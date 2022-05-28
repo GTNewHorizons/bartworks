@@ -53,7 +53,7 @@ import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
 public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ExtremeIndustrialGreenhouse> {
 
-    private static boolean debug = false;
+    private static final boolean debug = false;
 
     private int mCasing = 0;
     private int mMaxSlots = 0;
@@ -373,8 +373,16 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             "Max slots: " + EnumChatFormatting.GREEN + this.mMaxSlots + EnumChatFormatting.RESET,
             "Used slots: " + EnumChatFormatting.GREEN + this.mStorage.size() + EnumChatFormatting.RESET
         ));
-        for(int i = 0; i < mStorage.size(); i++)
-            info.add("Slot " + i + ": " + EnumChatFormatting.GREEN + "x" + this.mStorage.get(i).input.stackSize + " " + this.mStorage.get(i).input.getDisplayName() + EnumChatFormatting.RESET);
+        HashMap<String, Double> dropprogress = new HashMap<>();
+        for(int i = 0; i < mStorage.size(); i++) {
+            StringBuilder a = new StringBuilder("Slot " + i + ": " + EnumChatFormatting.GREEN + "x" + this.mStorage.get(i).input.stackSize + " " + this.mStorage.get(i).input.getDisplayName() + " : ");
+            if(this.isIC2Mode)
+                for(Map.Entry<String, Double> entry : mStorage.get(i).dropprogress.entrySet())
+                    a.append((int) (entry.getValue() * 100d)).append("% ");
+            a.append(EnumChatFormatting.RESET);
+            info.add(a.toString());
+        }
+
         info.addAll(Arrays.asList(super.getInfoData()));
         return info.toArray(new String[0]);
     }
