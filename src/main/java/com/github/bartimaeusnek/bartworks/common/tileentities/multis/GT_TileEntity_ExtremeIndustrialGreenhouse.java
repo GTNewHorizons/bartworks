@@ -12,6 +12,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.GregTech_API;
+import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -52,6 +53,8 @@ import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
 public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ExtremeIndustrialGreenhouse> {
 
+    private static boolean debug = false;
+
     private int mCasing = 0;
     private int mMaxSlots = 0;
     private int setupphase = 1;
@@ -77,7 +80,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             ofHatchAdder(GT_TileEntity_ExtremeIndustrialGreenhouse::addOutputToMachineList, CASING_INDEX, 1)
         ))
         .addElement('l', LoaderReference.ProjRedIllumination ? ofBlock(Block.getBlockFromName("ProjRed|Illumination:projectred.illumination.lamp"), 10) : ofBlock(Blocks.redstone_lamp, 0))
-        .addElement('g', BorosilicateGlass.ofBoroGlass((byte) 0, (byte) 1, Byte.MAX_VALUE, (te, t) -> te.glasTier = t, te -> te.glasTier))
+        .addElement('g', debug ? ofBlock(Blocks.glass, 0) : BorosilicateGlass.ofBoroGlass((byte) 0, (byte) 1, Byte.MAX_VALUE, (te, t) -> te.glasTier = t, te -> te.glasTier))
         .addElement('d', ofBlock(LoaderReference.RandomThings ? Block.getBlockFromName("RandomThings:fertilizedDirt_tilled") : Blocks.farmland, 0))
         .addElement('w', ofBlock(Blocks.water, 0))
         .build();
@@ -295,7 +298,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         for(GreenHouseSlot s : mStorage)
             waterusage += s.input.stackSize;
 
-        if(!depleteInput(new FluidStack(FluidRegistry.WATER, waterusage * 1000)))
+        if(!depleteInput(new FluidStack(FluidRegistry.WATER, waterusage * 1000)) && !debug)
             return false;
 
         // OVERCLOCK
@@ -318,7 +321,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             }
             this.mOutputItems = outputs.toArray(new ItemStack[0]);
         }
-        this.mEUt = -(int)((double)v * 0.99d);
+        this.mEUt = -(int)((double) GT_Values.V[tier] * 0.99d);
         this.mEfficiency = (10000 - (getIdealStatus() - getRepairStatus()) * 1000);
         this.mEfficiencyIncrease = 10000;
         return true;
@@ -329,6 +332,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     public boolean checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
         mCasing = 0;
         glasTier = 0;
+        if(debug)
+            glasTier = 8;
 
         if(!checkPiece(STRUCTURE_PIECE_MAIN, 2, 5, 0))
             return false;
@@ -362,7 +367,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     public String[] getInfoData() {
         List<String> info = new ArrayList<>(Arrays.asList(
             "Running in mode: " + EnumChatFormatting.GREEN + (setupphase == 0 ? (isIC2Mode ? "IC2 crops" : "Normal crops") : ("Setup mode " + (setupphase == 1 ? "(input)" : "(output)"))) + EnumChatFormatting.RESET,
-            "Uses " + waterusage * 1000 + "/operation of water",
+            "Uses " + waterusage * 1000 + "L/operation of water",
             "Max slots: " + EnumChatFormatting.GREEN + this.mMaxSlots + EnumChatFormatting.RESET,
             "Used slots: " + EnumChatFormatting.GREEN + this.mStorage.size() + EnumChatFormatting.RESET
         ));
