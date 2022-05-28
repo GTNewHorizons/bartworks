@@ -191,6 +191,14 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     }
 
     @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        List<String> info = new ArrayList<>(Arrays.asList(super.getStructureDescription(stackSize)));
+        info.add("The dirt is from RandomThings, must be tilled");
+        info.add("Purple lamps are from ProjectRedIllumination. They can be lit");
+        return info.toArray(new String[]{});
+    }
+
+    @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         aNBT.setByte("glasTier", glasTier);
@@ -259,6 +267,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     public void construct(ItemStack itemStack, boolean b) {
         buildPiece(STRUCTURE_PIECE_MAIN, itemStack, b, 2, 5, 0);
     }
+
+
 
     @Override
     public boolean isCorrectMachinePart(ItemStack itemStack) {
