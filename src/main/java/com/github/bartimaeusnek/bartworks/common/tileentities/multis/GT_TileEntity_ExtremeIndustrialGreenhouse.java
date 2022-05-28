@@ -179,6 +179,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addCasingInfo("Clean Stainless Steel Casings", 70).
             addOtherStructurePart("Borosilicate Glass", "Hollow two middle layers", 2).
             addStructureInfo("The glass tier limits the Energy Input tier").
+            addStructureInfo("The dirt is from RandomThings, must be tilled").
+            addStructureInfo("Purple lamps are from ProjectRedIllumination. They can be lit").
             addMaintenanceHatch("Any casing", 1).
             addInputBus("Any casing", 1).
             addOutputBus("Any casing", 1).
