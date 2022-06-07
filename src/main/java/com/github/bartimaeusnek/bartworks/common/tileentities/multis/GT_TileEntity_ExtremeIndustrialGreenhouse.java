@@ -383,8 +383,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             "Max slots: " + EnumChatFormatting.GREEN + this.mMaxSlots + EnumChatFormatting.RESET,
             "Used slots: " + EnumChatFormatting.GREEN + this.mStorage.size() + EnumChatFormatting.RESET
         ));
-        HashMap<String, Double> dropprogress = new HashMap<>();
         for(int i = 0; i < mStorage.size(); i++) {
+            if(!mStorage.get(i).isValid)
+                continue;
             StringBuilder a = new StringBuilder("Slot " + i + ": " + EnumChatFormatting.GREEN + "x" + this.mStorage.get(i).input.stackSize + " " + this.mStorage.get(i).input.getDisplayName() + " : ");
             if(this.isIC2Mode)
                 for(Map.Entry<String, Double> entry : mStorage.get(i).dropprogress.entrySet())
@@ -619,7 +620,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
                     return;
                 // GENERATE DROPS
                 generations = new ArrayList<>();
-                for(int i = 0; i < 10; i++) // get 10 generations
+                out: for(int i = 0; i < 10; i++) // get 10 generations
                 {
                     ItemStack[] st = te.harvest_automated(false);
                     te.setSize((byte) cc.maxSize());
@@ -629,6 +630,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
                     }
                     if (st.length == 0)
                         continue;
+                    for(ItemStack s : st)
+                        if(s == null)
+                            continue out;
                     generations.add(new ArrayList<>(Arrays.asList(st)));
                 }
                 if(generations.isEmpty())
