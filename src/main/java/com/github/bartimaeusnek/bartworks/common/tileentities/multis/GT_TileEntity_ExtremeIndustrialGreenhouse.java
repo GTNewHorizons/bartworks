@@ -624,10 +624,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
                 {
                     ItemStack[] st = te.harvest_automated(false);
                     te.setSize((byte) cc.maxSize());
-                    if (st == null){
-                        i--;
+                    if (st == null)
                         continue;
-                    }
                     if (st.length == 0)
                         continue;
                     for(ItemStack s : st)
