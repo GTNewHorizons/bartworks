@@ -659,10 +659,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
 
                     if(!cangrow)
                         return;
-
-                    te.setSize((byte) cc.maxSize());
-
                 }
+
+                te.setSize((byte) cc.maxSize());
 
                 if(!cc.canBeHarvested(te))
                     return;
