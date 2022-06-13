@@ -390,10 +390,12 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         for(int i = 0; i < mStorage.size(); i++) {
             if(!mStorage.get(i).isValid)
                 continue;
-            StringBuilder a = new StringBuilder("Slot " + i + ": " + EnumChatFormatting.GREEN + "x" + this.mStorage.get(i).input.stackSize + " " + this.mStorage.get(i).input.getDisplayName() + " : ");
-            if(this.isIC2Mode)
-                for(Map.Entry<String, Double> entry : mStorage.get(i).dropprogress.entrySet())
+            StringBuilder a = new StringBuilder("Slot " + i + ": " + EnumChatFormatting.GREEN + "x" + this.mStorage.get(i).input.stackSize + " " + this.mStorage.get(i).input.getDisplayName());
+            if(this.isIC2Mode) {
+                a.append(" : ");
+                for (Map.Entry<String, Double> entry : mStorage.get(i).dropprogress.entrySet())
                     a.append((int) (entry.getValue() * 100d)).append("% ");
+            }
             a.append(EnumChatFormatting.RESET);
             info.add(a.toString());
         }
@@ -611,7 +613,14 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             xyz[2] += tileEntity.getBaseMetaTileEntity().getZCoord();
             boolean cheating = false;
             try{
-                world.setBlock(xyz[0], xyz[1], xyz[2], Block.getBlockFromItem(Ic2Items.crop.getItem()), 0, 3);
+                if(world.getBlock(xyz[0], xyz[1] - 2, xyz[2]) != GregTech_API.sBlockCasings4 || world.getBlockMetadata(xyz[0], xyz[1] - 2, xyz[2]) != 1)
+                {
+                    // no
+                    cheating = true;
+                    return;
+                }
+
+                world.setBlock(xyz[0], xyz[1], xyz[2], Block.getBlockFromItem(Ic2Items.crop.getItem()), 0, 0);
                 TileEntity wte = world.getTileEntity(xyz[0], xyz[1], xyz[2]);
                 if(!(wte instanceof TileEntityCrop))
                 {
@@ -632,13 +641,6 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
                 if(!cc.canGrow(te))
                 {
                     // needs special block
-
-                    if(world.getBlock(xyz[0], xyz[1] - 2, xyz[2]) != GregTech_API.sBlockCasings4 || world.getBlockMetadata(xyz[0], xyz[1] - 2, xyz[2]) != 1)
-                    {
-                        // no
-                        cheating = true;
-                        return;
-                    }
 
                     boolean cangrow = false;
                     ArrayList<ItemStack> inputs = tileEntity.getStoredInputs();
