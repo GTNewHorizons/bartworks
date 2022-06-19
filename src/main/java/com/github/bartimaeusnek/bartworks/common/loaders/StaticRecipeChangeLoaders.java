@@ -32,6 +32,7 @@ import com.github.bartimaeusnek.bartworks.util.StreamUtils;
 import com.github.bartimaeusnek.bartworks.util.log.DebugLog;
 import com.github.bartimaeusnek.crossmod.BartWorksCrossmod;
 import com.google.common.collect.ArrayListMultimap;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.*;
 import gregtech.api.objects.GT_ItemStack;
@@ -55,6 +56,7 @@ import java.util.stream.Collectors;
 
 import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_ElectricImplosionCompressor.eicMap;
 import static com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader.*;
+import static gregtech.api.enums.GT_Values.MOD_ID_FR;
 import static gregtech.api.enums.GT_Values.VN;
 
 public class StaticRecipeChangeLoaders {
@@ -413,6 +415,18 @@ public class StaticRecipeChangeLoaders {
         if (eicMap == null) {
             eicMap = new GT_Recipe.GT_Recipe_Map(new HashSet<>(GT_Recipe.GT_Recipe_Map.sImplosionRecipes.mRecipeList.size()), "gt.recipe.electricimplosioncompressor", "Electric Implosion Compressor", (String) null, "gregtech:textures/gui/basicmachines/Default", 1, 2, 1, 0, 1, "", 1, "", true, true);
             GT_Recipe.GT_Recipe_Map.sImplosionRecipes.mRecipeList.stream().filter(e -> e.mInputs != null).forEach(recipe -> eicMap.addRecipe(true, Arrays.stream(recipe.mInputs).filter(e -> !StaticRecipeChangeLoaders.checkForExplosives(e)).distinct().toArray(ItemStack[]::new), recipe.mOutputs, null, null, null, 1, BW_Util.getMachineVoltageFromTier(10), 0));
+        }
+
+        // Custom electric implosion compressor recipe. Cannot be overclocked.
+        if (Loader.isModLoaded("eternalsingularity")) {
+            eicMap.addRecipe(
+                false,
+                new ItemStack[]{Materials.InfinityCatalyst.getDust(1)},
+                new ItemStack[]{GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 1L)},
+                null,
+                new FluidStack[]{Materials.Water.getFluid(3L)},
+                new FluidStack[]{Materials.Iron.getPlasma(2L)},
+                5, 100_000, 1); // aSpecialVaue has no meaning here.
         }
     }
 
