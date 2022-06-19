@@ -419,14 +419,16 @@ public class StaticRecipeChangeLoaders {
 
         // Custom electric implosion compressor recipe. Cannot be overclocked.
         if (Loader.isModLoaded("eternalsingularity")) {
+
+            // 1L SpaceTime -> 1 Eternal singularity.
             eicMap.addRecipe(
                 false,
-                new ItemStack[]{Materials.InfinityCatalyst.getDust(1)},
+                new ItemStack[]{GT_Values.NI},
                 new ItemStack[]{GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 1L)},
                 null,
-                new FluidStack[]{Materials.Water.getFluid(3L)},
-                new FluidStack[]{Materials.Iron.getPlasma(2L)},
-                5, 100_000, 1); // aSpecialVaue has no meaning here.
+                new FluidStack[]{Materials.SpaceTime.getFluid(1L)},
+                new FluidStack[]{GT_Values.NF},
+                100*20, 128_000_000, 1); // aSpecialVaue has no meaning here.
         }
     }
 
