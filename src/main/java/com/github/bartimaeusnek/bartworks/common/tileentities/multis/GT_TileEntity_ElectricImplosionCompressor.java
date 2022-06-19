@@ -188,13 +188,14 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
         long tVoltage = getMaxInputVoltage();
         byte tTier = (byte) Math.max(1, GT_Utility.getTier(tVoltage));
 
+
         if (tInputList.size() > 0) {
             GT_Recipe tRecipe = GT_TileEntity_ElectricImplosionCompressor.eicMap.findRecipe(this.getBaseMetaTileEntity(), false, V[tTier], tFluidInputs, tItemInputs);
             if (tRecipe != null && tRecipe.isRecipeInputEqual(true, tFluidInputs, tItemInputs)) {
                 this.mEfficiency = 10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000;
                 this.mEfficiencyIncrease = 10000;
                 this.mEUt = -tRecipe.mEUt;
-                this.mMaxProgresstime = Math.max(1, tRecipe.mDuration);
+                calculateOverclockedNessMulti(tRecipe.mEUt, tRecipe.mDuration, 1, tVoltage);
                 this.mOutputItems = tRecipe.mOutputs.clone();
                 this.mOutputFluids = tRecipe.mFluidOutputs.clone();
                 this.sendLoopStart((byte) 20);
