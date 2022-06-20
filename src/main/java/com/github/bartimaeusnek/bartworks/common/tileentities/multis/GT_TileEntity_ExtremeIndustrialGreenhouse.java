@@ -32,8 +32,8 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -49,7 +49,6 @@ import java.util.*;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER_GLOW;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
 public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ExtremeIndustrialGreenhouse> {
@@ -150,6 +149,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Use screwdriver to enable/change/disable setup mode").
             addInfo("Use screwdriver while sneaking to enable/disable IC2 mode").
             addInfo("Uses 1000L of water per crop per operation").
+            addInfo("You can insert fertilizer each operation to get more drops (max +400%)").
             addInfo("-------------------- SETUP   MODE --------------------").
             addInfo("Does not take power").
             addInfo("There are two modes: input / output").
@@ -165,6 +165,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Process time is divided by number of tiers past HV (Minimum 1 sec)").
             addInfo("All crops are grown at the end of the operation").
             addInfo("Will automatically craft seeds if they are not dropped").
+            addInfo("1 Fertilizer per 1 crop +200%").
             addInfo("-------------------- IC2    CROPS --------------------").
             addInfo("Minimal tier: UV").
             addInfo("Need UV glass tier").
@@ -173,6 +174,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Every tier past UV, slots are multiplied by 4").
             addInfo("Process time: 5 sec").
             addInfo("All crops are accelerated by x32 times").
+            addInfo("1 Fertilizer per 1 crop +10%").
             addInfo("Cannot process primordial").
             addInfo(BW_Tooltip_Reference.TT_BLUEPRINT).
             addSeparator().
@@ -288,7 +290,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         else if(isIC2Mode)
             mMaxSlots = 4 << (2 * (tier - 8));
         else
-            mMaxSlots = Math.max((tier - 4) * 2, 1);
+            mMaxSlots = (tier - 4) * 2 + 1;
         if(mStorage.size() > mMaxSlots)
         {
             // Void if user just downgraded power
@@ -318,6 +320,29 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             return false;
 
         // OVERCLOCK
+        // FERTILIZER IDEA - IC2 +10% per fertilizer per crop per operation, NORMAL +200% per fertilizer per crop per operation
+
+        int boost = 0;
+        int maxboost = 0;
+        for(GreenHouseSlot s : mStorage)
+            maxboost += s.input.stackSize * (isIC2Mode ? 40 : 2);
+
+        ArrayList<ItemStack> inputs = getStoredInputs();
+        for(ItemStack i : inputs){
+            if(( i.getItem() == Items.dye && i.getItemDamage() == 15) ||
+                (i.getItem() == GameRegistry.findItem("Forestry", "fertilizerCompound")) ||
+                (GT_Utility.areStacksEqual(i, Ic2Items.fertilizer)))
+            {
+                int used = Math.min(i.stackSize, maxboost - boost);
+                i.stackSize -= used;
+                boost += used;
+            }
+            if(boost == maxboost)
+                break;
+        }
+
+        double multiplier = 1.d + (((double)boost/(double)maxboost) * 4d);
+
         if(isIC2Mode)
         {
             if(glasTier < 8)
@@ -325,21 +350,25 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             this.mMaxProgresstime = 100;
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++)
-                outputs.addAll(mStorage.get(i).getIC2Drops(this.mMaxProgresstime / 8));
+                outputs.addAll(mStorage.get(i).getIC2Drops(((double)this.mMaxProgresstime / 8d) * multiplier));
             this.mOutputItems = outputs.toArray(new ItemStack[0]);
         }
         else {
             this.mMaxProgresstime = Math.max(20, 100 / (tier - 3)); // Min 1 s
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++) {
-                for (ItemStack drop : mStorage.get(i).getDrops())
-                    outputs.add(drop.copy());
+                for (ItemStack drop : mStorage.get(i).getDrops()) {
+                    ItemStack s = drop.copy();
+                    s.stackSize = (int)((double)s.stackSize * multiplier);
+                    outputs.add(s);
+                }
             }
             this.mOutputItems = outputs.toArray(new ItemStack[0]);
         }
         this.mEUt = -(int)((double) GT_Values.V[tier] * 0.99d);
         this.mEfficiency = (10000 - (getIdealStatus() - getRepairStatus()) * 1000);
         this.mEfficiencyIncrease = 10000;
+        this.updateSlots();
         return true;
     }
 
@@ -724,11 +753,11 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         Map<String, Double> dropprogress = new HashMap<>();
         static Map<String, ItemStack> dropstacks = new HashMap<>();
 
-        public List<ItemStack> getIC2Drops(int timeelapsed){
+        public List<ItemStack> getIC2Drops(double timeelapsed){
             int r = rn.nextInt(10);
             if(generations.size() <= r)
                 return new ArrayList<>();
-            double growthPercent = ((double)timeelapsed / (double)growthticks);
+            double growthPercent = (timeelapsed / (double)growthticks);
             List<ItemStack> generation = generations.get(r);
             List<ItemStack> copied = new ArrayList<>();
             for(ItemStack g : generation)
