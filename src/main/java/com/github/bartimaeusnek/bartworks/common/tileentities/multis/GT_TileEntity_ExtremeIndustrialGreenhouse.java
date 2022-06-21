@@ -167,11 +167,11 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Will automatically craft seeds if they are not dropped").
             addInfo("1 Fertilizer per 1 crop +200%").
             addInfo("-------------------- IC2    CROPS --------------------").
-            addInfo("Minimal tier: UV").
-            addInfo("Need UV glass tier").
+            addInfo("Minimal tier: LUV").
+            addInfo("Need LUV glass tier").
             addInfo("Starting with 4 slots").
             addInfo("Every slot gives 1 crop").
-            addInfo("Every tier past UV, slots are multiplied by 4").
+            addInfo("Every tier past LUV, slots are multiplied by 4").
             addInfo("Process time: 5 sec").
             addInfo("All crops are accelerated by x32 times").
             addInfo("1 Fertilizer per 1 crop +10%").
@@ -285,10 +285,10 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     public boolean checkRecipe(ItemStack itemStack) {
         long v = this.getMaxInputVoltage();
         int tier = GT_Utility.getTier(v);
-        if(tier < (isIC2Mode ? 8 : 4))
+        if(tier < (isIC2Mode ? 6 : 4))
             mMaxSlots = 0;
         else if(isIC2Mode)
-            mMaxSlots = 4 << (2 * (tier - 8));
+            mMaxSlots = 4 << (2 * (tier - 6));
         else
             mMaxSlots = (tier - 4) * 2 + 1;
         if(mStorage.size() > mMaxSlots)
@@ -345,7 +345,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
 
         if(isIC2Mode)
         {
-            if(glasTier < 8)
+            if(glasTier < 6)
                 return false;
             this.mMaxProgresstime = 100;
             List<ItemStack> outputs = new ArrayList<>();
