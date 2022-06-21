@@ -157,21 +157,21 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("[IC2] You need to also input block that is required under the crop").
             addInfo("Output mode: machine will take planted seeds and output them").
             addInfo("-------------------- NORMAL CROPS --------------------").
-            addInfo("Minimal tier: EV").
+            addInfo("Minimal tier: " + ChatColorHelper.DARKPURPLE + "EV").
             addInfo("Starting with 1 slot").
             addInfo("Every slot gives 64 crops").
-            addInfo("Every tier past EV adds additional 2 slots").
+            addInfo("Every tier past " + ChatColorHelper.DARKPURPLE + "EV" + ChatColorHelper.GRAY + " adds additional 2 slots").
             addInfo("Base process time: 5 sec").
-            addInfo("Process time is divided by number of tiers past HV (Minimum 1 sec)").
+            addInfo("Process time is divided by number of tiers past " + ChatColorHelper.GOLD + "HV" + ChatColorHelper.GRAY + " (Minimum 1 sec)").
             addInfo("All crops are grown at the end of the operation").
             addInfo("Will automatically craft seeds if they are not dropped").
             addInfo("1 Fertilizer per 1 crop +200%").
             addInfo("-------------------- IC2    CROPS --------------------").
-            addInfo("Minimal tier: LuV").
-            addInfo("Need LuV glass tier").
+            addInfo("Minimal tier: " + ChatColorHelper.LIGHT_PURPLE + "LuV").
+            addInfo("Need " + ChatColorHelper.LIGHT_PURPLE + "LuV" + ChatColorHelper.GRAY + " glass tier").
             addInfo("Starting with 4 slots").
             addInfo("Every slot gives 1 crop").
-            addInfo("Every tier past LuV, slots are multiplied by 4").
+            addInfo("Every tier past " + ChatColorHelper.LIGHT_PURPLE + "LuV" + ChatColorHelper.GRAY + ", slots are multiplied by 4").
             addInfo("Process time: 5 sec").
             addInfo("All crops are accelerated by x32 times").
             addInfo("1 Fertilizer per 1 crop +10%").
