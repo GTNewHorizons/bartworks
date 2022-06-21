@@ -167,11 +167,11 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addInfo("Will automatically craft seeds if they are not dropped").
             addInfo("1 Fertilizer per 1 crop +200%").
             addInfo("-------------------- IC2    CROPS --------------------").
-            addInfo("Minimal tier: LUV").
-            addInfo("Need LUV glass tier").
+            addInfo("Minimal tier: LuV").
+            addInfo("Need LuV glass tier").
             addInfo("Starting with 4 slots").
             addInfo("Every slot gives 1 crop").
-            addInfo("Every tier past LUV, slots are multiplied by 4").
+            addInfo("Every tier past LuV, slots are multiplied by 4").
             addInfo("Process time: 5 sec").
             addInfo("All crops are accelerated by x32 times").
             addInfo("1 Fertilizer per 1 crop +10%").
