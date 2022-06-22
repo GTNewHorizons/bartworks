@@ -51,6 +51,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -80,6 +81,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
     private int waterusage = 0;
     private static final int CASING_INDEX = 49;
     private static final String STRUCTURE_PIECE_MAIN = "main";
+    private static final Item forestryfertilizer = GameRegistry.findItem("Forestry", "fertilizerCompound");
     private static final IStructureDefinition<GT_TileEntity_ExtremeIndustrialGreenhouse> STRUCTURE_DEFINITION = StructureDefinition.<GT_TileEntity_ExtremeIndustrialGreenhouse>builder()
         .addShape(STRUCTURE_PIECE_MAIN, transpose(new String[][] {
             {"ccccc", "ccccc", "ccccc", "ccccc", "ccccc"},
@@ -345,7 +347,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
         ArrayList<ItemStack> inputs = getStoredInputs();
         for(ItemStack i : inputs){
             if(( i.getItem() == Items.dye && i.getItemDamage() == 15) ||
-                (i.getItem() == GameRegistry.findItem("Forestry", "fertilizerCompound")) ||
+                (forestryfertilizer != null && (i.getItem() == forestryfertilizer)) ||
                 (GT_Utility.areStacksEqual(i, Ic2Items.fertilizer)))
             {
                 int used = Math.min(i.stackSize, maxboost - boost);
@@ -852,5 +854,5 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             return count;
         }
     }
-    
+
 }
