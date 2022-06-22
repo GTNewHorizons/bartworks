@@ -114,9 +114,13 @@ public class RecipeFinderForParallel {
                     if (GT_OreDictUnificator.isInputStackEqual(input, tRealRecipe)) {
                         int d = Math.min(tTargetAmount, input.stackSize);
                         tTargetAmount -= d;
+                        tCompressedItemRecipe.put(tItem, tTargetAmount);
                         input.stackSize -= d;
                     }
-                    if (tTargetAmount == 0) break;
+                    if (tTargetAmount == 0) {
+                        tCompressedItemRecipe.remove(tItem);
+                        break;
+                    }
                 }
             }
         }
