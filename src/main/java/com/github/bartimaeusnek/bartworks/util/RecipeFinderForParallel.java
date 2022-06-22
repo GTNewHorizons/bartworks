@@ -89,18 +89,6 @@ public class RecipeFinderForParallel {
         }
 
         /*OreDict Stuff*/
-        for (int tItem : tCompressedItemRecipe.keySet()) {
-            ItemStack tRealRecipe = GT_Utility.intToStack(tItem);
-            int tTargetAmount = tCompressedItemRecipe.get(tItem);
-            for (ItemStack input : aItemStacks) {
-                if (GT_OreDictUnificator.isInputStackEqual(input, tRealRecipe)) {
-                    int d = Math.min(tTargetAmount, input.stackSize);
-                    tTargetAmount -= d;
-                    input.stackSize -= d;
-                }
-                if (tTargetAmount == 0) break;
-            }
-        }
         /*Wildcard Stuff*/
         for (int tItem : tCompressedItemRecipe.keySet()) {
             if (tItem >> 16 == Short.MAX_VALUE) {
@@ -117,6 +105,18 @@ public class RecipeFinderForParallel {
                             tInputItem.stackSize = 0;
                         }
                     }
+                }
+            }
+            else {
+                ItemStack tRealRecipe = GT_Utility.intToStack(tItem);
+                int tTargetAmount = tCompressedItemRecipe.get(tItem);
+                for (ItemStack input : aItemStacks) {
+                    if (GT_OreDictUnificator.isInputStackEqual(input, tRealRecipe)) {
+                        int d = Math.min(tTargetAmount, input.stackSize);
+                        tTargetAmount -= d;
+                        input.stackSize -= d;
+                    }
+                    if (tTargetAmount == 0) break;
                 }
             }
         }
