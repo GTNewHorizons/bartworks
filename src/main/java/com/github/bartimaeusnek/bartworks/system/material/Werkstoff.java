@@ -30,7 +30,6 @@ import com.github.bartimaeusnek.bartworks.util.MurmurHash3;
 import com.github.bartimaeusnek.bartworks.util.NonNullWrappedHashMap;
 import com.github.bartimaeusnek.bartworks.util.Pair;
 import com.github.bartimaeusnek.crossmod.thaumcraft.util.ThaumcraftHandler;
-import gregtech.api.GregTech_API;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.SubTag;
@@ -75,9 +74,9 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
     private final HashSet<SubTag> SUBTAGS = new HashSet<>();
     private byte[] rgb = new byte[3];
     private final String defaultName;
-    private String localizedName;
+    private final String localizedName;
     private String toolTip;
-    private String localizedToolTip;
+    private final String localizedToolTip;
 
     private Werkstoff.Stats stats;
     private final Werkstoff.Types type;
@@ -185,9 +184,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 
         this.mID = (short) mID;
         this.defaultName = defaultName;
-        GregTech_API.sAfterGTPreload.add(() -> {
-            this.localizedName = GT_LanguageManager.addStringLocalization(String.format("bw.werkstoff.%05d.name", this.mID), defaultName);
-        });
+        this.localizedName = GT_LanguageManager.addStringLocalization(String.format("bw.werkstoff.%05d.name", this.mID), defaultName);
         this.stats = stats;
         this.type = type;
         this.generationFeatures = generationFeatures;
@@ -224,9 +221,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 //        if (this.toolTip.length() > 25)
 //            this.toolTip = "The formula is to long...";
 
-        GregTech_API.sAfterGTPreload.add(() -> {
-            this.localizedToolTip = GT_LanguageManager.addStringLocalization(String.format("bw.werkstoff.%05d.tooltip", this.mID), toolTip);
-        });
+        this.localizedToolTip = GT_LanguageManager.addStringLocalization(String.format("bw.werkstoff.%05d.tooltip", this.mID), toolTip);
 
         if (this.stats.protons == 0) {
             long tmpprotons = 0;
