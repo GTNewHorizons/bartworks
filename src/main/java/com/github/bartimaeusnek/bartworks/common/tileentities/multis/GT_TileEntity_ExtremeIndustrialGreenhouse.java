@@ -47,6 +47,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.*;
 
+import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_VIA_BARTWORKS;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER_GLOW;
@@ -188,7 +189,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse extends GT_MetaTileEntity
             addOutputBus("Any casing", 1).
             addInputHatch("Any casing", 1).
             addEnergyHatch("Any casing", 1).
-            toolTipFinisher("Added by " + ChatColorHelper.GOLD + "kuba6000" + ChatColorHelper.RESET + ChatColorHelper.GREEN + " via " + BW_Tooltip_Reference.BW);
+            toolTipFinisher(MULTIBLOCK_ADDED_VIA_BARTWORKS.apply(ChatColorHelper.GOLD + "kuba6000"));
         return tt;
     }
 
