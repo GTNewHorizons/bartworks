@@ -22,27 +22,28 @@
 
 package com.github.bartimaeusnek.bartworks.common.tileentities.multis;
 
+import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.gtnewhorizon.structurelib.StructureLibAPI;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
+import com.gtnewhorizon.structurelib.alignment.enumerable.ExtendedFacing;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Textures;
-import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
@@ -50,14 +51,17 @@ import java.util.ArrayList;
 import static com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry.BW_BLOCKS;
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_BY_BARTWORKS;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static gregtech.api.enums.GT_Values.V;
+import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
 public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ElectricImplosionCompressor> {
 
     public static GT_Recipe.GT_Recipe_Map eicMap;
+    private static final boolean pistonEnabled = !ConfigHandler.disablePistonInEIC;
     private Boolean piston = true;
+    private static final String sound = GregTech_API.sSoundList.get(5);
+    private final ArrayList<ChunkCoordinates> chunkCoordinates = new ArrayList<>(5);
 
     public GT_TileEntity_ElectricImplosionCompressor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -153,7 +157,9 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
             addOtherStructurePart("Neutronium Blocks", "Layer 4,5,6").
             addMaintenanceHatch("Any bottom casing", 1).
             addInputBus("Any bottom casing", 1).
+            addInputHatch("Any bottom casing", 1).
             addOutputBus("Any bottom casing", 1).
+            addMaintenanceHatch("Any bottom casing", 1).
             addEnergyHatch("Bottom and top middle", 2).
             toolTipFinisher(MULTIBLOCK_ADDED_BY_BARTWORKS);
         return tt;
@@ -165,47 +171,54 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
         if (this.mEnergyHatches.get(0).getEUVar() <= 0 || this.mEnergyHatches.get(1).getEUVar() <= 0)
             return false;
 
-        ArrayList<ItemStack> tInputList = this.getStoredInputs();
-        int tInputList_sS = tInputList.size();
-
-        for (int i = 0; i < tInputList_sS - 1; ++i) {
-            for (int j = i + 1; j < tInputList_sS; ++j) {
-                if (GT_Utility.areStacksEqual(tInputList.get(i), tInputList.get(j))) {
-                    if (tInputList.get(i).stackSize < tInputList.get(j).stackSize) {
-                        tInputList.remove(i--);
-                        tInputList_sS = tInputList.size();
-                        break;
-                    }
-
-                    tInputList.remove(j--);
-                    tInputList_sS = tInputList.size();
-                }
-            }
-        }
-
-        ItemStack[] tItemInputs = tInputList.toArray(new ItemStack[0]);
-        FluidStack[] tFluidInputs = getCompactedFluids();
+        ItemStack[] tItemInputs = getCompactedInputs();
+        FluidStack[] tFluidInputs  = getCompactedFluids();
 
         long tVoltage = getMaxInputVoltage();
         byte tTier = (byte) Math.max(1, GT_Utility.getTier(tVoltage));
 
-
-        if (tInputList.size() > 0) {
-            GT_Recipe tRecipe = GT_TileEntity_ElectricImplosionCompressor.eicMap.findRecipe(this.getBaseMetaTileEntity(), false, V[tTier], tFluidInputs, tItemInputs);
+        if ((tItemInputs.length > 0) || (tFluidInputs.length > 0)) {
+            GT_Recipe tRecipe = eicMap.findRecipe(getBaseMetaTileEntity(), false, V[tTier], tFluidInputs, tItemInputs);
             if (tRecipe != null && tRecipe.isRecipeInputEqual(true, tFluidInputs, tItemInputs)) {
                 this.mEfficiency = 10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000;
                 this.mEfficiencyIncrease = 10000;
-                this.mEUt = -tRecipe.mEUt;
                 calculateOverclockedNessMulti(tRecipe.mEUt, tRecipe.mDuration, 1, tVoltage);
+                //In case recipe is too OP for that machine
+                if (mMaxProgresstime == Integer.MAX_VALUE - 1 && mEUt == Integer.MAX_VALUE - 1)
+                    return false;
+                if (this.mEUt > 0) {
+                    this.mEUt = -this.mEUt;
+                }
                 this.mOutputItems = tRecipe.mOutputs.clone();
                 this.mOutputFluids = tRecipe.mFluidOutputs.clone();
-                this.sendLoopStart((byte) 20);
                 this.updateSlots();
                 return true;
             }
         }
-
         return false;
+    }
+
+    private void updateChunkCoordinates(){
+        chunkCoordinates.clear();
+
+        for(int x = -1; x <= 1; x++)
+            for(int z = -1; z <= 1; z++) {
+                if (!(Math.abs(x) == 1 && Math.abs(z) == 1)) {
+                    int[] abc = new int[]{x, -2, z + 1};
+                    int[] xyz = new int[]{0, 0, 0};
+                    this.getExtendedFacing().getWorldOffset(abc, xyz);
+                    xyz[0] += this.getBaseMetaTileEntity().getXCoord();
+                    xyz[1] += this.getBaseMetaTileEntity().getYCoord();
+                    xyz[2] += this.getBaseMetaTileEntity().getZCoord();
+                    chunkCoordinates.add(new ChunkCoordinates(xyz[0], xyz[1], xyz[2]));
+                }
+            }
+    }
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        updateChunkCoordinates();
     }
 
     @Override
@@ -218,10 +231,18 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
     }
 
     @Override
-    public boolean onRunningTick(ItemStack aStack) {
-        if (this.mRuntime % 10 == 0)
-            this.togglePiston();
-        return super.onRunningTick(aStack);
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        super.onPostTick(aBaseMetaTileEntity, aTick);
+
+        if (pistonEnabled && aBaseMetaTileEntity.isServerSide() && aBaseMetaTileEntity.isActive() && aTick % 10 == 0)
+            togglePiston(aBaseMetaTileEntity);
+    }
+
+    @Override
+    public void setExtendedFacing(ExtendedFacing newExtendedFacing) {
+        super.setExtendedFacing(newExtendedFacing);
+
+        updateChunkCoordinates();
     }
 
     @Override
@@ -230,58 +251,40 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
     }
 
     public void stopMachine() {
-        this.resetPiston();
+        if (pistonEnabled)
+            this.resetPiston();
         super.stopMachine();
     }
 
     private void resetPiston() {
-        if (this.getBaseMetaTileEntity().getWorld().isRemote)
+        IGregTechTileEntity aBaseMetaTileEntity = this.getBaseMetaTileEntity();
+        if (!aBaseMetaTileEntity.isServerSide())
             return;
         if (!this.piston && this.mMachine) {
-            int xDir = ForgeDirection.getOrientation(this.getBaseMetaTileEntity().getBackFacing()).offsetX;
-            int zDir = ForgeDirection.getOrientation(this.getBaseMetaTileEntity().getBackFacing()).offsetZ;
-            int aX = this.getBaseMetaTileEntity().getXCoord(), aY = this.getBaseMetaTileEntity().getYCoord(), aZ = this.getBaseMetaTileEntity().getZCoord();
-            for (int x = -1; x <= 1; x++) {
-                for (int z = -1; z <= 1; z++) {
-                    if (!(Math.abs(x) == 1 && Math.abs(z) == 1))
-                        this.getBaseMetaTileEntity().getWorld().setBlock(xDir + aX + x, aY + 2, zDir + aZ + z, GregTech_API.sBlockMetal5, 2, 3);
-                }
-            }
-            GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(5), 10, 1.0F, aX, aY, aZ);
+            chunkCoordinates.forEach(c -> aBaseMetaTileEntity.getWorld().setBlock(c.posX, c.posY, c.posZ, GregTech_API.sBlockMetal5, 2, 3));
             this.piston = !this.piston;
         }
     }
 
-    private void togglePiston() {
-        if (this.getBaseMetaTileEntity().getWorld().isRemote)
+    private void togglePiston(IGregTechTileEntity aBaseMetaTileEntity) {
+        if (aBaseMetaTileEntity.getWorld().isRemote)
             return;
-        int xDir = ForgeDirection.getOrientation(this.getBaseMetaTileEntity().getBackFacing()).offsetX;
-        int zDir = ForgeDirection.getOrientation(this.getBaseMetaTileEntity().getBackFacing()).offsetZ;
-        int aX = this.getBaseMetaTileEntity().getXCoord(), aY = this.getBaseMetaTileEntity().getYCoord(), aZ = this.getBaseMetaTileEntity().getZCoord();
-        boolean hax = false;
         if (this.piston) {
-            for (int x = -1; x <= 1; x++) {
-                for (int z = -1; z <= 1; z++) {
-                    if (!(Math.abs(x) == 1 && Math.abs(z) == 1)) {
-                        if (this.getBaseMetaTileEntity().getBlock(xDir + aX + x, aY + 2, zDir + aZ + z) != GregTech_API.sBlockMetal5 && this.getBaseMetaTileEntity().getMetaID(xDir + aX + x, aY + 2, zDir + aZ + z) != 2) {
-                            hax = true;
-                        }
-                        this.getBaseMetaTileEntity().getWorld().setBlockToAir(xDir + aX + x, aY + 2, zDir + aZ + z);
-                    }
+            for(ChunkCoordinates c : chunkCoordinates)
+            {
+                if(aBaseMetaTileEntity.getBlock(c.posX, c.posY, c.posZ) != GregTech_API.sBlockMetal5 || aBaseMetaTileEntity.getMetaID(c.posX, c.posY, c.posZ) != 2)
+                {
+                    this.explodeMultiblock();
+                    return;
                 }
+                aBaseMetaTileEntity.getWorld().setBlockToAir(c.posX, c.posY, c.posZ);
             }
+
         } else {
-            for (int x = -1; x <= 1; x++) {
-                for (int z = -1; z <= 1; z++) {
-                    if (!(Math.abs(x) == 1 && Math.abs(z) == 1))
-                        this.getBaseMetaTileEntity().getWorld().setBlock(xDir + aX + x, aY + 2, zDir + aZ + z, GregTech_API.sBlockMetal5, 2, 3);
-                }
-            }
+            chunkCoordinates.forEach(c -> aBaseMetaTileEntity.getWorld().setBlock(c.posX, c.posY, c.posZ, GregTech_API.sBlockMetal5, 2, 3));
+            GT_Utility.sendSoundToPlayers(aBaseMetaTileEntity.getWorld(), sound, 10, 1.0F, chunkCoordinates.get(0).posX, chunkCoordinates.get(0).posY, chunkCoordinates.get(0).posZ);
         }
-        GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(5), 10, 1.0F, aX, aY, aZ);
         this.piston = !this.piston;
-        if (hax)
-            this.explodeMultiblock();
     }
 
     @Override
@@ -300,8 +303,7 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         if(!checkPiece(STRUCTURE_PIECE_MAIN, 1, 6, 0))
             return false;
-        return  this.mMaintenanceHatches.size() == 1 &&
-                this.mEnergyHatches.size() == 2;
+        return this.mMaintenanceHatches.size() == 1 && this.mEnergyHatches.size() == 2;
     }
 
     @Override
@@ -332,10 +334,17 @@ public class GT_TileEntity_ElectricImplosionCompressor extends GT_MetaTileEntity
 
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, byte aSide, byte aFacing, byte aColorIndex, boolean aActive, boolean aRedstone) {
         if (aSide == aFacing) {
-            return aActive ? new ITexture[]{Textures.BlockIcons.casingTexturePages[0][16], TextureFactory.builder().addIcon(new IIconContainer[]{Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COMPRESSOR_ACTIVE}).extFacing().build(), TextureFactory.builder().addIcon(new IIconContainer[]{Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COMPRESSOR_ACTIVE_GLOW}).extFacing().glow().build()} : new ITexture[]{Textures.BlockIcons.casingTexturePages[0][16], TextureFactory.builder().addIcon(new IIconContainer[]{Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COMPRESSOR}).extFacing().build(), TextureFactory.builder().addIcon(new IIconContainer[]{Textures.BlockIcons.OVERLAY_FRONT_IMPLOSION_COMPRESSOR_GLOW}).extFacing().glow().build()};
-        } else {
-            return new ITexture[]{Textures.BlockIcons.casingTexturePages[0][16]};
+            if (aActive)
+                return new ITexture[]{
+                    Textures.BlockIcons.getCasingTextureForId(CASING_INDEX),
+                    TextureFactory.builder().addIcon(OVERLAY_FRONT_IMPLOSION_COMPRESSOR_ACTIVE).extFacing().build(),
+                    TextureFactory.builder().addIcon(OVERLAY_FRONT_IMPLOSION_COMPRESSOR_ACTIVE_GLOW).extFacing().glow().build()};
+            return new ITexture[]{
+                Textures.BlockIcons.getCasingTextureForId(CASING_INDEX),
+                TextureFactory.builder().addIcon(OVERLAY_FRONT_IMPLOSION_COMPRESSOR).extFacing().build(),
+                TextureFactory.builder().addIcon(OVERLAY_FRONT_IMPLOSION_COMPRESSOR_GLOW).extFacing().glow().build()};
         }
+        return new ITexture[]{Textures.BlockIcons.getCasingTextureForId(CASING_INDEX)};
     }
 
     @Override

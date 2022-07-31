@@ -76,6 +76,10 @@ public class StaticRecipeChangeLoaders {
     private static TObjectDoubleHashMap<Materials> gtEbfGasRecipeTimeMultipliers = null;
     private static TObjectDoubleHashMap<Materials> gtEbfGasRecipeConsumptionMultipliers = null;
 
+    public static final List<ItemStack> whitelistForEBFNoGasRecipeDontCheckItemData = Arrays.asList(
+        GT_ModHandler.getModItem("TConstruct", "materials", 1L, 12) // Raw Aluminum -> Aluminium Ingot (coremod)
+    );
+
     private StaticRecipeChangeLoaders() {
     }
 
@@ -348,7 +352,14 @@ public class StaticRecipeChangeLoaders {
                         for (GT_Recipe baseRe : base.get(tag)) {
                             if (recipe.mInputs.length == baseRe.mInputs.length && recipe.mOutputs.length == baseRe.mOutputs.length)
                                 for (int i = 0; i < recipe.mInputs.length; i++) {
-                                    if ((recipe.mFluidInputs == null || recipe.mFluidInputs.length == 0) && BW_Util.checkStackAndPrefix(recipe.mInputs[i]) && BW_Util.checkStackAndPrefix(baseRe.mInputs[i]) && GT_OreDictUnificator.getAssociation(recipe.mInputs[i]).mMaterial.mMaterial.equals(GT_OreDictUnificator.getAssociation(baseRe.mInputs[i]).mMaterial.mMaterial) && GT_Utility.areStacksEqual(recipe.mOutputs[0], baseRe.mOutputs[0])) {
+                                    ItemStack tmpInput = recipe.mInputs[i];
+                                    if (
+                                        (recipe.mFluidInputs == null || recipe.mFluidInputs.length == 0)
+                                            && (whitelistForEBFNoGasRecipeDontCheckItemData.stream().anyMatch(s -> GT_Utility.areStacksEqual(s, tmpInput))
+                                                || (BW_Util.checkStackAndPrefix(recipe.mInputs[i])
+                                                    && BW_Util.checkStackAndPrefix(baseRe.mInputs[i])
+                                                    && GT_OreDictUnificator.getAssociation(recipe.mInputs[i]).mMaterial.mMaterial.equals(GT_OreDictUnificator.getAssociation(baseRe.mInputs[i]).mMaterial.mMaterial)
+                                                    && GT_Utility.areStacksEqual(recipe.mOutputs[0], baseRe.mOutputs[0])))) {
                                         toAdd.add(recipe.mOutputs[0]);
                                         repToAdd.put(tag, recipe);
                                         continue recipeLoop;
@@ -494,7 +505,7 @@ public class StaticRecipeChangeLoaders {
     @SuppressWarnings("ALL")
     public static void addElectricImplosionCompressorRecipes() {
         if (eicMap == null) {
-            eicMap = new GT_Recipe.GT_Recipe_Map(new HashSet<>(GT_Recipe.GT_Recipe_Map.sImplosionRecipes.mRecipeList.size()), "gt.recipe.electricimplosioncompressor", "Electric Implosion Compressor", (String) null, "gregtech:textures/gui/basicmachines/Default", 1, 2, 1, 0, 1, "", 1, "", true, true);
+            eicMap = new GT_Recipe.GT_Recipe_Map(new HashSet<>(GT_Recipe.GT_Recipe_Map.sImplosionRecipes.mRecipeList.size()), "gt.recipe.electricimplosioncompressor", "Electric Implosion Compressor", (String) null, "gregtech:textures/gui/basicmachines/Default", 1, 2, 0, 0, 1, "", 1, "", true, true);
             GT_Recipe.GT_Recipe_Map.sImplosionRecipes.mRecipeList.stream().filter(e -> e.mInputs != null).forEach(recipe -> eicMap.addRecipe(true, Arrays.stream(recipe.mInputs).filter(e -> !StaticRecipeChangeLoaders.checkForExplosives(e)).distinct().toArray(ItemStack[]::new), recipe.mOutputs, null, null, null, 1, BW_Util.getMachineVoltageFromTier(10), 0));
         }
 
