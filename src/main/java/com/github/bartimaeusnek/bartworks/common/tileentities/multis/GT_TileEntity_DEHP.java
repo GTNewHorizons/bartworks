@@ -125,7 +125,7 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
                 .beginStructureBlock(3, 7, 3, false)
                 .addController("Front bottom")
                 .addOtherStructurePart(casings, "form the 3x1x3 Base")
-                .addOtherStructurePart(casings, " 1x3x1 pillar above the center of the base (2 minimum total)")
+                .addOtherStructurePart(casings, "1x3x1 pillar above the center of the base (2 minimum total)")
                 .addOtherStructurePart(getFrameMaterial().mName + " Frame Boxes", "Each pillar's side and 1x3x1 on top")
                 .addEnergyHatch(VN[getMinTier()] + "+, Any base casing")
                 .addMaintenanceHatch("Any base casing")
