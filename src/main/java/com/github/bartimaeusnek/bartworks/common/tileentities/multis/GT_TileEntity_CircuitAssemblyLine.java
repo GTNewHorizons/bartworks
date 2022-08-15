@@ -278,6 +278,24 @@ public class GT_TileEntity_CircuitAssemblyLine extends GT_MetaTileEntity_Enhance
     }
 
     @Override
+    public boolean addInputHatchToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        if (aTileEntity == null) {
+            return false;
+        } else {
+            IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+            if (aMetaTileEntity == null) {
+                return false;
+            } else if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input) {
+                ((GT_MetaTileEntity_Hatch)aMetaTileEntity).updateTexture(aBaseCasingIndex);
+                ((GT_MetaTileEntity_Hatch_Input)aMetaTileEntity).mRecipeMap = this.getRecipeMap();
+                return this.mInputHatches.add((GT_MetaTileEntity_Hatch_Input)aMetaTileEntity);
+            } else {
+                return false;
+            }
+        }
+    }
+
+    @Override
     public int getMaxEfficiency(ItemStack itemStack) {
         return 10000;
     }
