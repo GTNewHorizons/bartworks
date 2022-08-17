@@ -56,6 +56,10 @@ public class BW_NEI_BioVatHandler extends GT_NEI_DefaultHandler {
         return new BW_NEI_BioVatHandler(this.mRecipeMap);
     }
 
+	protected static void drawText(int aX, int aY, String aString, int aColor) {
+		Minecraft.getMinecraft().fontRenderer.drawString(aString, aX, aY, aColor);
+	}
+
     public void drawExtras(int aRecipeIndex) {
         int base = 70;
         int[] lines = {base, base + 8, base + 16, base + 24, base + 32, base + 40, base + 48, base + 56, base + 64};
@@ -65,44 +69,44 @@ public class BW_NEI_BioVatHandler extends GT_NEI_DefaultHandler {
         int tSpecial;
         if (recipeDesc == null) {
             if (tEUt != 0) {
-                GT_NEI_DefaultHandler.drawText(10, lines[0], this.trans("152", "Total: ") + GT_Utility.formatNumbers((long) tDuration * (long) tEUt) + " EU", -16777216);
-                GT_NEI_DefaultHandler.drawText(10, lines[1], this.trans("153", "Usage: ") + GT_Utility.formatNumbers(tEUt) + " EU/t", -16777216);
+                drawText(10, lines[0], this.trans("152", "Total: ") + GT_Utility.formatNumbers((long) tDuration * (long) tEUt) + " EU", -16777216);
+                drawText(10, lines[1], this.trans("153", "Usage: ") + GT_Utility.formatNumbers(tEUt) + " EU/t", -16777216);
                 if (this.mRecipeMap.mShowVoltageAmperageInNEI) {
-                    GT_NEI_DefaultHandler.drawText(10, lines[2], this.trans("154", "Voltage: ") + GT_Utility.formatNumbers(tEUt / this.mRecipeMap.mAmperage) + " EU", -16777216);
-                    GT_NEI_DefaultHandler.drawText(10, lines[3], this.trans("155", "Amperage: ") + GT_Utility.formatNumbers(this.mRecipeMap.mAmperage), -16777216);
+                    drawText(10, lines[2], this.trans("154", "Voltage: ") + GT_Utility.formatNumbers(tEUt / this.mRecipeMap.mAmperage) + " EU", -16777216);
+                    drawText(10, lines[3], this.trans("155", "Amperage: ") + GT_Utility.formatNumbers(this.mRecipeMap.mAmperage), -16777216);
                 } else {
-                    GT_NEI_DefaultHandler.drawText(10, lines[2], this.trans("156", "Voltage: unspecified"), -16777216);
-                    GT_NEI_DefaultHandler.drawText(10, lines[3], this.trans("157", "Amperage: unspecified"), -16777216);
+                    drawText(10, lines[2], this.trans("156", "Voltage: unspecified"), -16777216);
+                    drawText(10, lines[3], this.trans("157", "Amperage: unspecified"), -16777216);
                 }
             }
 
 
             if (tDuration > 0) {
-                GT_NEI_DefaultHandler.drawText(10, lines[4], this.trans("158", "Time: ") + GT_Utility.formatNumbers(0.05d * tDuration) + this.trans("161", " secs"), -16777216);
+                drawText(10, lines[4], this.trans("158", "Time: ") + GT_Utility.formatNumbers(0.05d * tDuration) + this.trans("161", " secs"), -16777216);
             }
 
             tSpecial = ((GT_NEI_DefaultHandler.CachedDefaultRecipe) this.arecipes.get(aRecipeIndex)).mRecipe.mSpecialValue;
 
             int[] tSpecialA = GT_TileEntity_BioVat.specialValueUnpack(tSpecial);
 
-            GT_NEI_DefaultHandler.drawText(10, lines[5], StatCollector.translateToLocal("nei.biovat.0.name") + " " + tSpecialA[0], -16777216);
+            drawText(10, lines[5], StatCollector.translateToLocal("nei.biovat.0.name") + " " + tSpecialA[0], -16777216);
 
             if (tSpecialA[1] == -100 && GT_Mod.gregtechproxy.mLowGravProcessing) {
-                GT_NEI_DefaultHandler.drawText(10, lines[7], this.trans("159", "Needs Low Gravity"), -16777216);
+                drawText(10, lines[7], this.trans("159", "Needs Low Gravity"), -16777216);
             } else if (tSpecialA[1] == -200 && GT_Mod.gregtechproxy.mEnableCleanroom) {
-                GT_NEI_DefaultHandler.drawText(10, lines[7], this.trans("160", "Needs Cleanroom"), -16777216);
+                drawText(10, lines[7], this.trans("160", "Needs Cleanroom"), -16777216);
             } else if (tSpecialA[1] == -300 && GT_Mod.gregtechproxy.mEnableCleanroom) {
-                GT_NEI_DefaultHandler.drawText(10, lines[7], this.trans("160", "Needs Cleanroom & LowGrav"), -16777216);
+                drawText(10, lines[7], this.trans("160", "Needs Cleanroom & LowGrav"), -16777216);
             } else if (tSpecialA[1] == -400) {
-                GT_NEI_DefaultHandler.drawText(10, lines[7], this.trans("216", "Deprecated Recipe"), -16777216);
+                drawText(10, lines[7], this.trans("216", "Deprecated Recipe"), -16777216);
             } else if (GT_Utility.isStringValid(this.mRecipeMap.mNEISpecialValuePre) || GT_Utility.isStringValid(this.mRecipeMap.mNEISpecialValuePost)) {
-                GT_NEI_DefaultHandler.drawText(10, lines[6], (tSpecialA[2] == 1 ? StatCollector.translateToLocal("nei.biovat.1.name") : StatCollector.translateToLocal("nei.biovat.2.name")) + this.mRecipeMap.mNEISpecialValuePre + GT_Utility.formatNumbers(tSpecialA[3] * this.mRecipeMap.mNEISpecialValueMultiplier) + this.mRecipeMap.mNEISpecialValuePost, -16777216);
+                drawText(10, lines[6], (tSpecialA[2] == 1 ? StatCollector.translateToLocal("nei.biovat.1.name") : StatCollector.translateToLocal("nei.biovat.2.name")) + this.mRecipeMap.mNEISpecialValuePre + GT_Utility.formatNumbers(tSpecialA[3] * this.mRecipeMap.mNEISpecialValueMultiplier) + this.mRecipeMap.mNEISpecialValuePost, -16777216);
             }
         } else {
             tSpecial = 0;
 
             for (String descLine : recipeDesc) {
-                GT_NEI_DefaultHandler.drawText(10, 73 + 10 * tSpecial, descLine, -16777216);
+                drawText(10, 73 + 10 * tSpecial, descLine, -16777216);
                 ++tSpecial;
             }
         }
