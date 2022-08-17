@@ -57,10 +57,6 @@ public class BW_NEI_BioVatHandler extends GT_NEI_DefaultHandler {
         return new BW_NEI_BioVatHandler(this.mRecipeMap);
     }
 
-	protected static void drawText(int aX, int aY, String aString, int aColor) {
-		Minecraft.getMinecraft().fontRenderer.drawString(aString, aX, aY, aColor);
-	}
-
     public void drawExtras(int aRecipeIndex) {
         int base = 70;
         int[] lines = {base, base + 8, base + 16, base + 24, base + 32, base + 40, base + 48, base + 56, base + 64};
