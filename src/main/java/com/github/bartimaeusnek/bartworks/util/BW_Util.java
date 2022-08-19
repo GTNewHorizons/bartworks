@@ -52,6 +52,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -326,7 +327,7 @@ public class BW_Util {
     }
 
     public static byte getTier(long voltage){
-        if(voltage <= Integer.MAX_VALUE)
+        if(voltage <= Integer.MAX_VALUE - 7)
             return GT_Utility.getTier(voltage);
         byte t = 0;
         while(voltage > 8L) {
@@ -337,7 +338,7 @@ public class BW_Util {
     }
 
     public static String getTierName(byte tier){
-        if(VN.length <= tier) return "MAX+";
+        if(VN.length - 1 <= tier) return "MAX+";
         else return VN[tier];
     }
 
