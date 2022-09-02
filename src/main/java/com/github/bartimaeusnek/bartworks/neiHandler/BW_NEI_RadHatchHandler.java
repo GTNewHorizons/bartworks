@@ -15,10 +15,10 @@ public class BW_NEI_RadHatchHandler extends GT_NEI_DefaultHandler {
         super(aRecipeMap);
         if (!NEI_BW_Config.sIsAdded) {
             FMLInterModComms.sendRuntimeMessage(
-                MainMod.instance,
-                "NEIPlugins",
-                "register-crafting-handler",
-                "bartworks@" + this.getRecipeName() + "@" + this.getOverlayIdentifier());
+                    MainMod.instance,
+                    "NEIPlugins",
+                    "register-crafting-handler",
+                    "bartworks@" + this.getRecipeName() + "@" + this.getOverlayIdentifier());
             GuiCraftingRecipe.craftinghandlers.add(this);
             GuiUsageRecipe.usagehandlers.add(this);
         }
@@ -37,7 +37,10 @@ public class BW_NEI_RadHatchHandler extends GT_NEI_DefaultHandler {
         long time = recipe.mSpecialValue;
         drawText(10, 73, StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.0", radioLevel), -16777216);
         drawText(10, 83, StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.1", amount), -16777216);
-        drawText(10, 93, StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.2", time * amount / 20.0), -16777216);
+        drawText(
+                10,
+                93,
+                StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.2", time * amount / 20.0),
+                -16777216);
     }
-
 }

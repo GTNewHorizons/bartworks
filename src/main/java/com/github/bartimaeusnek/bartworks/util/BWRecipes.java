@@ -123,22 +123,22 @@ public class BWRecipes {
             true // special handler
             );
     private final GT_Recipe.GT_Recipe_Map sRadHatch = new GT_Recipe.GT_Recipe_Map(
-        new HashSet<>(150),
-        "bw.recipe.radhatch",
-        "Radio Hatch Material List",
-        null,
-        "gregtech:textures/gui/basicmachines/BW.GUI.Radioactive",
-        1,
-        0,
-        1,
-        0,
-        0,
-        "",
-        0,
-        "",
-        false,
-        false // special handler
-    );
+            new HashSet<>(150),
+            "bw.recipe.radhatch",
+            "Radio Hatch Material List",
+            null,
+            "gregtech:textures/gui/basicmachines/BW.GUI.Radioactive",
+            1,
+            0,
+            1,
+            0,
+            0,
+            "",
+            0,
+            "",
+            false,
+            false // special handler
+            );
 
     /**
      * @param machine 0 = biolab; 1 = BacterialVat; 2 = sAcidGenFuels; 3 = circuitAssemblyLine
@@ -169,45 +169,34 @@ public class BWRecipes {
         return ret;
     }
 
-    public boolean addRadHatch(
-        ItemStack item,
-        int radioLevel,
-        int amount,
-        short[] rgba
-    ) {
+    public boolean addRadHatch(ItemStack item, int radioLevel, int amount, short[] rgba) {
         return sRadHatch.addRecipe(new DynamicGTRecipe(
-            false,
-            new ItemStack[] {item},
-            null,
-            null,
-            new int[] {rgba[0], rgba[1], rgba[2]},
-            null,
-            null,
-            amount,
-            radioLevel,
-            (int) calcDecayTicks(radioLevel)))
-            != null;
+                        false,
+                        new ItemStack[] {item},
+                        null,
+                        null,
+                        new int[] {rgba[0], rgba[1], rgba[2]},
+                        null,
+                        null,
+                        amount,
+                        radioLevel,
+                        (int) calcDecayTicks(radioLevel)))
+                != null;
     }
 
-    public boolean addRadHatch(
-        ItemStack item,
-        int radioLevel,
-        int amount,
-        int time,
-        short[] rgba
-    ) {
+    public boolean addRadHatch(ItemStack item, int radioLevel, int amount, int time, short[] rgba) {
         return sRadHatch.addRecipe(new DynamicGTRecipe(
-            false,
-            new ItemStack[] {item},
-            null,
-            null,
-            new int[] {rgba[0], rgba[1], rgba[2]},
-            null,
-            null,
-            amount,
-            radioLevel,
-            time))
-            != null;
+                        false,
+                        new ItemStack[] {item},
+                        null,
+                        null,
+                        new int[] {rgba[0], rgba[1], rgba[2]},
+                        null,
+                        null,
+                        amount,
+                        radioLevel,
+                        time))
+                != null;
     }
 
     public boolean addBioLabRecipe(
