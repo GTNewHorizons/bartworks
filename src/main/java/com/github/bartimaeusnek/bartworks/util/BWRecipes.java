@@ -450,6 +450,7 @@ public class BWRecipes {
                 != null;
     }
 
+    @Deprecated
     public boolean addBacterialVatRecipe(
             ItemStack[] aInputs,
             BioCulture aCulture,
@@ -515,6 +516,7 @@ public class BWRecipes {
                 != null;
     }
 
+    @Deprecated
     public boolean addBacterialVatRecipe(
             ItemStack[] aInputs,
             BioCulture culture,
