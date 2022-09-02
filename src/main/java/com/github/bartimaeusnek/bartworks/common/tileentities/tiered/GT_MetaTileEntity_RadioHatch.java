@@ -174,21 +174,22 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
                         this.mass = (byte) this.lastRecipe.mDuration;
                         this.decayTime = this.lastRecipe.mSpecialValue;
                         this.sievert = this.lastRecipe.mEUt;
-                        lStack.stackSize --;
+                        lStack.stackSize--;
                         updateSlots();
-                    }
-                    else {
+                    } else {
                         this.lastRecipe = null;
                     }
                 }
 
                 if (this.lastRecipe == null) {
-                    this.lastRecipe = BWRecipes.instance.getMappingsFor(BWRecipes.RADHATCH).findRecipe(this.getBaseMetaTileEntity(), false, Integer.MAX_VALUE - 7, null, mInventory[0]);
+                    this.lastRecipe = BWRecipes.instance
+                            .getMappingsFor(BWRecipes.RADHATCH)
+                            .findRecipe(
+                                    this.getBaseMetaTileEntity(), false, Integer.MAX_VALUE - 7, null, mInventory[0]);
                     if (this.lastRecipe == null) {
                         this.lastFail = true;
                         this.lastUsedItem = this.mInventory[0] == null ? null : this.mInventory[0].copy();
-                    }
-                    else {
+                    } else {
                         if (this.lastRecipe.mDuration > this.cap) {
                             this.lastFail = true;
                             this.lastUsedItem = this.mInventory[0].copy();
@@ -199,9 +200,13 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
                         this.mass = (byte) this.lastRecipe.mDuration;
                         this.decayTime = this.lastRecipe.mSpecialValue;
                         this.sievert = this.lastRecipe.mEUt;
-                        this.colorForGUI = new short[] {(short) this.lastRecipe.mChances[0], (short) this.lastRecipe.mChances[1],(short) this.lastRecipe.mChances[2]};
+                        this.colorForGUI = new short[] {
+                            (short) this.lastRecipe.mChances[0],
+                            (short) this.lastRecipe.mChances[1],
+                            (short) this.lastRecipe.mChances[2]
+                        };
                         this.material = lStack.getDisplayName();
-                        lStack.stackSize --;
+                        lStack.stackSize--;
                         updateSlots();
                     }
                 }
@@ -222,26 +227,16 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
                 StatCollector.translateToLocal("tooltip.tile.radhatch.3.name") + " " + this.sievert,
                 StatCollector.translateToLocal("tooltip.tile.radhatch.4.name") + " " + this.mass,
                 StatCollector.translateToLocal("tooltip.tile.radhatch.5.name") + " "
-                        + (this.decayTime
-                                - this.timer % (this.decayTime * 60))
+                        + (this.decayTime - this.timer % (this.decayTime * 60))
                         + StatCollector.translateToLocal("tooltip.tile.radhatch.6.name")
                         + "/"
-                        + (this.decayTime
-                                        - this.timer % this.decayTime)
-                                / 20
+                        + (this.decayTime - this.timer % this.decayTime) / 20
                         + StatCollector.translateToLocal("tooltip.tile.radhatch.7.name")
                         + "/"
-                        + (this.decayTime
-                                        - this.timer % this.decayTime)
-                                / 20
-                                / 60
+                        + (this.decayTime - this.timer % this.decayTime) / 20 / 60
                         + StatCollector.translateToLocal("tooltip.tile.radhatch.8.name")
                         + "/"
-                        + (this.decayTime
-                                        - this.timer % this.decayTime)
-                                / 20
-                                / 60
-                                / 60
+                        + (this.decayTime - this.timer % this.decayTime) / 20 / 60 / 60
                         + StatCollector.translateToLocal("tooltip.tile.radhatch.9.name")
             };
         else
@@ -274,7 +269,8 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
     }
 
     public boolean allowPutStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, byte aSide, ItemStack aStack) {
-        return aSide == this.getBaseMetaTileEntity().getFrontFacing() && BWRecipes.instance.getMappingsFor(BWRecipes.RADHATCH).containsInput(aStack);
+        return aSide == this.getBaseMetaTileEntity().getFrontFacing()
+                && BWRecipes.instance.getMappingsFor(BWRecipes.RADHATCH).containsInput(aStack);
     }
 
     public Object getServerGUI(int aID, InventoryPlayer aPlayerInventory, IGregTechTileEntity aBaseMetaTileEntity) {

@@ -24,16 +24,13 @@ package com.github.bartimaeusnek.bartworks.client.gui;
 
 import com.github.bartimaeusnek.bartworks.API.BioVatLogicAdder;
 import com.github.bartimaeusnek.bartworks.MainMod;
-import com.github.bartimaeusnek.bartworks.common.tileentities.tiered.GT_MetaTileEntity_RadioHatch;
 import com.github.bartimaeusnek.bartworks.server.container.GT_Container_RadioHatch;
 import com.github.bartimaeusnek.bartworks.util.MathUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import java.nio.ByteBuffer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
@@ -81,7 +78,12 @@ public class GT_GUIContainer_RadioHatch extends GT_GUIContainerMetaTile_Machine 
                 (48 * (((GT_Container_RadioHatch) this.mContainer).sv)) / (GT_GUIContainer_RadioHatch.maxSv),
                 16);
 
-        this.fontRendererObj.drawString(StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.1", ((GT_Container_RadioHatch) this.mContainer).mass), 65, 62, 4210752);
+        this.fontRendererObj.drawString(
+                StatCollector.translateToLocalFormatted(
+                        "BW.NEI.display.radhatch.1", ((GT_Container_RadioHatch) this.mContainer).mass),
+                65,
+                62,
+                4210752);
     }
 
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
