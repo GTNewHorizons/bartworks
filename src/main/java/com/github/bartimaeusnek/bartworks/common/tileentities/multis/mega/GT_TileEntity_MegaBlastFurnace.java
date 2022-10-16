@@ -415,7 +415,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         long precutRecipeVoltage = (long) (tRecipe.mEUt * Math.pow(0.95, tHeatCapacityDivTiers));
 
         long tMaxPara = Math.min(ConfigHandler.megaMachinesMax, nominalV / precutRecipeVoltage);
-        if (mUseMultiparallelMode  && tMaxPara == ConfigHandler.megaMachinesMax) {
+        if (mUseMultiparallelMode && tMaxPara == ConfigHandler.megaMachinesMax) {
             tMaxPara *= 128;
         }
         double tBatchMultiplier = 1.0;
@@ -435,12 +435,15 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
             this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
             this.mEfficiencyIncrease = 10000;
 
-            //Apply batch mode time increase
+            // Apply batch mode time increase
             this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
 
             long actualEUT = precutRecipeVoltage * processed;
-            byte overclockCount =
-                    this.calculateOverclockedNessMultiInternal(actualEUT, mUseMultiparallelMode ? (int) tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration, nominalV, false);
+            byte overclockCount = this.calculateOverclockedNessMultiInternal(
+                    actualEUT,
+                    mUseMultiparallelMode ? (int) tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration,
+                    nominalV,
+                    false);
 
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) return false;

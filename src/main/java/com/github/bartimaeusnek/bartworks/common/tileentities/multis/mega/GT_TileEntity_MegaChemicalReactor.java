@@ -232,10 +232,13 @@ public class GT_TileEntity_MegaChemicalReactor
             this.mEfficiencyIncrease = 10000;
             long actualEUT = ((long) tRecipe.mEUt) * processed;
 
-            //Apply batch mode time increase
+            // Apply batch mode time increase
             this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
 
-            calculatePerfectOverclockedNessMulti(actualEUT, mUseMultiparallelMode ? (int) tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration, nominalV);
+            calculatePerfectOverclockedNessMulti(
+                    actualEUT,
+                    mUseMultiparallelMode ? (int) tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration,
+                    nominalV);
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) {
                 return false;

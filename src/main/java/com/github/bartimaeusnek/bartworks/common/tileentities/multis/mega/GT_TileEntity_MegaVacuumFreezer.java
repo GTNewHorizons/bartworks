@@ -460,7 +460,7 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
             if (mUseMultiparallelMode && tMaxPara == ConfigHandler.megaMachinesMax) {
                 tMaxPara *= 128;
             }
-            
+
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
             tBatchMultiplier = mUseMultiparallelMode ? tCurrentPara / ConfigHandler.megaMachinesMax : 1.0;
 
@@ -476,11 +476,14 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
             this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
             this.mEfficiencyIncrease = 10000;
 
-            //Apply batch mode time increase
+            // Apply batch mode time increase
             this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
 
             long actualEUT = (long) (tRecipe.mEUt) * processed;
-            calculateOverclockedNessMulti((int) actualEUT, mUseMultiparallelMode ? (int) tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration, nominalV);
+            calculateOverclockedNessMulti(
+                    (int) actualEUT,
+                    mUseMultiparallelMode ? (int) tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration,
+                    nominalV);
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) return false;
             if (this.lEUt > 0) {
