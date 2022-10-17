@@ -55,9 +55,12 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import java.util.ArrayList;
 import java.util.Collection;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
 @Optional.Interface(
@@ -158,6 +161,35 @@ public class GT_TileEntity_MegaChemicalReactor
         return false;
     } // TO IMPLEMENT
 
+    private boolean mUseMultiparallelMode = false;
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        super.saveNBTData(aNBT);
+        aNBT.setBoolean("mUseMultiparallelMode", mUseMultiparallelMode);
+    }
+
+    @Override
+    public void loadNBTData(NBTTagCompound aNBT) {
+        super.loadNBTData(aNBT);
+        this.mUseMultiparallelMode = aNBT.getBoolean("mUseMultiparallelMode");
+    }
+
+    @Override
+    public boolean onWireCutterRightClick(
+            byte aSide, byte aWrenchingSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+        if (aPlayer.isSneaking()) {
+            mUseMultiparallelMode = !mUseMultiparallelMode;
+            if (mUseMultiparallelMode) {
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOn"));
+            } else {
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOff"));
+            }
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean checkRecipe(ItemStack itemStack) {
         ItemStack[] tInputs = this.getStoredInputs().toArray(new ItemStack[0]);
@@ -174,11 +206,18 @@ public class GT_TileEntity_MegaChemicalReactor
                 this.getBaseMetaTileEntity(), false, V[tTier], tInputFluids, tInputs);
         boolean found_Recipe = false;
         int processed = 0;
+        double tBatchMultiplier = 1.0;
 
         if (tRecipe != null) {
             found_Recipe = true;
             long tMaxPara = Math.min(ConfigHandler.megaMachinesMax, nominalV / tRecipe.mEUt);
+            if (mUseMultiparallelMode && tMaxPara == ConfigHandler.megaMachinesMax) {
+                tMaxPara *= 128;
+            }
+
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
+            tBatchMultiplier = mUseMultiparallelMode ? tCurrentPara / ConfigHandler.megaMachinesMax : 1.0;
+
             this.updateSlots();
             if (tCurrentPara <= 0) {
                 return false;
@@ -193,7 +232,14 @@ public class GT_TileEntity_MegaChemicalReactor
             this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
             this.mEfficiencyIncrease = 10000;
             long actualEUT = ((long) tRecipe.mEUt) * processed;
-            calculatePerfectOverclockedNessMulti(actualEUT, tRecipe.mDuration, nominalV);
+
+            // Apply batch mode time increase
+            this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
+
+            calculatePerfectOverclockedNessMulti(
+                    actualEUT,
+                    mUseMultiparallelMode ? (int) tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration,
+                    nominalV);
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) {
                 return false;

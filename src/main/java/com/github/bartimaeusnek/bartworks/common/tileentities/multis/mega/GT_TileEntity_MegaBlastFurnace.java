@@ -223,10 +223,12 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         this.circuitMode = aNBT.getByte("circuitMode");
         this.glasTier = aNBT.getByte("glasTier");
         this.isBussesSeparate = aNBT.getBoolean("isBussesSeparate");
+        this.mUseMultiparallelMode = aNBT.getBoolean("mUseMultiparallelMode");
     }
 
     private byte circuitMode = 0;
     private boolean isBussesSeparate = false;
+    private boolean mUseMultiparallelMode = false;
 
     @Override
     public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
@@ -246,10 +248,20 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     @Override
     public boolean onWireCutterRightClick(
             byte aSide, byte aWrenchingSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
-        isBussesSeparate = !isBussesSeparate;
-        GT_Utility.sendChatToPlayer(
-                aPlayer, StatCollector.translateToLocal("GT5U.machines.separatebus") + " " + isBussesSeparate);
-        return true;
+        if (aPlayer.isSneaking()) {
+            mUseMultiparallelMode = !mUseMultiparallelMode;
+            if (mUseMultiparallelMode) {
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOn"));
+            } else {
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOff"));
+            }
+            return true;
+        } else {
+            isBussesSeparate = !isBussesSeparate;
+            GT_Utility.sendChatToPlayer(
+                    aPlayer, StatCollector.translateToLocal("GT5U.machines.separatebus") + " " + isBussesSeparate);
+            return true;
+        }
     }
 
     @Override
@@ -296,6 +308,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         aNBT.setByte("glasTier", glasTier);
         aNBT.setByte("circuitMode", circuitMode);
         aNBT.setBoolean("isBussesSeparate", isBussesSeparate);
+        aNBT.setBoolean("mUseMultiparallelMode", mUseMultiparallelMode);
     }
 
     @Override
@@ -402,9 +415,13 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         long precutRecipeVoltage = (long) (tRecipe.mEUt * Math.pow(0.95, tHeatCapacityDivTiers));
 
         long tMaxPara = Math.min(ConfigHandler.megaMachinesMax, nominalV / precutRecipeVoltage);
-
+        if (mUseMultiparallelMode && tMaxPara == ConfigHandler.megaMachinesMax) {
+            tMaxPara *= 128;
+        }
+        double tBatchMultiplier = 1.0;
         if (this.mHeatingCapacity >= tRecipe.mSpecialValue) {
             int tCurrentPara = handleParallelRecipe(tRecipe, tFluids, tInputs, (int) tMaxPara);
+            tBatchMultiplier = mUseMultiparallelMode ? tCurrentPara / ConfigHandler.megaMachinesMax : 1.0;
             this.updateSlots();
             if (tCurrentPara <= 0) return false;
             processed = tCurrentPara;
@@ -418,9 +435,15 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
             this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
             this.mEfficiencyIncrease = 10000;
 
+            // Apply batch mode time increase
+            this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
+
             long actualEUT = precutRecipeVoltage * processed;
-            byte overclockCount =
-                    this.calculateOverclockedNessMultiInternal(actualEUT, tRecipe.mDuration, nominalV, false);
+            byte overclockCount = this.calculateOverclockedNessMultiInternal(
+                    actualEUT,
+                    mUseMultiparallelMode ? (int) tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration,
+                    nominalV,
+                    false);
 
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) return false;
