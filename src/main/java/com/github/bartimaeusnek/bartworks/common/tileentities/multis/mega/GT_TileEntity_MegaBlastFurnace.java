@@ -251,9 +251,9 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         if (aPlayer.isSneaking()) {
             mUseMultiparallelMode = !mUseMultiparallelMode;
             if (mUseMultiparallelMode) {
-                GT_Utility.sendChatToPlayer(aPlayer, "Batch recipes");
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOn"));
             } else {
-                GT_Utility.sendChatToPlayer(aPlayer, "Don't batch recipes");
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOff"));
             }
             return true;
         } else {

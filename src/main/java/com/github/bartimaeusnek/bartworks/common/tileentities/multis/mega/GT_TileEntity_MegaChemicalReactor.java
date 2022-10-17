@@ -60,6 +60,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
 @Optional.Interface(
@@ -180,13 +181,13 @@ public class GT_TileEntity_MegaChemicalReactor
         if (aPlayer.isSneaking()) {
             mUseMultiparallelMode = !mUseMultiparallelMode;
             if (mUseMultiparallelMode) {
-                GT_Utility.sendChatToPlayer(aPlayer, "Batch recipes");
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOn"));
             } else {
-                GT_Utility.sendChatToPlayer(aPlayer, "Don't batch recipes");
+                GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOff"));
             }
             return true;
         }
-        return true;
+        return false;
     }
 
     @Override
