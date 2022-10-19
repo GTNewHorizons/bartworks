@@ -514,6 +514,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
         return survivialBuildPiece(
                 STRUCTURE_PIECE_TOP_HINT, stackSize, 7, 5 * mHeight, 0, realBudget, source, actor, false, true);
     }
+
     private boolean mUseMultiparallelMode = false;
 
     @Override
@@ -597,9 +598,9 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                 this.mEfficiencyIncrease = 10000;
                 long actualEUT = (long) (tRecipe.mEUt * processed / tBatchMultiplier);
                 calculateOverclockedNessMulti(
-                    actualEUT, 
-                    mUseMultiparallelMode ? (int)(tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration, 
-                    nominalV);
+                        actualEUT,
+                        mUseMultiparallelMode ? (int) (tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
+                        nominalV);
                 // In case recipe is too OP for that machine
                 if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) return false;
                 if (this.lEUt > 0) {

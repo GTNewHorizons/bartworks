@@ -478,12 +478,12 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
             this.mEfficiencyIncrease = 10000;
 
             // Apply batch mode time increase
-            this.mMaxProgresstime = (int)(tRecipe.mDuration * tBatchMultiplier);
+            this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
 
             long actualEUT = (long) (tRecipe.mEUt * processed / tBatchMultiplier);
             calculateOverclockedNessMulti(
                     (int) actualEUT,
-                    mUseMultiparallelMode ? (int)(tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
+                    mUseMultiparallelMode ? (int) (tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
                     nominalV);
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) return false;

@@ -216,7 +216,7 @@ public class GT_TileEntity_MegaChemicalReactor
             }
 
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? (int)(tCurrentPara / ConfigHandler.megaMachinesMax) : 1.0f;
+            tBatchMultiplier = mUseMultiparallelMode ? (int) (tCurrentPara / ConfigHandler.megaMachinesMax) : 1.0f;
 
             this.updateSlots();
             if (tCurrentPara <= 0) {
@@ -234,11 +234,11 @@ public class GT_TileEntity_MegaChemicalReactor
             long actualEUT = (long) (tRecipe.mEUt * processed / tBatchMultiplier);
 
             // Apply batch mode time increase
-            this.mMaxProgresstime = (int)(tRecipe.mDuration * tBatchMultiplier);
+            this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
 
             calculatePerfectOverclockedNessMulti(
                     actualEUT,
-                    mUseMultiparallelMode ? (int)(tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
+                    mUseMultiparallelMode ? (int) (tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
                     nominalV);
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) {

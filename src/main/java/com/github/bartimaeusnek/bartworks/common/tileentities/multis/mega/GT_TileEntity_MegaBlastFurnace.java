@@ -436,12 +436,12 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
             this.mEfficiencyIncrease = 10000;
 
             // Apply batch mode time increase
-            this.mMaxProgresstime = (int)(tRecipe.mDuration * tBatchMultiplier);
+            this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
 
-            long actualEUT = (long)(precutRecipeVoltage * processed / tBatchMultiplier);
+            long actualEUT = (long) (precutRecipeVoltage * processed / tBatchMultiplier);
             byte overclockCount = this.calculateOverclockedNessMultiInternal(
                     actualEUT,
-                    mUseMultiparallelMode ? (int)(tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
+                    mUseMultiparallelMode ? (int) (tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
                     nominalV,
                     false);
 
