@@ -216,13 +216,13 @@ public class GT_TileEntity_MegaChemicalReactor
             }
 
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? (float)tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
+            tBatchMultiplier = mUseMultiparallelMode ? (float) tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
 
             this.updateSlots();
             if (tCurrentPara <= 0) {
                 return false;
             }
-            processed = Math.min(tCurrentPara,ConfigHandler.megaMachinesMax);
+            processed = Math.min(tCurrentPara, ConfigHandler.megaMachinesMax);
             Pair<ArrayList<FluidStack>, ArrayList<ItemStack>> Outputs = getMultiOutput(tRecipe, tCurrentPara);
             outputFluids = Outputs.getKey();
             outputItems = Outputs.getValue();
