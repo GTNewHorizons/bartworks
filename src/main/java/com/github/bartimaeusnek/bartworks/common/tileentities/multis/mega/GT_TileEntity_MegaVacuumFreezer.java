@@ -463,11 +463,11 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
             }
 
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
+            tBatchMultiplier = mUseMultiparallelMode ? (float)tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
 
             this.updateSlots();
             if (tCurrentPara <= 0) return false;
-            processed = tCurrentPara;
+            processed = Math.min(tCurrentPara,ConfigHandler.megaMachinesMax);
             Pair<ArrayList<FluidStack>, ArrayList<ItemStack>> Outputs = getMultiOutput(tRecipe, tCurrentPara);
             outputFluids = Outputs.getKey();
             outputItems = Outputs.getValue();
@@ -480,7 +480,7 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
             // Apply batch mode time increase
             this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
 
-            long actualEUT = (long) (tRecipe.mEUt * processed / tBatchMultiplier);
+            long actualEUT = (long) (tRecipe.mEUt) * processed;
             calculateOverclockedNessMulti(
                     (int) actualEUT,
                     mUseMultiparallelMode ? (int) (tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,

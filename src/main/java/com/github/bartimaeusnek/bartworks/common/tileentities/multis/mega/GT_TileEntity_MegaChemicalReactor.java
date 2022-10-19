@@ -216,13 +216,13 @@ public class GT_TileEntity_MegaChemicalReactor
             }
 
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? (int) (tCurrentPara / ConfigHandler.megaMachinesMax) : 1.0f;
+            tBatchMultiplier = mUseMultiparallelMode ? (float)tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
 
             this.updateSlots();
             if (tCurrentPara <= 0) {
                 return false;
             }
-            processed = tCurrentPara;
+            processed = Math.min(tCurrentPara,ConfigHandler.megaMachinesMax);
             Pair<ArrayList<FluidStack>, ArrayList<ItemStack>> Outputs = getMultiOutput(tRecipe, tCurrentPara);
             outputFluids = Outputs.getKey();
             outputItems = Outputs.getValue();
@@ -231,7 +231,7 @@ public class GT_TileEntity_MegaChemicalReactor
         if (found_Recipe) {
             this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
             this.mEfficiencyIncrease = 10000;
-            long actualEUT = (long) (tRecipe.mEUt * processed / tBatchMultiplier);
+            long actualEUT = (long) (tRecipe.mEUt) * processed;
 
             // Apply batch mode time increase
             this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);

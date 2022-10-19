@@ -588,9 +588,9 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                         tMaxPara *= 128;
                     }
                     int tCurrentPara = handleParallelRecipe(tRecipe, new FluidStack[] {tFluid}, null, (int) tMaxPara);
-                    tBatchMultiplier = mUseMultiparallelMode ? tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
+                    tBatchMultiplier = mUseMultiparallelMode ? (float)tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
                     this.updateSlots();
-                    processed = tCurrentPara;
+                    processed = Math.min(tCurrentPara,ConfigHandler.megaMachinesMax);
                     Outputs = getMultiOutput(tRecipe, tCurrentPara);
                     outputFluids = Outputs.getKey();
                     outputItems = Outputs.getValue();
@@ -599,7 +599,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                 if (!found_Recipe) continue;
                 this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
                 this.mEfficiencyIncrease = 10000;
-                long actualEUT = (long) (tRecipe.mEUt * processed / tBatchMultiplier);
+                long actualEUT = (long) (tRecipe.mEUt) * processed;
                 calculateOverclockedNessMulti(
                         actualEUT,
                         mUseMultiparallelMode ? (int) (tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
