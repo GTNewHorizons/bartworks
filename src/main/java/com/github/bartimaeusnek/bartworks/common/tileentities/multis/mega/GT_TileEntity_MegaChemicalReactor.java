@@ -206,7 +206,7 @@ public class GT_TileEntity_MegaChemicalReactor
                 this.getBaseMetaTileEntity(), false, V[tTier], tInputFluids, tInputs);
         boolean found_Recipe = false;
         int processed = 0;
-        int tBatchMultiplier = 1;
+        float tBatchMultiplier = 1.0f;
 
         if (tRecipe != null) {
             found_Recipe = true;
@@ -216,7 +216,7 @@ public class GT_TileEntity_MegaChemicalReactor
             }
 
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? tCurrentPara / ConfigHandler.megaMachinesMax : 1;
+            tBatchMultiplier = mUseMultiparallelMode ? (int)(tCurrentPara / ConfigHandler.megaMachinesMax) : 1.0f;
 
             this.updateSlots();
             if (tCurrentPara <= 0) {
@@ -231,14 +231,14 @@ public class GT_TileEntity_MegaChemicalReactor
         if (found_Recipe) {
             this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
             this.mEfficiencyIncrease = 10000;
-            long actualEUT = (long) tRecipe.mEUt * processed / tBatchMultiplier;
+            long actualEUT = (long) (tRecipe.mEUt * processed / tBatchMultiplier);
 
             // Apply batch mode time increase
-            this.mMaxProgresstime = tRecipe.mDuration * tBatchMultiplier;
+            this.mMaxProgresstime = (int)(tRecipe.mDuration * tBatchMultiplier);
 
             calculatePerfectOverclockedNessMulti(
                     actualEUT,
-                    mUseMultiparallelMode ? tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration,
+                    mUseMultiparallelMode ? (int)(tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
                     nominalV);
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) {

@@ -418,10 +418,10 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         if (mUseMultiparallelMode && tMaxPara == ConfigHandler.megaMachinesMax) {
             tMaxPara *= 128;
         }
-        int tBatchMultiplier = 1;
+        float tBatchMultiplier = 1.0f;
         if (this.mHeatingCapacity >= tRecipe.mSpecialValue) {
             int tCurrentPara = handleParallelRecipe(tRecipe, tFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? tCurrentPara / ConfigHandler.megaMachinesMax : 1;
+            tBatchMultiplier = mUseMultiparallelMode ? tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
             this.updateSlots();
             if (tCurrentPara <= 0) return false;
             processed = tCurrentPara;
@@ -436,12 +436,12 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
             this.mEfficiencyIncrease = 10000;
 
             // Apply batch mode time increase
-            this.mMaxProgresstime = tRecipe.mDuration * tBatchMultiplier;
+            this.mMaxProgresstime = (int)(tRecipe.mDuration * tBatchMultiplier);
 
-            long actualEUT = precutRecipeVoltage * processed / tBatchMultiplier;
+            long actualEUT = (long)(precutRecipeVoltage * processed / tBatchMultiplier);
             byte overclockCount = this.calculateOverclockedNessMultiInternal(
                     actualEUT,
-                    mUseMultiparallelMode ? tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration,
+                    mUseMultiparallelMode ? (int)(tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
                     nominalV,
                     false);
 
