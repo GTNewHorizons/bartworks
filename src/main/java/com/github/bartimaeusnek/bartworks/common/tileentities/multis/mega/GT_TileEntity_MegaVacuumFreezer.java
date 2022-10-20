@@ -452,7 +452,7 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
                 this.getBaseMetaTileEntity(), false, V[tTier], tInputFluids, tInputs);
         boolean found_Recipe = false;
         int processed = 0;
-        int tBatchMultiplier = 1;
+        float tBatchMultiplier = 1.0f;
 
         if (tRecipe != null) {
             found_Recipe = true;
@@ -463,11 +463,11 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
             }
 
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? tCurrentPara / ConfigHandler.megaMachinesMax : 1;
+            tBatchMultiplier = mUseMultiparallelMode ? (float) tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
 
             this.updateSlots();
             if (tCurrentPara <= 0) return false;
-            processed = tCurrentPara;
+            processed = Math.min(tCurrentPara, ConfigHandler.megaMachinesMax);
             Pair<ArrayList<FluidStack>, ArrayList<ItemStack>> Outputs = getMultiOutput(tRecipe, tCurrentPara);
             outputFluids = Outputs.getKey();
             outputItems = Outputs.getValue();
@@ -478,12 +478,12 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
             this.mEfficiencyIncrease = 10000;
 
             // Apply batch mode time increase
-            this.mMaxProgresstime = tRecipe.mDuration * tBatchMultiplier;
+            this.mMaxProgresstime = (int) (tRecipe.mDuration * tBatchMultiplier);
 
-            long actualEUT = (long) (tRecipe.mEUt) * processed / tBatchMultiplier;
+            long actualEUT = (long) (tRecipe.mEUt) * processed;
             calculateOverclockedNessMulti(
                     (int) actualEUT,
-                    mUseMultiparallelMode ? tBatchMultiplier * tRecipe.mDuration : tRecipe.mDuration,
+                    mUseMultiparallelMode ? (int) (tBatchMultiplier * tRecipe.mDuration) : tRecipe.mDuration,
                     nominalV);
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) return false;
