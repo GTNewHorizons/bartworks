@@ -216,7 +216,8 @@ public class GT_TileEntity_MegaChemicalReactor
             }
 
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? (float) tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
+            tBatchMultiplier =
+                    mUseMultiparallelMode ? (float) Math.max(tCurrentPara / ConfigHandler.megaMachinesMax, 1.0f) : 1.0f;
 
             this.updateSlots();
             if (tCurrentPara <= 0) {

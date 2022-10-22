@@ -463,7 +463,8 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
             }
 
             int tCurrentPara = handleParallelRecipe(tRecipe, tInputFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? (float) tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
+            tBatchMultiplier =
+                    mUseMultiparallelMode ? (float) Math.max(tCurrentPara / ConfigHandler.megaMachinesMax, 1.0f) : 1.0f;
 
             this.updateSlots();
             if (tCurrentPara <= 0) return false;

@@ -421,7 +421,8 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         float tBatchMultiplier = 1.0f;
         if (this.mHeatingCapacity >= tRecipe.mSpecialValue) {
             int tCurrentPara = handleParallelRecipe(tRecipe, tFluids, tInputs, (int) tMaxPara);
-            tBatchMultiplier = mUseMultiparallelMode ? (float) tCurrentPara / ConfigHandler.megaMachinesMax : 1.0f;
+            tBatchMultiplier =
+                    mUseMultiparallelMode ? (float) Math.max(tCurrentPara / ConfigHandler.megaMachinesMax, 1.0f) : 1.0f;
             this.updateSlots();
             if (tCurrentPara <= 0) return false;
             processed = Math.min(tCurrentPara, ConfigHandler.megaMachinesMax);
