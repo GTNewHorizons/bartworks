@@ -234,18 +234,15 @@ public class GT_TileEntity_MegaChemicalReactor
 
             long actualEUT = (long) (tRecipe.mEUt) * processed;
 
-            calculatePerfectOverclockedNessMulti(
-                    actualEUT,
-                    tRecipe.mDuration,
-                    nominalV);
+            calculatePerfectOverclockedNessMulti(actualEUT, tRecipe.mDuration, nominalV);
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) {
                 return false;
             }
 
-            if(mUseMultiparallelMode) {
+            if (mUseMultiparallelMode) {
                 this.mMaxProgresstime = (int) Math.ceil(this.mMaxProgresstime * tBatchMultiplier);
-            }        
+            }
 
             if (this.lEUt > 0) {
                 this.lEUt = (-this.lEUt);

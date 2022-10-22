@@ -437,11 +437,8 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
 
             long actualEUT = precutRecipeVoltage * processed;
 
-            byte overclockCount = this.calculateOverclockedNessMultiInternal(
-                    actualEUT,
-                    tRecipe.mDuration,
-                    nominalV,
-                    false);
+            byte overclockCount =
+                    this.calculateOverclockedNessMultiInternal(actualEUT, tRecipe.mDuration, nominalV, false);
 
             // In case recipe is too OP for that machine
             if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) return false;
@@ -454,7 +451,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
                 if (this.mMaxProgresstime < 1) this.mMaxProgresstime = 1; // no eu efficiency correction
             }
 
-            if(mUseMultiparallelMode) {
+            if (mUseMultiparallelMode) {
                 this.mMaxProgresstime = (int) Math.ceil(this.mMaxProgresstime * tBatchMultiplier);
             }
 

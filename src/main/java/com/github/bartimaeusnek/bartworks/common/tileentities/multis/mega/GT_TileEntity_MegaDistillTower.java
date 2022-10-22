@@ -603,10 +603,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
 
                 long actualEUT = (long) (tRecipe.mEUt) * processed;
 
-                calculateOverclockedNessMulti(
-                        actualEUT,
-                        tRecipe.mDuration,
-                        nominalV);
+                calculateOverclockedNessMulti(actualEUT, tRecipe.mDuration, nominalV);
 
                 // In case recipe is too OP for that machine
                 if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) return false;
@@ -614,7 +611,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                     this.lEUt = (-this.lEUt);
                 }
 
-                if(mUseMultiparallelMode) {
+                if (mUseMultiparallelMode) {
                     this.mMaxProgresstime = (int) Math.ceil(this.mMaxProgresstime * tBatchMultiplier);
                 }
 
