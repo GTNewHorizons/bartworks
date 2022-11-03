@@ -409,8 +409,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         }
 
         // OVERCLOCK
-        // FERTILIZER IDEA - IC2 +10% per fertilizer per crop per operation, NORMAL +200% per fertilizer per crop per
-        // operation
+        // FERTILIZER IDEA:
+        // IC2    +10%  per fertilizer per crop per operation
+        // NORMAL +200% per fertilizer per crop per operation
 
         int boost = 0;
         int maxboost = 0;
@@ -435,7 +436,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             this.mMaxProgresstime = 100;
             List<ItemStack> outputs = new ArrayList<>();
             for (int i = 0; i < Math.min(mMaxSlots, mStorage.size()); i++)
-                outputs.addAll(mStorage.get(i).getIC2Drops(((double) this.mMaxProgresstime / 8d) * multiplier));
+                outputs.addAll(mStorage.get(i).getIC2Drops(((double) this.mMaxProgresstime * 32d) * multiplier));
             this.mOutputItems = outputs.toArray(new ItemStack[0]);
         } else {
             this.mMaxProgresstime = Math.max(20, 100 / (tier - 3)); // Min 1 s
@@ -884,7 +885,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 int dur = cc.growthDuration(te);
                 int rate = te.calcGrowthRate();
                 if (rate == 0) return; // should not be possible with those stats
-                growthticks = dur / rate;
+                growthticks = (int) Math.ceil(((double) dur / (double) rate) * (double) cc.maxSize() * 256.d);
                 if (growthticks < 1) growthticks = 1;
 
                 input.stackSize--;
