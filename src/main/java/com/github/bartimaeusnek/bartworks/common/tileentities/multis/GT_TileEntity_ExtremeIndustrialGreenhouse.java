@@ -246,7 +246,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 .addOtherStructurePart("Borosilicate Glass", "Hollow two middle layers")
                 .addStructureInfo("The glass tier limits the Energy Input tier")
                 .addStructureInfo("The dirt is from RandomThings, must be tilled")
-                .addStructureInfo("Purple lamps are from ProjectRedIllumination. They can be lit")
+                .addStructureInfo("Purple lamps are from ProjectRedIllumination. They can be powered and/or inverted")
                 .addMaintenanceHatch("Any casing (Except inner bottom ones)", 1)
                 .addInputBus("Any casing (Except inner bottom ones)", 1)
                 .addOutputBus("Any casing (Except inner bottom ones)", 1)
@@ -260,7 +260,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     public String[] getStructureDescription(ItemStack stackSize) {
         List<String> info = new ArrayList<>(Arrays.asList(super.getStructureDescription(stackSize)));
         info.add("The dirt is from RandomThings, must be tilled");
-        info.add("Purple lamps are from ProjectRedIllumination. They can be lit");
+        info.add("Purple lamps are from ProjectRedIllumination. They can be powered and/or inverted");
         return info.toArray(new String[] {});
     }
 
@@ -571,7 +571,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                     g.addAll(this.getBaseMetaTileEntity().getWorld(), input);
                     if (input.stackSize == 0) return true;
                 }
-        GreenHouseSlot h = new GreenHouseSlot(this, input, true, isIC2Mode);
+        GreenHouseSlot h = new GreenHouseSlot(this, input, isIC2Mode);
         if (h.isValid) {
             mStorage.add(h);
             return true;
@@ -673,7 +673,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             if (!GT_Utility.areStacksEqual(this.input, input)) return false;
             if (this.input.stackSize == 64) return false;
             int toconsume = Math.min(64 - this.input.stackSize, input.stackSize);
-            int left = addDrops(world, toconsume, true);
+            int left = addDrops(world, toconsume);
             input.stackSize -= toconsume - left;
             this.input.stackSize += toconsume - left;
             return left == 0;
@@ -718,8 +718,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         @Override
         public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {}
 
-        public GreenHouseSlot(
-                GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity, ItemStack input, boolean autocraft, boolean IC2) {
+        public GreenHouseSlot(GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity, ItemStack input, boolean IC2) {
             super(null, 3, 3);
             World world = tileEntity.getBaseMetaTileEntity().getWorld();
             this.input = input.copy();
@@ -733,7 +732,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             boolean detectedCustomHandler = false;
             if (LoaderReference.Thaumcraft) {
                 if (ThaumcraftHandler.ManaBeans.isManaBean(i)) {
-                    customDrops = new ArrayList<>();
+                    customDrops = new ArrayList<>(1);
                     customDrops.add(input.copy());
                     customDrops.get(0).stackSize = 1;
                     detectedCustomHandler = true;
@@ -770,7 +769,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             crop = b;
             isIC2Crop = false;
             int toUse = Math.min(64, input.stackSize);
-            if (addDrops(world, toUse, autocraft) == 0 && !drops.isEmpty()) {
+            if (addDrops(world, toUse) == 0 && !drops.isEmpty()) {
                 input.stackSize -= toUse;
                 this.isValid = true;
             }
@@ -880,7 +879,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 // CHECK GROWTH SPEED
                 te.humidity = 12; // humidity with full water storage
                 te.airQuality = 6; // air quality when sky is seen
-                te.nutrients = 8; // netrients with full nutrient storage
+                te.nutrients = 8; // nutrients with full nutrient storage
 
                 int dur = cc.growthDuration(te);
                 int rate = te.calcGrowthRate();
@@ -933,7 +932,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             return copied;
         }
 
-        public int addDrops(World world, int count, boolean autocraft) {
+        public int addDrops(World world, int count) {
             if (drops == null) drops = new ArrayList<>();
             if (customDrops != null && customDrops.size() > 0) {
                 @SuppressWarnings("unchecked")
@@ -982,21 +981,19 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                     }
                 }
             }
-            if (autocraft) {
-                if (!findCropRecipe(world)) return count;
-                int totake = count / recipe.getCraftingResult(this).stackSize + 1;
-                for (int i = 0; i < drops.size(); i++) {
-                    if (GT_Utility.areStacksEqual(drops.get(i), recipeInput)) {
-                        int took = Math.min(drops.get(i).stackSize, totake);
-                        drops.get(i).stackSize -= took;
-                        totake -= took;
-                        if (drops.get(i).stackSize == 0) {
-                            drops.remove(i);
-                            i--;
-                        }
-                        if (totake == 0) {
-                            return 0;
-                        }
+            if (!findCropRecipe(world)) return count;
+            int totake = count / recipe.getCraftingResult(this).stackSize + 1;
+            for (int i = 0; i < drops.size(); i++) {
+                if (GT_Utility.areStacksEqual(drops.get(i), recipeInput)) {
+                    int took = Math.min(drops.get(i).stackSize, totake);
+                    drops.get(i).stackSize -= took;
+                    totake -= took;
+                    if (drops.get(i).stackSize == 0) {
+                        drops.remove(i);
+                        i--;
+                    }
+                    if (totake == 0) {
+                        return 0;
                     }
                 }
             }
