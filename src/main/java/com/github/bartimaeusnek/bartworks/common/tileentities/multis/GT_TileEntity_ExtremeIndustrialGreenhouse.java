@@ -28,6 +28,7 @@ import com.github.bartimaeusnek.bartworks.API.LoaderReference;
 import com.github.bartimaeusnek.bartworks.client.renderer.BW_CropVisualizer;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.ChatColorHelper;
+import com.github.bartimaeusnek.crossmod.thaumcraft.util.ThaumcraftHandler;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -581,6 +582,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
         ItemStack input;
         Block crop;
+        ArrayList<ItemStack> customDrops = null;
         ItemStack undercrop = null;
         List<ItemStack> drops;
         boolean isValid;
@@ -605,6 +607,11 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             aNBT.setBoolean("isIC2Crop", isIC2Crop);
             if (!isIC2Crop) {
                 aNBT.setInteger("crop", Block.getIdFromBlock(crop));
+                if (customDrops != null && customDrops.size() > 0) {
+                    aNBT.setInteger("customDropsCount", customDrops.size());
+                    for (int i = 0; i < customDrops.size(); i++)
+                        aNBT.setTag("customDrop." + i, customDrops.get(i).writeToNBT(new NBTTagCompound()));
+                }
                 aNBT.setInteger("dropscount", drops.size());
                 for (int i = 0; i < drops.size(); i++)
                     aNBT.setTag("drop." + i, drops.get(i).writeToNBT(new NBTTagCompound()));
@@ -633,6 +640,12 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             input = ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("input"));
             if (!isIC2Crop) {
                 crop = Block.getBlockById(aNBT.getInteger("crop"));
+                if (aNBT.hasKey("customDropsCount")) {
+                    int imax = aNBT.getInteger("customDropsCount");
+                    customDrops = new ArrayList<>(imax);
+                    for (int i = 0; i < imax; i++)
+                        customDrops.add(ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("customDrop." + i)));
+                }
                 drops = new ArrayList<>();
                 for (int i = 0; i < aNBT.getInteger("dropscount"); i++)
                     drops.add(ItemStack.loadItemStackFromNBT(aNBT.getCompoundTag("drop." + i)));
@@ -717,33 +730,43 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             }
             Item i = input.getItem();
             Block b = null;
-            if (i instanceof IPlantable) {
-                if (i instanceof ItemSeeds) b = ((ItemSeeds) i).getPlant(world, 0, 0, 0);
-                else if (i instanceof ItemSeedFood) b = ((ItemSeedFood) i).getPlant(world, 0, 0, 0);
-            } else {
-                if (i == Items.reeds) b = Blocks.reeds;
-                else {
-                    b = Block.getBlockFromItem(i);
-                    if (b != Blocks.cactus) return;
+            boolean detectedCustomHandler = false;
+            if (LoaderReference.Thaumcraft) {
+                if (ThaumcraftHandler.ManaBeans.isManaBean(i)) {
+                    customDrops = new ArrayList<>();
+                    customDrops.add(input.copy());
+                    customDrops.get(0).stackSize = 1;
+                    detectedCustomHandler = true;
                 }
-                needsreplanting = false;
             }
-            if (!(b instanceof IPlantable)) return;
-            GameRegistry.UniqueIdentifier u = GameRegistry.findUniqueIdentifierFor(i);
-            if (u != null && Objects.equals(u.modId, "Natura")) optimalgrowth = 8;
-
-            if (b instanceof BlockStem) {
-                fakeworld.block = null;
-                try {
-                    b.updateTick(fakeworld, 5, 5, 5, fakeworld.rand);
-                } catch (Exception e) {
-                    e.printStackTrace(System.err);
+            if (!detectedCustomHandler) {
+                if (i instanceof IPlantable) {
+                    if (i instanceof ItemSeeds) b = ((ItemSeeds) i).getPlant(world, 0, 0, 0);
+                    else if (i instanceof ItemSeedFood) b = ((ItemSeedFood) i).getPlant(world, 0, 0, 0);
+                } else {
+                    if (i == Items.reeds) b = Blocks.reeds;
+                    else {
+                        b = Block.getBlockFromItem(i);
+                        if (b != Blocks.cactus) return;
+                    }
+                    needsreplanting = false;
                 }
-                if (fakeworld.block == null) return;
-                b = fakeworld.block;
-                needsreplanting = false;
-            }
+                if (!(b instanceof IPlantable)) return;
+                GameRegistry.UniqueIdentifier u = GameRegistry.findUniqueIdentifierFor(i);
+                if (u != null && Objects.equals(u.modId, "Natura")) optimalgrowth = 8;
 
+                if (b instanceof BlockStem) {
+                    fakeworld.block = null;
+                    try {
+                        b.updateTick(fakeworld, 5, 5, 5, fakeworld.rand);
+                    } catch (Exception e) {
+                        e.printStackTrace(System.err);
+                    }
+                    if (fakeworld.block == null) return;
+                    b = fakeworld.block;
+                    needsreplanting = false;
+                }
+            }
             crop = b;
             isIC2Crop = false;
             int toUse = Math.min(64, input.stackSize);
@@ -910,16 +933,37 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         }
 
         public int addDrops(World world, int count, boolean autocraft) {
-            drops = new ArrayList<>();
-            for (int i = 0; i < count; i++) {
-                List<ItemStack> d = crop.getDrops(world, 0, 0, 0, optimalgrowth, 0);
-                for (ItemStack x : drops)
-                    for (ItemStack y : d)
+            if (drops == null) drops = new ArrayList<>();
+            if (customDrops != null && customDrops.size() > 0) {
+                ArrayList<ItemStack> d = (ArrayList<ItemStack>) customDrops.clone();
+                for (ItemStack x : drops) {
+                    for (Iterator<ItemStack> iterator = d.iterator(); iterator.hasNext(); ) {
+                        ItemStack y = iterator.next();
                         if (GT_Utility.areStacksEqual(x, y)) {
-                            x.stackSize += y.stackSize;
-                            y.stackSize = 0;
+                            x.stackSize += y.stackSize * count;
+                            iterator.remove();
                         }
-                for (ItemStack x : d) if (x.stackSize > 0) drops.add(x.copy());
+                    }
+                }
+                final int finalCount = count;
+                d.forEach(stack -> {
+                    ItemStack i = stack.copy();
+                    i.stackSize *= finalCount;
+                    drops.add(i);
+                });
+                return 0;
+            } else {
+                if (crop == null) return count;
+                for (int i = 0; i < count; i++) {
+                    List<ItemStack> d = crop.getDrops(world, 0, 0, 0, optimalgrowth, 0);
+                    for (ItemStack x : drops)
+                        for (ItemStack y : d)
+                            if (GT_Utility.areStacksEqual(x, y)) {
+                                x.stackSize += y.stackSize;
+                                y.stackSize = 0;
+                            }
+                    for (ItemStack x : d) if (x.stackSize > 0) drops.add(x.copy());
+                }
             }
             if (!needsreplanting) return 0;
             for (int i = 0; i < drops.size(); i++) {

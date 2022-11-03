@@ -29,6 +29,7 @@ import gregtech.api.enums.TC_Aspects;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -89,6 +90,27 @@ public class ThaumcraftHandler {
             }
         }
         return biomeID == ThaumcraftHandler.taintBiomeID;
+    }
+
+    public static class ManaBeans {
+        public static Class mManaBeanClass;
+
+        static {
+            try {
+                mManaBeanClass = Class.forName("thaumcraft.common.items.ItemManaBean");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public static boolean isManaBean(ItemStack stack) {
+            return stack != null
+                    && mManaBeanClass.isAssignableFrom(stack.getItem().getClass());
+        }
+
+        public static boolean isManaBean(Item item) {
+            return item != null && mManaBeanClass.isAssignableFrom(item.getClass());
+        }
     }
 
     public static class AspectAdder {
