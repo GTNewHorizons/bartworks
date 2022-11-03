@@ -561,7 +561,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         return new ITexture[] {Textures.BlockIcons.getCasingTextureForId(CASING_INDEX)};
     }
 
-    public List<GreenHouseSlot> mStorage = new ArrayList<>();
+    public final List<GreenHouseSlot> mStorage = new ArrayList<>();
 
     public boolean addCrop(ItemStack input) {
         if (!isIC2Mode)
@@ -580,7 +580,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
     private static class GreenHouseSlot extends InventoryCrafting {
 
-        ItemStack input;
+        final ItemStack input;
         Block crop;
         ArrayList<ItemStack> customDrops = null;
         ItemStack undercrop = null;
@@ -598,7 +598,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
         boolean needsreplanting = true;
 
-        static GreenHouseWorld fakeworld = new GreenHouseWorld(5, 5, 5);
+        static final GreenHouseWorld fakeworld = new GreenHouseWorld(5, 5, 5);
 
         public NBTTagCompound toNBTTagCompound() {
             NBTTagCompound aNBT = new NBTTagCompound();
@@ -713,10 +713,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             return null;
         }
 
+        @SuppressWarnings("EmptyMethod")
         @Override
-        public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
-            return;
-        }
+        public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {}
 
         public GreenHouseSlot(
                 GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity, ItemStack input, boolean autocraft, boolean IC2) {
@@ -904,8 +903,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             return drops;
         }
 
-        Map<String, Double> dropprogress = new HashMap<>();
-        static Map<String, ItemStack> dropstacks = new HashMap<>();
+        final Map<String, Double> dropprogress = new HashMap<>();
+        static final Map<String, ItemStack> dropstacks = new HashMap<>();
 
         public List<ItemStack> getIC2Drops(double timeelapsed) {
             int r = rn.nextInt(10);
@@ -935,6 +934,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         public int addDrops(World world, int count, boolean autocraft) {
             if (drops == null) drops = new ArrayList<>();
             if (customDrops != null && customDrops.size() > 0) {
+                @SuppressWarnings("unchecked")
                 ArrayList<ItemStack> d = (ArrayList<ItemStack>) customDrops.clone();
                 for (ItemStack x : drops) {
                     for (Iterator<ItemStack> iterator = d.iterator(); iterator.hasNext(); ) {
@@ -1004,7 +1004,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
 
     private static class GreenHouseWorld extends GT_DummyWorld {
 
-        public int x = 0, y = 0, z = 0, meta = 0;
+        public int x, y, z, meta = 0;
         public Block block;
 
         GreenHouseWorld(int x, int y, int z) {
