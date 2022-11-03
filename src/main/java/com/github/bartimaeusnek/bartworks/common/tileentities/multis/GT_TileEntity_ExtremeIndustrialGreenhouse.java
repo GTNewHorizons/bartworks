@@ -78,7 +78,9 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_ExtremeIndustrialGreenhouse> {
 
     private static final boolean debug = false;
+    private static final int EIG_MATH_VERSION = 0;
 
+    private int oldVersion = 0;
     private int mCasing = 0;
     private int mMaxSlots = 0;
     private int setupphase = 1;
@@ -267,6 +269,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
+        aNBT.setInteger("EIG_MATH_VERSION", EIG_MATH_VERSION);
         aNBT.setByte("glasTier", glasTier);
         aNBT.setInteger("setupphase", setupphase);
         aNBT.setBoolean("isIC2Mode", isIC2Mode);
@@ -278,11 +281,14 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
+        oldVersion = aNBT.hasKey("EIG_MATH_VERSION") ? aNBT.getInteger("EIG_MATH_VERSION") : -1;
         glasTier = aNBT.getByte("glasTier");
         setupphase = aNBT.getInteger("setupphase");
         isIC2Mode = aNBT.getBoolean("isIC2Mode");
-        for (int i = 0; i < aNBT.getInteger("mStorageSize"); i++)
-            mStorage.add(new GreenHouseSlot(aNBT.getCompoundTag("mStorage." + i)));
+        for (int i = 0; i < aNBT.getInteger("mStorageSize"); i++) {
+            GreenHouseSlot slot = new GreenHouseSlot(aNBT.getCompoundTag("mStorage." + i));
+            mStorage.add(slot);
+        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -340,6 +346,13 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         long v = this.getMaxInputVoltage();
         int tier = GT_Utility.getTier(v);
         updateMaxSlots();
+
+        if (oldVersion != EIG_MATH_VERSION) {
+            for (GreenHouseSlot slot : mStorage)
+                slot.recalculate(this, getBaseMetaTileEntity().getWorld());
+            oldVersion = EIG_MATH_VERSION;
+        }
+
         if (setupphase > 0) {
             if ((mStorage.size() >= mMaxSlots && setupphase == 1) || (mStorage.size() == 0 && setupphase == 2))
                 return false;
@@ -771,6 +784,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             int toUse = Math.min(64, input.stackSize);
             if (addDrops(world, toUse) == 0 && !drops.isEmpty()) {
                 input.stackSize -= toUse;
+                this.input.stackSize = toUse;
                 this.isValid = true;
             }
         }
@@ -778,125 +792,139 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         public void GreenHouseSlotIC2(
                 GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity, World world, ItemStack input) {
             if (!ItemList.IC2_Crop_Seeds.isStackEqual(input, true, true)) return;
-            CropCard cc = Crops.instance.getCropCard(input);
-            this.input.stackSize = 1;
-            NBTTagCompound nbt = input.getTagCompound();
-            byte gr = nbt.getByte("growth");
-            byte ga = nbt.getByte("gain");
-            byte re = nbt.getByte("resistance");
             this.isIC2Crop = true;
-            int[] abc = new int[] {0, -2, 3};
-            int[] xyz = new int[] {0, 0, 0};
-            tileEntity.getExtendedFacing().getWorldOffset(abc, xyz);
-            xyz[0] += tileEntity.getBaseMetaTileEntity().getXCoord();
-            xyz[1] += tileEntity.getBaseMetaTileEntity().getYCoord();
-            xyz[2] += tileEntity.getBaseMetaTileEntity().getZCoord();
-            boolean cheating = false;
-            try {
-                if (world.getBlock(xyz[0], xyz[1] - 2, xyz[2]) != GregTech_API.sBlockCasings4
-                        || world.getBlockMetadata(xyz[0], xyz[1] - 2, xyz[2]) != 1) {
-                    // no
-                    cheating = true;
-                    return;
+            recalculate(tileEntity, world);
+        }
+
+        private boolean setBlock(ItemStack a, int x, int y, int z, World world) {
+            Item item = a.getItem();
+            Block b = Block.getBlockFromItem(item);
+            if (b == Blocks.air || !(item instanceof ItemBlock)) return false;
+            short tDamage = (short) item.getDamage(a);
+            if (item instanceof GT_Item_Ores && tDamage > 0) {
+                if (!world.setBlock(
+                        x,
+                        y,
+                        z,
+                        b,
+                        GT_TileEntity_Ores.getHarvestData(
+                                tDamage, ((GT_Block_Ores_Abstract) b).getBaseBlockHarvestLevel(tDamage % 16000 / 1000)),
+                        0)) {
+                    return false;
                 }
+                GT_TileEntity_Ores tTileEntity = (GT_TileEntity_Ores) world.getTileEntity(x, y, z);
+                tTileEntity.mMetaData = tDamage;
+                tTileEntity.mNatural = false;
+            } else world.setBlock(x, y, z, b, tDamage, 0);
+            return true;
+        }
 
-                world.setBlock(xyz[0], xyz[1], xyz[2], Block.getBlockFromItem(Ic2Items.crop.getItem()), 0, 0);
-                TileEntity wte = world.getTileEntity(xyz[0], xyz[1], xyz[2]);
-                if (!(wte instanceof TileEntityCrop)) {
-                    // should not be even possible
-                    return;
-                }
-                TileEntityCrop te = (TileEntityCrop) wte;
-                te.ticker = 1; // don't even think about ticking once
-                te.setCrop(cc);
-
-                te.setGrowth(gr);
-                te.setGain(ga);
-                te.setResistance(re);
-
-                ItemStack tobeused = null;
-
-                te.setSize((byte) (cc.maxSize() - 1));
-                if (!cc.canGrow(te)) {
-                    // needs special block
-
-                    boolean cangrow = false;
-                    ArrayList<ItemStack> inputs = tileEntity.getStoredInputs();
-                    for (ItemStack a : inputs) {
-                        if (a.stackSize <= 0) continue;
-                        Item item = a.getItem();
-                        Block b = Block.getBlockFromItem(item);
-                        if (b == Blocks.air || !(item instanceof ItemBlock)) continue;
-                        short tDamage = (short) item.getDamage(a);
-                        if (item instanceof GT_Item_Ores && tDamage > 0) {
-                            if (!world.setBlock(
-                                    xyz[0],
-                                    xyz[1] - 2,
-                                    xyz[2],
-                                    b,
-                                    GT_TileEntity_Ores.getHarvestData(
-                                            tDamage,
-                                            ((GT_Block_Ores_Abstract) b)
-                                                    .getBaseBlockHarvestLevel(tDamage % 16000 / 1000)),
-                                    0)) {
-                                continue;
-                            }
-                            GT_TileEntity_Ores tTileEntity =
-                                    (GT_TileEntity_Ores) world.getTileEntity(xyz[0], xyz[1] - 2, xyz[2]);
-                            tTileEntity.mMetaData = tDamage;
-                            tTileEntity.mNatural = false;
-                        } else world.setBlock(xyz[0], xyz[1] - 2, xyz[2], b, tDamage, 0);
-                        if (!cc.canGrow(te)) continue;
-                        cangrow = true;
-                        undercrop = a.copy();
-                        undercrop.stackSize = 1;
-                        tobeused = a;
-                        break;
+        public void recalculate(GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity, World world) {
+            if (isIC2Crop) { // Wrong growthticks
+                CropCard cc = Crops.instance.getCropCard(input);
+                this.input.stackSize = 1;
+                NBTTagCompound nbt = input.getTagCompound();
+                byte gr = nbt.getByte("growth");
+                byte ga = nbt.getByte("gain");
+                byte re = nbt.getByte("resistance");
+                int[] abc = new int[] {0, -2, 3};
+                int[] xyz = new int[] {0, 0, 0};
+                tileEntity.getExtendedFacing().getWorldOffset(abc, xyz);
+                xyz[0] += tileEntity.getBaseMetaTileEntity().getXCoord();
+                xyz[1] += tileEntity.getBaseMetaTileEntity().getYCoord();
+                xyz[2] += tileEntity.getBaseMetaTileEntity().getZCoord();
+                boolean cheating = false;
+                try {
+                    if (world.getBlock(xyz[0], xyz[1] - 2, xyz[2]) != GregTech_API.sBlockCasings4
+                            || world.getBlockMetadata(xyz[0], xyz[1] - 2, xyz[2]) != 1) {
+                        // no
+                        cheating = true;
+                        return;
                     }
 
-                    if (!cangrow) return;
-                }
+                    world.setBlock(xyz[0], xyz[1], xyz[2], Block.getBlockFromItem(Ic2Items.crop.getItem()), 0, 0);
+                    TileEntity wte = world.getTileEntity(xyz[0], xyz[1], xyz[2]);
+                    if (!(wte instanceof TileEntityCrop)) {
+                        // should not be even possible
+                        return;
+                    }
+                    TileEntityCrop te = (TileEntityCrop) wte;
+                    te.ticker = 1; // don't even think about ticking once
+                    te.setCrop(cc);
 
-                te.setSize((byte) cc.maxSize());
+                    te.setGrowth(gr);
+                    te.setGain(ga);
+                    te.setResistance(re);
 
-                if (!cc.canBeHarvested(te)) return;
+                    ItemStack tobeused = null;
 
-                // GENERATE DROPS
-                generations = new ArrayList<>();
-                out:
-                for (int i = 0; i < 10; i++) // get 10 generations
-                {
-                    ItemStack[] st = te.harvest_automated(false);
+                    if (undercrop != null) setBlock(undercrop, xyz[0], xyz[1] - 2, xyz[2], world);
+                    else {
+                        te.setSize((byte) (cc.maxSize() - 1));
+                        if (!cc.canGrow(te)) {
+                            // needs special block
+
+                            boolean cangrow = false;
+                            ArrayList<ItemStack> inputs = tileEntity.getStoredInputs();
+                            for (ItemStack a : inputs) {
+                                if (a.stackSize <= 0) continue;
+                                if (!setBlock(a, xyz[0], xyz[1] - 2, xyz[2], world)) continue;
+                                if (!cc.canGrow(te)) continue;
+                                cangrow = true;
+                                undercrop = a.copy();
+                                undercrop.stackSize = 1;
+                                tobeused = a;
+                                break;
+                            }
+
+                            if (!cangrow) return;
+                        }
+                    }
+
                     te.setSize((byte) cc.maxSize());
-                    if (st == null) continue;
-                    if (st.length == 0) continue;
-                    for (ItemStack s : st) if (s == null) continue out;
-                    generations.add(new ArrayList<>(Arrays.asList(st)));
+
+                    if (!cc.canBeHarvested(te)) return;
+
+                    // GENERATE DROPS
+                    generations = new ArrayList<>();
+                    out:
+                    for (int i = 0; i < 10; i++) // get 10 generations
+                    {
+                        ItemStack[] st = te.harvest_automated(false);
+                        te.setSize((byte) cc.maxSize());
+                        if (st == null) continue;
+                        if (st.length == 0) continue;
+                        for (ItemStack s : st) if (s == null) continue out;
+                        generations.add(new ArrayList<>(Arrays.asList(st)));
+                    }
+                    if (generations.isEmpty()) return;
+                    rn = new Random();
+
+                    // CHECK GROWTH SPEED
+                    te.humidity = 12; // humidity with full water storage
+                    te.airQuality = 6; // air quality when sky is seen
+                    te.nutrients = 8; // nutrients with full nutrient storage
+
+                    int dur = cc.growthDuration(te);
+                    int rate = te.calcGrowthRate();
+                    if (rate == 0) return; // should not be possible with those stats
+                    growthticks = (int) Math.ceil(
+                            ((double) dur / (double) rate) * (double) cc.maxSize() * (double) TileEntityCrop.tickRate);
+                    if (growthticks < 1) growthticks = 1;
+
+                    input.stackSize--;
+                    if (tobeused != null) tobeused.stackSize--;
+
+                    this.isValid = true;
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                } finally {
+                    if (!cheating) world.setBlock(xyz[0], xyz[1] - 2, xyz[2], GregTech_API.sBlockCasings4, 1, 0);
+                    world.setBlockToAir(xyz[0], xyz[1], xyz[2]);
                 }
-                if (generations.isEmpty()) return;
-                rn = new Random();
-
-                // CHECK GROWTH SPEED
-                te.humidity = 12; // humidity with full water storage
-                te.airQuality = 6; // air quality when sky is seen
-                te.nutrients = 8; // nutrients with full nutrient storage
-
-                int dur = cc.growthDuration(te);
-                int rate = te.calcGrowthRate();
-                if (rate == 0) return; // should not be possible with those stats
-                growthticks = (int) Math.ceil(
-                        ((double) dur / (double) rate) * (double) cc.maxSize() * (double) TileEntityCrop.tickRate);
-                if (growthticks < 1) growthticks = 1;
-
-                input.stackSize--;
-                if (tobeused != null) tobeused.stackSize--;
-
-                this.isValid = true;
-            } catch (Exception e) {
-                e.printStackTrace(System.err);
-            } finally {
-                if (!cheating) world.setBlock(xyz[0], xyz[1] - 2, xyz[2], GregTech_API.sBlockCasings4, 1, 0);
-                world.setBlockToAir(xyz[0], xyz[1], xyz[2]);
+            } else {
+                drops = new ArrayList<>();
+                addDrops(world, input.stackSize);
             }
         }
 
