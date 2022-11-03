@@ -794,6 +794,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             if (!ItemList.IC2_Crop_Seeds.isStackEqual(input, true, true)) return;
             this.isIC2Crop = true;
             recalculate(tileEntity, world);
+            if (this.isValid) input.stackSize--;
         }
 
         private boolean setBlock(ItemStack a, int x, int y, int z, World world) {
@@ -820,7 +821,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
         }
 
         public void recalculate(GT_TileEntity_ExtremeIndustrialGreenhouse tileEntity, World world) {
-            if (isIC2Crop) { // Wrong growthticks
+            if (isIC2Crop) {
                 CropCard cc = Crops.instance.getCropCard(input);
                 this.input.stackSize = 1;
                 NBTTagCompound nbt = input.getTagCompound();
@@ -912,7 +913,6 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                             ((double) dur / (double) rate) * (double) cc.maxSize() * (double) TileEntityCrop.tickRate);
                     if (growthticks < 1) growthticks = 1;
 
-                    input.stackSize--;
                     if (tobeused != null) tobeused.stackSize--;
 
                     this.isValid = true;
