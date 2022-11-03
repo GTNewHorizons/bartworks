@@ -785,7 +785,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                     return;
                 }
                 TileEntityCrop te = (TileEntityCrop) wte;
-                te.ticker = 1; // dont even think about ticking once
+                te.ticker = 1; // don't even think about ticking once
                 te.setCrop(cc);
 
                 te.setGrowth(gr);
