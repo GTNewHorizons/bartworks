@@ -885,7 +885,8 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                 int dur = cc.growthDuration(te);
                 int rate = te.calcGrowthRate();
                 if (rate == 0) return; // should not be possible with those stats
-                growthticks = (int) Math.ceil(((double) dur / (double) rate) * (double) cc.maxSize() * 256.d);
+                growthticks = (int) Math.ceil(
+                        ((double) dur / (double) rate) * (double) cc.maxSize() * (double) TileEntityCrop.tickRate);
                 if (growthticks < 1) growthticks = 1;
 
                 input.stackSize--;
