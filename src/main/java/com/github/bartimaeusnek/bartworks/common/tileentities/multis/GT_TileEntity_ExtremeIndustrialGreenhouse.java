@@ -46,6 +46,9 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.GT_DummyWorld;
+import gregtech.common.blocks.GT_Block_Ores_Abstract;
+import gregtech.common.blocks.GT_Item_Ores;
+import gregtech.common.blocks.GT_TileEntity_Ores;
 import gregtech.common.tileentities.machines.GT_MetaTileEntity_Hatch_OutputBus_ME;
 import ic2.api.crops.CropCard;
 import ic2.api.crops.Crops;
@@ -59,10 +62,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemSeedFood;
-import net.minecraft.item.ItemSeeds;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
@@ -802,9 +802,28 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
                     ArrayList<ItemStack> inputs = tileEntity.getStoredInputs();
                     for (ItemStack a : inputs) {
                         if (a.stackSize <= 0) continue;
-                        Block b = Block.getBlockFromItem(a.getItem());
-                        if (b == Blocks.air) continue;
-                        world.setBlock(xyz[0], xyz[1] - 2, xyz[2], b, a.getItemDamage(), 0);
+                        Item item = a.getItem();
+                        Block b = Block.getBlockFromItem(item);
+                        if (b == Blocks.air || !(item instanceof ItemBlock)) continue;
+                        short tDamage = (short) item.getDamage(a);
+                        if (item instanceof GT_Item_Ores && tDamage > 0) {
+                            if (!world.setBlock(
+                                    xyz[0],
+                                    xyz[1] - 2,
+                                    xyz[2],
+                                    b,
+                                    GT_TileEntity_Ores.getHarvestData(
+                                            tDamage,
+                                            ((GT_Block_Ores_Abstract) b)
+                                                    .getBaseBlockHarvestLevel(tDamage % 16000 / 1000)),
+                                    0)) {
+                                continue;
+                            }
+                            GT_TileEntity_Ores tTileEntity =
+                                    (GT_TileEntity_Ores) world.getTileEntity(xyz[0], xyz[1] - 2, xyz[2]);
+                            tTileEntity.mMetaData = tDamage;
+                            tTileEntity.mNatural = false;
+                        } else world.setBlock(xyz[0], xyz[1] - 2, xyz[2], b, tDamage, 0);
                         if (!cc.canGrow(te)) continue;
                         cangrow = true;
                         undercrop = a.copy();
