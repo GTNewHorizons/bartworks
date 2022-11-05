@@ -28,7 +28,6 @@ import com.github.bartimaeusnek.bartworks.API.LoaderReference;
 import com.github.bartimaeusnek.bartworks.client.renderer.BW_CropVisualizer;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.ChatColorHelper;
-import com.github.bartimaeusnek.crossmod.thaumcraft.util.ThaumcraftHandler;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -743,14 +742,7 @@ public class GT_TileEntity_ExtremeIndustrialGreenhouse
             Item i = input.getItem();
             Block b = null;
             boolean detectedCustomHandler = false;
-            if (LoaderReference.Thaumcraft) {
-                if (ThaumcraftHandler.ManaBeans.isManaBean(i)) {
-                    customDrops = new ArrayList<>(1);
-                    customDrops.add(input.copy());
-                    customDrops.get(0).stackSize = 1;
-                    detectedCustomHandler = true;
-                }
-            }
+            // There will be custom handlers here some day
             if (!detectedCustomHandler) {
                 if (i instanceof IPlantable) {
                     if (i instanceof ItemSeeds) b = ((ItemSeeds) i).getPlant(world, 0, 0, 0);
