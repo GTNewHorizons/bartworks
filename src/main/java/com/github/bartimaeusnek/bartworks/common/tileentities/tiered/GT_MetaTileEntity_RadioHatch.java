@@ -24,16 +24,26 @@ package com.github.bartimaeusnek.bartworks.common.tileentities.tiered;
 
 import static gregtech.api.enums.GT_Values.ticksBetweenSounds;
 
+import com.github.bartimaeusnek.bartworks.API.modularUI.BW_UITextures;
 import com.github.bartimaeusnek.bartworks.MainMod;
-import com.github.bartimaeusnek.bartworks.client.gui.GT_GUIContainer_RadioHatch;
-import com.github.bartimaeusnek.bartworks.server.container.GT_Container_RadioHatch;
 import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.BW_ColorUtil;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.MathUtils;
+import com.gtnewhorizons.modularui.api.drawable.shapes.Rectangle;
+import com.gtnewhorizons.modularui.api.screen.ModularWindow;
+import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
+import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
+import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
+import com.gtnewhorizons.modularui.common.widget.ProgressBar;
+import com.gtnewhorizons.modularui.common.widget.ProgressBar.Direction;
 import gregtech.api.enums.Textures;
+import gregtech.api.gui.modularui.GT_UIInfos;
+import gregtech.api.gui.modularui.GT_UITextures;
+import gregtech.api.gui.modularui.GUITextureSet;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+import gregtech.api.interfaces.modularui.IAddGregtechLogo;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.BaseMetaTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
@@ -41,19 +51,19 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
-public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
+public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implements IAddGregtechLogo {
 
     private final int cap;
     public int sievert;
     private long timer = 1;
     private long decayTime = 1;
     private short[] colorForGUI;
+    private int fullColorForGUI;
     private byte mass;
     private String material;
     private byte coverage;
@@ -90,7 +100,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
 
     public short[] getColorForGUI() {
         if (this.colorForGUI != null) return this.colorForGUI;
-        return new short[] {0xFA, 0xFA, 0xFF};
+        return colorForGUI = new short[] {0xFA, 0xFA, 0xFF};
     }
 
     public byte getMass() {
@@ -138,9 +148,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
     }
 
     public boolean onRightclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
-        if (!aBaseMetaTileEntity.isClientSide()) {
-            aBaseMetaTileEntity.openGUI(aPlayer);
-        }
+        GT_UIInfos.openGTTileEntityUI(aBaseMetaTileEntity, aPlayer);
         return true;
     }
 
@@ -222,6 +230,9 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
                             (short) this.lastRecipe.mChances[1],
                             (short) this.lastRecipe.mChances[2]
                         };
+                        for (int i = 0; i<this.lastRecipe.mChances.length;i++){
+                            this.fullColorForGUI+=this.lastRecipe.mChances[i];
+                        }
                         this.material = lStack.getDisplayName();
                         lStack.stackSize--;
                         updateSlots();
@@ -291,14 +302,6 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
                 && BWRecipes.instance.getMappingsFor(BWRecipes.RADHATCH).containsInput(aStack);
     }
 
-    public Object getServerGUI(int aID, InventoryPlayer aPlayerInventory, IGregTechTileEntity aBaseMetaTileEntity) {
-        return new GT_Container_RadioHatch(aPlayerInventory, aBaseMetaTileEntity);
-    }
-
-    public Object getClientGUI(int aID, InventoryPlayer aPlayerInventory, IGregTechTileEntity aBaseMetaTileEntity) {
-        return new GT_GUIContainer_RadioHatch(aPlayerInventory, aBaseMetaTileEntity, this.mName);
-    }
-
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         aNBT.setByte("mMass", this.mass);
@@ -334,5 +337,57 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch {
         if (aIndex == 1) {
             GT_Utility.doSoundAtClient(rl, 10, 1.0F, aX, aY, aZ);
         }
+    }
+
+    @Override
+    public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
+        getBaseMetaTileEntity().add1by1Slot(builder);
+        addGregTechLogo(builder);
+        builder.widget(new DrawableWidget()
+                        .setBackground(BW_UITextures.PICTURE_SIEVERTS_CONTAINER)
+                        .setPos(61, 9)
+                        .setSize(56, 24))
+                .widget(new ProgressBar()
+                        .setProgress(() -> getSievert() / 148f)
+                        .setDirection(Direction.RIGHT)
+                        .setTexture(BW_UITextures.PICTURE_SIEVERTS_PROGRESS, 24)
+                        .setPos(65, 13)
+                        .setSize(48, 16))
+                .widget(new DrawableWidget()
+                        .setBackground(BW_UITextures.PICTURE_DECAY_TIME_CONTAINER)
+                        .setPos(120, 16)
+                        .setSize(24, 56))
+                .widget(new DrawableWidget() {
+                    @Override
+                    public void draw(float partialTicks) {
+                        new Rectangle()
+                                .setColor(fullColorForGUI)
+                                .draw(pos, size, partialTicks);
+                    }
+                }
+                        .setPos(124, 20)
+                        .setSize(16, 48)
+                )
+                .widget(new FakeSyncWidget.IntegerSyncer(() -> fullColorForGUI, val -> fullColorForGUI = val));
+    }
+
+    @Override
+    public void addGregTechLogo(ModularWindow.Builder builder) {
+        builder.widget(new DrawableWidget()
+                .setDrawable(BW_UITextures.PICTURE_BW_LOGO_47X20)
+                .setSize(47, 20)
+                .setPos(11, 55));
+    }
+
+    @Override
+    public GUITextureSet getGUITextureSet() {
+        return new GUITextureSet()
+                .setMainBackground(GT_UITextures.BACKGROUND_SINGLEBLOCK_DEFAULT)
+                .setGregTechLogo(GT_UITextures.PICTURE_GT_LOGO_17x17_TRANSPARENT);
+    }
+
+    @Override
+    public boolean useModularUI() {
+        return true;
     }
 }
