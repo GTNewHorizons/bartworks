@@ -342,8 +342,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         getBaseMetaTileEntity().add1by1Slot(builder);
-        new TextWidget()
-                .setTextAlignment(Alignment.Center);
+        new TextWidget().setTextAlignment(Alignment.Center);
         builder.widget(new DrawableWidget()
                         .setBackground(BW_UITextures.PICTURE_SIEVERTS_CONTAINER)
                         .setPos(61, 9)
@@ -386,12 +385,14 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                         .setSize(24, 56))
                 .widget(new FakeSyncWidget.LongSyncer(() -> decayTime, val -> decayTime = val))
                 .widget(new FakeSyncWidget.LongSyncer(() -> timer, val -> timer = val))
-                .widget(TextWidget.dynamicString(() -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.1", mass))
+                .widget(TextWidget.dynamicString(
+                                () -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.1", mass))
                         .setTextAlignment(Alignment.Center)
                         .attachSyncer(new FakeSyncWidget.ByteSyncer(() -> mass, val -> mass = val), builder)
                         .setPos(60, 62)
                         .setSize(60, 10))
-                .widget(TextWidget.dynamicString(() -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.0", sievert))
+                .widget(TextWidget.dynamicString(
+                                () -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.0", sievert))
                         .setTextAlignment(Alignment.Center)
                         .attachSyncer(new FakeSyncWidget.IntegerSyncer(() -> sievert, val -> sievert = val), builder)
                         .setPos(55, 72)
