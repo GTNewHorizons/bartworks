@@ -12,7 +12,7 @@ dependencies {
         exclude group:"com.github.GTNewHorizons", module:"SpongePoweredMixin"
         exclude group:"com.github.GTNewHorizons", module:"SpongeMixins"
     }
-    compile("com.github.GTNewHorizons:ModularUI:1.0.9:dev")
+    compile("com.github.GTNewHorizons:ModularUI:1.0.16:dev")
     compile("com.github.GTNewHorizons:GalacticGregGT5:1.0.8:dev") {
         exclude group:"com.github.GTNewHorizons", module:"bartworks"
     }

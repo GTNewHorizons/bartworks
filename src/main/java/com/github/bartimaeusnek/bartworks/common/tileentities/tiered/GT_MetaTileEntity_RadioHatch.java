@@ -69,7 +69,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
     public int sievert;
     private long timer = 1;
     private long decayTime = 1;
-    private short[] colorForGUI;
+    private short[] colorForGUI = {0x02, 0x02, 0x02};
     private byte mass;
     private String material;
     private byte coverage;
@@ -342,7 +342,8 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         getBaseMetaTileEntity().add1by1Slot(builder);
-        addGregTechLogo(builder);
+        new TextWidget()
+                .setTextAlignment(Alignment.Center);
         builder.widget(new DrawableWidget()
                         .setBackground(BW_UITextures.PICTURE_SIEVERTS_CONTAINER)
                         .setPos(61, 9)
@@ -361,7 +362,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                                     int height = MathUtils.ceilInt(
                                             48 * ((decayTime - timer % decayTime) / (float) decayTime));
                                     new Rectangle()
-                                            .setColor(Color.argb(colorForGUI[0], colorForGUI[1], colorForGUI[2], 1))
+                                            .setColor(Color.argb(colorForGUI[0], colorForGUI[1], colorForGUI[2], 255))
                                             .draw(new Pos2d(0, 48 - height), new Size(16, height), partialTicks);
                                 }
                             }
@@ -385,12 +386,12 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                         .setSize(24, 56))
                 .widget(new FakeSyncWidget.LongSyncer(() -> decayTime, val -> decayTime = val))
                 .widget(new FakeSyncWidget.LongSyncer(() -> timer, val -> timer = val))
-                .widget(new TextWidget("Mass: " + mass + " kg")
+                .widget(TextWidget.dynamicString(() -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.1", mass))
                         .setTextAlignment(Alignment.Center)
                         .attachSyncer(new FakeSyncWidget.ByteSyncer(() -> mass, val -> mass = val), builder)
-                        .setPos(50, 62)
-                        .setSize(80, 10))
-                .widget(new TextWidget("Sievert: " + sievert + " Sv")
+                        .setPos(60, 62)
+                        .setSize(60, 10))
+                .widget(TextWidget.dynamicString(() -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.0", sievert))
                         .setTextAlignment(Alignment.Center)
                         .attachSyncer(new FakeSyncWidget.IntegerSyncer(() -> sievert, val -> sievert = val), builder)
                         .setPos(55, 72)
