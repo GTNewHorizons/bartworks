@@ -31,12 +31,18 @@ import com.github.bartimaeusnek.bartworks.util.BW_ColorUtil;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.MathUtils;
 import com.gtnewhorizons.modularui.api.drawable.shapes.Rectangle;
+import com.gtnewhorizons.modularui.api.math.Alignment;
+import com.gtnewhorizons.modularui.api.math.Color;
+import com.gtnewhorizons.modularui.api.math.Pos2d;
+import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.ProgressBar;
 import com.gtnewhorizons.modularui.common.widget.ProgressBar.Direction;
+import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
 import gregtech.api.gui.modularui.GT_UIInfos;
 import gregtech.api.gui.modularui.GT_UITextures;
@@ -48,6 +54,7 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.BaseMetaTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
@@ -63,7 +70,6 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
     private long timer = 1;
     private long decayTime = 1;
     private short[] colorForGUI;
-    private int fullColorForGUI;
     private byte mass;
     private String material;
     private byte coverage;
@@ -225,14 +231,8 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                         this.mass = (byte) this.lastRecipe.mDuration;
                         this.decayTime = this.lastRecipe.mSpecialValue;
                         this.sievert = this.lastRecipe.mEUt;
-                        this.colorForGUI = new short[] {
-                            (short) this.lastRecipe.mChances[0],
-                            (short) this.lastRecipe.mChances[1],
-                            (short) this.lastRecipe.mChances[2]
-                        };
-                        for (int i = 0; i<this.lastRecipe.mChances.length;i++){
-                            this.fullColorForGUI+=this.lastRecipe.mChances[i];
-                        }
+                        Materials mat = GT_OreDictUnificator.getAssociation(lStack).mMaterial.mMaterial;
+                        this.colorForGUI = new short[] {mat.getRGBA()[0], mat.getRGBA()[1], mat.getRGBA()[2]};
                         this.material = lStack.getDisplayName();
                         lStack.stackSize--;
                         updateSlots();
@@ -353,22 +353,48 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                         .setTexture(BW_UITextures.PICTURE_SIEVERTS_PROGRESS, 24)
                         .setPos(65, 13)
                         .setSize(48, 16))
+                .widget(
+                        new DrawableWidget() {
+                            @Override
+                            public void draw(float partialTicks) {
+                                if (decayTime > 0) {
+                                    int height = MathUtils.ceilInt(
+                                            48 * ((decayTime - timer % decayTime) / (float) decayTime));
+                                    new Rectangle()
+                                            .setColor(Color.argb(colorForGUI[0], colorForGUI[1], colorForGUI[2], 1))
+                                            .draw(new Pos2d(0, 48 - height), new Size(16, height), partialTicks);
+                                }
+                            }
+                        }.setPos(124, 20)
+                                .setSize(16, 48)
+                                .attachSyncer(
+                                        new FakeSyncWidget.ShortSyncer(
+                                                () -> colorForGUI[0], val -> colorForGUI[0] = val),
+                                        builder)
+                                .attachSyncer(
+                                        new FakeSyncWidget.ShortSyncer(
+                                                () -> colorForGUI[1], val -> colorForGUI[1] = val),
+                                        builder)
+                                .attachSyncer(
+                                        new FakeSyncWidget.ShortSyncer(
+                                                () -> colorForGUI[2], val -> colorForGUI[2] = val),
+                                        builder))
                 .widget(new DrawableWidget()
                         .setBackground(BW_UITextures.PICTURE_DECAY_TIME_CONTAINER)
                         .setPos(120, 16)
                         .setSize(24, 56))
-                .widget(new DrawableWidget() {
-                    @Override
-                    public void draw(float partialTicks) {
-                        new Rectangle()
-                                .setColor(fullColorForGUI)
-                                .draw(pos, size, partialTicks);
-                    }
-                }
-                        .setPos(124, 20)
-                        .setSize(16, 48)
-                )
-                .widget(new FakeSyncWidget.IntegerSyncer(() -> fullColorForGUI, val -> fullColorForGUI = val));
+                .widget(new FakeSyncWidget.LongSyncer(() -> decayTime, val -> decayTime = val))
+                .widget(new FakeSyncWidget.LongSyncer(() -> timer, val -> timer = val))
+                .widget(new TextWidget("Mass: " + mass + " kg")
+                        .setTextAlignment(Alignment.Center)
+                        .attachSyncer(new FakeSyncWidget.ByteSyncer(() -> mass, val -> mass = val), builder)
+                        .setPos(50, 62)
+                        .setSize(80, 10))
+                .widget(new TextWidget("Sievert: " + sievert + " Sv")
+                        .setTextAlignment(Alignment.Center)
+                        .attachSyncer(new FakeSyncWidget.IntegerSyncer(() -> sievert, val -> sievert = val), builder)
+                        .setPos(55, 72)
+                        .setSize(80, 10));
     }
 
     @Override
