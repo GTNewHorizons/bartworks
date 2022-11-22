@@ -192,7 +192,11 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                 ItemStack lStack = this.mInventory[0];
 
                 if (lStack == null) {
+                    this.colorForGUI = new short[] {0x37, 0x37, 0x37};
                     return;
+                } else {
+                    Materials mat = GT_OreDictUnificator.getAssociation(lStack).mMaterial.mMaterial;
+                    this.colorForGUI = new short[] {mat.getRGBA()[0], mat.getRGBA()[1], mat.getRGBA()[2]};
                 }
 
                 if (this.lastFail && GT_Utility.areStacksEqual(this.lastUsedItem, lStack, true)) {
@@ -231,8 +235,6 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                         this.mass = (byte) this.lastRecipe.mDuration;
                         this.decayTime = this.lastRecipe.mSpecialValue;
                         this.sievert = this.lastRecipe.mEUt;
-                        Materials mat = GT_OreDictUnificator.getAssociation(lStack).mMaterial.mMaterial;
-                        this.colorForGUI = new short[] {mat.getRGBA()[0], mat.getRGBA()[1], mat.getRGBA()[2]};
                         this.material = lStack.getDisplayName();
                         lStack.stackSize--;
                         updateSlots();
@@ -387,12 +389,14 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                 .widget(new FakeSyncWidget.LongSyncer(() -> timer, val -> timer = val))
                 .widget(TextWidget.dynamicString(
                                 () -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.1", mass))
+                        .setSynced(false)
                         .setTextAlignment(Alignment.Center)
                         .attachSyncer(new FakeSyncWidget.ByteSyncer(() -> mass, val -> mass = val), builder)
                         .setPos(60, 62)
                         .setSize(60, 10))
                 .widget(TextWidget.dynamicString(
                                 () -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.0", sievert))
+                        .setSynced(false)
                         .setTextAlignment(Alignment.Center)
                         .attachSyncer(new FakeSyncWidget.IntegerSyncer(() -> sievert, val -> sievert = val), builder)
                         .setPos(55, 72)
