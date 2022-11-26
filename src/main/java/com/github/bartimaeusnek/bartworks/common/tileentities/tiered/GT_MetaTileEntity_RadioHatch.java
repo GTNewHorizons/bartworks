@@ -346,15 +346,19 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
         getBaseMetaTileEntity().add1by1Slot(builder);
         new TextWidget().setTextAlignment(Alignment.Center);
         builder.widget(new DrawableWidget()
-                        .setBackground(BW_UITextures.PICTURE_SIEVERTS_CONTAINER)
+                        .setBackground(BW_UITextures.PICTURE_SIEVERT_CONTAINER)
                         .setPos(61, 9)
                         .setSize(56, 24))
                 .widget(new ProgressBar()
                         .setProgress(() -> getSievert() / 148f)
                         .setDirection(Direction.RIGHT)
-                        .setTexture(BW_UITextures.PICTURE_SIEVERTS_PROGRESS, 24)
+                        .setTexture(BW_UITextures.PROGRESSBAR_SIEVERT, 24)
                         .setPos(65, 13)
                         .setSize(48, 16))
+                .widget(new DrawableWidget()
+                        .setBackground(BW_UITextures.PICTURE_DECAY_TIME_INSIDE)
+                        .setPos(124, 18)
+                        .setSize(16, 48))
                 .widget(
                         new DrawableWidget() {
                             @Override
@@ -367,48 +371,32 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                                             .draw(new Pos2d(0, 48 - height), new Size(16, height), partialTicks);
                                 }
                             }
-                        }.setPos(124, 20)
-                                .setSize(16, 48)
-                                .attachSyncer(
-                                        new FakeSyncWidget.ShortSyncer(
-                                                () -> colorForGUI[0], val -> colorForGUI[0] = val),
-                                        builder)
-                                .attachSyncer(
-                                        new FakeSyncWidget.ShortSyncer(
-                                                () -> colorForGUI[1], val -> colorForGUI[1] = val),
-                                        builder)
-                                .attachSyncer(
-                                        new FakeSyncWidget.ShortSyncer(
-                                                () -> colorForGUI[2], val -> colorForGUI[2] = val),
-                                        builder))
+                        }.setPos(124, 18).setSize(16, 48))
+                .widget(new FakeSyncWidget.ShortSyncer(() -> colorForGUI[0], val -> colorForGUI[0] = val))
+                .widget(new FakeSyncWidget.ShortSyncer(() -> colorForGUI[1], val -> colorForGUI[1] = val))
+                .widget(new FakeSyncWidget.ShortSyncer(() -> colorForGUI[2], val -> colorForGUI[2] = val))
                 .widget(new DrawableWidget()
                         .setBackground(BW_UITextures.PICTURE_DECAY_TIME_CONTAINER)
-                        .setPos(120, 16)
+                        .setPos(120, 14)
                         .setSize(24, 56))
                 .widget(new FakeSyncWidget.LongSyncer(() -> decayTime, val -> decayTime = val))
                 .widget(new FakeSyncWidget.LongSyncer(() -> timer, val -> timer = val))
                 .widget(TextWidget.dynamicString(
                                 () -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.1", mass))
-                        .setSynced(false)
                         .setTextAlignment(Alignment.Center)
-                        .attachSyncer(new FakeSyncWidget.ByteSyncer(() -> mass, val -> mass = val), builder)
-                        .setPos(60, 62)
-                        .setSize(60, 10))
+                        .setPos(65, 62))
                 .widget(TextWidget.dynamicString(
                                 () -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.0", sievert))
-                        .setSynced(false)
                         .setTextAlignment(Alignment.Center)
-                        .attachSyncer(new FakeSyncWidget.IntegerSyncer(() -> sievert, val -> sievert = val), builder)
-                        .setPos(55, 72)
-                        .setSize(80, 10));
+                        .setPos(60, 72));
     }
 
     @Override
     public void addGregTechLogo(ModularWindow.Builder builder) {
         builder.widget(new DrawableWidget()
-                .setDrawable(BW_UITextures.PICTURE_BW_LOGO_47X20)
-                .setSize(47, 20)
-                .setPos(11, 55));
+                .setDrawable(BW_UITextures.PICTURE_BW_LOGO_47X21)
+                .setSize(47, 21)
+                .setPos(10, 53));
     }
 
     @Override
