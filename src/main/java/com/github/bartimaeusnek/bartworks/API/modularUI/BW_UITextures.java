@@ -20,6 +20,8 @@ public class BW_UITextures {
     public static final UITexture OVERLAY_SLOT_ROD = UITexture.fullImage(MOD_ID, "GUI/overlay_slot/rod");
 
     public static final UITexture PROGRESSBAR_SIEVERT = UITexture.fullImage(MOD_ID, "GUI/progressbar/sievert");
+    public static final UITexture PROGRESSBAR_STORED_EU_116 =
+            UITexture.fullImage(MOD_ID, "GUI/progressbar/stored_eu_116");
 
     public static final UITexture PICTURE_BW_LOGO_47X21 = UITexture.fullImage(MOD_ID, "GUI/picture/bw_logo_47x21");
     public static final UITexture PICTURE_SIEVERT_CONTAINER =
@@ -35,6 +37,7 @@ public class BW_UITextures {
                     UITexture.partly(MOD_ID, "GUI/picture/windmill_rotating", 32, 128, 0, i * 32, 32, (i + 1) * 32))
             .collect(Collectors.toList())
             .toArray(new UITexture[0]);
+    public static final UITexture PICTURE_STORED_EU_FRAME = UITexture.fullImage(MOD_ID, "GUI/picture/stored_eu_frame");
 
     public static final AdaptableUITexture TAB_TITLE_BROWN =
             AdaptableUITexture.of(MOD_ID, "GUI/tab/title_brown", 28, 28, 4);
