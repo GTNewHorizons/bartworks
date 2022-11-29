@@ -11,6 +11,8 @@ public class BW_UITextures {
 
     public static final AdaptableUITexture BACKGROUND_BROWN =
             AdaptableUITexture.of(MOD_ID, "GUI/background/brown", 176, 166, 3);
+    public static final UITexture BACKGROUND_CIRCUIT_PROGRAMMER =
+            UITexture.fullImage(MOD_ID, "GUI/background/circuit_programmer");
 
     public static final AdaptableUITexture SLOT_BROWN = AdaptableUITexture.of(MOD_ID, "GUI/slot/brown", 18, 18, 1);
 
@@ -18,10 +20,12 @@ public class BW_UITextures {
     public static final UITexture OVERLAY_SLOT_DNA_FLASK = UITexture.fullImage(MOD_ID, "GUI/overlay_slot/dna_flask");
     public static final UITexture OVERLAY_SLOT_MODULE = UITexture.fullImage(MOD_ID, "GUI/overlay_slot/module");
     public static final UITexture OVERLAY_SLOT_ROD = UITexture.fullImage(MOD_ID, "GUI/overlay_slot/rod");
+    public static final UITexture OVERLAY_SLOT_CROSS = UITexture.fullImage(MOD_ID, "GUI/overlay_slot/cross");
 
     public static final UITexture PROGRESSBAR_SIEVERT = UITexture.fullImage(MOD_ID, "GUI/progressbar/sievert");
     public static final UITexture PROGRESSBAR_STORED_EU_116 =
             UITexture.fullImage(MOD_ID, "GUI/progressbar/stored_eu_116");
+    public static final UITexture PROGRESSBAR_FUEL = UITexture.fullImage(MOD_ID, "GUI/progressbar/fuel");
 
     public static final UITexture PICTURE_BW_LOGO_47X21 = UITexture.fullImage(MOD_ID, "GUI/picture/bw_logo_47x21");
     public static final UITexture PICTURE_SIEVERT_CONTAINER =
