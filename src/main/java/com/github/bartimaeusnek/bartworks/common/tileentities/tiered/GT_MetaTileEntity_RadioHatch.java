@@ -30,6 +30,8 @@ import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.BW_ColorUtil;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.MathUtils;
+import com.gtnewhorizons.modularui.api.ModularUITextures;
+import com.gtnewhorizons.modularui.api.drawable.ItemDrawable;
 import com.gtnewhorizons.modularui.api.drawable.shapes.Rectangle;
 import com.gtnewhorizons.modularui.api.math.Alignment;
 import com.gtnewhorizons.modularui.api.math.Color;
@@ -37,11 +39,13 @@ import com.gtnewhorizons.modularui.api.math.Pos2d;
 import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
+import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.ProgressBar;
 import com.gtnewhorizons.modularui.common.widget.ProgressBar.Direction;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import com.gtnewhorizons.modularui.common.widget.textfield.TextFieldWidget;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
 import gregtech.api.gui.modularui.GT_UIInfos;
@@ -57,6 +61,8 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
+import gregtech.common.items.GT_MetaGenerated_Tool_01;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -117,10 +123,6 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
         return this.coverage;
     }
 
-    public long getDecayTime() {
-        return this.decayTime;
-    }
-
     public void setCoverage(short coverage) {
         byte nu;
         if (coverage > 100) nu = 100;
@@ -129,10 +131,12 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
         this.coverage = nu;
     }
 
+    @Override
     public ITexture[] getTexturesActive(ITexture aBaseTexture) {
         return new ITexture[] {aBaseTexture, TextureFactory.of(Textures.BlockIcons.OVERLAY_PIPE_IN)};
     }
 
+    @Override
     public ITexture[] getTexturesInactive(ITexture aBaseTexture) {
         return new ITexture[] {aBaseTexture, TextureFactory.of(Textures.BlockIcons.OVERLAY_PIPE_IN)};
     }
@@ -143,16 +147,6 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
     }
 
     @Override
-    public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
-        aPlayer.openGui(
-                MainMod.MOD_ID,
-                2,
-                this.getBaseMetaTileEntity().getWorld(),
-                this.getBaseMetaTileEntity().getXCoord(),
-                this.getBaseMetaTileEntity().getYCoord(),
-                this.getBaseMetaTileEntity().getZCoord());
-    }
-
     public boolean onRightclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
         GT_UIInfos.openGTTileEntityUI(aBaseMetaTileEntity, aPlayer);
         return true;
@@ -162,6 +156,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
         if (this.mInventory[0] != null && this.mInventory[0].stackSize <= 0) this.mInventory[0] = null;
     }
 
+    @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTimer) {
         BaseMetaTileEntity myMetaTileEntity = ((BaseMetaTileEntity) this.getBaseMetaTileEntity());
         if (myMetaTileEntity.isServerSide()) {
@@ -279,26 +274,32 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
             };
     }
 
+    @Override
     public boolean isSimpleMachine() {
         return true;
     }
 
+    @Override
     public boolean isFacingValid(byte aFacing) {
         return true;
     }
 
+    @Override
     public boolean isAccessAllowed(EntityPlayer aPlayer) {
         return true;
     }
 
+    @Override
     public boolean isValidSlot(int aIndex) {
         return true;
     }
 
+    @Override
     public boolean allowPullStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, byte aSide, ItemStack aStack) {
         return false;
     }
 
+    @Override
     public boolean allowPutStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, byte aSide, ItemStack aStack) {
         return aSide == this.getBaseMetaTileEntity().getFrontFacing()
                 && BWRecipes.instance.getMappingsFor(BWRecipes.RADHATCH).containsInput(aStack);
@@ -314,10 +315,6 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
         aNBT.setLong("timer", this.timer);
         aNBT.setLong("decay", this.decayTime);
         super.saveNBTData(aNBT);
-    }
-
-    public long getTimer() {
-        return this.timer;
     }
 
     @Override
@@ -341,10 +338,13 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
         }
     }
 
+    private static final int RADIATION_SHUTTER_WINDOW_ID = 999;
+
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
+        buildContext.addSyncedWindow(RADIATION_SHUTTER_WINDOW_ID, this::createShutterWindow);
+
         getBaseMetaTileEntity().add1by1Slot(builder);
-        new TextWidget().setTextAlignment(Alignment.Center);
         builder.widget(new DrawableWidget()
                         .setBackground(BW_UITextures.PICTURE_SIEVERT_CONTAINER)
                         .setPos(61, 9)
@@ -388,7 +388,66 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                 .widget(TextWidget.dynamicString(
                                 () -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.0", sievert))
                         .setTextAlignment(Alignment.Center)
-                        .setPos(60, 72));
+                        .setPos(60, 72))
+                .widget(new ButtonWidget()
+                        .setOnClick((clickData, widget) -> {
+                            if (!widget.isClient()) {
+                                widget.getContext().openSyncedWindow(RADIATION_SHUTTER_WINDOW_ID);
+                            }
+                        })
+                        .addTooltip("Radiation Shutter")
+                        .setBackground(GT_UITextures.BUTTON_STANDARD)
+                        .setPos(153, 5)
+                        .setSize(18, 18))
+                .widget(new ItemDrawable(GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(
+                                GT_MetaGenerated_Tool_01.SCREWDRIVER, 1, null, null, null))
+                        .asWidget()
+                        .setPos(154, 6));
+    }
+
+    private ModularWindow createShutterWindow(EntityPlayer player) {
+        ModularWindow.Builder builder = ModularWindow.builder(176, 107);
+        builder.setBackground(ModularUITextures.VANILLA_BACKGROUND);
+        builder.setGuiTint(getGUIColorization());
+
+        builder.widget(new TextWidget("Radiation Shutter Control")
+                        .setDefaultColor(COLOR_TITLE.get())
+                        .setPos(10, 9))
+                .widget(new DrawableWidget()
+                        .setDrawable(BW_UITextures.PICTURE_RADIATION_SHUTTER_FRAME)
+                        .setPos(14, 27)
+                        .setSize(55, 54))
+                .widget(new DrawableWidget()
+                        .setDrawable(() -> coverage < 100 ? BW_UITextures.PICTURE_RADIATION_SHUTTER_INSIDE : null)
+                        .setPos(16, 29)
+                        .setSize(51, 50)
+                        .attachSyncer(
+                                new FakeSyncWidget.ByteSyncer(this::getCoverage, this::setCoverage),
+                                builder,
+                                (widget, val) ->
+                                        widget.setPos(16, 29 + coverage / 2).setSize(51, 50 - coverage / 2)))
+                .widget(new TextFieldWidget()
+                        .setSetterInt(val -> coverage = val.byteValue())
+                        .setGetterInt(() -> (int) coverage)
+                        .setNumbers(0, 100)
+                        .setTextColor(Color.WHITE.dark(1))
+                        .setOnScrollNumbers((val, direction) -> {
+                            int step =
+                                    (GuiScreen.isShiftKeyDown() ? 50 : GuiScreen.isCtrlKeyDown() ? 5 : 1) * direction;
+                            try {
+                                val = Math.addExact(val, step);
+                            } catch (ArithmeticException ignored) {
+                                val = Integer.MAX_VALUE;
+                            }
+                            return val;
+                        })
+                        .setTextAlignment(Alignment.CenterLeft)
+                        .setBackground(GT_UITextures.BACKGROUND_TEXT_FIELD.withOffset(-1, -1, 2, 2))
+                        .setPos(86, 27)
+                        .setSize(30, 12))
+                .widget(ButtonWidget.closeWindowButton(true).setPos(176 - 15, 3));
+
+        return builder.build();
     }
 
     @Override

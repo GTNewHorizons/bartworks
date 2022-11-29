@@ -23,12 +23,7 @@
 package com.github.bartimaeusnek.bartworks;
 
 import com.github.bartimaeusnek.bartworks.API.SideReference;
-import com.github.bartimaeusnek.bartworks.client.gui.BW_GUIContainer_RadLevel;
-import com.github.bartimaeusnek.bartworks.client.gui.GT_GUIContainer_CircuitProgrammer;
-import com.github.bartimaeusnek.bartworks.server.container.BW_Container_RadioHatch;
-import com.github.bartimaeusnek.bartworks.server.container.GT_Container_CircuitProgrammer;
 import cpw.mods.fml.common.network.IGuiHandler;
-import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
@@ -36,33 +31,12 @@ public class GuiHandler implements IGuiHandler {
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        switch (ID) {
-            case 1:
-                return new GT_Container_CircuitProgrammer(player.inventory);
-            case 2: {
-                if (world.getTileEntity(x, y, z) instanceof IGregTechTileEntity) {
-                    IGregTechTileEntity te = (IGregTechTileEntity) world.getTileEntity(x, y, z);
-                    return new BW_Container_RadioHatch(player.inventory, te.getMetaTileEntity());
-                }
-            }
-        }
         return null;
     }
 
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (SideReference.Side.Client) {
-            switch (ID) {
-                case 1:
-                    return new GT_GUIContainer_CircuitProgrammer(player.inventory);
-                case 2: {
-                    if (world.getTileEntity(x, y, z) instanceof IGregTechTileEntity) {
-                        IGregTechTileEntity te = (IGregTechTileEntity) world.getTileEntity(x, y, z);
-                        return new BW_GUIContainer_RadLevel(
-                                new BW_Container_RadioHatch(player.inventory, te.getMetaTileEntity()));
-                    }
-                }
-            }
         } else return getServerGuiElement(ID, player, world, x, y, z);
         return null;
     }

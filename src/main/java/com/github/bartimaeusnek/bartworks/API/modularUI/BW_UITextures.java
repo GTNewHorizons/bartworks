@@ -42,6 +42,10 @@ public class BW_UITextures {
             .collect(Collectors.toList())
             .toArray(new UITexture[0]);
     public static final UITexture PICTURE_STORED_EU_FRAME = UITexture.fullImage(MOD_ID, "GUI/picture/stored_eu_frame");
+    public static final UITexture PICTURE_RADIATION_SHUTTER_FRAME =
+            UITexture.fullImage(MOD_ID, "GUI/picture/radiation_shutter_frame");
+    public static final AdaptableUITexture PICTURE_RADIATION_SHUTTER_INSIDE =
+            AdaptableUITexture.of(MOD_ID, "GUI/picture/radiation_shutter_inside", 51, 48, 1);
 
     public static final AdaptableUITexture TAB_TITLE_BROWN =
             AdaptableUITexture.of(MOD_ID, "GUI/tab/title_brown", 28, 28, 4);
