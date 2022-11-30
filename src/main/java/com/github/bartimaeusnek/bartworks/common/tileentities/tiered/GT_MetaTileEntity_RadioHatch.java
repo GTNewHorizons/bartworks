@@ -62,7 +62,6 @@ import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.items.GT_MetaGenerated_Tool_01;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -431,16 +430,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                         .setGetterInt(() -> (int) coverage)
                         .setNumbers(0, 100)
                         .setTextColor(Color.WHITE.dark(1))
-                        .setOnScrollNumbers((val, direction) -> {
-                            int step =
-                                    (GuiScreen.isShiftKeyDown() ? 50 : GuiScreen.isCtrlKeyDown() ? 5 : 1) * direction;
-                            try {
-                                val = Math.addExact(val, step);
-                            } catch (ArithmeticException ignored) {
-                                val = Integer.MAX_VALUE;
-                            }
-                            return val;
-                        })
+                        .setOnScrollNumbers(1, 5, 50)
                         .setTextAlignment(Alignment.CenterLeft)
                         .setBackground(GT_UITextures.BACKGROUND_TEXT_FIELD.withOffset(-1, -1, 2, 2))
                         .setPos(86, 27)
