@@ -621,8 +621,7 @@ public class StaticRecipeChangeLoaders {
                             "",
                             true,
                             true)
-                    .setSlotOverlay(false, false, true, GT_UITextures.OVERLAY_SLOT_IMPLOSION)
-                    .setSlotOverlay(false, false, false, GT_UITextures.OVERLAY_SLOT_EXPLOSIVE)
+                    .setSlotOverlay(false, false, GT_UITextures.OVERLAY_SLOT_IMPLOSION)
                     .setProgressBar(GT_UITextures.PROGRESSBAR_COMPRESS, ProgressBar.Direction.RIGHT);
             GT_Recipe.GT_Recipe_Map.sImplosionRecipes.mRecipeList.stream()
                     .filter(e -> e.mInputs != null)
