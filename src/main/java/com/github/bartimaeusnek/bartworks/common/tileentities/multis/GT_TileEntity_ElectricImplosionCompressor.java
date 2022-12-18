@@ -322,6 +322,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
     }
 
     private void resetPiston() {
+        if (!pistonEnabled) return;
         IGregTechTileEntity aBaseMetaTileEntity = this.getBaseMetaTileEntity();
         if (!aBaseMetaTileEntity.isServerSide()) return;
         if (!this.piston) {
@@ -332,6 +333,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
     }
 
     private void activatePiston() {
+        if (!pistonEnabled) return;
         IGregTechTileEntity aBaseMetaTileEntity = this.getBaseMetaTileEntity();
         if (!aBaseMetaTileEntity.isServerSide()) return;
         if (this.piston) {
