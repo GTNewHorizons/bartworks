@@ -41,6 +41,8 @@ import com.gtnewhorizon.structurelib.structure.AutoPlaceEnvironment;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
@@ -355,10 +357,14 @@ public class GT_TileEntity_ElectricImplosionCompressor
                     chunkCoordinates.get(0).posY,
                     chunkCoordinates.get(0).posZ);
         chunkCoordinates.forEach(c -> {
-            BW_EICPistonVisualizer pistonVisualizer =
-                    new BW_EICPistonVisualizer(aBaseMetaTileEntity.getWorld(), c.posX, c.posY, c.posZ, 10);
-            Minecraft.getMinecraft().effectRenderer.addEffect(pistonVisualizer);
+            spawnVisualPistonBlock(aBaseMetaTileEntity.getWorld(), c.posX, c.posY, c.posZ, 10);
         });
+    }
+
+    @SideOnly(Side.CLIENT)
+    private void spawnVisualPistonBlock(World world, int x, int y, int z, int age) {
+        BW_EICPistonVisualizer pistonVisualizer = new BW_EICPistonVisualizer(world, x, y, z, age);
+        Minecraft.getMinecraft().effectRenderer.addEffect(pistonVisualizer);
     }
 
     @Override
