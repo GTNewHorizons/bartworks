@@ -29,8 +29,11 @@ import static gregtech.api.enums.GT_Values.V;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofHatchAdder;
 
+import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.client.renderer.BW_EICPistonVisualizer;
 import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
+import com.github.bartimaeusnek.bartworks.common.net.EICPacket;
+import com.github.bartimaeusnek.bartworks.util.Coords;
 import com.gtnewhorizon.structurelib.StructureLibAPI;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.alignment.enumerable.ExtendedFacing;
@@ -285,8 +288,20 @@ public class GT_TileEntity_ElectricImplosionCompressor
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
 
-        if (pistonEnabled && aBaseMetaTileEntity.isClientSide() && aBaseMetaTileEntity.isActive() && aTick % 20 == 0)
-            animatePiston(aBaseMetaTileEntity);
+        if (pistonEnabled && aBaseMetaTileEntity.isActive() && aTick % 20 == 0) {
+            if (aBaseMetaTileEntity.isClientSide()) animatePiston(aBaseMetaTileEntity);
+            else if (aBaseMetaTileEntity.hasMufflerUpgrade())
+                MainMod.BW_Network_instance.sendPacketToAllPlayersInRange(
+                        aBaseMetaTileEntity.getWorld(),
+                        new EICPacket(
+                                new Coords(
+                                        aBaseMetaTileEntity.getXCoord(),
+                                        aBaseMetaTileEntity.getYCoord(),
+                                        aBaseMetaTileEntity.getZCoord()),
+                                true),
+                        aBaseMetaTileEntity.getXCoord(),
+                        aBaseMetaTileEntity.getZCoord());
+        }
     }
 
     @Override
