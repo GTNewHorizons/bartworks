@@ -123,11 +123,11 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                     24);
 
             GT_Values.RA.addBenderRecipe(
-                werkstoff.get(ingot),
-                GT_Utility.getIntegratedCircuit(10),
-                werkstoff.get(foil, 4),
-                (int) Math.max(werkstoff.getStats().getMass() * 2L, 1L),
-                24);
+                    werkstoff.get(ingot),
+                    GT_Utility.getIntegratedCircuit(10),
+                    werkstoff.get(foil, 4),
+                    (int) Math.max(werkstoff.getStats().getMass() * 2L, 1L),
+                    24);
 
             GT_Values.RA.addForgeHammerRecipe(
                     werkstoff.get(stick, 2),
