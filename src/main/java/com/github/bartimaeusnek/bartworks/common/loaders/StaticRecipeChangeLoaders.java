@@ -36,6 +36,7 @@ import com.github.bartimaeusnek.bartworks.util.StreamUtils;
 import com.github.bartimaeusnek.bartworks.util.log.DebugLog;
 import com.github.bartimaeusnek.crossmod.BartWorksCrossmod;
 import com.google.common.collect.ArrayListMultimap;
+import com.gtnewhorizon.gtnhlib.reflect.Fields;
 import com.gtnewhorizons.modularui.common.widget.ProgressBar;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -49,7 +50,6 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Recipe.GT_Recipe_Map;
 import gregtech.api.util.GT_Utility;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.stream.Collectors;
 import net.minecraft.init.Blocks;
@@ -59,7 +59,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.reflect.FieldUtils;
 
 public class StaticRecipeChangeLoaders {
 
@@ -698,15 +697,11 @@ public class StaticRecipeChangeLoaders {
     }
 
     public static void patchEBFMapForCircuitUnification() {
-        Field mUsualInputCount = FieldUtils.getField(GT_Recipe.GT_Recipe_Map.class, "mUsualInputCount", true);
-        mUsualInputCount.setAccessible(true);
-
         try {
-            Field modifiersField = Field.class.getDeclaredField("modifiers");
-            modifiersField.setAccessible(true);
-            modifiersField.setInt(mUsualInputCount, mUsualInputCount.getModifiers() & ~Modifier.FINAL);
-            mUsualInputCount.setInt(GT_Recipe.GT_Recipe_Map.sBlastRecipes, 3);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
+            Fields.ofClass(GT_Recipe_Map.class)
+                    .getIntField(Fields.LookupType.PUBLIC, "mUsualInputCount")
+                    .setValue(GT_Recipe.GT_Recipe_Map.sBlastRecipes, 3);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
