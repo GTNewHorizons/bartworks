@@ -105,155 +105,38 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
 
     private void addMagnetohydrodynamicallyConstrainedStarMatterPartRecipes() {
 
-        // Magnetohydrodynamically constrained recipes.
-        addWhiteDwarfMagnetoEICRecipe(ItemList.White_Dwarf_Shape_Extruder_Gear.get(0), OrePrefixes.gearGt);
-
-        addWhiteDwarfMagnetoEICRecipe(ItemList.White_Dwarf_Shape_Extruder_Rotor.get(0), OrePrefixes.rotor);
-
-        addWhiteDwarfMagnetoEICRecipe(ItemList.White_Dwarf_Shape_Extruder_Ingot.get(0), OrePrefixes.ingot);
-
-        addWhiteDwarfMagnetoEICRecipe(ItemList.White_Dwarf_Shape_Extruder_Plate.get(0), OrePrefixes.plate);
-
-        addWhiteDwarfMagnetoEICRecipe(ItemList.White_Dwarf_Shape_Extruder_Rod.get(0), OrePrefixes.stick);
-
-        addWhiteDwarfMagnetoEICRecipe(ItemList.White_Dwarf_Shape_Extruder_Bolt.get(0), OrePrefixes.bolt);
-
-        addWhiteDwarfMagnetoEICRecipe(ItemList.White_Dwarf_Shape_Extruder_Ring.get(0), OrePrefixes.ring);
-
-        addWhiteDwarfMagnetoEICRecipe(ItemList.White_Dwarf_Shape_Extruder_Casing.get(0), OrePrefixes.itemCasing);
-
-        addWhiteDwarfMagnetoEICRecipe(ItemList.White_Dwarf_Shape_Extruder_Small_Gear.get(0), OrePrefixes.gearGtSmall);
-
-        {
-            for (ItemStack circuit : circuits) {
-                addElectricImplosionRecipe(
-                        // IN.
-                        new ItemStack[] { circuit, ItemList.White_Dwarf_Shape_Extruder_Gear.get(0),
-                                GT_Utility.getIntegratedCircuit(12),
-                                GT_OreDictUnificator.get(OrePrefixes.gearGt, Materials.Universium, 1) },
-                        new FluidStack[] { Materials.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(612) },
-                        // OUT.
-                        new ItemStack[] { GT_OreDictUnificator
-                                .get(OrePrefixes.gearGt, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1) },
-                        new FluidStack[] { GT_Values.NF },
-                        // Recipe stats.
-                        4 * 20,
-                        (int) TierEU.RECIPE_UXV);
-            }
-
-            for (ItemStack circuit : circuits) {
-                addElectricImplosionRecipe(
-                        // IN.
-                        new ItemStack[] { circuit, ItemList.White_Dwarf_Shape_Extruder_Rotor.get(0),
-                                GT_Utility.getIntegratedCircuit(7),
-                                GT_OreDictUnificator.get(OrePrefixes.rotor, Materials.Universium, 1) },
-                        new FluidStack[] { Materials.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(612) },
-                        // OUT.
-                        new ItemStack[] { GT_OreDictUnificator
-                                .get(OrePrefixes.rotor, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1) },
-                        new FluidStack[] { GT_Values.NF },
-                        // Recipe stats.
-                        4 * 20,
-                        (int) TierEU.RECIPE_UXV);
-            }
-        }
-
-        // Other reshaping recipes.
-
-        // Dense Plates.
-        addOtherMagnetoEICRecipe(
-                GT_OreDictUnificator.get(OrePrefixes.plate, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 9L),
-                GT_OreDictUnificator
-                        .get(OrePrefixes.plateDense, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                1);
-
-        // Nuggets.
-        addOtherMagnetoEICRecipe(
-                GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                GT_OreDictUnificator
-                        .get(OrePrefixes.nugget, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 9L),
-                1);
-
-        // Rounds.
-        addOtherMagnetoEICRecipe(
-                GT_OreDictUnificator
-                        .get(OrePrefixes.nugget, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                GT_OreDictUnificator.get(OrePrefixes.round, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                1);
-
-        // Screws.
-        addOtherMagnetoEICRecipe(
-                GT_OreDictUnificator.get(OrePrefixes.bolt, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                GT_OreDictUnificator.get(OrePrefixes.screw, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                1);
-
-        // Foil.
-        addOtherMagnetoEICRecipe(
-                GT_OreDictUnificator.get(OrePrefixes.plate, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                GT_OreDictUnificator.get(OrePrefixes.foil, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 4L),
-                2);
-
-        // Spring.
-        addOtherMagnetoEICRecipe(
-                GT_OreDictUnificator
-                        .get(OrePrefixes.stickLong, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                GT_OreDictUnificator
-                        .get(OrePrefixes.spring, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                1);
-
-        // Small Spring.
-        addOtherMagnetoEICRecipe(
-                GT_OreDictUnificator.get(OrePrefixes.stick, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                GT_OreDictUnificator
-                        .get(OrePrefixes.springSmall, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 2L),
-                1);
-
-        // Long Rod.
-        addOtherMagnetoEICRecipe(
-                GT_OreDictUnificator.get(OrePrefixes.stick, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 2L),
-                GT_OreDictUnificator
-                        .get(OrePrefixes.stickLong, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                2);
-
-        // Frame Box.
-        addOtherMagnetoEICRecipe(
-                GT_OreDictUnificator.get(OrePrefixes.stick, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 8L),
-                GT_OreDictUnificator
-                        .get(OrePrefixes.frameGt, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1L),
-                3);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.frameGt);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.nugget);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.ingot);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.plate);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.plateDense);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.stick);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.round);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.bolt);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.screw);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.ring);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.foil);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.itemCasing);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.gearGtSmall);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.rotor);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.stickLong);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.springSmall);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.spring);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.gearGt);
     }
 
-    private static void addWhiteDwarfMagnetoEICRecipe(final ItemStack shape, final OrePrefixes part) {
-        final int magnetoBaseTime = (int) (144 * (part.mMaterialAmount / M)) / 4;
+    private void addWhiteDwarfMagnetoEICRecipe(OrePrefixes part) {
 
-        // Always integer division.
-        final double partFraction = part.mMaterialAmount / (double) M;
+        final int partFraction = (int) (144 * part.mMaterialAmount / M);
 
-        for (int i = 0; i < 4; i++) {
+        for (ItemStack circuit : circuits) {
             addElectricImplosionRecipe(
-                    new ItemStack[] { circuits[i], shape,
-                            GT_OreDictUnificator.get(part, Materials.Universium, min(1, (long) (1 / partFraction))) },
-                    new FluidStack[] { Materials.MagnetohydrodynamicallyConstrainedStarMatter
-                            .getMolten((long) (144 * partFraction)) },
-                    new ItemStack[] { GT_OreDictUnificator.get(
-                            part,
-                            Materials.MagnetohydrodynamicallyConstrainedStarMatter,
-                            min(1, (long) (1 / partFraction))) },
+                    new ItemStack[] { circuit, GT_OreDictUnificator.get(part, Materials.Universium, 1) },
+                    new FluidStack[] { Materials.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(partFraction) },
+                    new ItemStack[] {
+                            GT_OreDictUnificator.get(part, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1) },
                     new FluidStack[] { GT_Values.NF },
-                    max(1, (int) (magnetoBaseTime * partFraction)),
-                    (int) TierEU.RECIPE_UXV);
-        }
-    }
-
-    private static void addOtherMagnetoEICRecipe(final ItemStack partInput, final ItemStack partOutput,
-            final int circuitNumber) {
-        for (int i = 0; i < 4; i++) {
-            addElectricImplosionRecipe(
-                    new ItemStack[] { circuits[i], partInput, GT_Utility.getIntegratedCircuit(circuitNumber) },
-                    new FluidStack[] { GT_Values.NF },
-                    new ItemStack[] { partOutput },
-                    new FluidStack[] { GT_Values.NF },
-                    5 * 20,
+                    (int) (20 * partFraction / 144.0),
                     (int) TierEU.RECIPE_UXV);
         }
     }
