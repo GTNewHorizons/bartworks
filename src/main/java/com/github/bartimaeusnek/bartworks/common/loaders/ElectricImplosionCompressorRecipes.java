@@ -2,8 +2,6 @@ package com.github.bartimaeusnek.bartworks.common.loaders;
 
 import static com.github.bartimaeusnek.bartworks.common.tileentities.multis.GT_TileEntity_ElectricImplosionCompressor.eicMap;
 import static gregtech.api.enums.GT_Values.M;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -12,7 +10,6 @@ import cpw.mods.fml.common.Loader;
 import gregtech.api.enums.*;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
-import gregtech.api.util.GT_Utility;
 
 public class ElectricImplosionCompressorRecipes implements Runnable {
 
