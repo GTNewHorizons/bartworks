@@ -131,8 +131,8 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
             addElectricImplosionRecipe(
                     new ItemStack[] { circuit, GT_OreDictUnificator.get(part, Materials.Universium, multiplier) },
                     new FluidStack[] { Materials.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(partFraction) },
-                    new ItemStack[] {
-                            GT_OreDictUnificator.get(part, Materials.MagnetohydrodynamicallyConstrainedStarMatter, multiplier) },
+                    new ItemStack[] { GT_OreDictUnificator
+                            .get(part, Materials.MagnetohydrodynamicallyConstrainedStarMatter, multiplier) },
                     new FluidStack[] { GT_Values.NF },
                     (int) (20 * partFraction / 144.0),
                     (int) TierEU.RECIPE_UXV);
