@@ -102,36 +102,37 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
 
     private void addMagnetohydrodynamicallyConstrainedStarMatterPartRecipes() {
 
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.frameGt);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.nugget);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.ingot);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.plate);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.plateDense);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.stick);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.round);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.bolt);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.screw);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.ring);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.foil);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.itemCasing);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.gearGtSmall);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.rotor);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.stickLong);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.springSmall);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.spring);
-        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.gearGt);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.frameGt, 1);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.nugget, 9);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.ingot, 1);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.plate, 1);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.plateDense, 1);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.stick, 2);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.round, 8);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.bolt, 8);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.screw, 8);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.ring, 4);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.foil, 8);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.itemCasing, 2);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.gearGtSmall, 1);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.rotor, 1);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.stickLong, 1);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.springSmall, 2);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.spring, 1);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.gearGt, 1);
+        addWhiteDwarfMagnetoEICRecipe(OrePrefixes.wireFine, 8);
     }
 
-    private void addWhiteDwarfMagnetoEICRecipe(OrePrefixes part) {
+    private void addWhiteDwarfMagnetoEICRecipe(final OrePrefixes part, final int multiplier) {
 
         final int partFraction = (int) (144 * part.mMaterialAmount / M);
 
         for (ItemStack circuit : circuits) {
             addElectricImplosionRecipe(
-                    new ItemStack[] { circuit, GT_OreDictUnificator.get(part, Materials.Universium, 1) },
+                    new ItemStack[] { circuit, GT_OreDictUnificator.get(part, Materials.Universium, multiplier) },
                     new FluidStack[] { Materials.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(partFraction) },
                     new ItemStack[] {
-                            GT_OreDictUnificator.get(part, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1) },
+                            GT_OreDictUnificator.get(part, Materials.MagnetohydrodynamicallyConstrainedStarMatter, multiplier) },
                     new FluidStack[] { GT_Values.NF },
                     (int) (20 * partFraction / 144.0),
                     (int) TierEU.RECIPE_UXV);
