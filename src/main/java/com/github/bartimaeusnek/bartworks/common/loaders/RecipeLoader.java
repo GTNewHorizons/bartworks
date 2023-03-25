@@ -930,6 +930,32 @@ public class RecipeLoader {
             GT_Recipe.GT_Recipe_Map.sAssemblerRecipes.add(
                     new BWRecipes.DynamicGTRecipe(
                             false,
+                            new ItemStack[] { ItemList.Hatch_Input_HV.get(64), Materials.Helium.getCells(1),
+                                    GT_Utility.getIntegratedCircuit(17) },
+                            new ItemStack[] { ItemRegistry.heliumHatch.copy() },
+                            null,
+                            null,
+                            null,
+                            null,
+                            300,
+                            BW_Util.getMachineVoltageFromTier(3),
+                            0));
+            GT_Recipe.GT_Recipe_Map.sAssemblerRecipes.add(
+                    new BWRecipes.DynamicGTRecipe(
+                            false,
+                            new ItemStack[] { ItemList.Hatch_Input_HV.get(64), Materials.Hydrogen.getCells(1),
+                                    GT_Utility.getIntegratedCircuit(17) },
+                            new ItemStack[] { ItemRegistry.hydrogenHatch.copy() },
+                            null,
+                            null,
+                            null,
+                            null,
+                            300,
+                            BW_Util.getMachineVoltageFromTier(3),
+                            0));
+            GT_Recipe.GT_Recipe_Map.sAssemblerRecipes.add(
+                    new BWRecipes.DynamicGTRecipe(
+                            false,
                             new ItemStack[] { ItemList.Hatch_Output_HV.get(64), GT_Utility.getIntegratedCircuit(17) },
                             new ItemStack[] { ItemRegistry.giantOutputHatch.copy() },
                             null,
