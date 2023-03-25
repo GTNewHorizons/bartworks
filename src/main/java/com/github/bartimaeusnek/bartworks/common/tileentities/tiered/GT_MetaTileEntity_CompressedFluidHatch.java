@@ -25,24 +25,29 @@ import gregtech.common.gui.modularui.widget.FluidDisplaySlotWidget;
 
 public class GT_MetaTileEntity_CompressedFluidHatch extends GT_MetaTileEntity_Hatch_Input {
 
-    public GT_MetaTileEntity_CompressedFluidHatch(int aID, String aName, String aNameRegional) {
+    private final FluidStack allowedFluid;
+
+    public GT_MetaTileEntity_CompressedFluidHatch(int aID, String aName, String aNameRegional,
+            FluidStack aAllowedFluid) {
         super(aID, aName, aNameRegional, 0);
-        this.mDescriptionArray[1] = "Capacity: 100000000L";
+        this.mDescriptionArray[1] = "Capacity: 2,000,000,000L";
+        allowedFluid = aAllowedFluid;
     }
 
     public GT_MetaTileEntity_CompressedFluidHatch(String aName, int aTier, String[] aDescription,
-            ITexture[][][] aTextures) {
+            FluidStack aAllowedFluid, ITexture[][][] aTextures) {
         super(aName, aTier, aDescription, aTextures);
+        allowedFluid = aAllowedFluid;
     }
 
     @Override
     public int getCapacity() {
-        return 100000000;
+        return 2000000000;
     }
 
     @Override
     public boolean isFluidInputAllowed(FluidStack aFluid) {
-        return GT_Utility.areFluidsEqual(aFluid, Materials.LiquidAir.getFluid(1));
+        return GT_Utility.areFluidsEqual(aFluid, allowedFluid);
     }
 
     @Override
@@ -51,11 +56,19 @@ public class GT_MetaTileEntity_CompressedFluidHatch extends GT_MetaTileEntity_Ha
                 this.mName,
                 this.mTier,
                 this.mDescriptionArray,
+                this.allowedFluid,
                 this.mTextures);
     }
 
     @Override
     protected FluidDisplaySlotWidget createDrainableFluidSlot() {
-        return super.createDrainableFluidSlot().setEmptyCanFillFilter(f -> f == Materials.LiquidAir.mFluid);
+        if (Materials.LiquidAir.getFluid(1).equals(allowedFluid)) {
+            return super.createDrainableFluidSlot().setEmptyCanFillFilter(f -> f == Materials.LiquidAir.mFluid);
+        } else if (Materials.Helium.getGas(1).equals(allowedFluid)) {
+            return super.createDrainableFluidSlot().setEmptyCanFillFilter(f -> f == Materials.Helium.mGas);
+        } else if (Materials.Hydrogen.getGas(1).equals(allowedFluid)) {
+            return super.createDrainableFluidSlot().setEmptyCanFillFilter(f -> f == Materials.Hydrogen.mGas);
+        }
+        return super.createDrainableFluidSlot().setEmptyCanFillFilter(null);
     }
 }

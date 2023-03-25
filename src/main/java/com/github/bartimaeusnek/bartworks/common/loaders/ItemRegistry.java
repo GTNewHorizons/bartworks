@@ -211,6 +211,8 @@ public class ItemRegistry {
     public static ItemStack eic;
     public static ItemStack cal;
     public static ItemStack compressedHatch;
+    public static ItemStack heliumHatch;
+    public static ItemStack hydrogenHatch;
     public static ItemStack giantOutputHatch;
 
     public static ItemStack[][][] TecTechLaserAdditions = new ItemStack[3][4][4];
@@ -346,7 +348,18 @@ public class ItemRegistry {
             ItemRegistry.compressedHatch = new GT_MetaTileEntity_CompressedFluidHatch(
                     ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 8,
                     "CompressedFluidHatch",
-                    "Liquid Air Fluid Hatch").getStackForm(1L);
+                    "Liquid Air Fluid Hatch",
+                    Materials.LiquidAir.getFluid(1)).getStackForm(1L);
+            ItemRegistry.hydrogenHatch = new GT_MetaTileEntity_CompressedFluidHatch(
+                    ConfigHandler.IDOffset + GT_Values.VN.length * 9 + 55,
+                    "HydrogenHatch",
+                    "Hydrogen Input Hatch",
+                    Materials.Hydrogen.getGas(1)).getStackForm(1L);
+            ItemRegistry.heliumHatch = new GT_MetaTileEntity_CompressedFluidHatch(
+                    ConfigHandler.IDOffset + GT_Values.VN.length * 9 + 56,
+                    "HeliumHatch",
+                    "Helium Input Hatch",
+                    Materials.Helium.getGas(1)).getStackForm(1L);
             ItemRegistry.giantOutputHatch = new GT_MetaTileEntity_GiantOutputHatch(
                     ConfigHandler.IDOffset + GT_Values.VN.length * 8 + 9,
                     "GiantOutputHatch",
