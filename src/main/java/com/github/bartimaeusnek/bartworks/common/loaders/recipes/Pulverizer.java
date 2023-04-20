@@ -1,5 +1,6 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
+import gregtech.api.enums.MaterialsUEVplus;
 import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry;
@@ -65,7 +66,7 @@ public class Pulverizer implements Runnable {
                 BW_Util.getMachineVoltageFromTier(11));
         GT_Values.RA.addPulveriserRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[1], 1, 0),
-                new ItemStack[] { Materials.BorosilicateGlass.getDust(9), Materials.TranscendentMetal.getDust(8) },
+                new ItemStack[] { Materials.BorosilicateGlass.getDust(9), MaterialsUEVplus.TranscendentMetal.getDust(8) },
                 null,
                 800,
                 BW_Util.getMachineVoltageFromTier(12));
