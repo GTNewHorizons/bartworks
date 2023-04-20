@@ -21,7 +21,7 @@ dependencies {
     compileOnly("com.github.GTNewHorizons:ForestryMC:4.6.5:api") {
         transitive = false
     }
-    compileOnly("com.github.GTNewHorizons:Railcraft:9.14.1e:api") {
+    compileOnly("com.github.GTNewHorizons:Railcraft:9.14.1:api") {
         transitive = false
     }
 
