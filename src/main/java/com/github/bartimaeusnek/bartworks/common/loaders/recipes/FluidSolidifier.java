@@ -1,6 +1,5 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
-import gregtech.api.enums.MaterialsUEVplus;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -10,6 +9,7 @@ import com.github.bartimaeusnek.bartworks.util.BW_Util;
 
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 
 public class FluidSolidifier implements Runnable {
 
