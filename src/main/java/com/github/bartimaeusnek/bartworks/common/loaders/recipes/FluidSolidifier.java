@@ -1,5 +1,6 @@
 package com.github.bartimaeusnek.bartworks.common.loaders.recipes;
 
+import gregtech.api.enums.MaterialsUEVplus;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -72,7 +73,7 @@ public class FluidSolidifier implements Runnable {
                 BW_Util.getMachineVoltageFromTier(10));
         GT_Values.RA.addFluidSolidifierRecipe(
                 new ItemStack(ItemRegistry.bw_glasses[0], 1, 0),
-                Materials.TranscendentMetal.getMolten(1152),
+                MaterialsUEVplus.TranscendentMetal.getMolten(1152),
                 new ItemStack(ItemRegistry.bw_glasses[1], 1, 0),
                 800,
                 BW_Util.getMachineVoltageFromTier(11));
