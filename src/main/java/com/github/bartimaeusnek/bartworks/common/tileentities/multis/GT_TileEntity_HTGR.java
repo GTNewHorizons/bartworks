@@ -296,8 +296,11 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         int meta = (this.fueltype * HTGRMaterials.MATERIALS_PER_FUEL) + HTGRMaterials.BURNED_OUT_FUEL_INDEX;
 
-        this.mOutputItems = new ItemStack[] { new ItemStack(HTGRMaterials.aHTGR_Materials, burnedballs, meta),
+        ItemStack[] toOutput = new ItemStack[] { new ItemStack(HTGRMaterials.aHTGR_Materials, burnedballs, meta),
                 new ItemStack(HTGRMaterials.aHTGR_Materials, toReduce, meta + 1) };
+        if (!canOutputAll(toOutput)) return false;
+
+        this.mOutputItems = toOutput;
 
         // this.updateSlots(); // not needed ?
 
@@ -454,6 +457,11 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         GT_Utility.sendChatToPlayer(
                 aPlayer,
                 "HTGR is now running in " + (this.empty ? "emptying mode." : "normal Operation"));
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return true;
     }
 
     public static class HTGRMaterials {
