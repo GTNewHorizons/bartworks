@@ -290,7 +290,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         int toReduce = MathUtils.floorInt((double) this.fuelsupply * 0.025D * eff);
 
-        this.fuelsupply -= toReduce;
+        final int originalToReduce = toReduce;
         int burnedballs = toReduce / 64;
         if (burnedballs > 0) toReduce -= burnedballs * 64;
 
@@ -300,6 +300,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 new ItemStack(HTGRMaterials.aHTGR_Materials, toReduce, meta + 1) };
         if (!canOutputAll(toOutput)) return false;
 
+        this.fuelsupply -= originalToReduce;
         this.mOutputItems = toOutput;
 
         // this.updateSlots(); // not needed ?
