@@ -643,7 +643,7 @@ public class WerkstoffLoader {
             new short[] { 0x14, 0x39, 0x7F, 0 },
             "Oganesson",
             "Og",
-            new Werkstoff.Stats().setProtons(118).setMass(294).setGas(true),
+            new Werkstoff.Stats().setProtons(118).setMass(294).setGas(true).setEbfGasRecipeTimeMultiplier(0.2d),
             Werkstoff.Types.ELEMENT,
             new Werkstoff.GenerationFeatures().disable().addCells(),
             38,

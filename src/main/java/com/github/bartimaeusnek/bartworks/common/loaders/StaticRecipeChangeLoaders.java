@@ -86,6 +86,7 @@ public class StaticRecipeChangeLoaders {
             gtEbfGasRecipeTimeMultipliers = new TObjectDoubleHashMap<>(10, 0.5F, -1.0D); // keep default value as -1
             // Example to make Argon cut recipe times into a third of the original:
             // gtEbfGasRecipeTimeMultipliers.put(Materials.Argon, 1.0D / 3.0D);
+            gtEbfGasRecipeTimeMultipliers.put(Materials.Argon, 0.54687D);
         }
         if (gtEbfGasRecipeConsumptionMultipliers == null) {
             // For Werkstoff gases, use Werkstoff.Stats.setEbfGasRecipeConsumedAmountMultiplier
