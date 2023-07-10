@@ -4,7 +4,6 @@ import static gregtech.api.enums.GT_HatchElement.Energy;
 import static gregtech.api.enums.GT_Values.V;
 import static gregtech.api.enums.Mods.TecTech;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +17,6 @@ import net.minecraft.world.World;
 
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
-import com.github.bartimaeusnek.bartworks.util.MegaUtils;
 import com.github.bartimaeusnek.crossmod.tectech.TecTechEnabledMulti;
 import com.github.bartimaeusnek.crossmod.tectech.helper.TecTechUtils;
 import com.github.bartimaeusnek.crossmod.tectech.tileentites.tiered.LowPowerLaser;
@@ -32,9 +30,7 @@ import cpw.mods.fml.common.Optional;
 import gregtech.api.enums.Mods;
 import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
-import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_ExtendedPowerMultiBlockBase;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Muffler;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
@@ -46,7 +42,7 @@ import gregtech.api.util.IGT_HatchAdder;
         modid = Mods.Names.TECTECH,
         striprefs = true)
 public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_MegaMultiBlockBase<T>>
-        extends GT_MetaTileEntity_EnhancedMultiBlockBase<T> implements TecTechEnabledMulti {
+        extends GT_MetaTileEntity_ExtendedPowerMultiBlockBase<T> implements TecTechEnabledMulti {
 
     protected GT_TileEntity_MegaMultiBlockBase(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -56,28 +52,13 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
         super(aName);
     }
 
-    long lEUt = 0;
-    private int energyTier = -1;
-
-    public ArrayList<Object> TTTunnels = new ArrayList<>();
-    public ArrayList<Object> TTMultiAmp = new ArrayList<>();
-
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        this.lEUt = aNBT.getLong("lEUt");
-    }
-
-    @Override
-    public void clearHatches() {
-        super.clearHatches();
-        this.energyTier = -1;
-    }
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-        aNBT.setLong("lEUt", lEUt);
+        // Migration code
+        if (aNBT.hasKey("lEUt")) {
+            this.lEUt = aNBT.getLong("lEUt");
+        }
     }
 
     @SuppressWarnings("rawtypes")
@@ -99,38 +80,26 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Optional.Method(modid = Mods.Names.TECTECH)
     public List getTecTechEnergyTunnels() {
-        return TTTunnels;
+        return mExoticEnergyHatches;
     }
 
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Optional.Method(modid = Mods.Names.TECTECH)
     public List getTecTechEnergyMultis() {
-        return TTMultiAmp;
-    }
-
-    @Override
-    public boolean drainEnergyInput(long aEU) {
-        if (TecTech.isModLoaded()) return TecTechUtils.drainEnergyMEBFTecTech(this, aEU);
-        return MegaUtils.drainEnergyMegaVanilla(this, aEU);
-    }
-
-    @Override
-    public long getMaxInputVoltage() {
-        if (TecTech.isModLoaded()) return TecTechUtils.getMaxInputVoltage(this);
-        return super.getMaxInputVoltage();
+        return mExoticEnergyHatches;
     }
 
     @Deprecated
     @Override
     protected void calculateOverclockedNessMulti(int aEUt, int aDuration, int mAmperage, long maxInputVoltage) {
-        calculateOverclockedNessMultiInternal((long) aEUt, aDuration, maxInputVoltage, false);
+        calculateOverclockedNessMultiInternal(aEUt, aDuration, maxInputVoltage, false);
     }
 
     @Deprecated
     @Override
     protected void calculatePerfectOverclockedNessMulti(int aEUt, int aDuration, int mAmperage, long maxInputVoltage) {
-        calculateOverclockedNessMultiInternal((long) aEUt, aDuration, maxInputVoltage, true);
+        calculateOverclockedNessMultiInternal(aEUt, aDuration, maxInputVoltage, true);
     }
 
     @Override
@@ -325,51 +294,6 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
     }
 
     @Override
-    public boolean addEnergyInputToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        if (TecTech.isModLoaded()) {
-            int tier = TecTechUtils.addEnergyInputToMachineList(this, aTileEntity, aBaseCasingIndex, energyTier);
-            if (energyTier == -1) energyTier = tier;
-            return tier != -1;
-        } else {
-            if (aTileEntity == null) {
-                return false;
-            } else {
-                IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-                if (aMetaTileEntity == null) {
-                    return false;
-                } else if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Energy) {
-                    if (energyTier == -1) energyTier = ((GT_MetaTileEntity_Hatch_Energy) aMetaTileEntity).mTier;
-                    if (((GT_MetaTileEntity_Hatch_Energy) aMetaTileEntity).mTier != energyTier) return false;
-                    ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-                    return this.mEnergyHatches.add((GT_MetaTileEntity_Hatch_Energy) aMetaTileEntity);
-                } else {
-                    return false;
-                }
-            }
-        }
-    }
-
-    @Override
-    public void stopMachine() {
-        this.lEUt = 0L;
-        super.stopMachine();
-    }
-
-    @Override
-    public boolean onRunningTick(ItemStack aStack) {
-        if (this.lEUt > 0) {
-            this.addEnergyOutput(this.lEUt * (long) this.mEfficiency / 10000L);
-            return true;
-        } else if (this.lEUt < 0
-                && !this.drainEnergyInput((-this.lEUt) * 10000L / (long) Math.max(1000, this.mEfficiency))) {
-                    this.stopMachine();
-                    return false;
-                } else {
-                    return true;
-                }
-    }
-
-    @Override
     public boolean isCorrectMachinePart(ItemStack itemStack) {
         return true;
     }
@@ -414,7 +338,7 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
 
         @Override
         public long count(GT_TileEntity_MegaMultiBlockBase<?> t) {
-            return t.mEnergyHatches.size() + t.TTTunnels.size() + t.TTMultiAmp.size();
+            return t.mEnergyHatches.size() + t.mExoticEnergyHatches.size();
         }
     }
 
