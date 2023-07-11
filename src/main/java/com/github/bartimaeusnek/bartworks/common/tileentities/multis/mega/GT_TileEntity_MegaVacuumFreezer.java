@@ -17,11 +17,8 @@ import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTI
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.onElementPass;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose;
-import static gregtech.api.enums.GT_HatchElement.InputBus;
-import static gregtech.api.enums.GT_HatchElement.InputHatch;
-import static gregtech.api.enums.GT_HatchElement.Maintenance;
-import static gregtech.api.enums.GT_HatchElement.OutputBus;
-import static gregtech.api.enums.GT_HatchElement.OutputHatch;
+import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.enums.GT_HatchElement.ExoticEnergy;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_VACUUM_FREEZER;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_VACUUM_FREEZER_ACTIVE;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_VACUUM_FREEZER_ACTIVE_GLOW;
@@ -147,13 +144,9 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
             .addElement('=', StructureElementAirNoHint.getInstance())
             .addElement(
                     'c',
-                    buildHatchAdder(GT_TileEntity_MegaVacuumFreezer.class).atLeast(
-                            TTEnabledEnergyHatchElement.INSTANCE,
-                            InputHatch,
-                            InputBus,
-                            OutputHatch,
-                            OutputBus,
-                            Maintenance).casingIndex(CASING_INDEX).dot(1)
+                    buildHatchAdder(GT_TileEntity_MegaVacuumFreezer.class)
+                            .atLeast(Energy.or(ExoticEnergy), InputHatch, InputBus, OutputHatch, OutputBus, Maintenance)
+                            .casingIndex(CASING_INDEX).dot(1)
                             .buildAndChain(onElementPass(x -> x.mCasing++, ofBlock(GregTech_API.sBlockCasings2, 1))))
             .build();
 

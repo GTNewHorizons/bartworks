@@ -17,11 +17,7 @@ import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTI
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofChain;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose;
-import static gregtech.api.enums.GT_HatchElement.InputBus;
-import static gregtech.api.enums.GT_HatchElement.InputHatch;
-import static gregtech.api.enums.GT_HatchElement.Maintenance;
-import static gregtech.api.enums.GT_HatchElement.OutputBus;
-import static gregtech.api.enums.GT_HatchElement.OutputHatch;
+import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR_ACTIVE;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_LARGE_CHEMICAL_REACTOR_ACTIVE_GLOW;
@@ -209,9 +205,8 @@ public class GT_TileEntity_MegaChemicalReactor
             .addElement('r', Maintenance.newAny(CASING_INDEX, 2))
             .addElement(
                     'e',
-                    ofChain(
-                            TTEnabledEnergyHatchElement.INSTANCE.newAny(CASING_INDEX, 3),
-                            ofBlock(GregTech_API.sBlockCasings8, 0)))
+                    buildHatchAdder(GT_TileEntity_MegaChemicalReactor.class).atLeast(Energy.or(ExoticEnergy))
+                            .casingIndex(CASING_INDEX).dot(3).buildAndChain(GregTech_API.sBlockCasings8, 0))
             .addElement('c', ofChain(ofBlock(GregTech_API.sBlockCasings4, 7), ofBlock(GregTech_API.sBlockCasings5, 13)))
             .addElement(
                     'g',

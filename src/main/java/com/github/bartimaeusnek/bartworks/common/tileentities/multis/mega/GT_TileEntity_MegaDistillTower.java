@@ -17,11 +17,7 @@ import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTI
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.onElementPass;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose;
-import static gregtech.api.enums.GT_HatchElement.InputBus;
-import static gregtech.api.enums.GT_HatchElement.InputHatch;
-import static gregtech.api.enums.GT_HatchElement.Maintenance;
-import static gregtech.api.enums.GT_HatchElement.OutputBus;
-import static gregtech.api.enums.GT_HatchElement.OutputHatch;
+import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER_ACTIVE;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER_ACTIVE_GLOW;
@@ -143,22 +139,20 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                 .addElement('=', StructureElementAirNoHint.getInstance())
                 .addElement(
                         'b',
-                        buildHatchAdder(GT_TileEntity_MegaDistillTower.class)
-                                .atLeast(
-                                        InputHatch,
-                                        OutputHatch,
-                                        InputBus,
-                                        OutputBus,
-                                        Maintenance,
-                                        TTEnabledEnergyHatchElement.INSTANCE)
-                                .casingIndex(CASING_INDEX).dot(1).buildAndChain(
+                        buildHatchAdder(GT_TileEntity_MegaDistillTower.class).atLeast(
+                                InputHatch,
+                                OutputHatch,
+                                InputBus,
+                                OutputBus,
+                                Maintenance,
+                                Energy.or(ExoticEnergy)).casingIndex(CASING_INDEX).dot(1).buildAndChain(
                                         onElementPass(
                                                 GT_TileEntity_MegaDistillTower::onCasingFound,
                                                 ofBlock(GregTech_API.sBlockCasings4, 1))))
                 .addElement(
                         'l',
                         buildHatchAdder(GT_TileEntity_MegaDistillTower.class)
-                                .atLeast(layeredOutputHatch, Maintenance, TTEnabledEnergyHatchElement.INSTANCE)
+                                .atLeast(layeredOutputHatch, Maintenance, Energy.or(ExoticEnergy))
                                 .casingIndex(CASING_INDEX).dot(1).buildAndChain(
                                         onElementPass(
                                                 GT_TileEntity_MegaDistillTower::onCasingFound,

@@ -17,9 +17,8 @@ import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTI
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
-import static gregtech.api.enums.GT_HatchElement.InputHatch;
-import static gregtech.api.enums.GT_HatchElement.Maintenance;
-import static gregtech.api.enums.GT_HatchElement.OutputHatch;
+import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.enums.GT_HatchElement.ExoticEnergy;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_OIL_CRACKER;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_OIL_CRACKER_ACTIVE;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_OIL_CRACKER_ACTIVE_GLOW;
@@ -117,9 +116,8 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
                             .newAny(CASING_INDEX, 3))
             .addElement(
                     'm',
-                    buildHatchAdder(GT_TileEntity_MegaOilCracker.class)
-                            .atLeast(TTEnabledEnergyHatchElement.INSTANCE, Maintenance).casingIndex(CASING_INDEX).dot(1)
-                            .buildAndChain(GregTech_API.sBlockCasings4, 1))
+                    buildHatchAdder(GT_TileEntity_MegaOilCracker.class).atLeast(Energy.or(ExoticEnergy), Maintenance)
+                            .casingIndex(CASING_INDEX).dot(1).buildAndChain(GregTech_API.sBlockCasings4, 1))
             .addElement(
                     'M',
                     InputHatch.withAdder(GT_TileEntity_MegaOilCracker::addMiddleInputToMachineList)

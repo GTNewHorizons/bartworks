@@ -313,6 +313,11 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
         return 10000;
     }
 
+    /**
+     * @deprecated Since the multi now utilized {@link GT_MetaTileEntity_ExtendedPowerMultiBlockBase}, just use
+     *             Energy.or(ExoticEnergy)
+     */
+    @Deprecated
     protected enum TTEnabledEnergyHatchElement implements IHatchElement<GT_TileEntity_MegaMultiBlockBase<?>> {
 
         INSTANCE;
