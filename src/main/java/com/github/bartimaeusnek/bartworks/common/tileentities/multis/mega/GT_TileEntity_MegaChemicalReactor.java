@@ -123,11 +123,6 @@ public class GT_TileEntity_MegaChemicalReactor
     }
 
     @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-    }
-
-    @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
         if (!aNBT.hasKey(BATCH_MODE_NBT_KEY)) {
