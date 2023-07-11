@@ -30,6 +30,7 @@ import cpw.mods.fml.common.Optional;
 import gregtech.api.enums.Mods;
 import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_ExtendedPowerMultiBlockBase;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Muffler;
@@ -311,6 +312,12 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
     @Override
     public int getMaxEfficiency(ItemStack itemStack) {
         return 10000;
+    }
+
+    @Override
+    protected void setProcessingLogicPower(ProcessingLogic logic) {
+        logic.setAvailableVoltage(getMaxInputEu());
+        logic.setAvailableAmperage(1);
     }
 
     /**
