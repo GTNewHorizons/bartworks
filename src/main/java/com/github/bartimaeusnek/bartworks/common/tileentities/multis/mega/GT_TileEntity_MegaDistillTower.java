@@ -14,8 +14,6 @@
 package com.github.bartimaeusnek.bartworks.common.tileentities.multis.mega;
 
 import static com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference.MULTIBLOCK_ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS;
-import static com.github.bartimaeusnek.bartworks.util.RecipeFinderForParallel.getMultiOutput;
-import static com.github.bartimaeusnek.bartworks.util.RecipeFinderForParallel.handleParallelRecipe;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.onElementPass;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose;
@@ -24,8 +22,6 @@ import static gregtech.api.enums.GT_HatchElement.InputHatch;
 import static gregtech.api.enums.GT_HatchElement.Maintenance;
 import static gregtech.api.enums.GT_HatchElement.OutputBus;
 import static gregtech.api.enums.GT_HatchElement.OutputHatch;
-import static gregtech.api.enums.GT_Values.V;
-import static gregtech.api.enums.Mods.TecTech;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER_ACTIVE;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_DISTILLATION_TOWER_ACTIVE_GLOW;
@@ -45,9 +41,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
-import com.github.bartimaeusnek.bartworks.util.BW_Util;
-import com.github.bartimaeusnek.bartworks.util.Pair;
-import com.github.bartimaeusnek.crossmod.tectech.helper.TecTechUtils;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
@@ -56,17 +49,16 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 
 import cpw.mods.fml.common.Optional;
 import gregtech.api.GregTech_API;
-import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Mods;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Output;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_OverclockCalculator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 
@@ -295,10 +287,6 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        if (TecTech.isModLoaded()) {
-            this.getTecTechEnergyMultis().clear();
-            this.getTecTechEnergyTunnels().clear();
-        }
         // reset
         mOutputHatchesByLayer.forEach(List::clear);
         mHeight = 1;
@@ -403,87 +391,8 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
     }
 
     @Override
-    public boolean checkRecipe(ItemStack aStack) {
-
-        ItemStack[] tItems = getCompactedInputs();
-
-        ArrayList<FluidStack> tFluidList = this.getStoredFluids();
-
-        for (int i = 0; i < tFluidList.size() - 1; ++i) {
-            for (int j = i + 1; j < tFluidList.size(); ++j) {
-                if (GT_Utility.areFluidsEqual(tFluidList.get(i), tFluidList.get(j))) {
-                    if (tFluidList.get(i).amount < tFluidList.get(j).amount) {
-                        tFluidList.remove(i--);
-                        break;
-                    }
-                    tFluidList.remove(j--);
-                }
-            }
-        }
-
-        long nominalV = TecTech.isModLoaded() ? TecTechUtils.getnominalVoltageTT(this)
-                : BW_Util.getnominalVoltage(this);
-        byte tTier = (byte) Math.max(0, Math.min(GT_Utility.getTier(nominalV), V.length - 1));
-
-        FluidStack[] tFluids = tFluidList.toArray(new FluidStack[0]);
-        if (tFluids.length > 0) {
-            for (FluidStack tFluid : tFluids) {
-                ArrayList<FluidStack> outputFluids = new ArrayList<>();
-                ArrayList<ItemStack> outputItems = new ArrayList<>();
-                Pair<ArrayList<FluidStack>, ArrayList<ItemStack>> Outputs;
-                int processed = 0;
-                boolean found_Recipe = false;
-                GT_Recipe tRecipe = GT_Recipe.GT_Recipe_Map.sDistillationRecipes.findRecipe(
-                        this.getBaseMetaTileEntity(),
-                        false,
-                        GT_Values.V[tTier],
-                        new FluidStack[] { tFluid },
-                        tItems);
-                float tBatchMultiplier = 1.0f;
-                if (tRecipe != null) {
-                    found_Recipe = true;
-                    long tMaxPara = Math.min(ConfigHandler.megaMachinesMax, nominalV / tRecipe.mEUt);
-                    if (batchMode && tMaxPara == ConfigHandler.megaMachinesMax) {
-                        tMaxPara *= 128;
-                    }
-                    int tCurrentPara = handleParallelRecipe(tRecipe, new FluidStack[] { tFluid }, null, (int) tMaxPara);
-                    tBatchMultiplier = batchMode ? (float) Math.max(tCurrentPara / ConfigHandler.megaMachinesMax, 1.0f)
-                            : 1.0f;
-                    this.updateSlots();
-                    processed = Math.min(tCurrentPara, ConfigHandler.megaMachinesMax);
-                    Outputs = getMultiOutput(tRecipe, tCurrentPara);
-                    outputFluids = Outputs.getKey();
-                    outputItems = Outputs.getValue();
-                }
-
-                if (!found_Recipe) continue;
-                this.mEfficiency = (10000 - (this.getIdealStatus() - this.getRepairStatus()) * 1000);
-                this.mEfficiencyIncrease = 10000;
-
-                GT_OverclockCalculator calculator = new GT_OverclockCalculator().setRecipeEUt(tRecipe.mEUt)
-                        .setParallel(processed).setDuration(tRecipe.mDuration).setEUt(nominalV).calculate();
-
-                this.mMaxProgresstime = calculator.getDuration();
-                this.lEUt = calculator.getConsumption();
-
-                // In case recipe is too OP for that machine
-                if (this.mMaxProgresstime == Integer.MAX_VALUE - 1 && this.lEUt == Integer.MAX_VALUE - 1) return false;
-                if (this.lEUt > 0) {
-                    this.lEUt = (-this.lEUt);
-                }
-
-                if (batchMode) {
-                    this.mMaxProgresstime = (int) Math.ceil(this.mMaxProgresstime * tBatchMultiplier);
-                }
-
-                this.mMaxProgresstime = Math.max(1, this.mMaxProgresstime);
-                this.mOutputFluids = outputFluids.toArray(new FluidStack[0]);
-                if (!outputItems.isEmpty()) this.mOutputItems = outputItems.toArray(new ItemStack[0]);
-                else this.mOutputItems = null;
-                return true;
-            }
-        }
-        return false;
+    protected ProcessingLogic createProcessingLogic() {
+        return new ProcessingLogic().setMaxParallel(ConfigHandler.megaMachinesMax);
     }
 
     @Override
@@ -497,6 +406,11 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
 
     @Override
     public boolean supportsBatchMode() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
         return true;
     }
 }
