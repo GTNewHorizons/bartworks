@@ -49,6 +49,7 @@ import gregtech.api.enums.Mods;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.ITexture;
+import gregtech.api.interfaces.fluid.IFluidStore;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
@@ -396,6 +397,11 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
             if (!dumpFluid(mOutputHatchesByLayer.get(i), tStack, true))
                 dumpFluid(mOutputHatchesByLayer.get(i), tStack, false);
         }
+    }
+
+    @Override
+    public List<? extends IFluidStore> getFluidOutputSlots(FluidStack[] toOutput) {
+        return this.getFluidOutputSlotsByLayer(toOutput, mOutputHatchesByLayer);
     }
 
     @Override
