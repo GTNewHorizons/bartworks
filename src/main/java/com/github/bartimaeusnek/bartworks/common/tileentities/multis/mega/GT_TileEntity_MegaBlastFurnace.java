@@ -200,7 +200,6 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        this.circuitMode = aNBT.getByte("circuitMode");
         this.glassTier = aNBT.getByte("glasTier");
         if (!aNBT.hasKey(INPUT_SEPARATION_NBT_KEY)) {
             inputSeparation = aNBT.getBoolean("isBussesSeparate");
@@ -208,23 +207,6 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         if (!aNBT.hasKey(BATCH_MODE_NBT_KEY)) {
             batchMode = aNBT.getBoolean("mUseMultiparallelMode");
         }
-    }
-
-    private byte circuitMode = 0;
-
-    @Override
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
-        if (aPlayer.isSneaking()) {
-            --circuitMode;
-            if (circuitMode < 0) circuitMode = 24;
-        } else {
-            ++circuitMode;
-            if (circuitMode > 24) circuitMode = 0;
-        }
-
-        GT_Utility.sendChatToPlayer(
-                aPlayer,
-                circuitMode > 0 ? "MEBF will prioritise circuit: " + circuitMode : "Circuit prioritisation disabled.");
     }
 
     @Override
@@ -267,7 +249,6 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         aNBT.setByte("glasTier", glassTier);
-        aNBT.setByte("circuitMode", circuitMode);
     }
 
     @Override
@@ -401,7 +382,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
             }
         }
 
-        this.mHeatingCapacity = (int) getCoilLevel().getHeat() + 100 * (BW_Util.getTier(getMaxInputPower()) - 2);
+        this.mHeatingCapacity = (int) getCoilLevel().getHeat() + 100 * (BW_Util.getTier((getMaxInputEu())) - 2);
 
         return true;
     }
