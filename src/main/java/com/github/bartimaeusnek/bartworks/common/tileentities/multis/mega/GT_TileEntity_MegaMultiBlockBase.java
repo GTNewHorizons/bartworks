@@ -1,12 +1,6 @@
 package com.github.bartimaeusnek.bartworks.common.tileentities.multis.mega;
 
-import static gregtech.api.enums.GT_HatchElement.Energy;
-import static gregtech.api.enums.GT_Values.V;
-import static gregtech.api.enums.Mods.TecTech;
-
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -17,33 +11,20 @@ import net.minecraft.world.World;
 
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
-import com.github.bartimaeusnek.crossmod.tectech.TecTechEnabledMulti;
-import com.github.bartimaeusnek.crossmod.tectech.helper.TecTechUtils;
-import com.github.bartimaeusnek.crossmod.tectech.tileentites.tiered.LowPowerLaser;
-import com.github.technus.tectech.thing.metaTileEntity.hatch.GT_MetaTileEntity_Hatch_EnergyMulti;
-import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.StructureLibAPI;
 import com.gtnewhorizon.structurelib.structure.AutoPlaceEnvironment;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
 
-import cpw.mods.fml.common.Optional;
-import gregtech.api.enums.Mods;
-import gregtech.api.interfaces.IHatchElement;
-import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_ExtendedPowerMultiBlockBase;
+import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Muffler;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
 import gregtech.api.util.GT_Utility;
-import gregtech.api.util.IGT_HatchAdder;
 
-@Optional.Interface(
-        iface = "com.github.bartimaeusnek.crossmod.tectech.TecTechEnabledMulti",
-        modid = Mods.Names.TECTECH,
-        striprefs = true)
 public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_MegaMultiBlockBase<T>>
-        extends GT_MetaTileEntity_ExtendedPowerMultiBlockBase<T> implements TecTechEnabledMulti {
+        extends GT_MetaTileEntity_ExtendedPowerMultiBlockBase<T> {
 
     protected GT_TileEntity_MegaMultiBlockBase(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -62,58 +43,23 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
         }
     }
 
-    @SuppressWarnings("rawtypes")
-    @Optional.Method(modid = Mods.Names.TECTECH)
-    boolean areLazorsLowPowa() {
-        Collection collection = this.getTecTechEnergyTunnels();
-        if (!collection.isEmpty()) for (Object tecTechEnergyMulti : collection)
-            if (!(tecTechEnergyMulti instanceof LowPowerLaser)) return false;
-        return true;
-    }
-
-    @Override
-    @Optional.Method(modid = Mods.Names.TECTECH)
-    public List<GT_MetaTileEntity_Hatch_Energy> getVanillaEnergyHatches() {
-        return this.mEnergyHatches;
-    }
-
-    @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Optional.Method(modid = Mods.Names.TECTECH)
-    public List getTecTechEnergyTunnels() {
-        return mExoticEnergyHatches;
-    }
-
-    @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Optional.Method(modid = Mods.Names.TECTECH)
-    public List getTecTechEnergyMultis() {
-        return mExoticEnergyHatches;
-    }
-
-    @Deprecated
-    @Override
-    protected void calculateOverclockedNessMulti(int aEUt, int aDuration, int mAmperage, long maxInputVoltage) {
-        calculateOverclockedNessMultiInternal(aEUt, aDuration, maxInputVoltage, false);
-    }
-
-    @Deprecated
-    @Override
-    protected void calculatePerfectOverclockedNessMulti(int aEUt, int aDuration, int mAmperage, long maxInputVoltage) {
-        calculateOverclockedNessMultiInternal(aEUt, aDuration, maxInputVoltage, true);
-    }
-
-    @Override
-    public String[] getInfoData() {
-        return TecTech.isModLoaded() ? this.getInfoDataArray(this) : super.getInfoData();
-    }
-
     protected String[] getExtendedInfoData() {
         return new String[0];
     }
 
+    protected long[] getCurrentInfoData() {
+        long storedEnergy = 0, maxEnergy = 0;
+        for (GT_MetaTileEntity_Hatch hatch : getExoticAndNormalEnergyHatchList()) {
+            if (GT_MetaTileEntity_MultiBlockBase.isValidMetaTileEntity(hatch)) {
+                storedEnergy += hatch.getBaseMetaTileEntity().getStoredEU();
+                maxEnergy += hatch.getBaseMetaTileEntity().getEUCapacity();
+            }
+        }
+        return new long[] { storedEnergy, maxEnergy };
+    }
+
     @Override
-    public String[] getInfoDataArray(GT_MetaTileEntity_MultiBlockBase multiBlockBase) {
+    public String[] getInfoData() {
         int mPollutionReduction = 0;
 
         for (GT_MetaTileEntity_Hatch_Muffler tHatch : this.mMufflerHatches) {
@@ -133,8 +79,7 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
             }
         }
 
-        long nominalV = TecTech.isModLoaded() ? TecTechUtils.getnominalVoltageTT(this)
-                : BW_Util.getnominalVoltage(this);
+        long nominalV = getMaxInputEu();
         String tName = BW_Util.getTierNameFromVoltage(nominalV);
         if (tName.equals("MAX+")) tName = EnumChatFormatting.OBFUSCATED + "MAX+";
 
@@ -169,7 +114,7 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
                         + GT_Utility.formatNumbers(this.getMaxInputVoltage())
                         + EnumChatFormatting.RESET
                         + " EU/t(*"
-                        + GT_Utility.formatNumbers(TecTechUtils.getMaxInputAmperage(this))
+                        + GT_Utility.formatNumbers(getMaxInputAmps())
                         + "A) = "
                         + EnumChatFormatting.YELLOW
                         + GT_Utility.formatNumbers(nominalV)
@@ -204,96 +149,6 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
         return combinedInfo;
     }
 
-    /**
-     * Calculates the overclock for megas. Will set this.mMaxProgressTime and this.lEUt automatically
-     *
-     * @deprecated Use GT_OverclockCalculator instead
-     *
-     * @param aEUt            EUt of the recipe
-     * @param aDuration       Duration of the recipe
-     * @param maxInputVoltage Max input voltage of the mega (nominal, so 1A)
-     * @param perfectOC       Flag if the multi has perfect OC
-     * @return Number of performed overclocks
-     */
-    @Deprecated
-    protected byte calculateOverclockedNessMultiInternal(long aEUt, int aDuration, long maxInputVoltage,
-            boolean perfectOC) {
-        byte mTier = (byte) Math.max(0, BW_Util.getTier(maxInputVoltage)), overclockCount = 0;
-        if (mTier == 0) {
-            // Long time calculation
-            long xMaxProgresstime = ((long) aDuration) << 1;
-            if (xMaxProgresstime > Integer.MAX_VALUE - 1) {
-                // make impossible if too long
-                this.lEUt = Integer.MAX_VALUE - 1;
-                this.mMaxProgresstime = Integer.MAX_VALUE - 1;
-            } else {
-                this.lEUt = aEUt >> 2;
-                this.mMaxProgresstime = (int) xMaxProgresstime;
-            }
-        } else {
-            // Long EUt calculation
-            long xEUt = aEUt;
-            // Isnt too low EUt check?
-            long tempEUt = Math.max(xEUt, V[1]);
-
-            this.mMaxProgresstime = aDuration;
-
-            while (tempEUt <= BW_Util.getTierVoltage(mTier - 1)) {
-                tempEUt <<= 2; // this actually controls overclocking
-                // xEUt *= 4;//this is effect of everclocking
-                this.mMaxProgresstime >>= perfectOC ? 2 : 1; // this is effect of overclocking
-                xEUt = this.mMaxProgresstime <= 0 ? xEUt >> 1 : xEUt << 2; // U know, if the time is less than 1 tick
-                                                                           // make the machine use less power
-                overclockCount++;
-            }
-
-            while (xEUt > maxInputVoltage && xEUt >= aEUt) {
-                // downclock one notch until we are good again, we have overshot.
-                xEUt >>= 2;
-                this.mMaxProgresstime <<= perfectOC ? 2 : 1;
-                overclockCount--;
-            }
-
-            if (xEUt < aEUt) {
-                xEUt <<= 2;
-                this.mMaxProgresstime >>= perfectOC ? 2 : 1;
-                overclockCount++;
-            }
-
-            this.lEUt = xEUt;
-            if (this.lEUt == 0) this.lEUt = 1;
-            if (this.mMaxProgresstime <= 0) this.mMaxProgresstime = 1; // set time to 1 tick
-        }
-        return overclockCount;
-    }
-
-    /**
-     * Calculates the overclock for megas. Will set this.mMaxProgressTime and this.lEUt automatically
-     *
-     * @deprecated Use GT_OverclockCalculator instead
-     *
-     * @param aEUt            EUt of the recipe
-     * @param aDuration       Duration of the recipe
-     * @param maxInputVoltage Max input voltage of the mega (nominal, so 1A)
-     */
-    protected void calculateOverclockedNessMulti(long aEUt, int aDuration, long maxInputVoltage) {
-        calculateOverclockedNessMultiInternal(aEUt, aDuration, maxInputVoltage, false);
-    }
-
-    /**
-     * Calculates the overclock for megas. Will set this.mMaxProgressTime and this.lEUt automatically
-     *
-     * @deprecated Use GT_OverclockCalculator instead
-     *
-     * @param aEUt            EUt of the recipe
-     * @param aDuration       Duration of the recipe
-     * @param maxInputVoltage Max input voltage of the mega (nominal, so 1A)
-     */
-    @Deprecated
-    protected void calculatePerfectOverclockedNessMulti(long aEUt, int aDuration, long maxInputVoltage) {
-        calculateOverclockedNessMultiInternal(aEUt, aDuration, maxInputVoltage, true);
-    }
-
     @Override
     public boolean isCorrectMachinePart(ItemStack itemStack) {
         return true;
@@ -318,40 +173,6 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
     protected void setProcessingLogicPower(ProcessingLogic logic) {
         logic.setAvailableVoltage(getMaxInputEu());
         logic.setAvailableAmperage(1);
-    }
-
-    /**
-     * @deprecated Since the multi now utilized {@link GT_MetaTileEntity_ExtendedPowerMultiBlockBase}, just use
-     *             Energy.or(ExoticEnergy)
-     */
-    @Deprecated
-    protected enum TTEnabledEnergyHatchElement implements IHatchElement<GT_TileEntity_MegaMultiBlockBase<?>> {
-
-        INSTANCE;
-
-        private static final List<? extends Class<? extends IMetaTileEntity>> mteClasses;
-
-        static {
-            ImmutableList.Builder<Class<? extends IMetaTileEntity>> builder = ImmutableList
-                    .<Class<? extends IMetaTileEntity>>builder().addAll(Energy.mteClasses());
-            if (TecTech.isModLoaded()) builder.add(GT_MetaTileEntity_Hatch_EnergyMulti.class);
-            mteClasses = builder.build();
-        }
-
-        @Override
-        public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
-            return mteClasses;
-        }
-
-        @Override
-        public IGT_HatchAdder<? super GT_TileEntity_MegaMultiBlockBase<?>> adder() {
-            return GT_TileEntity_MegaMultiBlockBase::addEnergyInputToMachineList;
-        }
-
-        @Override
-        public long count(GT_TileEntity_MegaMultiBlockBase<?> t) {
-            return t.mEnergyHatches.size() + t.mExoticEnergyHatches.size();
-        }
     }
 
     protected static class StructureElementAirNoHint<T> implements IStructureElement<T> {
