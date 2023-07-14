@@ -279,7 +279,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
         long amperage = getMaxInputAmps();
         long voltage = getAverageInputVoltage();
         // We allow one OC, if there is enough amperage, no matter which type of hatch is used
-        logic.setAvailableVoltage(amperage >= 4 ? voltage : voltage * 4);
+        logic.setAvailableVoltage(amperage >= 4 ? voltage * 4 : voltage);
         logic.setAvailableAmperage(amperage >= 4 ? amperage / 4 : amperage);
     }
 
