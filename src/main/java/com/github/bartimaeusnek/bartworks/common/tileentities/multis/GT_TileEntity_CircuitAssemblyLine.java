@@ -448,7 +448,6 @@ public class GT_TileEntity_CircuitAssemblyLine extends
             int z) {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         String imprintedWith = getTypeForDisplay();
-        if (!imprintedWith.equals("")) tag.setString("ImprintedWith", imprintedWith);
-
+        if (!imprintedWith.isEmpty()) tag.setString("ImprintedWith", imprintedWith);
     }
 }
