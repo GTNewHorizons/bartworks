@@ -78,7 +78,6 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_ParallelHelper;
 import gregtech.api.util.GT_Recipe;
 
 public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBase<GT_TileEntity_BioVat> {
@@ -252,12 +251,6 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
                 }
 
                 return CheckRecipeResultRegistry.SUCCESSFUL;
-            }
-
-            @NotNull
-            @Override
-            protected GT_ParallelHelper createParallelHelper(@NotNull GT_Recipe recipe) {
-                return super.createParallelHelper(recipe);
             }
 
             @NotNull

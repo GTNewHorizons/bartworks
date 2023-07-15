@@ -4,7 +4,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.StatCollector;
 
 import gregtech.api.recipe.check.CheckRecipeResult;
-import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.util.GT_Utility;
 
 public class ResultWrongSievert implements CheckRecipeResult {
@@ -17,7 +16,7 @@ public class ResultWrongSievert implements CheckRecipeResult {
     private NeededSievertType type;
     private int required;
 
-    ResultWrongSievert(int required, NeededSievertType type) {
+    public ResultWrongSievert(int required, NeededSievertType type) {
         this.required = required;
         this.type = type;
     }
@@ -83,9 +82,5 @@ public class ResultWrongSievert implements CheckRecipeResult {
      */
     public static CheckRecipeResult wrongSievert(int required) {
         return new ResultWrongSievert(required, NeededSievertType.EXACTLY);
-    }
-
-    static {
-        CheckRecipeResultRegistry.register(new ResultWrongSievert(0, NeededSievertType.EXACTLY));
     }
 }
