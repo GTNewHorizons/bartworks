@@ -30,7 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.Set;
 
 import net.minecraft.init.Blocks;
@@ -46,7 +45,6 @@ import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
-import com.github.bartimaeusnek.bartworks.util.Pair;
 import com.github.bartimaeusnek.bartworks.util.StreamUtils;
 import com.github.bartimaeusnek.bartworks.util.log.DebugLog;
 import com.github.bartimaeusnek.crossmod.BartWorksCrossmod;
@@ -639,126 +637,5 @@ public class StaticRecipeChangeLoaders {
                 || GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("industrialTnt", 1L))
                 || GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("dynamite", 1L))
                 || GT_Utility.areStacksEqual(input, ItemList.Block_Powderbarrel.get(1L)));
-    }
-
-    private static int getBlastLogic(GT_Recipe recipe) {
-        int ret = 0;
-
-        for (ItemStack stack : recipe.mInputs) {
-            if (stack != null) {
-                ret += Math.max(stack.stackSize, 1);
-            }
-        }
-
-        while (ret > 14) {
-            ret /= 10;
-        }
-
-        if (recipe.mFluidInputs.length != 0) ret += 10;
-
-        return ret;
-    }
-
-    private static int getLogicFuntion(GT_Recipe.GT_Recipe_Map gt_recipe_map, GT_Recipe recipe,
-            Pair<Integer, Integer> counts) {
-        if (gt_recipe_map == GT_Recipe.GT_Recipe_Map.sMultiblockChemicalRecipes)
-            return getChemicalLogic(recipe, counts);
-        else if (gt_recipe_map == GT_Recipe.GT_Recipe_Map.sBlastRecipes) return getBlastLogic(recipe);
-        throw new NoSuchMethodError("Could not find a Supported Method for " + gt_recipe_map.mUnlocalizedName);
-    }
-
-    private static int getChemicalLogic(GT_Recipe recipe, Pair<Integer, Integer> counts) {
-        Pair<Integer, Integer> toSet;
-
-        if (counts.getKey() == 0 || counts.getValue() == 0)
-            toSet = new Pair<>(Math.max(recipe.mFluidOutputs.length, recipe.mOutputs.length), 0);
-        else if (counts.getValue() > 2) toSet = new Pair<>(counts.getKey() + counts.getValue(), 1);
-        else toSet = counts;
-
-        return toSet.getValue() * 10 + toSet.getKey();
-    }
-
-    private static void transformCircuitRecipes(GT_Recipe.GT_Recipe_Map gtRecipeMap,
-            Map<GT_Recipe, Pair<Integer, Integer>> mapGtRecipeCounts) {
-        mapGtRecipeCounts.forEach(
-                (recipe, counts) -> StaticRecipeChangeLoaders.rewriteForCorrectCircuit(gtRecipeMap, recipe, counts));
-
-        gtRecipeMap.mRecipeList.clear();
-        gtRecipeMap.mRecipeList.addAll(mapGtRecipeCounts.keySet());
-
-        fixRecipeClashes(gtRecipeMap);
-    }
-
-    private static void fixRecipeClashes(GT_Recipe.GT_Recipe_Map gtRecipeMap) {
-        boolean hasClashes;
-        do {
-            hasClashes = false;
-            gtRecipeMap.reInit();
-            for (GT_Recipe re : gtRecipeMap.mRecipeList) {
-                if (gtRecipeMap.findRecipe(null, false, Long.MAX_VALUE, re.mFluidInputs, re.mInputs) != re) {
-                    hasClashes = true;
-                    fixRecipeCircuitClashes(re);
-                }
-            }
-        } while (hasClashes);
-    }
-
-    private static void fixRecipeCircuitClashes(GT_Recipe recipe) {
-        for (int i = 0; i < recipe.mInputs.length; i++) {
-            if (GT_Utility.areStacksEqual(GT_Utility.getIntegratedCircuit(Short.MAX_VALUE), recipe.mInputs[i])) {
-                int nudmg = recipe.mInputs[i].getItemDamage() + 1 > 24 ? 1 : recipe.mInputs[i].getItemDamage() + 1;
-                recipe.mInputs[i].setItemDamage(nudmg);
-            }
-        }
-    }
-
-    private static Map<GT_Recipe.GT_Recipe_Map, Map<GT_Recipe, Pair<Integer, Integer>>> getRecipesByCircuitID(
-            GT_Recipe.GT_Recipe_Map[] ref) {
-        return Arrays.stream(ref).collect(
-                Collectors.toMap(
-                        k -> k,
-                        k -> getArrayListMultiMapFromRecipeList(gatherNoCircuitRecipes(new HashSet<>(k.mRecipeList)))));
-    }
-
-    private static GT_Recipe rewriteForCorrectCircuit(GT_Recipe.GT_Recipe_Map gt_recipe_map, GT_Recipe recipe,
-            Pair<Integer, Integer> counts) {
-        ItemStack[] old = BW_Util.copyAndRemoveNulls(recipe.mInputs, ItemStack.class);
-        ItemStack[] nu = Arrays.copyOf(old, old.length + 1);
-
-        nu[old.length] = GT_Utility.getIntegratedCircuit( // Max 24, Min 1
-                Math.min(Math.max(getLogicFuntion(gt_recipe_map, recipe, counts), 1), 24));
-        recipe.mInputs = nu;
-
-        return recipe;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static Collection<GT_Recipe> gatherNoCircuitRecipes(Collection<GT_Recipe> mRecipeList) {
-        Collection<GT_Recipe> newColl;
-        try {
-            newColl = (Collection<GT_Recipe>) mRecipeList.getClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            newColl = new HashSet<>();
-        }
-
-        recipeloop: for (GT_Recipe r : mRecipeList) {
-            for (int i = 0; i < r.mInputs.length; i++)
-                if (GT_Utility.areStacksEqual(GT_Utility.getIntegratedCircuit(Short.MAX_VALUE), r.mInputs[i])) {
-                    continue recipeloop;
-                }
-            newColl.add(r);
-        }
-
-        return newColl;
-    }
-
-    private static Map<GT_Recipe, Pair<Integer, Integer>> getArrayListMultiMapFromRecipeList(
-            Collection<GT_Recipe> mRecipeList) {
-        return mRecipeList.stream().collect(
-                Collectors.toMap(
-                        recipe -> recipe,
-                        recipe -> new Pair<>(
-                                (int) Arrays.stream(recipe.mInputs).filter(Objects::nonNull).count(),
-                                (int) Arrays.stream(recipe.mFluidInputs).filter(Objects::nonNull).count())));
     }
 }

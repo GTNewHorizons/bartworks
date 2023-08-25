@@ -454,7 +454,6 @@ public class BWRecipes {
     public boolean addBacterialVatRecipe(ItemStack[] aInputs, BioCulture aCulture, FluidStack[] aFluidInputs,
             FluidStack[] aFluidOutputs, @Nonnegative int aDuration, @Nonnegative int aEUt, @Nonnegative int aSv,
             @Nonnegative int glasTier, int aSpecialValue, boolean exactSv) {
-        byte gTier = (byte) glasTier;
         int aSievert = 0;
         if (aSv >= 83 || aSv == 61 || aSv == 43) aSievert += aSv;
         aSievert = aSievert << 1;
@@ -462,7 +461,7 @@ public class BWRecipes {
         aSievert = aSievert << 2;
         aSievert = aSievert | specialToByte(aSpecialValue);
         aSievert = aSievert << 4;
-        aSievert = aSievert | gTier;
+        aSievert = aSievert | glasTier;
         return sBacteriaVat.addRecipe(
                 new BacteriaVatRecipe(
                         false,

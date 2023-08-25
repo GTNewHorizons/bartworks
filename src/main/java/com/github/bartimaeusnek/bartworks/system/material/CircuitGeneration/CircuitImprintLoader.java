@@ -117,15 +117,6 @@ public class CircuitImprintLoader {
         }
     }
 
-    @Deprecated
-    private static String getTypeFromOreDict(ItemStack[] outputs) {
-        int[] oreIDS = OreDictionary.getOreIDs(outputs[0]);
-
-        if (oreIDS.length < 1) return "";
-
-        return OreDictionary.getOreName(oreIDS[0]);
-    }
-
     private static boolean isCircuitOreDict(ItemStack item) {
         return BW_Util.isTieredCircuit(item)
                 || BW_Util.getOreNames(item).stream().anyMatch(s -> s.equals("circuitPrimitiveArray"));

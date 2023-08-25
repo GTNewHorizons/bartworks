@@ -107,17 +107,4 @@ public class BW_MetaGenerated_Ores extends BW_MetaGenerated_Blocks {
             }
         }
     }
-
-    @SuppressWarnings("unused")
-    private boolean checkForAir(IBlockAccess aWorld, int aX, int aY, int aZ) {
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                for (int z = -1; z <= 1; z++) {
-                    if (x == 0 && y == 0 && z == 0) continue;
-                    if (aWorld.getBlock(aX + x, aY + y, aZ + z).isAir(aWorld, aX + x, aY + y, aZ + z)) return true;
-                }
-            }
-        }
-        return false;
-    }
 }

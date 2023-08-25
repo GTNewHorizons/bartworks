@@ -52,10 +52,4 @@ class TooltipCache {
         }
         return Arrays.asList(new String(toTest).split(System.lineSeparator()));
     }
-
-    private static void checkSize() {
-        if (TooltipCache.cache.size() > Short.MAX_VALUE * 2) {
-            TooltipCache.cache.clear();
-        }
-    }
 }

@@ -133,7 +133,6 @@ public class BWCoreTransformer implements IClassTransformer {
                     String name_deObfs = "canDoRainSnowIce";
 
                     String dsc_deObfs = "(Lnet/minecraft/world/chunk/Chunk;)Z";
-                    String dsc_Obfs = "(Lapx;)Z";
                     for (int i = 0; i < methods.size(); i++) {
                         if (methods.get(i).name.equalsIgnoreCase(name_deObfs)) {
                             BWCore.BWCORE_LOG.info("Found " + name_deObfs + "! Removing!");
@@ -142,12 +141,7 @@ public class BWCoreTransformer implements IClassTransformer {
                         }
                     }
                     BWCore.BWCORE_LOG.info("Creating new " + name_deObfs + "!");
-                    MethodNode nu = new MethodNode(
-                            ACC_PUBLIC,
-                            name_deObfs,
-                            /* obfs ? dsc_Obfs : */ dsc_deObfs,
-                            null,
-                            new String[0]);
+                    MethodNode nu = new MethodNode(ACC_PUBLIC, name_deObfs, dsc_deObfs, null, new String[0]);
                     InsnList insnList = new InsnList();
                     insnList.add(new InsnNode(ICONST_0));
                     insnList.add(new InsnNode(IRETURN));

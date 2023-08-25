@@ -538,10 +538,9 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      * Output logic of the VM
      */
     private void handleOutputs() {
-        Pair<Integer, Boolean> stats = getOreDamage();
         final List<ItemStack> inputOres = this.getStoredInputs().stream().filter(GT_Utility::isOre)
                 .collect(Collectors.toList());
-        final ItemStack output = getOreItemStack(stats);
+        final ItemStack output = getOreItemStack(getOreDamage());
         if (inputOres.size() == 0
                 || (mBlacklist && inputOres.stream().allMatch(is -> !GT_Utility.areStacksEqual(is, output)))
                 || (!mBlacklist && inputOres.stream().anyMatch(is -> GT_Utility.areStacksEqual(is, output))))
