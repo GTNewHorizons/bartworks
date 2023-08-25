@@ -77,8 +77,8 @@ public class GT_Rockcutter_Item extends ItemTool implements IElectricItem {
         aList.add(BW_Tooltip_Reference.ADDED_BY_BARTWORKS.get());
     }
 
-    public void onUpdate(ItemStack aStack, World p_77663_2_, Entity p_77663_3_, int p_77663_4_, boolean p_77663_5_) {
     @Override
+    public void onUpdate(ItemStack aStack, World worldIn, Entity entityIn, int p_77663_4_, boolean p_77663_5_) {
         if (!ElectricItem.manager.canUse(aStack, 500 * this.multi)) {
             if (aStack.isItemEnchanted()) {
                 aStack.getTagCompound().removeTag("ench");

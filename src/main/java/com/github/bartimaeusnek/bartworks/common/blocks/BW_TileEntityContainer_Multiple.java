@@ -64,8 +64,8 @@ public class BW_TileEntityContainer_Multiple extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World worldObj, int x, int y, int z, EntityPlayer player, int p_149727_6_,
-            float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+    public boolean onBlockActivated(World worldObj, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
         if (worldObj.isRemote) {
             return true;
         }

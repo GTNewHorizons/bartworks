@@ -38,8 +38,8 @@ public class BW_GUIContainer_RotorBlock extends GuiWindKineticGenerator {
         this.name = StatCollector.translateToLocal("tile.BWRotorBlock.0.name");
     }
 
-    protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
     @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         this.fontRendererObj
                 .drawString(this.name, (this.xSize - this.fontRendererObj.getStringWidth(this.name)) / 2, 6, 2157374);
         if (this.container.base.checkrotor()) {
@@ -59,8 +59,8 @@ public class BW_GUIContainer_RotorBlock extends GuiWindKineticGenerator {
                 this.fontRendererObj.drawString(this.container.base.getRotorhealth() + " %", 46, 52, 2157374);
                 if (this.container.base.guiisoverload()) {
                     GuiTooltipHelper.drawAreaTooltip(
-                            p_146979_1_ - this.guiLeft,
-                            p_146979_2_ - this.guiTop,
+                            mouseX - this.guiLeft,
+                            mouseY - this.guiTop,
                             StatCollector.translateToLocal("ic2.WindKineticGenerator.error.overload"),
                             44,
                             27,

@@ -86,7 +86,7 @@ public class BW_MetaGenerated_Ores extends BW_MetaGenerated_Blocks {
     }
 
     @Override
-    public IIcon getIcon(IBlockAccess p_149673_1_, int p_149673_2_, int p_149673_3_, int p_149673_4_, int p_149673_5_) {
+    public IIcon getIcon(IBlockAccess worldIn, int x, int y, int z, int side) {
         return Blocks.stone.getIcon(0, 0);
     }
 

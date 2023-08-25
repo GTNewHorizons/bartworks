@@ -70,10 +70,10 @@ public class SimpleSubItemClass extends Item {
         else return this.itemIcon[0];
     }
 
-    public String getUnlocalizedName(ItemStack p_77667_1_) {
-        if (p_77667_1_.getItemDamage() < this.tex.length)
-            return "item." + this.tex[p_77667_1_.getItemDamage()].replaceAll("/", ".");
     @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        if (stack.getItemDamage() < this.tex.length)
+            return "item." + this.tex[stack.getItemDamage()].replaceAll("/", ".");
         else return "WrongDamageItemDestroyIt";
     }
 }

@@ -147,24 +147,24 @@ public class TileEntity_GTDataServer extends TileEntity
     }
 
     @Override
-    public ItemStack getStackInSlot(int p_70301_1_) {
-        return p_70301_1_ == 0 ? this.mItems[0] : this.mItems[1];
+    public ItemStack getStackInSlot(int slotIn) {
+        return slotIn == 0 ? this.mItems[0] : this.mItems[1];
     }
 
     @Override
-    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_) {
+    public ItemStack decrStackSize(int index, int count) {
         return null;
     }
 
     @Override
-    public ItemStack getStackInSlotOnClosing(int p_70304_1_) {
+    public ItemStack getStackInSlotOnClosing(int index) {
         return null;
     }
 
     @Override
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_) {
-        if (p_70299_1_ > 1 || p_70299_1_ < 0) return;
-        this.mItems[p_70299_1_] = p_70299_2_;
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        if (index > 1 || index < 0) return;
+        this.mItems[index] = stack;
     }
 
     @Override
@@ -183,7 +183,7 @@ public class TileEntity_GTDataServer extends TileEntity
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_) {
+    public boolean isUseableByPlayer(EntityPlayer player) {
         return true;
     }
 
@@ -194,7 +194,7 @@ public class TileEntity_GTDataServer extends TileEntity
     public void closeInventory() {}
 
     @Override
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
-        return p_94041_1_ == 0;
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
+        return index == 0;
     }
 }

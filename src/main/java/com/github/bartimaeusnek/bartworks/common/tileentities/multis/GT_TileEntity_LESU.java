@@ -252,15 +252,15 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
     }
 
     @Override
-    public ItemStack getStackInSlot(int p_70301_1_) {
-        if (p_70301_1_ > 1) return this.circuits[(p_70301_1_ - 2)];
-        return this.mInventory[p_70301_1_];
+    public ItemStack getStackInSlot(int slotIn) {
+        if (slotIn > 1) return this.circuits[(slotIn - 2)];
+        return this.mInventory[slotIn];
     }
 
     @Override
-    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_) {
-        if (p_70299_1_ < 2) this.mInventory[p_70299_1_] = p_70299_2_;
-        else this.circuits[(p_70299_1_ - 2)] = p_70299_2_;
+    public void setInventorySlotContents(int index, ItemStack stack) {
+        if (index < 2) this.mInventory[index] = stack;
+        else this.circuits[(index - 2)] = stack;
     }
 
     @Override
@@ -279,19 +279,19 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer p_70300_1_) {
+    public boolean isUseableByPlayer(EntityPlayer player) {
         return true;
     }
 
     @Override
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
+    public boolean isItemValidForSlot(int index, ItemStack stack) {
 
-        switch (p_94041_1_) {
+        switch (index) {
             case 0:
             case 1:
                 return true;
             default:
-                return p_94041_2_ != null && p_94041_2_.getItem().equals(GT_Utility.getIntegratedCircuit(0).getItem());
+                return stack != null && stack.getItem().equals(GT_Utility.getIntegratedCircuit(0).getItem());
         }
     }
 

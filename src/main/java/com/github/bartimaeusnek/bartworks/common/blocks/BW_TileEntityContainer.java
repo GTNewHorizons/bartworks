@@ -60,8 +60,8 @@ public class BW_TileEntityContainer extends BlockContainer implements ITileAddsI
     }
 
     @Override
-    public boolean onBlockActivated(World worldObj, int x, int y, int z, EntityPlayer player, int p_149727_6_,
-            float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+    public boolean onBlockActivated(World worldObj, int x, int y, int z, EntityPlayer player, int side, float subX,
+            float subY, float subZ) {
         if (worldObj.isRemote) {
             return false;
         }
@@ -162,7 +162,7 @@ public class BW_TileEntityContainer extends BlockContainer implements ITileAddsI
     }
 
     @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         try {
             return this.tileEntity.getConstructor().newInstance();
         } catch (Exception e) {
