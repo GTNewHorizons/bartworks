@@ -124,40 +124,19 @@ public class BW_Util {
         char[] chars = b.toCharArray();
         char[] nu = new char[chars.length];
         for (int i = 0; i < chars.length; i++) {
-            switch (chars[i]) {
-                case '0':
-                    nu[i] = '₀';
-                    continue;
-                case '1':
-                    nu[i] = '₁';
-                    continue;
-                case '2':
-                    nu[i] = '₂';
-                    continue;
-                case '3':
-                    nu[i] = '₃';
-                    continue;
-                case '4':
-                    nu[i] = '₄';
-                    continue;
-                case '5':
-                    nu[i] = '₅';
-                    continue;
-                case '6':
-                    nu[i] = '₆';
-                    continue;
-                case '7':
-                    nu[i] = '₇';
-                    continue;
-                case '8':
-                    nu[i] = '₈';
-                    continue;
-                case '9':
-                    nu[i] = '₉';
-                    continue;
-                default:
-                    nu[i] = chars[i];
-            }
+            nu[i] = switch (chars[i]) {
+                case '0' -> '\u2080';
+                case '1' -> '\u2081';
+                case '2' -> '\u2082';
+                case '3' -> '\u2083';
+                case '4' -> '\u2084';
+                case '5' -> '\u2085';
+                case '6' -> '\u2086';
+                case '7' -> '\u2087';
+                case '8' -> '\u2088';
+                case '9' -> '\u2089';
+                default -> chars[i];
+            };
         }
         return new String(nu);
     }
@@ -166,37 +145,19 @@ public class BW_Util {
         char[] chars = Long.toString(b.longValue()).toCharArray();
         char[] nu = new char[chars.length];
         for (int i = 0; i < chars.length; i++) {
-            switch (chars[i]) {
-                case '0':
-                    nu[i] = '₀';
-                    continue;
-                case '1':
-                    nu[i] = '₁';
-                    continue;
-                case '2':
-                    nu[i] = '₂';
-                    continue;
-                case '3':
-                    nu[i] = '₃';
-                    continue;
-                case '4':
-                    nu[i] = '₄';
-                    continue;
-                case '5':
-                    nu[i] = '₅';
-                    continue;
-                case '6':
-                    nu[i] = '₆';
-                    continue;
-                case '7':
-                    nu[i] = '₇';
-                    continue;
-                case '8':
-                    nu[i] = '₈';
-                    continue;
-                case '9':
-                    nu[i] = '₉';
-            }
+            nu[i] = switch (chars[i]) {
+                case '0' -> '\u2080';
+                case '1' -> '\u2081';
+                case '2' -> '\u2082';
+                case '3' -> '\u2083';
+                case '4' -> '\u2084';
+                case '5' -> '\u2085';
+                case '6' -> '\u2086';
+                case '7' -> '\u2087';
+                case '8' -> '\u2088';
+                case '9' -> '\u2089';
+                default -> chars[i];
+            };
         }
         return new String(nu);
     }
@@ -205,40 +166,19 @@ public class BW_Util {
         char[] chars = b.toCharArray();
         char[] nu = new char[chars.length];
         for (int i = 0; i < chars.length; i++) {
-            switch (chars[i]) {
-                case '0':
-                    nu[i] = '⁰';
-                    continue;
-                case '1':
-                    nu[i] = '¹';
-                    continue;
-                case '2':
-                    nu[i] = '²';
-                    continue;
-                case '3':
-                    nu[i] = '³';
-                    continue;
-                case '4':
-                    nu[i] = '⁴';
-                    continue;
-                case '5':
-                    nu[i] = '⁵';
-                    continue;
-                case '6':
-                    nu[i] = '⁶';
-                    continue;
-                case '7':
-                    nu[i] = '⁷';
-                    continue;
-                case '8':
-                    nu[i] = '⁸';
-                    continue;
-                case '9':
-                    nu[i] = '⁹';
-                    continue;
-                default:
-                    nu[i] = chars[i];
-            }
+            nu[i] = switch (chars[i]) {
+                case '0' -> '\u2070';
+                case '1' -> '\u2071';
+                case '2' -> '\u00B2';
+                case '3' -> '\u00B3';
+                case '4' -> '\u2074';
+                case '5' -> '\u2075';
+                case '6' -> '\u2076';
+                case '7' -> '\u2077';
+                case '8' -> '\u2078';
+                case '9' -> '\u2079';
+                default -> chars[i];
+            };
         }
         return new String(nu);
     }
@@ -247,37 +187,19 @@ public class BW_Util {
         char[] chars = Long.toString(b.longValue()).toCharArray();
         char[] nu = new char[chars.length];
         for (int i = 0; i < chars.length; i++) {
-            switch (chars[i]) {
-                case '0':
-                    nu[i] = '⁰';
-                    continue;
-                case '1':
-                    nu[i] = '¹';
-                    continue;
-                case '2':
-                    nu[i] = '²';
-                    continue;
-                case '3':
-                    nu[i] = '³';
-                    continue;
-                case '4':
-                    nu[i] = '⁴';
-                    continue;
-                case '5':
-                    nu[i] = '⁵';
-                    continue;
-                case '6':
-                    nu[i] = '⁶';
-                    continue;
-                case '7':
-                    nu[i] = '⁷';
-                    continue;
-                case '8':
-                    nu[i] = '⁸';
-                    continue;
-                case '9':
-                    nu[i] = '⁹';
-            }
+            nu[i] = switch (chars[i]) {
+                case '0' -> '\u2070';
+                case '1' -> '\u2071';
+                case '2' -> '\u00B2';
+                case '3' -> '\u00B3';
+                case '4' -> '\u2074';
+                case '5' -> '\u2075';
+                case '6' -> '\u2076';
+                case '7' -> '\u2077';
+                case '8' -> '\u2078';
+                case '9' -> '\u2079';
+                default -> chars[i];
+            };
         }
         return new String(nu);
     }
@@ -871,8 +793,6 @@ public class BW_Util {
         }
         return ret;
     }
-
-    private static Block bw_realglasRef;
 
     public static byte calculateGlassTier(@Nonnull Block block, @Nonnegative byte meta) {
 

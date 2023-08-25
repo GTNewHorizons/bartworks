@@ -69,11 +69,11 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
 
     private static ArrayListMultimap<Integer, Pair<Pair<Integer, Boolean>, Float>> extraDropsDimMap = ArrayListMultimap
             .create();
-    private static FluidStack[] NOBLE_GASSES = new FluidStack[] { WerkstoffLoader.Neon.getFluidOrGas(1),
+    private static FluidStack[] NOBLE_GASSES = { WerkstoffLoader.Neon.getFluidOrGas(1),
             WerkstoffLoader.Krypton.getFluidOrGas(1), WerkstoffLoader.Xenon.getFluidOrGas(1),
             WerkstoffLoader.Oganesson.getFluidOrGas(1) };
 
-    private HashMap<Pair<Integer, Boolean>, Float> dropmap = null;
+    private Map<Pair<Integer, Boolean>, Float> dropmap = null;
     private float totalWeight;
     private int multiplier = 1;
 
@@ -213,23 +213,17 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      */
     private Predicate<GT_Worldgen_GT_Ore_Layer> makeOreLayerPredicate() {
         World world = this.getBaseMetaTileEntity().getWorld();
-        switch (world.provider.dimensionId) {
-            case -1:
-                return gt_worldgen -> gt_worldgen.mNether;
-            case 0:
-                return gt_worldgen -> gt_worldgen.mOverworld;
-            case 1:
-                return gt_worldgen -> gt_worldgen.mEnd || gt_worldgen.mEndAsteroid;
-            case 7:
-                /*
-                 * explicitely giving different dim numbers so it default to false in the config, keeping compat with
-                 * the current worldgen config
-                 */
-
-                return gt_worldgen -> gt_worldgen.isGenerationAllowed(world, 0, 7);
-            default:
-                throw new IllegalStateException();
-        }
+        return switch (world.provider.dimensionId) {
+            case -1 -> gt_worldgen -> gt_worldgen.mNether;
+            case 0 -> gt_worldgen -> gt_worldgen.mOverworld;
+            case 1 -> gt_worldgen -> gt_worldgen.mEnd || gt_worldgen.mEndAsteroid;
+            /*
+             * explicitely giving different dim numbers so it default to false in the config, keeping compat with the
+             * current worldgen config
+             */
+            case 7 -> gt_worldgen -> gt_worldgen.isGenerationAllowed(world, 0, 7);
+            default -> throw new IllegalStateException();
+        };
     }
 
     /**
@@ -239,22 +233,17 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      */
     private Predicate<GT_Worldgen_GT_Ore_SmallPieces> makeSmallOresPredicate() {
         World world = this.getBaseMetaTileEntity().getWorld();
-        switch (world.provider.dimensionId) {
-            case -1:
-                return gt_worldgen -> gt_worldgen.mNether;
-            case 0:
-                return gt_worldgen -> gt_worldgen.mOverworld;
-            case 1:
-                return gt_worldgen -> gt_worldgen.mEnd;
-            case 7:
-                /*
-                 * explicitely giving different dim numbers so it default to false in the config, keeping compat with
-                 * the current worldgen config
-                 */
-                return gt_worldgen -> gt_worldgen.isGenerationAllowed(world, 0, 7);
-            default:
-                throw new IllegalStateException();
-        }
+        return switch (world.provider.dimensionId) {
+            case -1 -> gt_worldgen -> gt_worldgen.mNether;
+            case 0 -> gt_worldgen -> gt_worldgen.mOverworld;
+            case 1 -> gt_worldgen -> gt_worldgen.mEnd;
+            /*
+             * explicitely giving different dim numbers so it default to false in the config, keeping compat with the
+             * current worldgen config
+             */
+            case 7 -> gt_worldgen -> gt_worldgen.isGenerationAllowed(world, 0, 7);
+            default -> throw new IllegalStateException();
+        };
     }
 
     /**
