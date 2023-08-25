@@ -117,6 +117,7 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
         else return 0L;
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public String[] getDescription() {
         return new String[] { this.mDescription,

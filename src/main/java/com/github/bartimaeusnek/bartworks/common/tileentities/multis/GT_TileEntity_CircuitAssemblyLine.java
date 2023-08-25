@@ -117,6 +117,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
         return STRUCTURE_DEFINITION;
     }
 
+    @Override
     protected GT_Multiblock_Tooltip_Builder createTooltip() {
         GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
         tt.addMachineType("Circuit Assembler").addInfo("Controller block for the Circuit Assembly Line")
@@ -351,6 +352,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
         return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(CASING_INDEX) };
     }
 
+    @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         if (!this.checkPiece(STRUCTURE_PIECE_FIRST, 0, 0, 0)) {
             return false;

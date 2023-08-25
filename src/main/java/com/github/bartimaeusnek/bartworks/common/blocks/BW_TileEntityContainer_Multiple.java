@@ -83,6 +83,7 @@ public class BW_TileEntityContainer_Multiple extends BlockContainer {
         return false;
     }
 
+    @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile instanceof IWrenchable && itemStack != null) {

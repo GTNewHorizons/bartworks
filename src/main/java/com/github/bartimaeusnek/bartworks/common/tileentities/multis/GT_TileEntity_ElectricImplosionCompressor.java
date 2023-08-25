@@ -335,6 +335,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
         return true;
     }
 
+    @Override
     public void stopMachine() {
         this.resetPiston();
         super.stopMachine();

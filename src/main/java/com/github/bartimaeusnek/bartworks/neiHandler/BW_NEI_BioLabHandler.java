@@ -40,10 +40,12 @@ public class BW_NEI_BioLabHandler extends GT_NEI_DefaultHandler {
         }
     }
 
+    @Override
     public TemplateRecipeHandler newInstance() {
         return new BW_NEI_BioLabHandler(this.mRecipeMap);
     }
 
+    @Override
     public void loadCraftingRecipes(ItemStack aResult) {
         if (aResult != null && aResult.getItem() instanceof LabParts
                 && aResult.getItemDamage() < 3

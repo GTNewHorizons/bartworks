@@ -283,6 +283,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
         return true;
     }
 
+    @Override
     public boolean isFacingValid(ForgeDirection facing) {
         return true;
     }

@@ -84,6 +84,7 @@ public class BW_MetaGenerated_Items extends GT_MetaGenerated_Item implements IRa
         }
     }
 
+    @Override
     public boolean onEntityItemUpdate(EntityItem aItemEntity) {
         if (this.orePrefixes == OrePrefixes.dustImpure || this.orePrefixes == OrePrefixes.dustPure
                 || this.orePrefixes == OrePrefixes.crushed) {

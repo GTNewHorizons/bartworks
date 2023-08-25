@@ -90,6 +90,7 @@ public class GT_MetaTileEntity_Transistor extends GT_MetaTileEntity_TieredMachin
     @Override
     public void saveNBTData(NBTTagCompound nbtTagCompound) {}
 
+    @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         if (aBaseMetaTileEntity.isServerSide()) {
             final ForgeDirection side = ForgeDirection.EAST;
@@ -117,6 +118,7 @@ public class GT_MetaTileEntity_Transistor extends GT_MetaTileEntity_TieredMachin
         }
     }
 
+    @Override
     public long maxEUInput() {
         return GT_Values.V[this.mTier];
     }
@@ -131,6 +133,7 @@ public class GT_MetaTileEntity_Transistor extends GT_MetaTileEntity_TieredMachin
         return this.powered ? 1L : 0;
     }
 
+    @Override
     public long maxEUOutput() {
         return this.powered ? GT_Values.V[this.mTier] : 0;
     }

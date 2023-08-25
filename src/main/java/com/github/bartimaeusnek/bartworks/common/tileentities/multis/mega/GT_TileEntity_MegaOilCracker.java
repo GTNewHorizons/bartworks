@@ -188,6 +188,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
     protected ProcessingLogic createProcessingLogic() {
         return new ProcessingLogic() {
 
+            @Override
             @Nonnull
             public CheckRecipeResult process() {
                 setEuModifier(1.0F - Math.min(0.1F * (heatLevel.getTier() + 1), 0.5F));

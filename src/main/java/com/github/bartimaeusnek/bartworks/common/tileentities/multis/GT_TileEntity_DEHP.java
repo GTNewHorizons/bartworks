@@ -191,6 +191,7 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
         super.onScrewdriverRightClick(side, aPlayer, aX, aY, aZ);
     }
 
+    @Override
     protected boolean workingDownward(ItemStack aStack, int xDrill, int yDrill, int zDrill, int xPipe, int zPipe,
             int yHead, int oldYHead) {
         if (this.mMode == 3) {

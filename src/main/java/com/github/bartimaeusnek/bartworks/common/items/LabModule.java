@@ -30,6 +30,7 @@ public class LabModule extends SimpleSubItemClass {
 
     public String getUnlocalizedName(ItemStack p_77667_1_) {
         return "labModule." + super.getUnlocalizedName(p_77667_1_);
+    @Override
     }
 
     @Override

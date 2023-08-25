@@ -32,15 +32,18 @@ public abstract class BW_MetaGenerated_Block_TE extends TileEntity implements IT
 
     public short mMetaData;
 
+    @Override
     public boolean canUpdate() {
         return false;
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound aNBT) {
         super.readFromNBT(aNBT);
         this.mMetaData = aNBT.getShort("m");
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound aNBT) {
         aNBT.setShort("m", this.mMetaData);
         super.writeToNBT(aNBT);

@@ -211,6 +211,7 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
         return getMaterial(aStack).mRGBa;
     }
 
+    @Override
     public boolean onEntityItemUpdate(EntityItem aItemEntity) {
         return false;
     }

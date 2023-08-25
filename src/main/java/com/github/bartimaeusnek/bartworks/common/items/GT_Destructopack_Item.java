@@ -60,6 +60,7 @@ public class GT_Destructopack_Item extends GT_Generic_Item implements IItemWithM
         return aStack;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister aIconRegister) {
         this.mIcon = aIconRegister.registerIcon("bartworks:gt.GT2Destructopack");

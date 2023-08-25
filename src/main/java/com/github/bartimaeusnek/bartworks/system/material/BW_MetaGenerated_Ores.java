@@ -42,6 +42,7 @@ public class BW_MetaGenerated_Ores extends BW_MetaGenerated_Blocks {
                 OrePrefixes.ore.mLocalizedMaterialPre + "%material" + OrePrefixes.ore.mLocalizedMaterialPost);
     }
 
+    @Override
     protected void doRegistrationStuff(Werkstoff w) {
         if (w != null) {
             if (!w.hasItemType(OrePrefixes.ore) || ((w.getGenerationFeatures().blacklist & 0b1000) != 0)) return;
@@ -89,6 +90,7 @@ public class BW_MetaGenerated_Ores extends BW_MetaGenerated_Blocks {
         return Blocks.stone.getIcon(0, 0);
     }
 
+    @Override
     public int getHarvestLevel(int metadata) {
         return 3;
     }

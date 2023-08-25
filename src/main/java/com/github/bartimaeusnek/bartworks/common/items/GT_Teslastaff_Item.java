@@ -66,6 +66,7 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
         aList.add(BW_Tooltip_Reference.ADDED_BY_BARTWORKS.get());
     }
 
+    @Override
     public boolean hitEntity(ItemStack aStack, EntityLivingBase aTarget, EntityLivingBase aPlayer) {
         if (aTarget instanceof EntityLiving && ElectricItem.manager.canUse(aStack, 9000000)) {
             EntityLiving tTarget = (EntityLiving) aTarget;
@@ -80,6 +81,7 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
         return true;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List<ItemStack> itemList) {
         ItemStack itemStack = new ItemStack(this, 1);
@@ -128,11 +130,13 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
         return this.mTransfer;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
         this.icon = iconRegister.registerIcon("bartworks:GT_Teslastaff");
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int par1) {
         return this.icon;

@@ -38,10 +38,12 @@ public class TT_TileEntity_ManualTrafo extends GT_TileEntity_ManualTrafo {
         super(aName);
     }
 
+    @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity iGregTechTileEntity) {
         return new TT_TileEntity_ManualTrafo(this.mName);
     }
 
+    @Override
     public boolean addEnergyOutput(long aEU) {
         if (aEU <= 0L) {
             return true;
@@ -51,6 +53,7 @@ public class TT_TileEntity_ManualTrafo extends GT_TileEntity_ManualTrafo {
         }
     }
 
+    @Override
     public boolean addEnergyOutputMultipleDynamos(long aEU, boolean aAllowMixedVoltageDynamos) {
         int injected = 0;
         long totalOutput = 0L;
@@ -113,6 +116,7 @@ public class TT_TileEntity_ManualTrafo extends GT_TileEntity_ManualTrafo {
         }
     }
 
+    @Override
     public boolean drainEnergyInput(long aEU) {
         if (aEU > 0L) {
             {

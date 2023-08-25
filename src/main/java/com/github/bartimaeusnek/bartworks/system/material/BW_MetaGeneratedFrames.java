@@ -126,10 +126,12 @@ public class BW_MetaGeneratedFrames extends MetaPipeEntity {
         return false;
     }
 
+    @Override
     public int connect(ForgeDirection side) {
         return 0;
     }
 
+    @Override
     public void disconnect(ForgeDirection side) {
         /* Do nothing */
     }

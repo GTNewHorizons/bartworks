@@ -753,6 +753,7 @@ public class BWRecipes {
                     aNEIAllowed);
         }
 
+        @Override
         protected GT_Recipe addRecipe(GT_Recipe aRecipe, boolean aCheckForCollisions, boolean aFakeRecipe,
                 boolean aHidden) {
             aRecipe.mHidden = aHidden;
@@ -776,6 +777,7 @@ public class BWRecipes {
             else return addRecipe(aRecipe);
         }
 
+        @Override
         public GT_Recipe addRecipe(GT_Recipe aRecipe) {
 
             if (aRecipe.mInputs.length > 0 && GT_Utility.areStacksEqual(

@@ -37,11 +37,13 @@ public class NonNullWrappedHashSet<E> extends HashSet<E> {
         super(initialCapacity);
     }
 
+    @Override
     public boolean add(E e) {
         if (e != null) return super.add(e);
         return false;
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> c) {
         boolean wasChanged = false;
         for (E element : c) {

@@ -79,15 +79,18 @@ public abstract class BW_MetaGenerated_Blocks extends BW_TileEntityContainer {
         return "pickaxe";
     }
 
+    @Override
     protected boolean canSilkHarvest() {
         return false;
     }
 
+    @Override
     public int getRenderType() {
         if (BW_Renderer_Block_Ores.INSTANCE == null) return super.getRenderType();
         return BW_Renderer_Block_Ores.INSTANCE.mRenderID;
     }
 
+    @Override
     public int getDamageValue(World aWorld, int aX, int aY, int aZ) {
         TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
         if (((tTileEntity instanceof BW_MetaGenerated_Block_TE))) {
@@ -106,6 +109,7 @@ public abstract class BW_MetaGenerated_Blocks extends BW_TileEntityContainer {
         return true;
     }
 
+    @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         TileEntity tTileEntity = world.getTileEntity(x, y, z);
         if ((tTileEntity instanceof BW_MetaGenerated_Block_TE)) {
@@ -114,6 +118,7 @@ public abstract class BW_MetaGenerated_Blocks extends BW_TileEntityContainer {
         super.breakBlock(world, x, y, z, block, meta);
     }
 
+    @Override
     public ArrayList<ItemStack> getDrops(World aWorld, int aX, int aY, int aZ, int aMeta, int aFortune) {
         TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
         if ((tTileEntity instanceof BW_MetaGenerated_Block_TE)) {

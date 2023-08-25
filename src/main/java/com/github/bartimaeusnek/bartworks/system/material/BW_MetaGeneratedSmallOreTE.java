@@ -31,6 +31,7 @@ import gregtech.api.util.GT_Utility;
 
 public class BW_MetaGeneratedSmallOreTE extends BW_MetaGeneratedOreTE {
 
+    @Override
     public ArrayList<ItemStack> getDrops(int aFortune) {
         ArrayList<ItemStack> rList = new ArrayList<>();
         Materials aMaterial = Werkstoff.werkstoffHashMap.get(this.mMetaData).getBridgeMaterial();

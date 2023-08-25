@@ -188,6 +188,7 @@ public class BW_Meta_Items {
             super.getSubItems(var1, aCreativeTab, aList);
         }
 
+        @Override
         @SideOnly(Side.CLIENT)
         public final void registerIcons(IIconRegister aIconRegister) {
 
@@ -342,6 +343,7 @@ public class BW_Meta_Items {
             return rStack;
         }
 
+        @Override
         @SideOnly(Side.CLIENT)
         public void getSubItems(Item var1, CreativeTabs aCreativeTab, List<ItemStack> aList) {
             int j = this.mEnabledItems.length();

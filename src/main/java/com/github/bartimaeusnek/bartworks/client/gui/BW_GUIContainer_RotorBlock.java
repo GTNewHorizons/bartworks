@@ -39,6 +39,7 @@ public class BW_GUIContainer_RotorBlock extends GuiWindKineticGenerator {
     }
 
     protected void drawGuiContainerForegroundLayer(int p_146979_1_, int p_146979_2_) {
+    @Override
         this.fontRendererObj
                 .drawString(this.name, (this.xSize - this.fontRendererObj.getStringWidth(this.name)) / 2, 6, 2157374);
         if (this.container.base.checkrotor()) {
@@ -76,6 +77,7 @@ public class BW_GUIContainer_RotorBlock extends GuiWindKineticGenerator {
         }
     }
 
+    @Override
     protected void drawGuiContainerBackgroundLayer(float f, int x, int y) {
         GL11.glColor3f(0.5f, 0.25f, 0.07f);
         this.mc.getTextureManager()

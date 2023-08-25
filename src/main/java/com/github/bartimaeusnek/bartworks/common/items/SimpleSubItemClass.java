@@ -41,6 +41,7 @@ public class SimpleSubItemClass extends Item {
         this.setCreativeTab(MainMod.BWT);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
         this.itemIcon = new IIcon[this.tex.length];
@@ -62,6 +63,7 @@ public class SimpleSubItemClass extends Item {
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int p_77617_1_) {
         if (p_77617_1_ < this.tex.length) return this.itemIcon[p_77617_1_];
@@ -71,6 +73,7 @@ public class SimpleSubItemClass extends Item {
     public String getUnlocalizedName(ItemStack p_77667_1_) {
         if (p_77667_1_.getItemDamage() < this.tex.length)
             return "item." + this.tex[p_77667_1_.getItemDamage()].replaceAll("/", ".");
+    @Override
         else return "WrongDamageItemDestroyIt";
     }
 }

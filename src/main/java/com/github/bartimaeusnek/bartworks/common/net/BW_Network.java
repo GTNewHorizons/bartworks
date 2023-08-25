@@ -58,6 +58,7 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
                 new MetaBlockPacket(), new OreDictCachePacket(), new ServerJoinedPackage(), new EICPacket() };
     }
 
+    @Override
     protected void encode(ChannelHandlerContext aContext, GT_Packet_New aPacket, List<Object> aOutput)
             throws Exception {
         aOutput.add(
@@ -66,12 +67,14 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
                         (String) aContext.channel().attr(NetworkRegistry.FML_CHANNEL).get()));
     }
 
+    @Override
     protected void decode(ChannelHandlerContext aContext, FMLProxyPacket aPacket, List<Object> aOutput)
             throws Exception {
         ByteArrayDataInput aData = ByteStreams.newDataInput(aPacket.payload().array());
         aOutput.add(this.mSubChannels[aData.readByte()].decode(aData));
     }
 
+    @Override
     public void sendToPlayer(@Nonnull GT_Packet aPacket, @Nonnull EntityPlayerMP aPlayer) {
         ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.PLAYER);
@@ -90,6 +93,7 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
         }
     }
 
+    @Override
     public void sendToAllAround(@Nonnull GT_Packet aPacket, NetworkRegistry.TargetPoint aPosition) {
         ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
@@ -98,12 +102,14 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
         ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).writeAndFlush(aPacket);
     }
 
+    @Override
     public void sendToServer(@Nonnull GT_Packet aPacket) {
         ((FMLEmbeddedChannel) this.mChannel.get(Side.CLIENT)).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.TOSERVER);
         ((FMLEmbeddedChannel) this.mChannel.get(Side.CLIENT)).writeAndFlush(aPacket);
     }
 
+    @Override
     public void sendPacketToAllPlayersInRange(World aWorld, @Nonnull GT_Packet aPacket, int aX, int aZ) {
         if (!aWorld.isRemote) {
 
@@ -127,6 +133,7 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
 
         HandlerShared() {}
 
+        @Override
         protected void channelRead0(ChannelHandlerContext ctx, GT_Packet_New aPacket) throws Exception {
             EntityPlayer aPlayer = GT_Values.GT.getThePlayer();
             aPacket.process(aPlayer == null ? null : GT_Values.GT.getThePlayer().worldObj);
