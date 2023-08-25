@@ -73,8 +73,7 @@ public class Circuit_Programmer extends GT_Generic_Item implements IElectricItem
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
+    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List<String> aList, boolean aF3_H) {
         super.addInformation(aStack, aPlayer, aList, aF3_H);
         if (aStack != null && aStack.getTagCompound() != null) aList.add(
                 StatCollector.translateToLocal("tooltip.cp.0.name") + " "
@@ -94,8 +93,7 @@ public class Circuit_Programmer extends GT_Generic_Item implements IElectricItem
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List itemList) {
+    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List<ItemStack> itemList) {
         ItemStack itemStack = new ItemStack(this, 1);
         if (this.getChargedItem(itemStack) == this) {
             ItemStack charged = new ItemStack(this, 1);

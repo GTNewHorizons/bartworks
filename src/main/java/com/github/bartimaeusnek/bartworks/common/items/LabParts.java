@@ -70,8 +70,7 @@ public class LabParts extends SimpleSubItemClass {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean b) {
+    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List<String> list, boolean b) {
         if (itemStack == null) return;
 
         if (itemStack.getTagCompound() == null) {
@@ -129,8 +128,7 @@ public class LabParts extends SimpleSubItemClass {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
+    public void getSubItems(Item item, CreativeTabs creativeTabs, List<ItemStack> list) {
         list.addAll(getAllPetriDishes());
         list.addAll(getAllDNASampleFlasks());
         list.addAll(getAllPlasmidCells());

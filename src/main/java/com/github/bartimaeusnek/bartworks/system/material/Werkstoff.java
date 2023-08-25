@@ -60,14 +60,15 @@ import gregtech.api.interfaces.ISubTagContainer;
 import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_OreDictUnificator;
 
-@SuppressWarnings("ALL")
 public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 
     public static final LinkedHashSet<Werkstoff> werkstoffHashSet = new LinkedHashSet<>();
     public static final LinkedHashMap<Short, Werkstoff> werkstoffHashMap = new LinkedHashMap<>();
     public static final LinkedHashMap<String, Werkstoff> werkstoffNameHashMap = new LinkedHashMap<>();
 
-    public static final Map<String, String> modNameOverrides = new HashMap() {
+    public static final Map<String, String> modNameOverrides = new HashMap<>() {
+
+        private static final long serialVersionUID = 6399917619058898648L;
 
         {
             put(GalaxySpace.ID, DARK_PURPLE + "GalaxySpace");
@@ -160,6 +161,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
     }
 
+    @SafeVarargs
     public Werkstoff(short[] rgba, String defaultName, Werkstoff.Types type, int meltingpoint,
             Werkstoff.GenerationFeatures generationFeatures, int mID, TextureSet texSet,
             Pair<ISubTagContainer, Integer>... contents) {
@@ -174,6 +176,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                 contents);
     }
 
+    @SafeVarargs
     public Werkstoff(short[] rgba, String defaultName, Werkstoff.Types type,
             Werkstoff.GenerationFeatures generationFeatures, int mID, TextureSet texSet,
             Pair<ISubTagContainer, Integer>... contents) {
@@ -188,6 +191,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                 contents);
     }
 
+    @SafeVarargs
     public Werkstoff(short[] rgba, String defaultName, Werkstoff.Types type, int meltingpoint,
             Werkstoff.GenerationFeatures generationFeatures, int mID, TextureSet texSet,
             List<ISubTagContainer> oreByProduct, Pair<ISubTagContainer, Integer>... contents) {
@@ -203,6 +207,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                 contents);
     }
 
+    @SafeVarargs
     public Werkstoff(short[] rgba, String defaultName, Werkstoff.Types type,
             Werkstoff.GenerationFeatures generationFeatures, int mID, TextureSet texSet,
             List<ISubTagContainer> oreByProduct, Pair<ISubTagContainer, Integer>... contents) {
@@ -218,6 +223,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                 contents);
     }
 
+    @SafeVarargs
     public Werkstoff(short[] rgba, String toolTip, String defaultName, Werkstoff.Types type,
             Werkstoff.GenerationFeatures generationFeatures, int mID, TextureSet texSet,
             List<ISubTagContainer> oreByProduct, Pair<ISubTagContainer, Integer>... contents) {
@@ -234,6 +240,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                 contents);
     }
 
+    @SafeVarargs
     public Werkstoff(short[] rgba, String defaultName, Werkstoff.Stats stats, Werkstoff.Types type,
             Werkstoff.GenerationFeatures generationFeatures, int mID, TextureSet texSet,
             List<ISubTagContainer> oreByProduct, Pair<ISubTagContainer, Integer>... contents) {
@@ -242,12 +249,14 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         this.mOreByProducts.addAll(oreByProduct);
     }
 
+    @SafeVarargs
     public Werkstoff(short[] rgba, String defaultName, Werkstoff.Stats stats, Werkstoff.Types type,
             Werkstoff.GenerationFeatures generationFeatures, int mID, TextureSet texSet,
             Pair<ISubTagContainer, Integer>... contents) {
         this(rgba, defaultName, "", stats, type, generationFeatures, mID, texSet, contents);
     }
 
+    @SafeVarargs
     public Werkstoff(short[] rgba, String defaultName, String toolTip, Werkstoff.Stats stats, Werkstoff.Types type,
             Werkstoff.GenerationFeatures generationFeatures, int mID, TextureSet texSet,
             List<ISubTagContainer> oreByProduct, Pair<ISubTagContainer, Integer>... contents) {
@@ -256,6 +265,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         this.mOreByProducts.addAll(oreByProduct);
     }
 
+    @SafeVarargs
     public Werkstoff(short[] rgba, String defaultName, String toolTip, Werkstoff.Stats stats, Werkstoff.Types type,
             Werkstoff.GenerationFeatures generationFeatures, int mID, TextureSet texSet,
             Pair<ISubTagContainer, Integer>... contents) {
@@ -392,11 +402,12 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         this.stats.mTC_Aspects = pAspectsArr;
     }
 
+    @SuppressWarnings("unchecked")
     public Pair<Object, Integer>[] getTCAspects(int ratio) {
         if (this.stats.mTC_Aspects == null) {
             HashSet<TC_Aspects.TC_AspectStack> tc_aspectStacks = new HashSet<>();
             HashSet<Pair<Object, Integer>> set = new HashSet<>();
-            for (Pair p : this.getContents().getValue()) {
+            for (Pair<?, ?> p : this.getContents().getValue()) {
                 if (p.getKey() instanceof Materials) tc_aspectStacks.addAll(((Materials) p.getKey()).mAspects);
                 if (p.getKey() instanceof Werkstoff) set.addAll(Arrays.asList(((Werkstoff) p.getKey()).getTCAspects()));
             }
@@ -448,7 +459,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
             case MIXTURE:
             case BIOLOGICAL: {
                 for (int i = 0; i < this.CONTENTS.toArray().length; i++) {
-                    ret += ((Pair<ISubTagContainer, Integer>) this.CONTENTS.toArray()[i]).getValue();
+                    ret += (int) this.CONTENTS.toArray(new Pair[0])[i].getValue();
                 }
                 break;
             }
@@ -957,12 +968,12 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public Werkstoff.GenerationFeatures addPrefix(OrePrefixes prefixes) {
-            this.toGenerate = (long) (this.toGenerate | this.getPrefixDataRaw(prefixes));
+            this.toGenerate = (long) (this.toGenerate | getPrefixDataRaw(prefixes));
             return this;
         }
 
         public Werkstoff.GenerationFeatures removePrefix(OrePrefixes prefixes) {
-            this.toGenerate = (long) (this.toGenerate ^ this.getPrefixDataRaw(prefixes));
+            this.toGenerate = (long) (this.toGenerate ^ getPrefixDataRaw(prefixes));
             return this;
         }
     }

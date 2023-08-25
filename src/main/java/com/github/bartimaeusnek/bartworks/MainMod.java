@@ -80,7 +80,6 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
 
-@SuppressWarnings("ALL")
 @Mod(
         modid = MainMod.MOD_ID,
         name = MainMod.NAME,

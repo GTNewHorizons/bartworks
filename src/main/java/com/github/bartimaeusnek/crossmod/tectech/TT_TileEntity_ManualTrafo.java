@@ -25,7 +25,6 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Dynamo;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
 
-@SuppressWarnings({ "unused", "RedundantSuppression" })
 public class TT_TileEntity_ManualTrafo extends GT_TileEntity_ManualTrafo {
 
     ArrayList<GT_MetaTileEntity_Hatch_EnergyMulti> mTTEnergyHatches = new ArrayList<>();

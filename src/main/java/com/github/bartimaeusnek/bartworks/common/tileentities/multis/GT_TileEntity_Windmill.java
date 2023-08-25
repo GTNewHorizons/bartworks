@@ -74,7 +74,6 @@ import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.modularui.IGetTitleColor;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_EnhancedMultiBlockBase;
-import gregtech.api.objects.XSTR;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_OreDictUnificator;
@@ -89,7 +88,6 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
     private static final IIconContainer[] iIconContainers = new IIconContainer[2];
     private static final ITexture[] iTextures = new ITexture[3];
 
-    private static final XSTR localRandomInstance = new XSTR();
     private BW_RotorBlock rotorBlock;
     private int mDoor = 0;
     private int mHardenedClay = 0;
@@ -195,7 +193,8 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                 .addInfo("The structure is too complex!")
                 .addInfo("Follow the StructureLib hologram projector to build the main structure.").addSeparator()
                 .beginStructureBlock(7, 12, 7, false).addController("Front bottom center")
-                .addCasingInfo("Hardened Clay block", 40).addOtherStructurePart("Dispenser", "Any Hardened Clay block")
+                .addCasingInfoMin("Hardened Clay block", 40, false)
+                .addOtherStructurePart("Dispenser", "Any Hardened Clay block")
                 .addOtherStructurePart("0-1 Wooden door", "Any Hardened Clay block")
                 .addStructureHint("Primitive Kinetic Shaftbox", 1).toolTipFinisher(MULTIBLOCK_ADDED_BY_BARTWORKS);
         return tt;
@@ -343,7 +342,6 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
         return false;
     }
 
-    @SuppressWarnings("ALL")
     @Override
     public boolean addOutput(ItemStack aStack) {
         if (GT_Utility.isStackInvalid(aStack)) return false;

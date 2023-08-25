@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -66,7 +65,6 @@ import gregtech.common.GT_Worldgen_GT_Ore_Layer;
 import gregtech.common.GT_Worldgen_GT_Ore_SmallPieces;
 import gregtech.common.tileentities.machines.multi.GT_MetaTileEntity_DrillerBase;
 
-@SuppressWarnings("ALL")
 public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_DrillerBase {
 
     private static ArrayListMultimap<Integer, Pair<Pair<Integer, Boolean>, Float>> extraDropsDimMap = ArrayListMultimap
@@ -310,26 +308,17 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      * @param finalDef ModDimensionDef corresponding to the target dim
      */
     private void getDropsOreVeinsSpace(ModDimensionDef finalDef) {
-        Set space = GalacticGreg.oreVeinWorldgenList.stream()
+        GalacticGreg.oreVeinWorldgenList.stream()
                 .filter(
-                        gt_worldgen -> gt_worldgen.mEnabled && gt_worldgen instanceof GT_Worldgen_GT_Ore_Layer_Space
-                                && ((GT_Worldgen_GT_Ore_Layer_Space) gt_worldgen).isEnabledForDim(finalDef))
-                .collect(Collectors.toSet());
-
-        space.forEach(element -> {
-            addDrop(
-                    new Pair<>((int) ((GT_Worldgen_GT_Ore_Layer_Space) element).mPrimaryMeta, false),
-                    (float) ((GT_Worldgen_GT_Ore_Layer_Space) element).mWeight);
-            addDrop(
-                    new Pair<>((int) ((GT_Worldgen_GT_Ore_Layer_Space) element).mSecondaryMeta, false),
-                    (float) ((GT_Worldgen_GT_Ore_Layer_Space) element).mWeight);
-            addDrop(
-                    new Pair<>((int) ((GT_Worldgen_GT_Ore_Layer_Space) element).mSporadicMeta, false),
-                    (((GT_Worldgen_GT_Ore_Layer_Space) element).mWeight / 8f));
-            addDrop(
-                    new Pair<>((int) ((GT_Worldgen_GT_Ore_Layer_Space) element).mBetweenMeta, false),
-                    (((GT_Worldgen_GT_Ore_Layer_Space) element).mWeight / 8f));
-        });
+                        gt_worldgen -> gt_worldgen.mEnabled
+                                && gt_worldgen instanceof GT_Worldgen_GT_Ore_Layer_Space oreLayerSpace
+                                && oreLayerSpace.isEnabledForDim(finalDef))
+                .map(gt_worldgen -> (GT_Worldgen_GT_Ore_Layer_Space) gt_worldgen).forEach(element -> {
+                    addDrop(new Pair<>((int) element.mPrimaryMeta, false), (float) element.mWeight);
+                    addDrop(new Pair<>((int) element.mSecondaryMeta, false), (float) element.mWeight);
+                    addDrop(new Pair<>((int) element.mSporadicMeta, false), (element.mWeight / 8f));
+                    addDrop(new Pair<>((int) element.mBetweenMeta, false), (element.mWeight / 8f));
+                });
     }
 
     /**
@@ -338,15 +327,13 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      * @param finalDef ModDimensionDef corresponding to the target dim
      */
     private void getDropsSmallOreSpace(ModDimensionDef finalDef) {
-        Set space = GalacticGreg.smallOreWorldgenList.stream().filter(
-                gt_worldgen -> gt_worldgen.mEnabled && gt_worldgen instanceof GT_Worldgen_GT_Ore_SmallPieces_Space
-                        && ((GT_Worldgen_GT_Ore_SmallPieces_Space) gt_worldgen).isEnabledForDim(finalDef))
-                .collect(Collectors.toSet());
-
-        space.forEach(
-                element -> addDrop(
-                        new Pair<>((int) ((GT_Worldgen_GT_Ore_SmallPieces_Space) element).mMeta, false),
-                        (float) ((GT_Worldgen_GT_Ore_SmallPieces_Space) element).mAmount));
+        GalacticGreg.smallOreWorldgenList.stream()
+                .filter(
+                        gt_worldgen -> gt_worldgen.mEnabled
+                                && gt_worldgen instanceof GT_Worldgen_GT_Ore_SmallPieces_Space oreSmallPiecesSpace
+                                && oreSmallPiecesSpace.isEnabledForDim(finalDef))
+                .map(gt_worldgen -> (GT_Worldgen_GT_Ore_SmallPieces_Space) gt_worldgen)
+                .forEach(element -> addDrop(new Pair<>((int) element.mMeta, false), (float) element.mAmount));
     }
 
     /**
@@ -419,7 +406,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                 .filter(
                         gt_worldgen -> gt_worldgen.mEnabled && gt_worldgen instanceof BW_OreLayer
                                 && gt_worldgen.isGenerationAllowed(null, aID, 0))
-                .collect(Collectors.toSet()).forEach(addToList);
+                .forEach(addToList);
     }
 
     /**
@@ -459,13 +446,12 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      */
     private void addOresVeinsBartworks(ModDimensionDef finalDef, Consumer<BW_OreLayer> addToList) {
         try {
-            Set space = GalacticGreg.oreVeinWorldgenList.stream()
+            GalacticGreg.oreVeinWorldgenList.stream()
                     .filter(
-                            gt_worldgen -> gt_worldgen.mEnabled && gt_worldgen instanceof BW_Worldgen_Ore_Layer_Space
-                                    && ((BW_Worldgen_Ore_Layer_Space) gt_worldgen).isEnabledForDim(finalDef))
-                    .collect(Collectors.toSet());
-
-            space.forEach(addToList);
+                            gt_worldgen -> gt_worldgen.mEnabled
+                                    && gt_worldgen instanceof BW_Worldgen_Ore_Layer_Space oreLayerSpace
+                                    && oreLayerSpace.isEnabledForDim(finalDef))
+                    .map(gt_worldgen -> (BW_Worldgen_Ore_Layer_Space) gt_worldgen).forEach(addToList);
         } catch (NullPointerException ignored) {}
     }
 
@@ -476,18 +462,15 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      */
     private void addSmallOresBartworks(ModDimensionDef finalDef) {
         try {
-            Set space = GalacticGreg.smallOreWorldgenList.stream()
+            GalacticGreg.smallOreWorldgenList.stream()
                     .filter(
-                            gt_worldgen -> gt_worldgen.mEnabled && gt_worldgen instanceof BW_Worldgen_Ore_SmallOre_Space
-                                    && ((BW_Worldgen_Ore_SmallOre_Space) gt_worldgen).isEnabledForDim(finalDef))
-                    .collect(Collectors.toSet());
-
-            space.forEach(
-                    element -> addDrop(
-                            new Pair<>(
-                                    ((BW_Worldgen_Ore_SmallOre_Space) element).mPrimaryMeta,
-                                    ((BW_Worldgen_Ore_SmallOre_Space) element).bwOres != 0),
-                            (float) ((BW_Worldgen_Ore_SmallOre_Space) element).mDensity));
+                            gt_worldgen -> gt_worldgen.mEnabled
+                                    && gt_worldgen instanceof BW_Worldgen_Ore_SmallOre_Space smallOreSpace
+                                    && smallOreSpace.isEnabledForDim(finalDef))
+                    .map(gt_worldgen -> (BW_Worldgen_Ore_SmallOre_Space) gt_worldgen).forEach(
+                            element -> addDrop(
+                                    new Pair<>(element.mPrimaryMeta, element.bwOres != 0),
+                                    (float) element.mDensity));
         } catch (NullPointerException ignored) {}
     }
 

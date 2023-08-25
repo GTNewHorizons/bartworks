@@ -18,6 +18,8 @@ import java.util.HashSet;
 
 public class NonNullWrappedHashSet<E> extends HashSet<E> {
 
+    private static final long serialVersionUID = 8377161849188229010L;
+
     public NonNullWrappedHashSet() {
         super();
     }

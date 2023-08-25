@@ -135,7 +135,7 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
                 .addInfo("Mode 3: Circuit 2 in controller: Tapped-Upstep (currently disabled)")
                 .addInfo("Mode 4: Circuit 2 in controller: Tapped-Downstep (currently disabled)").addSeparator()
                 .beginVariableStructureBlock(3, 3, 3, 10, 3, 3, false).addController("Front bottom center")
-                .addCasingInfo("MV Machine Casing", 0)
+                .addCasingInfoMin("MV Machine Casing", 0, false)
                 .addOtherStructurePart("Transformer-Winding Blocks", "1 Layer for each tier transformed")
                 .addOtherStructurePart("Nickel-Zinc-Ferrite Blocks", "Middle of Transformer-Winding Blocks")
                 .addMaintenanceHatch("Any bottom layer casing", 1).addEnergyHatch("Any bottom layer casing", 1)

@@ -42,13 +42,12 @@ import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
 public class RadioHatchCompat {
 
-    private static Class intf;
-    private static Class materialClass;
-    private static Class enu;
-    private static Class materialStackClass;
+    private static Class<?> intf;
+    private static Class<?> materialClass;
+    private static Class<?> enu;
+    private static Class<?> materialStackClass;
 
     private static Field isRadioactive;
     private static Field f;
@@ -105,11 +104,14 @@ public class RadioHatchCompat {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void run() {
         DebugLog.log("Starting Generation of missing GT++ rods/longrods");
         try {
-            Class rodclass = Class.forName("gtPlusPlus.core.item.base.rods.BaseItemRod");
-            Class longrodclass = Class.forName("gtPlusPlus.core.item.base.rods.BaseItemRodLong");
+            Class<? extends Item> rodclass = (Class<? extends Item>) Class
+                    .forName("gtPlusPlus.core.item.base.rods.BaseItemRod");
+            Class<? extends Item> longrodclass = (Class<? extends Item>) Class
+                    .forName("gtPlusPlus.core.item.base.rods.BaseItemRodLong");
             Constructor<? extends Item> c1 = rodclass.getConstructor(RadioHatchCompat.materialClass);
             Constructor<? extends Item> c2 = longrodclass.getConstructor(RadioHatchCompat.materialClass);
             Field cOwners = GameData.class.getDeclaredField("customOwners");
@@ -129,7 +131,7 @@ public class RadioHatchCompat {
                 else if (container.getModId().equalsIgnoreCase(GTPlusPlus.ID)) gtpp = container;
             }
 
-            for (Object mats : (Set) RadioHatchCompat.materialClass.getField("mMaterialMap").get(null)) {
+            for (Object mats : (Set<?>) RadioHatchCompat.materialClass.getField("mMaterialMap").get(null)) {
                 if (RadioHatchCompat.isRadioactive.getBoolean(mats)) {
 
                     if (OreDictionary.getOres("stick" + RadioHatchCompat.unlocalizedName.get(mats)).isEmpty()) {
@@ -194,19 +196,19 @@ public class RadioHatchCompat {
         byte amount;
         final Object m;
 
-        private static ArrayList getMaterialInput(Object GTPPMaterial) throws IllegalAccessException {
+        private static ArrayList<?> getMaterialInput(Object GTPPMaterial) throws IllegalAccessException {
             Object ret = RadioHatchCompat.vMaterialInput.get(GTPPMaterial);
-            return ret instanceof ArrayList ? (ArrayList) ret : new ArrayList();
+            return ret instanceof ArrayList ? (ArrayList<?>) ret : new ArrayList<>();
         }
 
         private static boolean isElement(Object GTPPMaterial) throws IllegalAccessException {
             return RadioHatchCompat.GTPPRadAdapter.getMaterialInput(GTPPMaterial).isEmpty();
         }
 
-        private static List getElemets(Object GTPPMaterial) throws IllegalAccessException {
-            ArrayList elements = new ArrayList();
-            Queue toCheck = new LinkedList();
-            ArrayList materialInputs = RadioHatchCompat.GTPPRadAdapter.getMaterialInput(GTPPMaterial);
+        private static List<?> getElemets(Object GTPPMaterial) throws IllegalAccessException {
+            ArrayList<Object> elements = new ArrayList<>();
+            Queue<Object> toCheck = new LinkedList<>();
+            ArrayList<?> materialInputs = RadioHatchCompat.GTPPRadAdapter.getMaterialInput(GTPPMaterial);
             if (materialInputs.isEmpty()) return Collections.singletonList(GTPPMaterial);
             for (Object materialStack : materialInputs) {
                 if (!RadioHatchCompat.GTPPRadAdapter.isElement(RadioHatchCompat.stackMaterial.get(materialStack)))
@@ -222,7 +224,7 @@ public class RadioHatchCompat {
         private static Integer calulateRad(Object m) {
             int ret = 0;
             try {
-                List pureElements = RadioHatchCompat.GTPPRadAdapter.getElemets(m);
+                List<?> pureElements = RadioHatchCompat.GTPPRadAdapter.getElemets(m);
                 for (Object materialObj : pureElements) if (RadioHatchCompat.isRadioactive.getBoolean(materialObj))
                     ret += ((int) RadioHatchCompat.radlevel.getByte(m) + RadioHatchCompat.GTPPRadAdapter
                             .clampToZero(RadioHatchCompat.protons.getLong(materialObj)));

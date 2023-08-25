@@ -86,7 +86,6 @@ public class BW_Meta_Items {
                         BW_Util.CLEANROOM));
     }
 
-    @SuppressWarnings("deprecation")
     public void addNewCircuit(int aTier, int aID, String aName) {
 
         String additionalOreDictData = "";
@@ -179,8 +178,7 @@ public class BW_Meta_Items {
         }
 
         @Override
-        @SuppressWarnings("unchecked")
-        public void getSubItems(Item var1, CreativeTabs aCreativeTab, List aList) {
+        public void getSubItems(Item var1, CreativeTabs aCreativeTab, List<ItemStack> aList) {
             if (aCreativeTab == this.getCreativeTab())
                 for (NBTTagCompound tag : CircuitImprintLoader.recipeTagMap.keySet()) {
                     ItemStack stack = new ItemStack(BW_Meta_Items.NEWCIRCUITS, 1, 0);
@@ -224,8 +222,7 @@ public class BW_Meta_Items {
         }
 
         @Override
-        @SuppressWarnings("unchecked")
-        protected void addAdditionalToolTips(List aList, ItemStack aStack, EntityPlayer aPlayer) {
+        protected void addAdditionalToolTips(List<String> aList, ItemStack aStack, EntityPlayer aPlayer) {
             if (aStack.getItemDamage() == 0) if (aStack.getTagCompound() != null
                     && CircuitImprintLoader.getStackFromTag(aStack.getTagCompound()) != null)
                 aList.add(
@@ -346,8 +343,7 @@ public class BW_Meta_Items {
         }
 
         @SideOnly(Side.CLIENT)
-        @SuppressWarnings("unchecked")
-        public void getSubItems(Item var1, CreativeTabs aCreativeTab, List aList) {
+        public void getSubItems(Item var1, CreativeTabs aCreativeTab, List<ItemStack> aList) {
             int j = this.mEnabledItems.length();
 
             for (int i = 0; i < j; ++i) {
@@ -360,8 +356,7 @@ public class BW_Meta_Items {
         }
 
         @Override
-        @SuppressWarnings("unchecked")
-        protected void addAdditionalToolTips(List aList, ItemStack aStack, EntityPlayer aPlayer) {
+        protected void addAdditionalToolTips(List<String> aList, ItemStack aStack, EntityPlayer aPlayer) {
             super.addAdditionalToolTips(aList, aStack, aPlayer);
             aList.add(BW_Tooltip_Reference.ADDED_BY_BARTWORKS.get());
         }

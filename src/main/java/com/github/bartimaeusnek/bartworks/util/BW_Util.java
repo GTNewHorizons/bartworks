@@ -78,7 +78,6 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Shaped_Recipe;
 import gregtech.api.util.GT_Utility;
 
-@SuppressWarnings({ "unused", "RedundantSuppression" })
 public class BW_Util {
 
     public static final int STANDART = 0;
@@ -1001,7 +1000,6 @@ public class BW_Util {
                 aRecipe);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static ShapedOreRecipe createGTCraftingRecipe(ItemStack aResult, Enchantment[] aEnchantmentsAdded,
             int[] aEnchantmentLevelsAdded, boolean aMirrored, boolean aBuffered, boolean aKeepNBT,
             boolean aDismantleable, boolean aRemovable, boolean aReversible, boolean aRemoveAllOthersWithSameOutput,
@@ -1017,7 +1015,7 @@ public class BW_Util {
 
         for (byte i = 0; i < aRecipe.length; i++) {
             if (aRecipe[i] instanceof IItemContainer) aRecipe[i] = ((IItemContainer) aRecipe[i]).get(1);
-            else if (aRecipe[i] instanceof Enum) aRecipe[i] = ((Enum) aRecipe[i]).name();
+            else if (aRecipe[i] instanceof Enum) aRecipe[i] = ((Enum<?>) aRecipe[i]).name();
             else if (!(aRecipe[i] == null || aRecipe[i] instanceof ItemStack
                     || aRecipe[i] instanceof ItemData
                     || aRecipe[i] instanceof String

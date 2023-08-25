@@ -71,8 +71,7 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
         this.itemIcon = iconRegister.registerIcon(MainMod.MOD_ID + ":" + this.itemTex);
     }
 
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack itemStack, EntityPlayer player, List info, boolean b) {
+    public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> info, boolean b) {
         info.add(
                 StatCollector
                         .translateToLocalFormatted("ic2.itemrotor.wind.info", this.DiaMinMax[1], this.DiaMinMax[2]));

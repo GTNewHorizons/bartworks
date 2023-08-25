@@ -50,7 +50,6 @@ public class AspectLoader implements IWerkstoffRunnable {
                                                 : (int) (enabledOrePrefixes.mMaterialAmount / 3628800L)));
                 } else if (enabledOrePrefixes.mMaterialAmount >= 0L) {
                     if (Objects.nonNull(WerkstoffLoader.items.get(enabledOrePrefixes)))
-                        // noinspection unchecked
                         ThaumcraftHandler.AspectAdder.addAspectViaBW(
                                 werkstoff.get(enabledOrePrefixes),
                                 new Pair<>(TC_Aspects.PERDITIO.mAspect, 1));

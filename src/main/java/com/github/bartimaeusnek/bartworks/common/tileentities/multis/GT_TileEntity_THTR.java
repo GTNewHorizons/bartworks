@@ -152,7 +152,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 .addInfo("Reactor will take 4 800L/t of coolant multiplied by efficiency")
                 .addInfo("Uses " + GT_Utility.formatNumbers(powerUsage) + " EU/t")
                 .addInfo("One Operation takes 9 hours").addSeparator().beginStructureBlock(11, 12, 11, true)
-                .addController("Front bottom center").addCasingInfo("Radiation Proof Casings", 500)
+                .addController("Front bottom center").addCasingInfoMin("Radiation Proof Casings", 500, false)
                 .addStructureInfo("Corners and the 2 touching blocks are air (cylindric)")
                 .addInputBus("Any top layer casing", 2).addInputHatch("Any top layer casing", 2)
                 .addOutputBus("Any bottom layer casing", 1).addOutputHatch("Any bottom layer casing", 1)

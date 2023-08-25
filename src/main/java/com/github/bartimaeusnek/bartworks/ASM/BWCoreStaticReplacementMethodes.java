@@ -39,7 +39,6 @@ public class BWCoreStaticReplacementMethodes {
         RECENTLYUSEDRECIPES = ThreadLocal.withInitial(AccessPriorityList::new);
     }
 
-    @SuppressWarnings("ALL")
     public static ItemStack findCachedMatchingRecipe(InventoryCrafting inventoryCrafting, World world) {
         int i = 0;
         ItemStack itemstack = null;
@@ -91,10 +90,10 @@ public class BWCoreStaticReplacementMethodes {
             ItemStack stack = null;
 
             HashSet<IRecipe> recipeSet = new NonNullWrappedHashSet<>();
-            List recipeList = CraftingManager.getInstance().getRecipeList();
+            List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
 
             for (int k = 0; k < recipeList.size(); k++) {
-                IRecipe r = (IRecipe) recipeList.get(k);
+                IRecipe r = recipeList.get(k);
                 if (r.matches(inventoryCrafting, world)) recipeSet.add(r);
             }
 

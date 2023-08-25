@@ -138,8 +138,9 @@ public class BW_TileEntityContainer extends BlockContainer implements ITileAddsI
     public IIcon getIcon(int side, int meta) {
         if (ITileHasDifferentTextureSides.class.isAssignableFrom(this.tileEntity)) {
             try {
-                return ((ITileHasDifferentTextureSides) this.tileEntity.newInstance()).getTextureForSide(side, meta);
-            } catch (InstantiationException | IllegalAccessException e) {
+                return ((ITileHasDifferentTextureSides) this.tileEntity.getConstructor().newInstance())
+                        .getTextureForSide(side, meta);
+            } catch (Exception e) {
                 e.printStackTrace();
                 return super.getIcon(side, meta);
             }
@@ -151,8 +152,9 @@ public class BW_TileEntityContainer extends BlockContainer implements ITileAddsI
     public void registerBlockIcons(IIconRegister par1IconRegister) {
         if (ITileHasDifferentTextureSides.class.isAssignableFrom(this.tileEntity)) {
             try {
-                ((ITileHasDifferentTextureSides) this.tileEntity.newInstance()).registerBlockIcons(par1IconRegister);
-            } catch (InstantiationException | IllegalAccessException e) {
+                ((ITileHasDifferentTextureSides) this.tileEntity.getConstructor().newInstance())
+                        .registerBlockIcons(par1IconRegister);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else super.registerBlockIcons(par1IconRegister);
@@ -161,8 +163,8 @@ public class BW_TileEntityContainer extends BlockContainer implements ITileAddsI
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
         try {
-            return this.tileEntity.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            return this.tileEntity.getConstructor().newInstance();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -187,8 +189,8 @@ public class BW_TileEntityContainer extends BlockContainer implements ITileAddsI
     public String[] getInfoData() {
         if (ITileAddsInformation.class.isAssignableFrom(this.tileEntity)) {
             try {
-                return ((ITileAddsInformation) this.tileEntity.newInstance()).getInfoData();
-            } catch (InstantiationException | IllegalAccessException e) {
+                return ((ITileAddsInformation) this.tileEntity.getConstructor().newInstance()).getInfoData();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

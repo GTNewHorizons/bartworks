@@ -23,15 +23,14 @@ import java.util.Spliterator;
 
 import org.apache.commons.lang3.NotImplementedException;
 
-@SuppressWarnings("ALL")
 public class AccessPriorityList<E> implements List<E>, Deque<E>, Set<E> {
 
     transient int size = 0;
     transient AccessPriorityListNode<E> head;
     transient AccessPriorityListNode<E> tail;
 
-    public static AccessPriorityList create() {
-        return new AccessPriorityList();
+    public static <E> AccessPriorityList<E> create() {
+        return new AccessPriorityList<>();
     }
 
     public AccessPriorityList() {}

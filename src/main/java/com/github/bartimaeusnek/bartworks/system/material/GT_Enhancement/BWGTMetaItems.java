@@ -105,9 +105,8 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
         return material.getLocalizedNameForItem(itemTypeLocalizedName);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    protected void addAdditionalToolTips(List aList, ItemStack aStack, EntityPlayer aPlayer) {
+    protected void addAdditionalToolTips(List<String> aList, ItemStack aStack, EntityPlayer aPlayer) {
         Materials material = getMaterial(aStack);
         if (material != null) {
             String tooltip = material.getToolTip();
@@ -167,8 +166,7 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item var1, CreativeTabs aCreativeTab, List aList) {
+    public void getSubItems(Item var1, CreativeTabs aCreativeTab, List<ItemStack> aList) {
         for (int i = 0; i < Materials.values().length; i++) {
             Materials w = Materials.values()[i];
             if ((w == null) || (w.mTypes & Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes)) == 0

@@ -36,7 +36,6 @@ public class PrintRecipeListToFile extends CommandBase {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
         File file = new File(p_71515_2_[0]);
         try {

@@ -149,7 +149,7 @@ public class GT_TileEntity_MegaVacuumFreezer extends GT_TileEntity_MegaMultiBloc
         GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
         tt.addMachineType("Vacuum Freezer").addInfo("Controller Block for the Mega Vacuum Freezer")
                 .addInfo("Cools hot ingots and cells").addSeparator().beginStructureBlock(15, 15, 15, true)
-                .addController("Front center").addCasingInfo("Frost Proof Machine Casing", 900)
+                .addController("Front center").addCasingInfoMin("Frost Proof Machine Casing", 900, false)
                 .addEnergyHatch("Any casing", 1).addMaintenanceHatch("Any casing", 1).addInputHatch("Any casing", 1)
                 .addOutputHatch("Any casing", 1).addInputBus("Any casing", 1).addOutputBus("Any casing", 1)
                 .toolTipFinisher(MULTIBLOCK_ADDED_BY_BARTWORKS);

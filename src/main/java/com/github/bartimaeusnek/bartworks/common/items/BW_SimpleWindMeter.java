@@ -47,8 +47,7 @@ public class BW_SimpleWindMeter extends Item {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List list, boolean p_77624_4_) {
+    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List<String> list, boolean p_77624_4_) {
         super.addInformation(itemStack, entityPlayer, list, p_77624_4_);
         list.add(StatCollector.translateToLocal("tooltip.windmeter.0.name"));
         list.add(

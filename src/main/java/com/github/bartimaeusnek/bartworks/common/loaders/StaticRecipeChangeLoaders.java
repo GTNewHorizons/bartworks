@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.Set;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -234,7 +235,6 @@ public class StaticRecipeChangeLoaders {
         }
     }
 
-    @SuppressWarnings("ALL")
     private static void runMoltenUnificationEnfocement(Werkstoff werkstoff) {
         if (werkstoff.getGenerationFeatures().enforceUnification && werkstoff.hasItemType(OrePrefixes.cellMolten)) {
             try {
@@ -244,9 +244,10 @@ public class StaticRecipeChangeLoaders {
                         Materials.Empty.getCells(1));
                 Field f = GT_Utility.class.getDeclaredField("sFilledContainerToData");
                 f.setAccessible(true);
+                @SuppressWarnings("unchecked")
                 Map<GT_ItemStack, FluidContainerRegistry.FluidContainerData> sFilledContainerToData = (Map<GT_ItemStack, FluidContainerRegistry.FluidContainerData>) f
                         .get(null);
-                HashSet torem = new HashSet<>();
+                Set<Map.Entry<GT_ItemStack, FluidContainerRegistry.FluidContainerData>> toremFilledContainerToData = new HashSet<>();
                 ItemStack toReplace = null;
                 for (Map.Entry<GT_ItemStack, FluidContainerRegistry.FluidContainerData> entry : sFilledContainerToData
                         .entrySet()) {
@@ -255,41 +256,41 @@ public class StaticRecipeChangeLoaders {
                     if (entry.getValue().fluid.equals(data.fluid)
                             && !entry.getValue().filledContainer.equals(data.filledContainer)) {
                         toReplace = entry.getValue().filledContainer;
-                        torem.add(entry);
+                        toremFilledContainerToData.add(entry);
                     }
                 }
-                sFilledContainerToData.entrySet().removeAll(torem);
-                torem.clear();
+                sFilledContainerToData.entrySet().removeAll(toremFilledContainerToData);
+                Set<GT_Recipe> toremRecipeList = new HashSet<>();
                 if (toReplace != null) {
                     for (GT_Recipe.GT_Recipe_Map map : GT_Recipe.GT_Recipe_Map.sMappings) {
-                        torem.clear();
+                        toremRecipeList.clear();
                         for (GT_Recipe recipe : map.mRecipeList) {
                             for (int i = 0; i < recipe.mInputs.length; i++) {
                                 if (GT_Utility.areStacksEqual(recipe.mInputs[i], toReplace)) {
-                                    torem.add(recipe);
+                                    toremRecipeList.add(recipe);
                                     // recipe.mInputs[i] = data.filledContainer;
                                 }
                             }
                             for (int i = 0; i < recipe.mOutputs.length; i++) {
                                 if (GT_Utility.areStacksEqual(recipe.mOutputs[i], toReplace)) {
-                                    torem.add(recipe);
+                                    toremRecipeList.add(recipe);
                                     // recipe.mOutputs[i] = data.filledContainer;
                                     if (map == GT_Recipe.GT_Recipe_Map.sFluidCannerRecipes
                                             && GT_Utility.areStacksEqual(recipe.mOutputs[i], data.filledContainer)
                                             && !recipe.mFluidInputs[0].equals(data.fluid)) {
-                                        torem.add(recipe);
+                                        toremRecipeList.add(recipe);
                                         // recipe.mOutputs[i] = data.filledContainer;
                                     }
                                 }
                             }
                             if (recipe.mSpecialItems instanceof ItemStack) {
                                 if (GT_Utility.areStacksEqual((ItemStack) recipe.mSpecialItems, toReplace)) {
-                                    torem.add(recipe);
+                                    toremRecipeList.add(recipe);
                                     // recipe.mSpecialItems = data.filledContainer;
                                 }
                             }
                         }
-                        map.mRecipeList.removeAll(torem);
+                        map.mRecipeList.removeAll(toremRecipeList);
                     }
                 }
                 GT_Utility.addFluidContainerData(data);

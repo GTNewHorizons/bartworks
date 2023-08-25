@@ -39,6 +39,7 @@ import gregtech.api.GregTech_API;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.ITexture;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
@@ -127,12 +128,15 @@ public class GemLoader implements IWerkstoffRunnable {
 
             GT_Values.RA
                     .addLatheRecipe(werkstoff.get(gemExquisite), werkstoff.get(lens), werkstoff.get(dust, 2), 2400, 30);
+            final ITexture texture = TextureFactory.of(
+                    Textures.BlockIcons.MACHINE_CASINGS[2][0],
+                    TextureFactory.of(Textures.BlockIcons.OVERLAY_LENS, werkstoff.getRGBA(), false));
             GregTech_API.registerCover(
                     werkstoff.get(lens),
-                    TextureFactory.of(
-                            Textures.BlockIcons.MACHINE_CASINGS[2][0],
-                            TextureFactory.of(Textures.BlockIcons.OVERLAY_LENS, werkstoff.getRGBA(), false)),
-                    new gregtech.common.covers.GT_Cover_Lens(BW_ColorUtil.getDyeFromColor(werkstoff.getRGBA()).mIndex));
+                    texture,
+                    new gregtech.common.covers.GT_Cover_Lens(
+                            BW_ColorUtil.getDyeFromColor(werkstoff.getRGBA()).mIndex,
+                            texture));
             GT_ModHandler.addPulverisationRecipe(werkstoff.get(lens), werkstoff.get(dustSmall, 3));
 
             for (ItemStack is : OreDictionary.getOres(

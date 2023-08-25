@@ -177,6 +177,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
     public static List<Pair<Block, Integer>> getAllBlockTiers() {
         return new ArrayList<Pair<Block, Integer>>() {
 
+            private static final long serialVersionUID = 8171991663102417651L;
+
             {
                 add(Pair.of(GregTech_API.sBlockMetal5, 2));
                 add(Pair.of(LudicrousBlocks.resource_block, 1));
@@ -242,7 +244,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 .addInfo("Valid blocks: Neutronium, Infinity, Transcendent Metal, Spacetime, Universium")
                 .addInfo("Minimum allowed energy hatch tier is one below recipe tier")
                 .addInfo("Supports " + TT + " energy hatches").addSeparator().beginStructureBlock(3, 9, 3, false)
-                .addController("Front 3rd layer center").addCasingInfo("Solid Steel Machine Casing", 8)
+                .addController("Front 3rd layer center").addCasingInfoMin("Solid Steel Machine Casing", 8, false)
                 .addStructureInfo("Casings can be replaced with Explosion Warning Signs")
                 .addOtherStructurePart("Transformer-Winding Blocks", "Outer layer 2,3,7,8")
                 .addOtherStructurePart("Nickel-Zinc-Ferrite Blocks", "Inner layer 2,3,7,8")

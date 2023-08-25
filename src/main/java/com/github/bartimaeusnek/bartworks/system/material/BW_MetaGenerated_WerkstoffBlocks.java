@@ -56,8 +56,7 @@ public class BW_MetaGenerated_WerkstoffBlocks extends BW_MetaGenerated_Blocks {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void getSubBlocks(Item aItem, CreativeTabs p_149666_2_, List aList) {
+    public void getSubBlocks(Item aItem, CreativeTabs tab, List<ItemStack> aList) {
         Werkstoff.werkstoffHashSet.stream()
                 .filter(tMaterial -> tMaterial.hasItemType(OrePrefixes.gem) || tMaterial.hasItemType(OrePrefixes.ingot))
                 .map(tMaterial -> new ItemStack(aItem, 1, tMaterial.getmID())).forEach(aList::add);

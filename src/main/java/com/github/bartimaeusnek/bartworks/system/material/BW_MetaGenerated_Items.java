@@ -124,8 +124,7 @@ public class BW_MetaGenerated_Items extends GT_MetaGenerated_Item implements IRa
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected void addAdditionalToolTips(List aList, ItemStack aStack, EntityPlayer aPlayer) {
+    protected void addAdditionalToolTips(List<String> aList, ItemStack aStack, EntityPlayer aPlayer) {
         if (this.orePrefixes == OrePrefixes.dustImpure || this.orePrefixes == OrePrefixes.dustPure) {
             aList.add(GT_LanguageManager.getTranslation("metaitem.01.tooltip.purify"));
         }
@@ -177,8 +176,7 @@ public class BW_MetaGenerated_Items extends GT_MetaGenerated_Item implements IRa
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item var1, CreativeTabs aCreativeTab, List aList) {
+    public void getSubItems(Item var1, CreativeTabs aCreativeTab, List<ItemStack> aList) {
         for (Werkstoff werkstoff : werkstoffHashSet) {
             if (werkstoff != null && werkstoff.hasItemType(this.orePrefixes)) {
                 ItemStack tStack = new ItemStack(this, 1, werkstoff.getmID());

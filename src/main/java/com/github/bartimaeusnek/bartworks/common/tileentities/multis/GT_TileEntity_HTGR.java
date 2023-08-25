@@ -181,7 +181,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         "Reactor will take 4 000L/s of coolant multiplied by efficiency and by fuel coolant value (check tooltips)")
                 .addInfo("Uses " + GT_Utility.formatNumbers(powerUsage) + " EU/t").addInfo("One Operation takes 1 hour")
                 .addSeparator().beginStructureBlock(11, 12, 11, true).addController("Front bottom center")
-                .addCasingInfo("Europium Reinforced Radiation Proof Casings", 500)
+                .addCasingInfoMin("Europium Reinforced Radiation Proof Casings", 500, false)
                 .addStructureInfo("Corners and the 2 touching blocks are air (cylindric)")
                 .addInputBus("Any top layer casing", 2).addInputHatch("Any top layer casing", 2)
                 .addOutputBus("Any bottom layer casing", 1).addOutputHatch("Any bottom layer casing", 1)
@@ -603,7 +603,8 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         public static void register_fake_THR_Recipes() {
 
             int i = 0;
-            for (Fuel_ fuel : sHTGR_Fuel) {
+            for (@SuppressWarnings("unused")
+            Fuel_ fuel : sHTGR_Fuel) {
 
                 fakeRecipeMap.addFakeRecipe(
                         false,

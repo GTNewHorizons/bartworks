@@ -90,8 +90,7 @@ public class BW_MetaGeneratedBlocks_Casing extends BW_MetaGenerated_Blocks
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubBlocks(Item aItem, CreativeTabs aTab, List aList) {
+    public void getSubBlocks(Item aItem, CreativeTabs aTab, List<ItemStack> aList) {
         Werkstoff.werkstoffHashSet.stream()
                 .filter(
                         pMaterial -> pMaterial.getType().equals(Werkstoff.Types.BIOLOGICAL)

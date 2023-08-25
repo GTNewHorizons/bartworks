@@ -71,8 +71,7 @@ public class GT_Rockcutter_Item extends ItemTool implements IElectricItem {
         this.setUnlocalizedName("GT_Rockcutter_Item_" + GT_Values.VN[this.mTier]);
     }
 
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
+    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List<String> aList, boolean aF3_H) {
         aList.add(StatCollector.translateToLocal("tooltip.bw.tier.name") + " " + GT_Values.VN[this.mTier]);
         aList.add(BW_Tooltip_Reference.ADDED_BY_BARTWORKS.get());
     }
@@ -116,8 +115,7 @@ public class GT_Rockcutter_Item extends ItemTool implements IElectricItem {
     }
 
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List itemList) {
+    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List<ItemStack> itemList) {
         ItemStack itemStack = new ItemStack(this, 1);
         if (this.getChargedItem(itemStack) == this) {
             ItemStack charged = new ItemStack(this, 1);

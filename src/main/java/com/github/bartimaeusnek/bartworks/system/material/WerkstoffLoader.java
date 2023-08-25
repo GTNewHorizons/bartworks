@@ -139,7 +139,7 @@ import ic2.api.recipe.RecipeInputOreDict;
 import ic2.api.recipe.RecipeOutput;
 import ic2.api.recipe.Recipes;
 
-@SuppressWarnings({ "unchecked", "deprecation" })
+@SuppressWarnings("deprecation")
 public class WerkstoffLoader {
 
     private WerkstoffLoader() {}
@@ -169,7 +169,7 @@ public class WerkstoffLoader {
         } catch (NullPointerException | IllegalArgumentException ignored) {}
 
         // add tiberium
-        Element t = EnumUtils.createNewElement("Tr", 123L, 203L, 0L, -1L, null, "Tiberium", false);
+        EnumUtils.createNewElement("Tr", 123L, 203L, 0L, -1L, null, "Tiberium", false);
 
         bottle.mDefaultStackSize = 1;
         Werkstoff.GenerationFeatures.initPrefixLogic();
@@ -1544,6 +1544,7 @@ public class WerkstoffLoader {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private static void addSubTags() {
         WerkstoffLoader.CubicZirconia.getStats().setDurOverride(Materials.Diamond.mDurability);
         WerkstoffLoader.HDCS.getStats().setSpeedOverride(Materials.HSSS.mToolSpeed);
@@ -1821,6 +1822,7 @@ public class WerkstoffLoader {
      * used for the miners mostly removing this hacky material from the materials map instantly. we only need the item
      * data.
      */
+    @SuppressWarnings("unchecked")
     private static void addFakeItemDataToInWorldBlocksAndCleanUpFakeData() {
 
         Map<String, Materials> MATERIALS_MAP = null;

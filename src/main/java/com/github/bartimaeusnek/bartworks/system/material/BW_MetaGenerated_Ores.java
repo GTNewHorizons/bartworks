@@ -99,8 +99,7 @@ public class BW_MetaGenerated_Ores extends BW_MetaGenerated_Blocks {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void getSubBlocks(Item aItem, CreativeTabs aTab, List aList) {
+    public void getSubBlocks(Item aItem, CreativeTabs aTab, List<ItemStack> aList) {
         for (Werkstoff tMaterial : Werkstoff.werkstoffHashSet) {
             if ((tMaterial != null) && tMaterial.hasItemType(OrePrefixes.ore)
                     && ((tMaterial.getGenerationFeatures().blacklist & 0x8) == 0)) {

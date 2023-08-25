@@ -39,9 +39,9 @@ import gregtech.api.metatileentity.MetaPipeEntity;
 import gregtech.api.objects.XSTR;
 import gregtech.api.threads.GT_Runnable_MachineBlockUpdate;
 
-@SuppressWarnings({ "ALL" })
 public abstract class MapGenRuins extends WorldGenerator {
 
+    @SuppressWarnings("unchecked")
     protected Pair<Block, Integer>[][] ToBuildWith = new Pair[4][0];
 
     @Override
@@ -49,6 +49,7 @@ public abstract class MapGenRuins extends WorldGenerator {
         return false;
     }
 
+    @SuppressWarnings("unchecked")
     protected void setFloorBlocks(int[] metas, Block... blocks) {
         this.ToBuildWith[0] = new Pair[metas.length];
         for (int i = 0; i < metas.length; i++) {
@@ -56,6 +57,7 @@ public abstract class MapGenRuins extends WorldGenerator {
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void setWallBlocks(int[] metas, Block... blocks) {
         this.ToBuildWith[1] = new Pair[metas.length];
         for (int i = 0; i < metas.length; i++) {
@@ -63,6 +65,7 @@ public abstract class MapGenRuins extends WorldGenerator {
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void setRoofBlocks(int[] metas, Block... blocks) {
         this.ToBuildWith[2] = new Pair[metas.length];
         for (int i = 0; i < metas.length; i++) {
@@ -70,6 +73,7 @@ public abstract class MapGenRuins extends WorldGenerator {
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void setMiscBlocks(int[] metas, Block... blocks) {
         this.ToBuildWith[3] = new Pair[metas.length];
         for (int i = 0; i < metas.length; i++) {

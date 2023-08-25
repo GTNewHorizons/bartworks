@@ -151,7 +151,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         tt.addMachineType("Bacterial Vat").addInfo("Controller block for the Bacterial Vat")
                 .addInfo("For maximum efficiency boost keep the Output Hatch always half filled!").addSeparator()
                 .beginStructureBlock(5, 4, 5, false).addController("Front bottom center")
-                .addCasingInfo("Clean Stainless Steel Casings", 19)
+                .addCasingInfoMin("Clean Stainless Steel Casings", 19, false)
                 .addOtherStructurePart("Glass", "Hollow two middle layers", 2)
                 .addStructureInfo("The glass can be any glass, i.e. Tinkers Construct Clear Glass")
                 .addStructureInfo("Some Recipes need more advanced Glass Types").addMaintenanceHatch("Any casing", 1)

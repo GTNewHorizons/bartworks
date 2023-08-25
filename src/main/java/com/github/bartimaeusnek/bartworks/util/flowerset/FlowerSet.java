@@ -20,20 +20,20 @@ import java.util.function.Function;
 
 public class FlowerSet<T> implements Set<T> {
 
-    public FlowerSet(int petals, Function<FlowerNode, Integer> comparerison) {
+    public FlowerSet(int petals, Function<FlowerNode<T>, Integer> comparerison) {
         this.petals = petals;
         this.comparerison = comparerison;
     }
 
     final int petals;
-    final Function<FlowerNode, Integer> comparerison;
+    final Function<FlowerNode<T>, Integer> comparerison;
 
-    public static FlowerSet createBase64(Function<FlowerNode, Integer> comparerison) {
-        return new FlowerSet(64, comparerison);
+    public static <U> FlowerSet<U> createBase64(Function<FlowerNode<U>, Integer> comparerison) {
+        return new FlowerSet<>(64, comparerison);
     }
 
-    public static FlowerSet createHexflower(Function<FlowerNode, Integer> comparerison) {
-        return new FlowerSet(16, comparerison);
+    public static <U> FlowerSet<U> createHexflower(Function<FlowerNode<U>, Integer> comparerison) {
+        return new FlowerSet<>(16, comparerison);
     }
 
     @Override
@@ -103,8 +103,9 @@ public class FlowerSet<T> implements Set<T> {
 
         private final FlowerSet<V> map;
         final V value;
-        final FlowerNode[] links;
+        final FlowerNode<V>[] links;
 
+        @SuppressWarnings("unchecked")
         public FlowerNode(V value, FlowerSet<V> map) {
             this.value = value;
             this.map = map;
@@ -113,13 +114,13 @@ public class FlowerSet<T> implements Set<T> {
 
         private static final int DEPTH = 20480;
 
-        public void TryToSetSingleNode(FlowerNode node, FlowerNode toset, int place, int depth) {
+        public void TryToSetSingleNode(FlowerNode<V> node, FlowerNode<V> toset, int place, int depth) {
             if (depth > DEPTH) throw new IllegalStateException("Recursive Call went too deep.");
             if (node.links[place] == null) node.links[place] = toset;
             else TryToSetSingleNode(node.links[place], toset, place, depth++);
         }
 
-        public void TryToSetSingleNode(FlowerNode node, FlowerNode toset, int place) {
+        public void TryToSetSingleNode(FlowerNode<V> node, FlowerNode<V> toset, int place) {
             if (node.links[place] == null) node.links[place] = toset;
             else TryToSetSingleNode(node.links[place], toset, place, 0);
         }
@@ -135,7 +136,7 @@ public class FlowerSet<T> implements Set<T> {
 
     static class Functions {
 
-        public static Function<FlowerNode, Integer> HashBasedFunction() {
+        public static <V> Function<FlowerNode<V>, Integer> HashBasedFunction() {
             return function -> function.hashCode() % function.map.petals;
         }
     }

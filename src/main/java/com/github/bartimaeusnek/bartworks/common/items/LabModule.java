@@ -33,8 +33,7 @@ public class LabModule extends SimpleSubItemClass {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List aList, boolean p_77624_4_) {
+    public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List<String> aList, boolean p_77624_4_) {
         aList.add(StatCollector.translateToLocal("tooltip.labmodule.0.name"));
         super.addInformation(p_77624_1_, p_77624_2_, aList, p_77624_4_);
     }

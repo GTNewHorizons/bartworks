@@ -15,7 +15,7 @@ package com.github.bartimaeusnek.bartworks.util.accessprioritylist;
 
 public class AccessPriorityListNode<E> {
 
-    public static final AccessPriorityListNode EMPTY_NODE = new AccessPriorityListNode(null);
+    public static final AccessPriorityListNode<?> EMPTY_NODE = new AccessPriorityListNode<>(null);
 
     private final E ELEMENT;
     private long priority = Long.MIN_VALUE;

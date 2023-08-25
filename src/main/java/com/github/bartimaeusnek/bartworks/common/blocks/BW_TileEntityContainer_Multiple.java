@@ -116,8 +116,7 @@ public class BW_TileEntityContainer_Multiple extends BlockContainer {
 
     @Override
     @SideOnly(Side.CLIENT)
-    @SuppressWarnings("unchecked")
-    public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+    public void getSubBlocks(Item item, CreativeTabs tab, List<ItemStack> list) {
         for (int i = 0; i < this.textureNames.length; i++) {
             list.add(new ItemStack(item, 1, i));
         }
@@ -154,10 +153,10 @@ public class BW_TileEntityContainer_Multiple extends BlockContainer {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         try {
-            return this.tileEntityArray[p_149915_2_].newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            return this.tileEntityArray[meta].getConstructor().newInstance();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

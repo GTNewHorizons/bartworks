@@ -60,7 +60,6 @@ public class CircuitImprintLoader {
     private static final HashSet<GT_Recipe> ORIGINAL_CAL_RECIPES = new HashSet<>();
     private static final HashSet<GT_Recipe> MODIFIED_CAL_RECIPES = new HashSet<>();
 
-    @SuppressWarnings({ "unused", "RedundantSuppression" })
     public static void run() {
         HashSet<GT_Recipe> toRem = new HashSet<>();
         HashSet<GT_Recipe> toAdd = new HashSet<>();

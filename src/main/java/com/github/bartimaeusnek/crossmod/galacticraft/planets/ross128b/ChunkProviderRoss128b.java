@@ -59,8 +59,8 @@ public class ChunkProviderRoss128b extends ChunkProviderGenerate {
     }
 
     @Override
-    @SuppressWarnings("rawtypes")
-    public List getPossibleCreatures(EnumCreatureType p_73155_1_, int p_73155_2_, int p_73155_3_, int p_73155_4_) {
+    public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType p_73155_1_, int p_73155_2_, int p_73155_3_,
+            int p_73155_4_) {
         return null;
     }
 
