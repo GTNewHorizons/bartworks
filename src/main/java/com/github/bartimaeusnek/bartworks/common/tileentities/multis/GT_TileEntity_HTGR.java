@@ -295,7 +295,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         int meta = (this.fueltype * HTGRMaterials.MATERIALS_PER_FUEL) + HTGRMaterials.BURNED_OUT_FUEL_INDEX;
 
-        ItemStack[] toOutput = new ItemStack[] { new ItemStack(HTGRMaterials.aHTGR_Materials, burnedballs, meta),
+        ItemStack[] toOutput = { new ItemStack(HTGRMaterials.aHTGR_Materials, burnedballs, meta),
                 new ItemStack(HTGRMaterials.aHTGR_Materials, toReduce, meta + 1) };
         if (!this.canOutputAll(toOutput)) return false;
 
@@ -531,7 +531,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             }
         }
 
-        public static final Base_[] sHTGR_Bases = new Base_[] { new Base_("HTGRFuelMixture", "HTGR fuel mixture"),
+        public static final Base_[] sHTGR_Bases = { new Base_("HTGRFuelMixture", "HTGR fuel mixture"),
                 new Base_("BISOPebbleCompound", "BISO pebble compound"),
                 new Base_("TRISOPebbleCompound", "TRISO pebble compound"), new Base_("TRISOBall", "TRISO ball"),
                 new Base_("TRISOPebble", "TRISO pebble"), new Base_("BurnedOutTRISOBall", "Burned out TRISO Ball"),
@@ -539,7 +539,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         public static final int MATERIALS_PER_FUEL = sHTGR_Bases.length;
         static final int USABLE_FUEL_INDEX = 4;
         static final int BURNED_OUT_FUEL_INDEX = 5;
-        public static final Fuel_[] sHTGR_Fuel = new Fuel_[] {
+        public static final Fuel_[] sHTGR_Fuel = {
                 new Fuel_(
                         "Thorium",
                         "Thorium",

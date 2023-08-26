@@ -286,8 +286,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
 
         for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) {
             if (((Math.abs(x) != 1) || (Math.abs(z) != 1))) {
-                int[] abc = new int[] { x, -2, z + 1 };
-                int[] xyz = new int[] { 0, 0, 0 };
+                int[] abc = { x, -2, z + 1 };
+                int[] xyz = { 0, 0, 0 };
                 this.getExtendedFacing().getWorldOffset(abc, xyz);
                 xyz[0] += this.getBaseMetaTileEntity().getXCoord();
                 xyz[1] += this.getBaseMetaTileEntity().getYCoord();

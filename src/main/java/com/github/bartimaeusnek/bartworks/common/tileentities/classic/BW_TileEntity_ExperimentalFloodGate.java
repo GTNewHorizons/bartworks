@@ -33,7 +33,7 @@ import com.github.bartimaeusnek.bartworks.util.Coords;
 
 public class BW_TileEntity_ExperimentalFloodGate extends TileFluidHandler implements ITileAddsInformation {
 
-    private static final ForgeDirection[] allowed_directions = new ForgeDirection[] { DOWN, WEST, EAST, SOUTH, NORTH };
+    private static final ForgeDirection[] allowed_directions = { DOWN, WEST, EAST, SOUTH, NORTH };
     private PriorityQueue<Coords> breadthFirstQueue = new PriorityQueue<>(Comparator.comparingInt(x -> x.y));
     private boolean wasInited = false;
 

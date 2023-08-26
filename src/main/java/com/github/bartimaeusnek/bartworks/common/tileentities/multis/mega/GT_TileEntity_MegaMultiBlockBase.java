@@ -85,7 +85,7 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
 
         String[] extendedInfo = this.getExtendedInfoData();
 
-        String[] baseInfo = new String[] {
+        String[] baseInfo = {
                 StatCollector.translateToLocal("GT5U.multiblock.Progress") + ": "
                         + EnumChatFormatting.GREEN
                         + GT_Utility.formatNumbers(this.mProgresstime / 20)

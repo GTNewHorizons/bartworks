@@ -33,7 +33,7 @@ public class ElectricImplosionCompressorRecipes implements Runnable {
                 1);
     }
 
-    private static final ItemStack[] circuits = new ItemStack[] { ItemList.Circuit_ExoticProcessor.get(1),
+    private static final ItemStack[] circuits = { ItemList.Circuit_ExoticProcessor.get(1),
             ItemList.Circuit_OpticalAssembly.get(1), ItemList.Circuit_Biowaresupercomputer.get(1),
             ItemList.Circuit_Wetwaremainframe.get(1) };
 

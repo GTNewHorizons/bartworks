@@ -260,7 +260,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         int meta = THTRMaterials.MATERIAL_USED_FUEL_INDEX;
 
-        ItemStack[] toOutput = new ItemStack[] { new ItemStack(THTRMaterials.aTHTR_Materials, burnedballs, meta),
+        ItemStack[] toOutput = { new ItemStack(THTRMaterials.aTHTR_Materials, burnedballs, meta),
                 new ItemStack(THTRMaterials.aTHTR_Materials, toReduce, meta + 1) };
         if (!this.canOutputAll(toOutput)) return false;
 

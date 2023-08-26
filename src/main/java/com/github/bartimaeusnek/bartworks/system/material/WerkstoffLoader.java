@@ -1491,11 +1491,11 @@ public class WerkstoffLoader {
             ProgressManager.ProgressBar progressBar = ProgressManager
                     .push("Register BW Materials", Werkstoff.werkstoffHashSet.size() + 1);
             DebugLog.log("Loading Recipes" + (System.nanoTime() - timepre));
-            Integer[] clsArr = new Integer[0];
+            Integer[] clsArr = {};
             int size = 0;
             if (BetterLoadingScreen.isModLoaded()) clsArr = CLSCompat.initCls();
 
-            IWerkstoffRunnable[] werkstoffRunnables = new IWerkstoffRunnable[] { new ToolLoader(), new DustLoader(),
+            IWerkstoffRunnable[] werkstoffRunnables = { new ToolLoader(), new DustLoader(),
                     new GemLoader(), new SimpleMetalLoader(), new CasingLoader(), new AspectLoader(), new OreLoader(),
                     new CrushedLoader(), new CraftingMaterialLoader(), new CellLoader(), new MoltenCellLoader(),
                     new MultipleMetalLoader(), new MetalLoader(), new BlockLoader() };
@@ -1783,7 +1783,7 @@ public class WerkstoffLoader {
     }
 
     private static void runGTItemDataRegistrator() {
-        IWerkstoffRunnable[] registrations = new IWerkstoffRunnable[] { new BridgeMaterialsLoader(),
+        IWerkstoffRunnable[] registrations = { new BridgeMaterialsLoader(),
                 new AssociationLoader(), new CasingRegistrator() };
         for (Werkstoff werkstoff : Werkstoff.werkstoffHashSet) {
             for (IWerkstoffRunnable registration : registrations) {

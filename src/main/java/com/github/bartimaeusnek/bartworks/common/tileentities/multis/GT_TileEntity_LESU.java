@@ -217,7 +217,7 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
             int aColorIndex, boolean aActive, boolean aRedstone) {
 
-        ITexture[] ret = new ITexture[0];
+        ITexture[] ret = {};
 
         if (this.isClientSide()) {
 

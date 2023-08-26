@@ -42,9 +42,9 @@ public class RadioHatchMaterialLoader {
             }
         }
 
-        Materials[] spacialMaterial = new Materials[] { Materials.Naquadah, Materials.NaquadahEnriched,
+        Materials[] spacialMaterial = { Materials.Naquadah, Materials.NaquadahEnriched,
                 Materials.Naquadria };
-        int[] spacialValue = new int[] { 130, 140, 150 };
+        int[] spacialValue = { 130, 140, 150 };
 
         for (int i = 0; i < spacialMaterial.length; i++) {
             if (GT_OreDictUnificator.get(OrePrefixes.stick, spacialMaterial[i], 1) != null)
