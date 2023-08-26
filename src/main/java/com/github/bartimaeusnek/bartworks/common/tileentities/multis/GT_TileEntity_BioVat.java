@@ -244,10 +244,8 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
                     if (mSievert < mNeededSievert) {
                         return ResultWrongSievert.insufficientSievert(mNeededSievert);
                     }
-                } else {
-                    if (mSievert != conditions[3]) {
-                        return ResultWrongSievert.wrongSievert(conditions[3]);
-                    }
+                } else if (mSievert != conditions[3]) {
+                    return ResultWrongSievert.wrongSievert(conditions[3]);
                 }
 
                 return CheckRecipeResultRegistry.SUCCESSFUL;

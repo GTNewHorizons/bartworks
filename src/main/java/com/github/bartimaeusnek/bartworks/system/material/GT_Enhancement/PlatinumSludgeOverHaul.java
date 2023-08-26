@@ -754,21 +754,19 @@ public class PlatinumSludgeOverHaul {
                                                     recipe.mFluidOutputs[i] = AcidicOsmiumSolution.getFluidOrGas(1000);
                                                     recipe.reloadOwner();
                                                 }
-                            } else {
-                                if (GT_Utility.areFluidsEqual(Ruthenium.getMolten(1), recipe.mFluidOutputs[i]))
-                                    toDel.add(recipe);
-                                else if (GT_Utility.areFluidsEqual(Rhodium.getMolten(1), recipe.mFluidOutputs[i]))
-                                    toDel.add(recipe);
-                                else if (GT_Utility
-                                        .areFluidsEqual(Materials.Iridium.getMolten(1), recipe.mFluidOutputs[i]))
-                                    toDel.add(recipe);
-                                else if (GT_Utility
-                                        .areFluidsEqual(Materials.Platinum.getMolten(1), recipe.mFluidOutputs[i]))
-                                    toDel.add(recipe);
-                                else if (GT_Utility
-                                        .areFluidsEqual(Materials.Osmium.getMolten(1), recipe.mFluidOutputs[i]))
-                                    toDel.add(recipe);
-                            }
+                            } else if (GT_Utility.areFluidsEqual(Ruthenium.getMolten(1), recipe.mFluidOutputs[i]))
+                        toDel.add(recipe);
+                    else if (GT_Utility.areFluidsEqual(Rhodium.getMolten(1), recipe.mFluidOutputs[i]))
+                        toDel.add(recipe);
+                    else if (GT_Utility
+                            .areFluidsEqual(Materials.Iridium.getMolten(1), recipe.mFluidOutputs[i]))
+                        toDel.add(recipe);
+                    else if (GT_Utility
+                            .areFluidsEqual(Materials.Platinum.getMolten(1), recipe.mFluidOutputs[i]))
+                        toDel.add(recipe);
+                    else if (GT_Utility
+                            .areFluidsEqual(Materials.Osmium.getMolten(1), recipe.mFluidOutputs[i]))
+                        toDel.add(recipe);
                 }
                 for (int i = 0; i < recipe.mOutputs.length; i++) {
                     if (!GT_Utility.isStackValid(recipe.mOutputs[i])) continue;

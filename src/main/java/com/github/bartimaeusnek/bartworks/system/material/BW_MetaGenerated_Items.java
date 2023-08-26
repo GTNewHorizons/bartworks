@@ -107,16 +107,14 @@ public class BW_MetaGenerated_Items extends GT_MetaGenerated_Item implements IRa
                             aItemEntity.worldObj.setBlockMetadataWithNotify(tX, tY, tZ, tMetaData - 1, 3);
                             return true;
                         }
-                    } else {
-                        if ((tBlock == Blocks.cauldron) && (tMetaData > 0)) {
-                            aItemEntity.setEntityItemStack(
-                                    WerkstoffLoader.getCorrespondingItemStack(
-                                            OrePrefixes.crushedPurified,
-                                            aMaterial,
-                                            aItemEntity.getEntityItem().stackSize));
-                            aItemEntity.worldObj.setBlockMetadataWithNotify(tX, tY, tZ, tMetaData - 1, 3);
-                            return true;
-                        }
+                    } else if ((tBlock == Blocks.cauldron) && (tMetaData > 0)) {
+                        aItemEntity.setEntityItemStack(
+                                WerkstoffLoader.getCorrespondingItemStack(
+                                        OrePrefixes.crushedPurified,
+                                        aMaterial,
+                                        aItemEntity.getEntityItem().stackSize));
+                        aItemEntity.worldObj.setBlockMetadataWithNotify(tX, tY, tZ, tMetaData - 1, 3);
+                        return true;
                     }
                 }
             }

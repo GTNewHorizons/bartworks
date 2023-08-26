@@ -102,17 +102,15 @@ public class BW_GT_ItemRenderer implements IItemRenderer {
                                     -1.0F);
                         }
                     }
-                } else {
-                    if (aMetaData < CircuitImprintLoader.reverseIDs) ItemRenderer.renderItemIn2D(
-                            Tessellator.instance,
-                            tIcon.getMaxU(),
-                            tIcon.getMinV(),
-                            tIcon.getMinU(),
-                            tIcon.getMaxV(),
-                            tIcon.getIconWidth(),
-                            tIcon.getIconHeight(),
-                            0.0625F);
-                }
+                } else if (aMetaData < CircuitImprintLoader.reverseIDs) ItemRenderer.renderItemIn2D(
+                        Tessellator.instance,
+                        tIcon.getMaxU(),
+                        tIcon.getMinV(),
+                        tIcon.getMinU(),
+                        tIcon.getMaxV(),
+                        tIcon.getIconWidth(),
+                        tIcon.getIconHeight(),
+                        0.0625F);
 
                 IIcon tOverlay = (IIcon) BW_Util.get2DCoordFrom1DArray(aMetaData, 1, 2, aItem.mIconList);
                 GL11.glColor3f(1.0F, 1.0F, 1.0F);

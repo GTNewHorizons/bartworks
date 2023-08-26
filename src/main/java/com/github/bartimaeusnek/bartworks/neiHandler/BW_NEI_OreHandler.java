@@ -131,11 +131,9 @@ public class BW_NEI_OreHandler extends TemplateRecipeHandler {
                 GuiDraw.drawString(cachedOreRecipe.getOtherStacks().get(2).item.getDisplayName(), 0, 100, 0, false);
                 GuiDraw.drawString(ChatColorHelper.BOLD + "Sporadic:", 0, 110, 0, false);
                 GuiDraw.drawString(cachedOreRecipe.getOtherStacks().get(3).item.getDisplayName(), 0, 120, 0, false);
-            } else {
-                if (cachedOreRecipe.worldGen != null) {
-                    GuiDraw.drawString(ChatColorHelper.BOLD + "Amount per Chunk:", 0, 70, 0, false);
-                    GuiDraw.drawString(cachedOreRecipe.worldGen.mDensity + "", 0, 80, 0, false);
-                }
+            } else if (cachedOreRecipe.worldGen != null) {
+                GuiDraw.drawString(ChatColorHelper.BOLD + "Amount per Chunk:", 0, 70, 0, false);
+                GuiDraw.drawString(cachedOreRecipe.worldGen.mDensity + "", 0, 80, 0, false);
             }
         }
         super.drawExtras(recipe);

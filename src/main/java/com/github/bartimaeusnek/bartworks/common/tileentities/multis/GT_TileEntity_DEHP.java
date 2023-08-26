@@ -232,19 +232,17 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
                             return false;
                         }
                     }
-                } else {
-                    if (this.mMode == 1 || this.mMode == 2) {
-                        long coolantConverted = (long) (this.mTier * 24
-                                * ((double) GT_TileEntity_DEHP.nulearHeatMod)
-                                * this.mEfficiency
-                                / 10000L);
-                        if (this.getFluidFromHatches(FluidRegistry.getFluid("ic2coolant")) - coolantConverted > 0) {
-                            this.consumeFluid(FluidRegistry.getFluid("ic2coolant"), coolantConverted);
-                            this.addOutput(FluidRegistry.getFluidStack("ic2hotcoolant", (int) coolantConverted));
-                        } else {
-                            this.explodeMultiblock();
-                            return false;
-                        }
+                } else if (this.mMode == 1 || this.mMode == 2) {
+                    long coolantConverted = (long) (this.mTier * 24
+                            * ((double) GT_TileEntity_DEHP.nulearHeatMod)
+                            * this.mEfficiency
+                            / 10000L);
+                    if (this.getFluidFromHatches(FluidRegistry.getFluid("ic2coolant")) - coolantConverted > 0) {
+                        this.consumeFluid(FluidRegistry.getFluid("ic2coolant"), coolantConverted);
+                        this.addOutput(FluidRegistry.getFluidStack("ic2hotcoolant", (int) coolantConverted));
+                    } else {
+                        this.explodeMultiblock();
+                        return false;
                     }
                 }
             }

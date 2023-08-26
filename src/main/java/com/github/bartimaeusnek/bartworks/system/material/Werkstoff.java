@@ -304,13 +304,11 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                         else this.toolTip += getFormula((Werkstoff) p.getKey())
                                 + (p.getValue() > 1 ? BW_Util.subscriptNumber(p.getValue()) : "");
                     }
-                } else {
-                    if (p.getKey() instanceof Materials) {
-                        this.toolTip += getFormula((Materials) p.getKey())
-                                + (p.getValue() > 1 ? BW_Util.subscriptNumber(p.getValue()) : "");
-                    } else if (p.getKey() instanceof Werkstoff) this.toolTip += getFormula((Werkstoff) p.getKey())
+                } else if (p.getKey() instanceof Materials) {
+                    this.toolTip += getFormula((Materials) p.getKey())
                             + (p.getValue() > 1 ? BW_Util.subscriptNumber(p.getValue()) : "");
-                }
+                } else if (p.getKey() instanceof Werkstoff) this.toolTip += getFormula((Werkstoff) p.getKey())
+                        + (p.getValue() > 1 ? BW_Util.subscriptNumber(p.getValue()) : "");
             }
         } else this.toolTip = toolTip;
 
