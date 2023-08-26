@@ -58,11 +58,8 @@ public class TT_TileEntity_ManualTrafo extends GT_TileEntity_ManualTrafo {
         long totalOutput = 0L;
         long aFirstVoltageFound = -1L;
         boolean aFoundMixedDynamos = false;
-        Iterator<GT_MetaTileEntity_Hatch_Dynamo> var10 = this.mDynamoHatches.iterator();
-
         long aVoltage;
-        while (var10.hasNext()) {
-            GT_MetaTileEntity_Hatch_Dynamo aDynamo = var10.next();
+        for (GT_MetaTileEntity_Hatch_Dynamo aDynamo : this.mDynamoHatches) {
             if (aDynamo == null) {
                 return false;
             }

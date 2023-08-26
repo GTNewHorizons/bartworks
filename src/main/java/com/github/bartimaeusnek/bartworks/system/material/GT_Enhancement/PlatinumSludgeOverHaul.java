@@ -766,8 +766,7 @@ public class PlatinumSludgeOverHaul {
                             || BW_Util.areStacksEqualOrNull(Ruthenium.get(dustImpure), recipe.mOutputs[i])
                             || BW_Util.areStacksEqualOrNull(Ruthenium.get(dustPure), recipe.mOutputs[i])) {
                         if (!BW_Util.areStacksEqualOrNull(Ruthenium.get(ingot), recipe.mInputs[0])) {
-                            for (int j = 0; j < recipe.mInputs.length; j++)
-                                if (PlatinumSludgeOverHaul.isInBlackList(recipe.mInputs[j])) continue recipeloop;
+                            for (ItemStack mInput : recipe.mInputs) if (PlatinumSludgeOverHaul.isInBlackList(mInput)) continue recipeloop;
                             int amount = recipe.mOutputs[i].stackSize * 2;
                             recipe.mOutputs[i] = LeachResidue.get(dust, amount);
                             recipe.reloadOwner();
@@ -777,8 +776,7 @@ public class PlatinumSludgeOverHaul {
                             || BW_Util.areStacksEqualOrNull(Rhodium.get(dustImpure), recipe.mOutputs[i])
                             || BW_Util.areStacksEqualOrNull(Rhodium.get(dustPure), recipe.mOutputs[i])) {
                         if (!BW_Util.areStacksEqualOrNull(Rhodium.get(ingot), recipe.mInputs[0])) {
-                            for (int j = 0; j < recipe.mInputs.length; j++)
-                                if (PlatinumSludgeOverHaul.isInBlackList(recipe.mInputs[j])) continue recipeloop;
+                            for (ItemStack mInput : recipe.mInputs) if (PlatinumSludgeOverHaul.isInBlackList(mInput)) continue recipeloop;
                             int amount = recipe.mOutputs[i].stackSize * 2;
                             recipe.mOutputs[i] = CrudeRhMetall.get(dust, amount);
                             recipe.reloadOwner();
@@ -788,8 +786,8 @@ public class PlatinumSludgeOverHaul {
                     // Pt
                     if (GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mMaterial.mMaterial
                             .equals(Materials.Platinum)) {
-                        for (int j = 0; j < recipe.mInputs.length; j++) {
-                            if (PlatinumSludgeOverHaul.isInBlackList(recipe.mInputs[j])) continue recipeloop;
+                        for (ItemStack mInput : recipe.mInputs) {
+                            if (PlatinumSludgeOverHaul.isInBlackList(mInput)) continue recipeloop;
                         }
                         if (GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mPrefix.equals(dust)
                                 || GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mPrefix.equals(dustImpure)
@@ -808,8 +806,8 @@ public class PlatinumSludgeOverHaul {
                         }
                     } else if (GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mMaterial.mMaterial
                             .equals(Materials.Palladium)) {
-                                for (int j = 0; j < recipe.mInputs.length; j++) {
-                                    if (PlatinumSludgeOverHaul.isInBlackList(recipe.mInputs[j])) continue recipeloop;
+                                for (ItemStack mInput : recipe.mInputs) {
+                                    if (PlatinumSludgeOverHaul.isInBlackList(mInput)) continue recipeloop;
                                 }
                                 if (GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mPrefix.equals(dust)
                                         || GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mPrefix
@@ -836,8 +834,8 @@ public class PlatinumSludgeOverHaul {
                             } else
                         if (GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mMaterial.mMaterial
                                 .equals(Materials.Osmium)) {
-                                    for (int j = 0; j < recipe.mInputs.length; j++) {
-                                        if (PlatinumSludgeOverHaul.isInBlackList(recipe.mInputs[j]))
+                                    for (ItemStack mInput : recipe.mInputs) {
+                                        if (PlatinumSludgeOverHaul.isInBlackList(mInput))
                                             continue recipeloop;
                                     }
                                     if (GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mPrefix.equals(dust)
@@ -865,8 +863,8 @@ public class PlatinumSludgeOverHaul {
                                 } else
                             if (GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mMaterial.mMaterial
                                     .equals(Materials.Iridium)) {
-                                        for (int j = 0; j < recipe.mInputs.length; j++) {
-                                            if (PlatinumSludgeOverHaul.isInBlackList(recipe.mInputs[j]))
+                                        for (ItemStack mInput : recipe.mInputs) {
+                                            if (PlatinumSludgeOverHaul.isInBlackList(mInput))
                                                 continue recipeloop;
                                         }
                                         if (GT_OreDictUnificator.getAssociation(recipe.mOutputs[i]).mPrefix.equals(dust)

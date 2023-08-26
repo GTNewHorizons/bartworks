@@ -262,18 +262,18 @@ public class StaticRecipeChangeLoaders {
                     for (GT_Recipe.GT_Recipe_Map map : GT_Recipe.GT_Recipe_Map.sMappings) {
                         toremRecipeList.clear();
                         for (GT_Recipe recipe : map.mRecipeList) {
-                            for (int i = 0; i < recipe.mInputs.length; i++) {
-                                if (GT_Utility.areStacksEqual(recipe.mInputs[i], toReplace)) {
+                            for (ItemStack mInput : recipe.mInputs) {
+                                if (GT_Utility.areStacksEqual(mInput, toReplace)) {
                                     toremRecipeList.add(recipe);
                                     // recipe.mInputs[i] = data.filledContainer;
                                 }
                             }
-                            for (int i = 0; i < recipe.mOutputs.length; i++) {
-                                if (GT_Utility.areStacksEqual(recipe.mOutputs[i], toReplace)) {
+                            for (ItemStack mOutput : recipe.mOutputs) {
+                                if (GT_Utility.areStacksEqual(mOutput, toReplace)) {
                                     toremRecipeList.add(recipe);
                                     // recipe.mOutputs[i] = data.filledContainer;
                                     if (map == GT_Recipe.GT_Recipe_Map.sFluidCannerRecipes
-                                            && GT_Utility.areStacksEqual(recipe.mOutputs[i], data.filledContainer)
+                                            && GT_Utility.areStacksEqual(mOutput, data.filledContainer)
                                             && !recipe.mFluidInputs[0].equals(data.fluid)) {
                                         toremRecipeList.add(recipe);
                                         // recipe.mOutputs[i] = data.filledContainer;

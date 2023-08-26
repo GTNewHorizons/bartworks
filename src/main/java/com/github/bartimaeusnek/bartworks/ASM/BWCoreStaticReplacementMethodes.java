@@ -91,8 +91,7 @@ public class BWCoreStaticReplacementMethodes {
         HashSet<IRecipe> recipeSet = new NonNullWrappedHashSet<>();
         List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
 
-        for (int k = 0; k < recipeList.size(); k++) {
-            IRecipe r = recipeList.get(k);
+        for (IRecipe r : recipeList) {
             if (r.matches(inventoryCrafting, world)) recipeSet.add(r);
         }
 
