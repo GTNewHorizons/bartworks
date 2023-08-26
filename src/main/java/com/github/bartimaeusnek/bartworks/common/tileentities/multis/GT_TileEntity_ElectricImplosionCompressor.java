@@ -81,8 +81,6 @@ public class GT_TileEntity_ElectricImplosionCompressor
     private final ArrayList<ChunkCoordinates> chunkCoordinates = new ArrayList<>(5);
     private int mBlockTier = 0;
     private int mCasing;
-    private int mMaxHatchTier = 0;
-
     public GT_TileEntity_ElectricImplosionCompressor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -410,13 +408,13 @@ public class GT_TileEntity_ElectricImplosionCompressor
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         this.mCasing = 0;
-        this.mMaxHatchTier = 0;
+        int mMaxHatchTier = 0;
         this.setBlockTier(0);
         boolean isOK = this.checkPiece(STRUCTURE_PIECE_MAIN, 1, 6, 0);
 
         List<GT_MetaTileEntity_Hatch> energyHatches = this.getExoticAndNormalEnergyHatchList();
         for (GT_MetaTileEntity_Hatch hatch : energyHatches) {
-            this.mMaxHatchTier = Math.max(this.mMaxHatchTier, hatch.mTier);
+            mMaxHatchTier = Math.max(mMaxHatchTier, hatch.mTier);
         }
 
         isOK = isOK && this.mMaintenanceHatches.size() == 1 && energyHatches.size() >= 1;
