@@ -237,34 +237,39 @@ public class RendererSwitchingColorFluid implements ISimpleBlockRenderingHandler
             if (renderer.renderAllFaces || renderSides[side]) {
                 rendered = true;
                 double dHeight1, dHeight2, dXcoord1, dXcoord2, dZcoord1, dZcoord2;
-                if (side == 0) {
-                    dHeight1 = heightNW;
-                    dHeight2 = heightNE;
-                    dXcoord1 = x;
-                    dXcoord2 = x + 1;
-                    dZcoord1 = z + RendererSwitchingColorFluid.RENDER_OFFSET;
-                    dZcoord2 = z + RendererSwitchingColorFluid.RENDER_OFFSET;
-                } else if (side == 1) {
-                    dHeight1 = heightSE;
-                    dHeight2 = heightSW;
-                    dXcoord1 = x + 1;
-                    dXcoord2 = x;
-                    dZcoord1 = z + 1 - RendererSwitchingColorFluid.RENDER_OFFSET;
-                    dZcoord2 = z + 1 - RendererSwitchingColorFluid.RENDER_OFFSET;
-                } else if (side == 2) {
-                    dHeight1 = heightSW;
-                    dHeight2 = heightNW;
-                    dXcoord1 = x + RendererSwitchingColorFluid.RENDER_OFFSET;
-                    dXcoord2 = x + RendererSwitchingColorFluid.RENDER_OFFSET;
-                    dZcoord1 = z + 1;
-                    dZcoord2 = z;
-                } else {
-                    dHeight1 = heightNE;
-                    dHeight2 = heightSE;
-                    dXcoord1 = x + 1 - RendererSwitchingColorFluid.RENDER_OFFSET;
-                    dXcoord2 = x + 1 - RendererSwitchingColorFluid.RENDER_OFFSET;
-                    dZcoord1 = z;
-                    dZcoord2 = z + 1;
+                switch (side) {
+                    case 0:
+                        dHeight1 = heightNW;
+                        dHeight2 = heightNE;
+                        dXcoord1 = x;
+                        dXcoord2 = x + 1;
+                        dZcoord1 = z + RendererSwitchingColorFluid.RENDER_OFFSET;
+                        dZcoord2 = z + RendererSwitchingColorFluid.RENDER_OFFSET;
+                        break;
+                    case 1:
+                        dHeight1 = heightSE;
+                        dHeight2 = heightSW;
+                        dXcoord1 = x + 1;
+                        dXcoord2 = x;
+                        dZcoord1 = z + 1 - RendererSwitchingColorFluid.RENDER_OFFSET;
+                        dZcoord2 = z + 1 - RendererSwitchingColorFluid.RENDER_OFFSET;
+                        break;
+                    case 2:
+                        dHeight1 = heightSW;
+                        dHeight2 = heightNW;
+                        dXcoord1 = x + RendererSwitchingColorFluid.RENDER_OFFSET;
+                        dXcoord2 = x + RendererSwitchingColorFluid.RENDER_OFFSET;
+                        dZcoord1 = z + 1;
+                        dZcoord2 = z;
+                        break;
+                    default:
+                        dHeight1 = heightNE;
+                        dHeight2 = heightSE;
+                        dXcoord1 = x + 1 - RendererSwitchingColorFluid.RENDER_OFFSET;
+                        dXcoord2 = x + 1 - RendererSwitchingColorFluid.RENDER_OFFSET;
+                        dZcoord1 = z;
+                        dZcoord2 = z + 1;
+                        break;
                 }
                 float u1Flow = iconFlow.getInterpolatedU(0.0);
                 float u2Flow = iconFlow.getInterpolatedU(8.0);

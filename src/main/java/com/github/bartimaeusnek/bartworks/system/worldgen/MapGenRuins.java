@@ -353,83 +353,91 @@ public abstract class MapGenRuins extends WorldGenerator {
                                     }
                                 }
                             }
-                        } else if (dy == 4) {
-                            if (Math.abs(dx) == 5) this.setRandomBlockWAirChance(
-                                    worldObj,
-                                    x + dx,
-                                    y + 4,
-                                    z + dz,
-                                    rand,
-                                    25,
-                                    this.ToBuildWith[2]);
-                            else if (Math.abs(dz) == 5 && Math.abs(dx) < 5) this.setRandomBlockWAirChance(
-                                    worldObj,
-                                    x + dx,
-                                    y + dy,
-                                    z + dz,
-                                    rand,
-                                    25,
-                                    this.ToBuildWith[1]);
-                        } else if (dy == 5) {
-                            if (Math.abs(dx) == 4) this.setRandomBlockWAirChance(
-                                    worldObj,
-                                    x + dx,
-                                    y + 5,
-                                    z + dz,
-                                    rand,
-                                    25,
-                                    this.ToBuildWith[2]);
-                            else if (Math.abs(dz) == 5 && Math.abs(dx) < 4) this.setRandomBlockWAirChance(
-                                    worldObj,
-                                    x + dx,
-                                    y + dy,
-                                    z + dz,
-                                    rand,
-                                    25,
-                                    this.ToBuildWith[1]);
-                        } else if (dy == 6) {
-                            if (Math.abs(dx) == 3) this.setRandomBlockWAirChance(
-                                    worldObj,
-                                    x + dx,
-                                    y + 6,
-                                    z + dz,
-                                    rand,
-                                    25,
-                                    this.ToBuildWith[2]);
-                            else if (Math.abs(dz) == 5 && Math.abs(dx) < 3) this.setRandomBlockWAirChance(
-                                    worldObj,
-                                    x + dx,
-                                    y + dy,
-                                    z + dz,
-                                    rand,
-                                    25,
-                                    this.ToBuildWith[1]);
-                        } else if (dy == 7) {
-                            if (Math.abs(dx) == 2) this.setRandomBlockWAirChance(
-                                    worldObj,
-                                    x + dx,
-                                    y + 7,
-                                    z + dz,
-                                    rand,
-                                    25,
-                                    this.ToBuildWith[2]);
-                            else if (Math.abs(dz) == 5 && Math.abs(dx) < 2) this.setRandomBlockWAirChance(
-                                    worldObj,
-                                    x + dx,
-                                    y + dy,
-                                    z + dz,
-                                    rand,
-                                    25,
-                                    this.ToBuildWith[1]);
-                        } else if (dy == 8) {
-                            if (Math.abs(dx) == 1 || Math.abs(dx) == 0) this.setRandomBlockWAirChance(
-                                    worldObj,
-                                    x + dx,
-                                    y + 8,
-                                    z + dz,
-                                    rand,
-                                    25,
-                                    this.ToBuildWith[2]);
+                        } else switch (dy) {
+                            case 4:
+                                if (Math.abs(dx) == 5) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + 4,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        this.ToBuildWith[2]);
+                                else if (Math.abs(dz) == 5 && Math.abs(dx) < 5) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + dy,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        this.ToBuildWith[1]);
+                                break;
+                            case 5:
+                                if (Math.abs(dx) == 4) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + 5,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        this.ToBuildWith[2]);
+                                else if (Math.abs(dz) == 5 && Math.abs(dx) < 4) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + dy,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        this.ToBuildWith[1]);
+                                break;
+                            case 6:
+                                if (Math.abs(dx) == 3) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + 6,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        this.ToBuildWith[2]);
+                                else if (Math.abs(dz) == 5 && Math.abs(dx) < 3) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + dy,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        this.ToBuildWith[1]);
+                                break;
+                            case 7:
+                                if (Math.abs(dx) == 2) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + 7,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        this.ToBuildWith[2]);
+                                else if (Math.abs(dz) == 5 && Math.abs(dx) < 2) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + dy,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        this.ToBuildWith[1]);
+                                break;
+                            case 8:
+                                if (Math.abs(dx) == 1 || Math.abs(dx) == 0) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + 8,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        this.ToBuildWith[2]);
+                                break;
+                            default:
+                                break;
                         }
                     }
                 }

@@ -206,9 +206,19 @@ public class BW_Util {
 
     public static byte specialToByte(int aSpecialValue) {
         byte special = 0;
-        if (aSpecialValue == (LOWGRAVITY)) special = 1;
-        else if (aSpecialValue == (CLEANROOM)) special = 2;
-        else if (aSpecialValue == (LOWGRAVITY | CLEANROOM)) special = 3;
+        switch (aSpecialValue) {
+            case (LOWGRAVITY):
+                special = 1;
+                break;
+            case (CLEANROOM):
+                special = 2;
+                break;
+            case (LOWGRAVITY | CLEANROOM):
+                special = 3;
+                break;
+            default:
+                break;
+        }
         return special;
     }
 
