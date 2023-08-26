@@ -50,9 +50,8 @@ public class BW_GT_ItemRenderer implements IItemRenderer {
                     || aType == IItemRenderer.ItemRenderType.INVENTORY
                     || aType == IItemRenderer.ItemRenderType.EQUIPPED
                     || aType == IItemRenderer.ItemRenderType.ENTITY;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
@@ -60,9 +59,8 @@ public class BW_GT_ItemRenderer implements IItemRenderer {
             IItemRenderer.ItemRendererHelper aHelper) {
         if (GT_Utility.isStackInvalid(aStack)) {
             return false;
-        } else {
-            return aType == IItemRenderer.ItemRenderType.ENTITY;
         }
+        return aType == IItemRenderer.ItemRenderType.ENTITY;
     }
 
     @Override

@@ -764,17 +764,16 @@ public class BWRecipes {
             if (aRecipe.mFluidInputs.length < this.mMinimalInputFluids
                     && aRecipe.mInputs.length < this.mMinimalInputItems) {
                 return null;
-            } else {
-                return aCheckForCollisions && isthere != null
-                        && BW_Util.areStacksEqualOrNull(
-                                (ItemStack) isthere.mSpecialItems,
-                                (ItemStack) aRecipe.mSpecialItems) ? null : this.add(aRecipe);
             }
+            return aCheckForCollisions && isthere != null
+                    && BW_Util.areStacksEqualOrNull(
+                            (ItemStack) isthere.mSpecialItems,
+                            (ItemStack) aRecipe.mSpecialItems) ? null : this.add(aRecipe);
         }
 
         public GT_Recipe addRecipe(GT_Recipe aRecipe, boolean VanillaGT) {
             if (VanillaGT) return addRecipe(aRecipe, true, false, false);
-            else return addRecipe(aRecipe);
+            return addRecipe(aRecipe);
         }
 
         @Override
@@ -784,11 +783,9 @@ public class BWRecipes {
                     aRecipe.mInputs[aRecipe.mInputs.length - 1],
                     GT_Utility.getIntegratedCircuit(32767)))
                 return aRecipe;
-            else {
-                ItemStack[] nu1 = Arrays.copyOf(aRecipe.mInputs, aRecipe.mInputs.length + 1);
-                nu1[nu1.length - 1] = GT_Utility.getIntegratedCircuit(9 + nu1.length);
-                aRecipe.mInputs = nu1;
-            }
+            ItemStack[] nu1 = Arrays.copyOf(aRecipe.mInputs, aRecipe.mInputs.length + 1);
+            nu1[nu1.length - 1] = GT_Utility.getIntegratedCircuit(9 + nu1.length);
+            aRecipe.mInputs = nu1;
             if (this.findRecipe(null, false, 9223372036854775807L, aRecipe.mFluidInputs, aRecipe.mInputs) != null) {
                 ItemStack[] nu = Arrays.copyOf(aRecipe.mInputs, aRecipe.mInputs.length + 1);
                 int i = 9 + nu.length;

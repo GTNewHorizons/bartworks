@@ -71,45 +71,43 @@ public class BWCoreStaticReplacementMethodes {
 
             return new ItemStack(itemstack.getItem(), 1, i1);
 
-        } else {
-
-            IRecipe iPossibleRecipe = null;
-            AccessPriorityList<IRecipe> cache = RECENTLYUSEDRECIPES.get();
-            Iterator<AccessPriorityListNode<IRecipe>> it = cache.nodeIterator();
-
-            while (it.hasNext()) {
-                AccessPriorityListNode<IRecipe> recipeNode = it.next();
-                iPossibleRecipe = recipeNode.getELEMENT();
-
-                if (!iPossibleRecipe.matches(inventoryCrafting, world)) continue;
-
-                cache.addPrioToNode(recipeNode);
-                return iPossibleRecipe.getCraftingResult(inventoryCrafting);
-            }
-
-            ItemStack stack = null;
-
-            HashSet<IRecipe> recipeSet = new NonNullWrappedHashSet<>();
-            List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
-
-            for (int k = 0; k < recipeList.size(); k++) {
-                IRecipe r = recipeList.get(k);
-                if (r.matches(inventoryCrafting, world)) recipeSet.add(r);
-            }
-
-            Object[] arr = recipeSet.toArray();
-
-            if (arr.length == 0) return null;
-
-            IRecipe recipe = (IRecipe) arr[0];
-            stack = recipe.getCraftingResult(inventoryCrafting);
-
-            if (arr.length != 1) return stack;
-
-            if (stack != null) cache.addLast(recipe);
-
-            return stack;
         }
+        IRecipe iPossibleRecipe = null;
+        AccessPriorityList<IRecipe> cache = RECENTLYUSEDRECIPES.get();
+        Iterator<AccessPriorityListNode<IRecipe>> it = cache.nodeIterator();
+
+        while (it.hasNext()) {
+            AccessPriorityListNode<IRecipe> recipeNode = it.next();
+            iPossibleRecipe = recipeNode.getELEMENT();
+
+            if (!iPossibleRecipe.matches(inventoryCrafting, world)) continue;
+
+            cache.addPrioToNode(recipeNode);
+            return iPossibleRecipe.getCraftingResult(inventoryCrafting);
+        }
+
+        ItemStack stack = null;
+
+        HashSet<IRecipe> recipeSet = new NonNullWrappedHashSet<>();
+        List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
+
+        for (int k = 0; k < recipeList.size(); k++) {
+            IRecipe r = recipeList.get(k);
+            if (r.matches(inventoryCrafting, world)) recipeSet.add(r);
+        }
+
+        Object[] arr = recipeSet.toArray();
+
+        if (arr.length == 0) return null;
+
+        IRecipe recipe = (IRecipe) arr[0];
+        stack = recipe.getCraftingResult(inventoryCrafting);
+
+        if (arr.length != 1) return stack;
+
+        if (stack != null) cache.addLast(recipe);
+
+        return stack;
     }
 
     private BWCoreStaticReplacementMethodes() {}

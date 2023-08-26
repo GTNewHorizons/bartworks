@@ -438,19 +438,18 @@ public abstract class MapGenRuins extends WorldGenerator {
                 int dy = 1;
                 int dz = 3;
                 for (int dx = 2; dx > -5; dx--) {
-                    if (set < toSet) {
-                        if (!lastset || treeinaRow > 2 && worldObj.getTileEntity(x + dx, y + dy, z + dz) == null) {
-                            short meta = GT_WorldgenUtil.getMachine(secureRandom, tier);
-                            this.setGTMachine(worldObj, x + dx, y + dy, z + dz, meta, owner, ForgeDirection.UP);
+                    if (set >= toSet) break tosetloop;
+                    if (!lastset || treeinaRow > 2 && worldObj.getTileEntity(x + dx, y + dy, z + dz) == null) {
+                        short meta = GT_WorldgenUtil.getMachine(secureRandom, tier);
+                        this.setGTMachine(worldObj, x + dx, y + dy, z + dz, meta, owner, ForgeDirection.UP);
 
-                            set++;
-                            treeinaRow = 0;
-                            lastset = true;
-                        } else {
-                            lastset = rand.nextBoolean();
-                            if (lastset) treeinaRow++;
-                        }
-                    } else break tosetloop;
+                        set++;
+                        treeinaRow = 0;
+                        lastset = true;
+                    } else {
+                        lastset = rand.nextBoolean();
+                        if (lastset) treeinaRow++;
+                    }
                 }
             }
             return true;

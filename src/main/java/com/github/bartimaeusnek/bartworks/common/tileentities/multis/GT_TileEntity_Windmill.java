@@ -228,7 +228,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
     private float[] multiplierRecipe(ItemStack itemStack) {
         // will return max and min value of the multiplier, the average of these is used to calculate the multiplier.
         if (itemStack.getItem().equals(Items.wheat)) return new float[] { 1.13f, 1.5f };
-        else if (itemStack.getItem().equals(Items.bone)
+        if (itemStack.getItem().equals(Items.bone)
                 || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.glowstone)
                 || Block.getBlockFromItem(itemStack.getItem()).equals(Blocks.pumpkin))
             return new float[] { 0.8f, 1f };
@@ -361,11 +361,10 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                     if (GT_Utility.areStacksEqual(tHatch.getStackInSlot(i), aStack)) {
                         aStack = null;
                         return true;
-                    } else {
-                        tHatch.setInventorySlotContents(i, null);
-                        aStack = null;
-                        return false;
                     }
+                    tHatch.setInventorySlotContents(i, null);
+                    aStack = null;
+                    return false;
                 }
             }
         }

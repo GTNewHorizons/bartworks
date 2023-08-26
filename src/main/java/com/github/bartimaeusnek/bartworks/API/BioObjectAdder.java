@@ -56,7 +56,7 @@ public final class BioObjectAdder {
             EnumRarity rarity, boolean breedable) {
         if (BioCulture.BIO_CULTURE_ARRAY_LIST.size() > 1)
             return BioCulture.createAndRegisterBioCulture(color, name, plasmid, dna, rarity, breedable);
-        else new Exception(
+        new Exception(
                 "Too Early to register a BioCulture! You MUST run this either after:bartworks OR in the init Phase!")
                         .printStackTrace();
         return null;
@@ -76,7 +76,7 @@ public final class BioObjectAdder {
             boolean breedable) {
         if (BioCulture.BIO_CULTURE_ARRAY_LIST.size() > 1)
             return BioCulture.createAndRegisterBioCulture(color, name, plasmid, dna, breedable);
-        else new Exception(
+        new Exception(
                 "Too Early to register a BioCulture! You MUST run this either after:bartworks OR in the init Phase!")
                         .printStackTrace();
         return null;

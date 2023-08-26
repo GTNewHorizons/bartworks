@@ -180,9 +180,8 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                             && world.getBlockMetadata(x, y, z) == 1) {
                         t.onTopLayerFound(true);
                         return true;
-                    } else {
-                        return false;
                     }
+                    return false;
                 }).build();
     }
 

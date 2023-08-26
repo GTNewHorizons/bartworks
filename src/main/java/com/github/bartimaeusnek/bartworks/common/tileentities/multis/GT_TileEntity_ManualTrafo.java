@@ -108,7 +108,8 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
                                 == intier + (te.upstep ? te.mTiers : -te.mTiers)) {
                             te.addToMachineList((IGregTechTileEntity) tileEntity, CASING_INDEX);
                             return true;
-                        } else return false;
+                        }
+                        return false;
                     }
                     return true;
                 }
@@ -206,14 +207,14 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
     public long getInputTier() {
         if (this.mEnergyHatches.size() > 0)
             return GT_Utility.getTier(this.mEnergyHatches.get(0).getBaseMetaTileEntity().getInputVoltage());
-        else return 0L;
+        return 0L;
     }
 
     @Override
     public long getOutputTier() {
         if (this.mDynamoHatches.size() > 0)
             return GT_Utility.getTier(this.mDynamoHatches.get(0).getBaseMetaTileEntity().getOutputVoltage());
-        else return 0L;
+        return 0L;
     }
 
     @Override

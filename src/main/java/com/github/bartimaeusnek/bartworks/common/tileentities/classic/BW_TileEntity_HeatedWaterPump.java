@@ -194,7 +194,7 @@ public class BW_TileEntity_HeatedWaterPump extends TileEntity implements ITileDr
     @Override
     public ItemStack getStackInSlot(int slotIn) {
         if (slotIn == 0) return this.fuelstack;
-        else return this.fakestack;
+        return this.fakestack;
     }
 
     @Override

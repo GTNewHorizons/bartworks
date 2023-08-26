@@ -214,11 +214,10 @@ public class AccessPriorityList<E> implements List<E>, Deque<E>, Set<E> {
             AccessPriorityListNode<E> x = head;
             for (int i = 0; i < index; i++) x = x.getNext();
             return x;
-        } else {
-            AccessPriorityListNode<E> x = tail;
-            for (int i = size - 1; i > index; i--) x = x.getBefore();
-            return x;
         }
+        AccessPriorityListNode<E> x = tail;
+        for (int i = size - 1; i > index; i--) x = x.getBefore();
+        return x;
     }
 
     @Override

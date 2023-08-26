@@ -95,7 +95,7 @@ public class RadioHatchCompat {
             Object[] arr = RadioHatchCompat.enu.getEnumConstants();
             for (Object o : arr) {
                 if (RadioHatchCompat.rod != null && RadioHatchCompat.longRod != null) break;
-                else if (o.toString().equalsIgnoreCase("ROD")) RadioHatchCompat.rod = o;
+                if (o.toString().equalsIgnoreCase("ROD")) RadioHatchCompat.rod = o;
                 else if (o.toString().equalsIgnoreCase("RODLONG")) RadioHatchCompat.longRod = o;
             }
 
@@ -127,7 +127,7 @@ public class RadioHatchCompat {
 
             for (ModContainer container : Loader.instance().getModList()) {
                 if (gtpp != null && bartworks != null) break;
-                else if (container.getModId().equalsIgnoreCase(BartWorksCrossmod.MOD_ID)) bartworks = container;
+                if (container.getModId().equalsIgnoreCase(BartWorksCrossmod.MOD_ID)) bartworks = container;
                 else if (container.getModId().equalsIgnoreCase(GTPlusPlus.ID)) gtpp = container;
             }
 

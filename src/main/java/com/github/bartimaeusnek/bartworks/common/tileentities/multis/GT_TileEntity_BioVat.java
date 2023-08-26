@@ -287,16 +287,15 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     private boolean addRadiationInputToMachineList(IGregTechTileEntity aTileEntity, int CasingIndex) {
         if (aTileEntity == null) {
             return false;
+        }
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity == null) {
+            return false;
+        } else if (aMetaTileEntity instanceof GT_MetaTileEntity_RadioHatch) {
+            ((GT_MetaTileEntity_RadioHatch) aMetaTileEntity).updateTexture(CasingIndex);
+            return this.mRadHatches.add((GT_MetaTileEntity_RadioHatch) aMetaTileEntity);
         } else {
-            IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-            if (aMetaTileEntity == null) {
-                return false;
-            } else if (aMetaTileEntity instanceof GT_MetaTileEntity_RadioHatch) {
-                ((GT_MetaTileEntity_RadioHatch) aMetaTileEntity).updateTexture(CasingIndex);
-                return this.mRadHatches.add((GT_MetaTileEntity_RadioHatch) aMetaTileEntity);
-            } else {
-                return false;
-            }
+            return false;
         }
     }
 

@@ -216,25 +216,24 @@ public abstract class BW_OreLayer extends GT_Worldgen {
     }
 
     public boolean setGTOreBlockSpace(World aWorld, int aX, int aY, int aZ, int aMetaData, Block block) {
-        if (!GT_TileEntity_Ores.setOreBlock(aWorld, aX, aY, aZ, aMetaData, false, false)) {
-            aY = Math.min(aWorld.getActualHeight(), Math.max(aY, 1));
-            Block tBlock = aWorld.getBlock(aX, aY, aZ);
-            Block tOreBlock = GregTech_API.sBlockOres1;
-            if (aMetaData < 0 || tBlock == Blocks.air) {
+        if (GT_TileEntity_Ores.setOreBlock(aWorld, aX, aY, aZ, aMetaData, false, false)) return true;
+        aY = Math.min(aWorld.getActualHeight(), Math.max(aY, 1));
+        Block tBlock = aWorld.getBlock(aX, aY, aZ);
+        Block tOreBlock = GregTech_API.sBlockOres1;
+        if (aMetaData < 0 || tBlock == Blocks.air) {
+            return false;
+        } else {
+            if (!tBlock.isReplaceableOreGen(aWorld, aX, aY, aZ, block)) {
                 return false;
-            } else {
-                if (!tBlock.isReplaceableOreGen(aWorld, aX, aY, aZ, block)) {
-                    return false;
-                }
-                aMetaData += 5000;
-                aWorld.setBlock(aX, aY, aZ, tOreBlock, aMetaData, 0);
-                TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
-                if (tTileEntity instanceof GT_TileEntity_Ores) {
-                    ((GT_TileEntity_Ores) tTileEntity).mMetaData = (short) aMetaData;
-                }
-                return true;
             }
-        } else return true;
+            aMetaData += 5000;
+            aWorld.setBlock(aX, aY, aZ, tOreBlock, aMetaData, 0);
+            TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
+            if (tTileEntity instanceof GT_TileEntity_Ores) {
+                ((GT_TileEntity_Ores) tTileEntity).mMetaData = (short) aMetaData;
+            }
+            return true;
+        }
     }
 
     @Override

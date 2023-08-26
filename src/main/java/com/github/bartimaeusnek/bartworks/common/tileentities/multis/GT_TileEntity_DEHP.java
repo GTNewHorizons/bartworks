@@ -203,51 +203,50 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
             return true;
         }
 
-        if (tryLowerPipeState(false) != 0) {
-            if (this.waitForPipes()) {
-                return false;
-            } else {
-                if (this.mMode == 0) this.mMode = 1;
-                if (ConfigHandler.DEHPDirectSteam) {
-                    if (this.mMode == 1) {
-                        long steamProduced = (this.mTier * 600 * 2L * this.mEfficiency / 10000L);
-                        long waterConsume = ((steamProduced + 160) / 160);
+        if (tryLowerPipeState(false) == 0) {
+            return true;
+        }
+        if (this.waitForPipes()) {
+            return false;
+        } else {
+            if (this.mMode == 0) this.mMode = 1;
+            if (ConfigHandler.DEHPDirectSteam) {
+                if (this.mMode == 1) {
+                    long steamProduced = (this.mTier * 600 * 2L * this.mEfficiency / 10000L);
+                    long waterConsume = ((steamProduced + 160) / 160);
 
-                        if (this.getWaterFromHatches(false) - waterConsume > 0) {
-                            this.consumeFluid(FluidRegistry.WATER, waterConsume);
-                            this.addOutput(GT_ModHandler.getSteam(steamProduced));
-                        } else {
-                            this.explodeMultiblock();
-                            return false;
-                        }
-                    } else if (this.mMode == 2) {
-                        long steamProduced = (this.mTier * 300 * 2L * this.mEfficiency / 10000L);
-                        long waterConsume = ((steamProduced + 160) / 160);
-
-                        if (this.getWaterFromHatches(true) - waterConsume > 0) {
-                            this.consumeFluid(GT_ModHandler.getDistilledWater(1).getFluid(), waterConsume);
-                            this.addOutput(FluidRegistry.getFluidStack("ic2superheatedsteam", (int) steamProduced));
-                        } else {
-                            this.explodeMultiblock();
-                            return false;
-                        }
+                    if (this.getWaterFromHatches(false) - waterConsume > 0) {
+                        this.consumeFluid(FluidRegistry.WATER, waterConsume);
+                        this.addOutput(GT_ModHandler.getSteam(steamProduced));
+                    } else {
+                        this.explodeMultiblock();
+                        return false;
                     }
-                } else if (this.mMode == 1 || this.mMode == 2) {
-                    long coolantConverted = (long) (this.mTier * 24
-                            * ((double) GT_TileEntity_DEHP.nulearHeatMod)
-                            * this.mEfficiency
-                            / 10000L);
-                    if (this.getFluidFromHatches(FluidRegistry.getFluid("ic2coolant")) - coolantConverted > 0) {
-                        this.consumeFluid(FluidRegistry.getFluid("ic2coolant"), coolantConverted);
-                        this.addOutput(FluidRegistry.getFluidStack("ic2hotcoolant", (int) coolantConverted));
+                } else if (this.mMode == 2) {
+                    long steamProduced = (this.mTier * 300 * 2L * this.mEfficiency / 10000L);
+                    long waterConsume = ((steamProduced + 160) / 160);
+
+                    if (this.getWaterFromHatches(true) - waterConsume > 0) {
+                        this.consumeFluid(GT_ModHandler.getDistilledWater(1).getFluid(), waterConsume);
+                        this.addOutput(FluidRegistry.getFluidStack("ic2superheatedsteam", (int) steamProduced));
                     } else {
                         this.explodeMultiblock();
                         return false;
                     }
                 }
+            } else if (this.mMode == 1 || this.mMode == 2) {
+                long coolantConverted = (long) (this.mTier * 24
+                        * ((double) GT_TileEntity_DEHP.nulearHeatMod)
+                        * this.mEfficiency
+                        / 10000L);
+                if (this.getFluidFromHatches(FluidRegistry.getFluid("ic2coolant")) - coolantConverted > 0) {
+                    this.consumeFluid(FluidRegistry.getFluid("ic2coolant"), coolantConverted);
+                    this.addOutput(FluidRegistry.getFluidStack("ic2hotcoolant", (int) coolantConverted));
+                } else {
+                    this.explodeMultiblock();
+                    return false;
+                }
             }
-        } else {
-            return true;
         }
         return true;
     }

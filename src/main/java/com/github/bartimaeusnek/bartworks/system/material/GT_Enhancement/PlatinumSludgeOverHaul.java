@@ -732,7 +732,7 @@ public class PlatinumSludgeOverHaul {
 
                 for (int i = 0; i < recipe.mFluidOutputs.length; i++) {
                     if (map.equals(GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes)) continue maploop;
-                    else if (map.equals(GT_Recipe.GT_Recipe_Map.sMultiblockChemicalRecipes)
+                    if (map.equals(GT_Recipe.GT_Recipe_Map.sMultiblockChemicalRecipes)
                             || map.equals(GT_Recipe.GT_Recipe_Map.sChemicalRecipes)) {
                                 if (GT_Utility.areFluidsEqual(Ruthenium.getMolten(1), recipe.mFluidOutputs[i]))
                                     toDel.add(recipe);
@@ -1034,13 +1034,12 @@ public class PlatinumSludgeOverHaul {
 
             boolean allSame = false;
             for (Object stack : stacks) {
-                if (stack instanceof ItemStack) {
-                    allSame = BW_Util.checkStackAndPrefix((ItemStack) stack)
-                            && GT_OreDictUnificator.getAssociation((ItemStack) stack).mMaterial.mMaterial.equals(mat);
-                } else {
+                if (!(stack instanceof ItemStack)) {
                     allSame = false;
                     break;
                 }
+                allSame = BW_Util.checkStackAndPrefix((ItemStack) stack)
+                        && GT_OreDictUnificator.getAssociation((ItemStack) stack).mMaterial.mMaterial.equals(mat);
                 if (!allSame) break;
             }
             return allSame;

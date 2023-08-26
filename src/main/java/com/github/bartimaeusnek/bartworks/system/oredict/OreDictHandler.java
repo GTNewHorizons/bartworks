@@ -73,7 +73,8 @@ public class OreDictHandler {
         if (OreDictHandler.cache.get(prefixes + elementName.replaceAll(" ", "")) != null) {
             Pair<Integer, Short> p = OreDictHandler.cache.get(prefixes + elementName.replaceAll(" ", ""));
             return new ItemStack(Item.getItemById(p.getKey()), amount, p.getValue());
-        } else if (!OreDictionary.getOres(prefixes + elementName.replaceAll(" ", "")).isEmpty()) {
+        }
+        if (!OreDictionary.getOres(prefixes + elementName.replaceAll(" ", "")).isEmpty()) {
             ItemStack tmp = GT_OreDictUnificator
                     .get(OreDictionary.getOres(prefixes + elementName.replaceAll(" ", "")).get(0).copy()).copy();
             OreDictHandler.cache.put(

@@ -102,7 +102,7 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
         if (meta > ConfigHandler.IDOffset + GT_Values.VN.length
                 && meta <= ConfigHandler.IDOffset + GT_Values.VN.length * 2)
             return 2L;
-        else if (meta > ConfigHandler.IDOffset + GT_Values.VN.length * 2
+        if (meta > ConfigHandler.IDOffset + GT_Values.VN.length * 2
                 && meta <= ConfigHandler.IDOffset + GT_Values.VN.length * 3)
             return 4L;
         else if (meta > ConfigHandler.IDOffset + GT_Values.VN.length * 3

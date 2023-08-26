@@ -123,9 +123,8 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
         Materials material = getMaterialFromMeta(aMetaData);
         if (material != null) {
             return material.mIconSet.mTextures[this.orePrefixes.mTextureIndex];
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
@@ -156,12 +155,11 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
     public Materials getMaterialFromMeta(int aMetaData) {
         if (aMetaData > 1000 && hasList) {
             return NoMetaValue.get(aMetaData - 1001);
-        } else {
-            if (aMetaData < 0 || aMetaData >= Materials.values().length) {
-                return null;
-            }
-            return Materials.values()[aMetaData];
         }
+        if (aMetaData < 0 || aMetaData >= Materials.values().length) {
+            return null;
+        }
+        return Materials.values()[aMetaData];
     }
 
     @Override
@@ -172,7 +170,7 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
             if ((w == null) || (w.mTypes & Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes)) == 0
                     && Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes) != 0)
                 continue;
-            else if (((w.getMolten(1) == null && orePrefixes == OrePrefixes.capsuleMolten)
+            if (((w.getMolten(1) == null && orePrefixes == OrePrefixes.capsuleMolten)
                     || ((w.getFluid(1) == null && w.getGas(1) == null)
                             && (orePrefixes == OrePrefixes.capsule || orePrefixes == OrePrefixes.bottle))))
                 continue;
@@ -184,7 +182,7 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
             if ((w == null) || (w.mTypes & Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes)) == 0
                     && Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes) != 0)
                 continue;
-            else if (((w.getMolten(1) == null && orePrefixes == OrePrefixes.capsuleMolten)
+            if (((w.getMolten(1) == null && orePrefixes == OrePrefixes.capsuleMolten)
                     || ((w.getFluid(1) == null && w.getGas(1) == null)
                             && (orePrefixes == OrePrefixes.capsule || orePrefixes == OrePrefixes.bottle))))
                 continue;

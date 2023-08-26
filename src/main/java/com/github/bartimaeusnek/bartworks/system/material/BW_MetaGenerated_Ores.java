@@ -60,24 +60,22 @@ public class BW_MetaGenerated_Ores extends BW_MetaGenerated_Blocks {
         Block tOreBlock = WerkstoffLoader.BWOres;
         if (aMetaData < 0 || tBlock == Blocks.air && !air) {
             return false;
-        } else {
-
-            if (Block.getIdFromBlock(tBlock) != Block.getIdFromBlock(block)) {
-                return false;
-            }
-            final int aaY = aY;
-            if (Arrays.stream(aBlockMeta).noneMatch(e -> e == aWorld.getBlockMetadata(aX, aaY, aZ))) {
-                return false;
-            }
-
-            aWorld.setBlock(aX, aY, aZ, tOreBlock, aMetaData, 0);
-            TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
-            if (tTileEntity instanceof BW_MetaGeneratedOreTE) {
-                ((BW_MetaGeneratedOreTE) tTileEntity).mMetaData = (short) aMetaData;
-            }
-
-            return true;
         }
+        if (Block.getIdFromBlock(tBlock) != Block.getIdFromBlock(block)) {
+            return false;
+        }
+        final int aaY = aY;
+        if (Arrays.stream(aBlockMeta).noneMatch(e -> e == aWorld.getBlockMetadata(aX, aaY, aZ))) {
+            return false;
+        }
+
+        aWorld.setBlock(aX, aY, aZ, tOreBlock, aMetaData, 0);
+        TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
+        if (tTileEntity instanceof BW_MetaGeneratedOreTE) {
+            ((BW_MetaGeneratedOreTE) tTileEntity).mMetaData = (short) aMetaData;
+        }
+
+        return true;
     }
 
     @Override

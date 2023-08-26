@@ -160,10 +160,9 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
             handleFluidConsumption();
             handleOutputs();
             return true;
-        } else {
-            stopMachine();
-            return false;
         }
+        stopMachine();
+        return false;
     }
 
     @Override

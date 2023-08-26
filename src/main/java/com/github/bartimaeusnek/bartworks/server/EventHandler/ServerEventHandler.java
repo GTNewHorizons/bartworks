@@ -70,17 +70,16 @@ public class ServerEventHandler {
                                 }
                                 toReplace = GT_OreDictUnificator.get(prefixes, e.getVarName(), stack.stackSize);
                                 break loop;
-                            } else {
-                                for (String s : e.getADDITIONAL_OREDICT()) {
-                                    if (oreDictName.contains(s)) {
-                                        String prefix = oreDictName.replace(s, "");
-                                        OrePrefixes prefixes = OrePrefixes.getPrefix(prefix);
-                                        if (prefixes == null) {
-                                            continue;
-                                        }
-                                        toReplace = GT_OreDictUnificator.get(prefixes, e.getVarName(), stack.stackSize);
-                                        break loop;
+                            }
+                            for (String s : e.getADDITIONAL_OREDICT()) {
+                                if (oreDictName.contains(s)) {
+                                    String prefix = oreDictName.replace(s, "");
+                                    OrePrefixes prefixes = OrePrefixes.getPrefix(prefix);
+                                    if (prefixes == null) {
+                                        continue;
                                     }
+                                    toReplace = GT_OreDictUnificator.get(prefixes, e.getVarName(), stack.stackSize);
+                                    break loop;
                                 }
                             }
                         }

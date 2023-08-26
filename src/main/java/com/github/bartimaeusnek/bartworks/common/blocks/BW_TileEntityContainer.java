@@ -84,7 +84,8 @@ public class BW_TileEntityContainer extends BlockContainer implements ITileAddsI
         if (!player.isSneaking()) {
             if (tile instanceof IHasGui) {
                 return worldObj.isRemote || IC2.platform.launchGui(player, (IHasGui) tile);
-            } else if (tile instanceof ITileWithModularUI) {
+            }
+            if (tile instanceof ITileWithModularUI) {
                 if (!worldObj.isRemote) {
                     UIInfos.TILE_MODULAR_UI.open(player, worldObj, x, y, z);
                 }
@@ -137,15 +138,14 @@ public class BW_TileEntityContainer extends BlockContainer implements ITileAddsI
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
-        if (ITileHasDifferentTextureSides.class.isAssignableFrom(this.tileEntity)) {
-            try {
-                return ((ITileHasDifferentTextureSides) this.tileEntity.getConstructor().newInstance())
-                        .getTextureForSide(side, meta);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return super.getIcon(side, meta);
-            }
-        } else return super.getIcon(side, meta);
+        if (!ITileHasDifferentTextureSides.class.isAssignableFrom(this.tileEntity)) return super.getIcon(side, meta);
+        try {
+            return ((ITileHasDifferentTextureSides) this.tileEntity.getConstructor().newInstance())
+                    .getTextureForSide(side, meta);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.getIcon(side, meta);
+        }
     }
 
     @Override

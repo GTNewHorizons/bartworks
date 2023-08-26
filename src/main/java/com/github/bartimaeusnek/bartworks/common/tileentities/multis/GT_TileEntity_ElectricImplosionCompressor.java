@@ -200,7 +200,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
         }
         if (block == GregTech_API.sBlockMetal5 && meta == 2) {
             return 1; // Neutronium
-        } else if (block == LudicrousBlocks.resource_block && meta == 1) {
+        }
+        if (block == LudicrousBlocks.resource_block && meta == 1) {
             return 2; // Infinity
         } else if (block == GregTech_API.sBlockMetal9) {
             switch (meta) {
@@ -422,10 +423,9 @@ public class GT_TileEntity_ElectricImplosionCompressor
         if (isOK) {
             activatePiston();
             return true;
-        } else {
-            resetPiston();
-            return false;
         }
+        resetPiston();
+        return false;
     }
 
     @Override

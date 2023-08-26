@@ -407,9 +407,8 @@ public class StaticRecipeChangeLoaders {
         double originalEbfMul = gtEbfGasRecipeTimeMultipliers.get(originalGas);
         if (newEbfMul < 0.0D || originalEbfMul < 0.0D) {
             return transformEBFGasRecipeTime(recipe.mDuration, originalGas.getProtons(), newGas.getProtons());
-        } else {
-            return Math.max(1, (int) ((double) recipe.mDuration * newEbfMul / originalEbfMul));
         }
+        return Math.max(1, (int) ((double) recipe.mDuration * newEbfMul / originalEbfMul));
     }
 
     private static int transformEBFGasRecipeTime(GT_Recipe recipe, Materials originalGas, Werkstoff newGas) {
@@ -420,9 +419,8 @@ public class StaticRecipeChangeLoaders {
                     recipe.mDuration,
                     originalGas.getProtons(),
                     newGas.getStats().getProtons());
-        } else {
-            return Math.max(1, (int) ((double) recipe.mDuration * newEbfMul / originalEbfMul));
         }
+        return Math.max(1, (int) ((double) recipe.mDuration * newEbfMul / originalEbfMul));
     }
 
     private static int transformEBFNoGasRecipeTime(GT_Recipe recipe, Materials originalGas) {

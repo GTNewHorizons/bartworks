@@ -1440,7 +1440,7 @@ public class WerkstoffLoader {
             if (ret != null) return ret;
         }
         if (orePrefixes == ore) return new ItemStack(WerkstoffLoader.BWOres, amount, werkstoff.getmID());
-        else if (orePrefixes == oreSmall) return new ItemStack(WerkstoffLoader.BWSmallOres, amount, werkstoff.getmID());
+        if (orePrefixes == oreSmall) return new ItemStack(WerkstoffLoader.BWSmallOres, amount, werkstoff.getmID());
         else if (orePrefixes == block) return new ItemStack(WerkstoffLoader.BWBlocks, amount, werkstoff.getmID());
         else if (orePrefixes == OrePrefixes.blockCasing)
             return new ItemStack(WerkstoffLoader.BWBlockCasings, amount, werkstoff.getmID());
@@ -1453,7 +1453,7 @@ public class WerkstoffLoader {
     public static ItemStack getCorrespondingItemStack(OrePrefixes orePrefixes, Werkstoff werkstoff, int amount) {
         ItemStack stack = getCorrespondingItemStackUnsafe(orePrefixes, werkstoff, amount);
         if (stack != null) return stack;
-        else MainMod.LOGGER.catching(
+        MainMod.LOGGER.catching(
                 Level.ERROR,
                 new Exception(
                         "NO SUCH ITEM! " + orePrefixes
@@ -1591,7 +1591,8 @@ public class WerkstoffLoader {
                 if (pair.getKey() instanceof Materials && pair.getKey() == Materials.Neodymium) {
                     W.add(SubTag.ELECTROMAGNETIC_SEPERATION_NEODYMIUM);
                     break;
-                } else if (pair.getKey() instanceof Materials && pair.getKey() == Materials.Iron) {
+                }
+                if (pair.getKey() instanceof Materials && pair.getKey() == Materials.Iron) {
                     W.add(SubTag.ELECTROMAGNETIC_SEPERATION_IRON);
                     break;
                 } else if (pair.getKey() instanceof Materials && pair.getKey() == Materials.Gold) {

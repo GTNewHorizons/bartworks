@@ -340,7 +340,7 @@ public class BW_Util {
 
     public static String getTierName(byte tier) {
         if (VN.length - 1 <= tier) return "MAX+";
-        else return VN[tier];
+        return VN[tier];
     }
 
     public static String getTierNameFromVoltage(long voltage) {
@@ -357,7 +357,7 @@ public class BW_Util {
 
     public static byte getByteFromRarity(EnumRarity rarity) {
         if (rarity.equals(EnumRarity.uncommon)) return 1;
-        else if (rarity.equals(EnumRarity.epic)) return 2;
+        if (rarity.equals(EnumRarity.epic)) return 2;
         else if (rarity.equals(EnumRarity.rare)) return 3;
         return 0;
     }

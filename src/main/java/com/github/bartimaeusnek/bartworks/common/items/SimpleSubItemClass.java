@@ -67,13 +67,13 @@ public class SimpleSubItemClass extends Item {
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int p_77617_1_) {
         if (p_77617_1_ < this.tex.length) return this.itemIcon[p_77617_1_];
-        else return this.itemIcon[0];
+        return this.itemIcon[0];
     }
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         if (stack.getItemDamage() < this.tex.length)
             return "item." + this.tex[stack.getItemDamage()].replaceAll("/", ".");
-        else return "WrongDamageItemDestroyIt";
+        return "WrongDamageItemDestroyIt";
     }
 }

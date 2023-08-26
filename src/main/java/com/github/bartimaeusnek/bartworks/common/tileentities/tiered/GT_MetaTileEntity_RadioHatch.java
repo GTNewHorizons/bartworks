@@ -190,14 +190,13 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                 if (lStack == null) {
                     this.colorForGUI = new short[] { 0x37, 0x37, 0x37 };
                     return;
+                }
+                ItemData itemData = GT_OreDictUnificator.getAssociation(lStack);
+                if (itemData != null) {
+                    Materials mat = itemData.mMaterial.mMaterial;
+                    this.colorForGUI = new short[] { mat.getRGBA()[0], mat.getRGBA()[1], mat.getRGBA()[2] };
                 } else {
-                    ItemData itemData = GT_OreDictUnificator.getAssociation(lStack);
-                    if (itemData != null) {
-                        Materials mat = itemData.mMaterial.mMaterial;
-                        this.colorForGUI = new short[] { mat.getRGBA()[0], mat.getRGBA()[1], mat.getRGBA()[2] };
-                    } else {
-                        this.colorForGUI = new short[] { 0x37, 0x37, 0x37 };
-                    }
+                    this.colorForGUI = new short[] { 0x37, 0x37, 0x37 };
                 }
 
                 if (this.lastFail && GT_Utility.areStacksEqual(this.lastUsedItem, lStack, true)) {
@@ -271,7 +270,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                         + "/"
                         + (this.decayTime - this.timer % this.decayTime) / 20 / 60 / 60
                         + StatCollector.translateToLocal("tooltip.tile.radhatch.9.name") };
-        else return new String[] {
+        return new String[] {
                 StatCollector.translateToLocal("tooltip.tile.radhatch.2.name") + " "
                         + StatCollector.translateToLocal("tooltip.bw.empty.name"),
                 StatCollector.translateToLocal("tooltip.tile.radhatch.3.name") + " " + "0",

@@ -263,19 +263,18 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     public boolean addInputToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         if (aTileEntity == null) {
             return false;
+        }
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input) {
+            ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
+            ((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity).mRecipeMap = this.getRecipeMap();
+            return this.mInputHatches.add((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity);
+        } else if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_InputBus) {
+            ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
+            ((GT_MetaTileEntity_Hatch_InputBus) aMetaTileEntity).mRecipeMap = this.getRecipeMap();
+            return this.mInputBusses.add((GT_MetaTileEntity_Hatch_InputBus) aMetaTileEntity);
         } else {
-            IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-            if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input) {
-                ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-                ((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity).mRecipeMap = this.getRecipeMap();
-                return this.mInputHatches.add((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity);
-            } else if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_InputBus) {
-                ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-                ((GT_MetaTileEntity_Hatch_InputBus) aMetaTileEntity).mRecipeMap = this.getRecipeMap();
-                return this.mInputBusses.add((GT_MetaTileEntity_Hatch_InputBus) aMetaTileEntity);
-            } else {
-                return false;
-            }
+            return false;
         }
     }
 
@@ -283,17 +282,16 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     public boolean addInputHatchToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         if (aTileEntity == null) {
             return false;
+        }
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity == null) {
+            return false;
+        } else if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input) {
+            ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
+            ((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity).mRecipeMap = this.getRecipeMap();
+            return this.mInputHatches.add((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity);
         } else {
-            IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-            if (aMetaTileEntity == null) {
-                return false;
-            } else if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input) {
-                ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-                ((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity).mRecipeMap = this.getRecipeMap();
-                return this.mInputHatches.add((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity);
-            } else {
-                return false;
-            }
+            return false;
         }
     }
 
@@ -356,9 +354,8 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         if (!this.checkPiece(STRUCTURE_PIECE_FIRST, 0, 0, 0)) {
             return false;
-        } else {
-            return this.checkMachine(true) || this.checkMachine(false);
         }
+        return this.checkMachine(true) || this.checkMachine(false);
     }
 
     private boolean checkMachine(boolean leftToRight) {

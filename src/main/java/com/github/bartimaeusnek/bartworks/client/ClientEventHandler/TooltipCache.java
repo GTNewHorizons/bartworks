@@ -31,17 +31,16 @@ class TooltipCache {
         Pair<Integer, Short> p = new Pair<>(Item.getIdFromItem(itemStack.getItem()), (short) itemStack.getItemDamage());
         if (TooltipCache.cache.containsKey(p)) return false;
 
-        if (!tooltip.isEmpty()) {
-            StringBuilder sb = new StringBuilder();
-            for (String s : tooltip) {
-                sb.append(s);
-                sb.append(System.lineSeparator());
-            }
-            char[] rettype = sb.toString().toCharArray();
-            return TooltipCache.cache.put(p, rettype) == rettype;
-        } else {
+        if (tooltip.isEmpty()) {
             return false;
         }
+        StringBuilder sb = new StringBuilder();
+        for (String s : tooltip) {
+            sb.append(s);
+            sb.append(System.lineSeparator());
+        }
+        char[] rettype = sb.toString().toCharArray();
+        return TooltipCache.cache.put(p, rettype) == rettype;
     }
 
     static List<String> getTooltip(ItemStack itemStack) {
