@@ -32,17 +32,14 @@ public class ResultWrongSievert implements CheckRecipeResult {
 
     @Override
     public String getDisplayString() {
-        switch (type) {
-            case EXACTLY:
-                return StatCollector.translateToLocalFormatted(
-                        "GT5U.gui.text.wrong_sievert_exactly",
-                        GT_Utility.formatNumbers(required));
-            case MINIMUM:
-                return StatCollector.translateToLocalFormatted(
-                        "GT5U.gui.text.wrong_sievert_min",
-                        GT_Utility.formatNumbers(required));
-        }
-        return "";
+        return switch (type) {
+            case EXACTLY -> StatCollector.translateToLocalFormatted(
+                                    "GT5U.gui.text.wrong_sievert_exactly",
+                                    GT_Utility.formatNumbers(required));
+            case MINIMUM -> StatCollector.translateToLocalFormatted(
+                                    "GT5U.gui.text.wrong_sievert_min",
+                                    GT_Utility.formatNumbers(required));
+        };
     }
 
     @Override

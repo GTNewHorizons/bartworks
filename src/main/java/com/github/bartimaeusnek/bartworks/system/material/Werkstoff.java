@@ -665,15 +665,11 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         UNDEFINED;
 
         public static Werkstoff.Stats getDefaultStatForType(Werkstoff.Types T) {
-            switch (T) {
-                case COMPOUND:
-                case BIOLOGICAL:
-                    return new Werkstoff.Stats().setElektrolysis(true);
-                case MIXTURE:
-                    return new Werkstoff.Stats().setCentrifuge(true);
-                default:
-                    return new Werkstoff.Stats();
-            }
+            return switch (T) {
+                case COMPOUND, BIOLOGICAL -> new Werkstoff.Stats().setElektrolysis(true);
+                case MIXTURE -> new Werkstoff.Stats().setCentrifuge(true);
+                default -> new Werkstoff.Stats();
+            };
         }
     }
 

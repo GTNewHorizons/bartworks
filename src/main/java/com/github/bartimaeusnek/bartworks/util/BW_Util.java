@@ -377,34 +377,16 @@ public class BW_Util {
      */
     @Deprecated
     public static byte getTierFromGlasMeta(int meta) {
-        byte ret;
-        switch (meta) {
-            case 1:
-                ret = 4;
-                break;
-            case 2:
-            case 12:
-                ret = 5;
-                break;
-            case 3:
-                ret = 6;
-                break;
-            case 4:
-                ret = 7;
-                break;
-            case 5:
-                ret = 8;
-                break;
-            case 13:
-                ret = 9;
-                break;
-            case 14:
-                ret = 10;
-                break;
-            default:
-                ret = 3;
-        }
-        return ret;
+        return switch (meta) {
+            case 1 -> 4;
+            case 2, 12 -> 5;
+            case 3 -> 6;
+            case 4 -> 7;
+            case 5 -> 8;
+            case 13 -> 9;
+            case 14 -> 10;
+            default -> 3;
+        };
     }
 
     /**
@@ -510,16 +492,12 @@ public class BW_Util {
     }
 
     public static EnumRarity getRarityFromByte(byte b) {
-        switch (b) {
-            case 1:
-                return EnumRarity.uncommon;
-            case 2:
-                return EnumRarity.rare;
-            case 3:
-                return EnumRarity.epic;
-            default:
-                return EnumRarity.common;
-        }
+        return switch (b) {
+            case 1 -> EnumRarity.uncommon;
+            case 2 -> EnumRarity.rare;
+            case 3 -> EnumRarity.epic;
+            default -> EnumRarity.common;
+        };
     }
 
     public static boolean check_layer(IGregTechTileEntity aBaseMetaTileEntity, int radius, int yLevel, int height,
@@ -743,43 +721,24 @@ public class BW_Util {
     }
 
     public static byte getCircuitTierFromOreDictName(String name) {
-        switch (name) {
-            case "circuitPrimitive":
-                return 0;
-            case "circuitBasic":
-                return 1;
-            case "circuitGood":
-                return 2;
-            case "circuitAdvanced":
-                return 3;
-            case "circuitData":
-                return 4;
-            case "circuitElite":
-                return 5;
-            case "circuitMaster":
-                return 6;
-            case "circuitUltimate":
-                return 7;
-            case "circuitSuperconductor":
-                return 8;
-            case "circuitInfinite":
-                return 9;
-            case "circuitBio":
-                return 10;
-            case "circuitNano":
-            case "circuitOptical":
-                return 11;
-            case "circuitPiko":
-            case "circuitExotic":
-                return 12;
-            case "circuitQuantum":
-            case "circuitCosmic":
-                return 13;
-            case "circuitTranscendent":
-                return 14;
-            default:
-                return -1;
-        }
+        return switch (name) {
+            case "circuitPrimitive" -> 0;
+            case "circuitBasic" -> 1;
+            case "circuitGood" -> 2;
+            case "circuitAdvanced" -> 3;
+            case "circuitData" -> 4;
+            case "circuitElite" -> 5;
+            case "circuitMaster" -> 6;
+            case "circuitUltimate" -> 7;
+            case "circuitSuperconductor" -> 8;
+            case "circuitInfinite" -> 9;
+            case "circuitBio" -> 10;
+            case "circuitNano", "circuitOptical" -> 11;
+            case "circuitPiko", "circuitExotic" -> 12;
+            case "circuitQuantum", "circuitCosmic" -> 13;
+            case "circuitTranscendent" -> 14;
+            default -> -1;
+        };
     }
 
     public static byte getCircuitTierFromItemStack(ItemStack stack) {

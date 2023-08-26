@@ -230,20 +230,14 @@ public class BWRecipes {
      * @param machine 0 = biolab; 1 = BacterialVat; 2 = sAcidGenFuels; 3 = circuitAssemblyLine
      */
     public GT_Recipe.GT_Recipe_Map getMappingsFor(byte machine) {
-        switch (machine) {
-            case 0:
-                return sBiolab;
-            case 1:
-                return sBacteriaVat;
-            case 2:
-                return sAcidGenFuels;
-            case 3:
-                return sCircuitAssemblyLineMap;
-            case 4:
-                return sRadHatch;
-            default:
-                return null;
-        }
+        return switch (machine) {
+            case 0 -> sBiolab;
+            case 1 -> sBacteriaVat;
+            case 2 -> sAcidGenFuels;
+            case 3 -> sCircuitAssemblyLineMap;
+            case 4 -> sRadHatch;
+            default -> null;
+        };
     }
 
     public static long calcDecayTicks(int x) {

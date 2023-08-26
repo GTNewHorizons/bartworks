@@ -286,13 +286,10 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
 
-        switch (index) {
-            case 0:
-            case 1:
-                return true;
-            default:
-                return stack != null && stack.getItem().equals(GT_Utility.getIntegratedCircuit(0).getItem());
-        }
+        return switch (index) {
+            case 0, 1 -> true;
+            default -> stack != null && stack.getItem().equals(GT_Utility.getIntegratedCircuit(0).getItem());
+        };
     }
 
     @Override

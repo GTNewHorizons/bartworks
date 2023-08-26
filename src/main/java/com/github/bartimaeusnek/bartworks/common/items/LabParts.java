@@ -46,15 +46,11 @@ public class LabParts extends SimpleSubItemClass {
 
         if (itemStack == null || itemStack.getTagCompound() == null) return EnumRarity.common;
 
-        switch (itemStack.getItemDamage()) {
-            case 0:
-                return BW_Util.getRarityFromByte(itemStack.getTagCompound().getCompoundTag("DNA").getByte("Rarity"));
-            case 1:
-            case 2:
-                return BW_Util.getRarityFromByte(itemStack.getTagCompound().getByte("Rarity"));
-            default:
-                return EnumRarity.common;
-        }
+        return switch (itemStack.getItemDamage()) {
+            case 0 -> BW_Util.getRarityFromByte(itemStack.getTagCompound().getCompoundTag("DNA").getByte("Rarity"));
+            case 1, 2 -> BW_Util.getRarityFromByte(itemStack.getTagCompound().getByte("Rarity"));
+            default -> EnumRarity.common;
+        };
     }
 
     @Override
