@@ -127,7 +127,7 @@ public class BioData {
 
     @Override
     public String toString() {
-        return "BioData{" + "name='" + name + '\'' + ", ID=" + ID + '}';
+        return "BioData{" + "name='" + this.name + '\'' + ", ID=" + this.ID + '}';
     }
 
     public EnumRarity getRarity() {

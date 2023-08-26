@@ -161,10 +161,10 @@ public class Circuit_Programmer extends GT_Generic_Item implements IElectricItem
 
             @Override
             public void putStack(ItemStack stack) {
-                if (isLVCircuit(stack)) {
-                    stack = createRealCircuit(0);
+                if (Circuit_Programmer.this.isLVCircuit(stack)) {
+                    stack = Circuit_Programmer.this.createRealCircuit(0);
                 }
-                ((IItemHandlerModifiable) this.getItemHandler()).setStackInSlot(getSlotIndex(), stack);
+                ((IItemHandlerModifiable) this.getItemHandler()).setStackInSlot(this.getSlotIndex(), stack);
                 this.onSlotChanged();
             }
         });
@@ -172,7 +172,7 @@ public class Circuit_Programmer extends GT_Generic_Item implements IElectricItem
         ItemStack initialStack = null;
         NBTTagCompound tag = heldStack.getTagCompound();
         if (tag != null && tag.getBoolean(NBT_KEY_HAS_CHIP)) {
-            initialStack = createRealCircuit(tag.getByte(NBT_KEY_CHIP_CONFIG));
+            initialStack = this.createRealCircuit(tag.getByte(NBT_KEY_CHIP_CONFIG));
         }
         circuitSlotWidget.getMcSlot().putStack(initialStack);
 
@@ -191,15 +191,15 @@ public class Circuit_Programmer extends GT_Generic_Item implements IElectricItem
                 tag2.setBoolean(NBT_KEY_HAS_CHIP, false);
             }
             heldItem.setTagCompound(tag2);
-        }).setFilter(stack -> isProgrammedCircuit(stack) || isLVCircuit(stack))
+        }).setFilter(stack -> this.isProgrammedCircuit(stack) || this.isLVCircuit(stack))
                 .setBackground(ModularUITextures.ITEM_SLOT, GT_UITextures.OVERLAY_SLOT_INT_CIRCUIT).setPos(122, 60));
 
         for (int i = 0; i < 24; i++) {
             final int index = i;
             builder.widget(new ButtonWidget().setOnClick((clickData, widget) -> {
                 if (circuitSlotWidget.getMcSlot().getHasStack()
-                        && isProgrammedCircuit(circuitSlotWidget.getMcSlot().getStack())) {
-                    circuitSlotWidget.getMcSlot().putStack(createRealCircuit(index + 1));
+                        && this.isProgrammedCircuit(circuitSlotWidget.getMcSlot().getStack())) {
+                    circuitSlotWidget.getMcSlot().putStack(this.createRealCircuit(index + 1));
                 }
             }).setPos(32 + (i % 12) * 18, 21 + (i / 12) * 18).setSize(18, 18));
         }

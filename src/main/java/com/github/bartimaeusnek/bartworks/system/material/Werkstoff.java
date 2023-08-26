@@ -71,7 +71,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         private static final long serialVersionUID = 6399917619058898648L;
 
         {
-            put(GalaxySpace.ID, DARK_PURPLE + "GalaxySpace");
+            this.put(GalaxySpace.ID, DARK_PURPLE + "GalaxySpace");
         }
     };
 
@@ -376,7 +376,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         Werkstoff.werkstoffHashMap.put(this.mID, this);
         Werkstoff.werkstoffNameHashMap.put(this.defaultName, this);
 
-        this.owner = getMaterialOwner();
+        this.owner = this.getMaterialOwner();
     }
 
     private static String getFormula(Materials material) {
@@ -388,12 +388,12 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
     }
 
     public Werkstoff addAdditionalOreDict(String s) {
-        ADDITIONAL_OREDICT.add(s);
+        this.ADDITIONAL_OREDICT.add(s);
         return this;
     }
 
     public HashSet<String> getADDITIONAL_OREDICT() {
-        return ADDITIONAL_OREDICT;
+        return this.ADDITIONAL_OREDICT;
     }
 
     public void setTCAspects(Pair<Object, Integer>... pAspectsArr) {
@@ -423,7 +423,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 
     public List<TC_Aspects.TC_AspectStack> getGTWrappedTCAspects() {
         final List<TC_Aspects.TC_AspectStack> ret = new ArrayList<>();
-        Arrays.stream(getTCAspects()).forEach(objectIntegerPair -> {
+        Arrays.stream(this.getTCAspects()).forEach(objectIntegerPair -> {
             try {
                 new TC_Aspects.TC_AspectStack(
                         TC_Aspects.valueOf(
@@ -500,7 +500,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
     public String getLocalizedName() {
         return GT_LanguageManager.addStringLocalization(
                 String.format("bw.werkstoff.%05d.name", this.mID),
-                defaultName,
+                this.defaultName,
                 !GregTech_API.sPostloadFinished);
     }
 
@@ -515,7 +515,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
     public String getLocalizedToolTip() {
         return GT_LanguageManager.addStringLocalization(
                 String.format("bw.werkstoff.%05d.tooltip", this.mID),
-                toolTip,
+                this.toolTip,
                 !GregTech_API.sPostloadFinished);
     }
 
@@ -640,7 +640,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
     }
 
     public String getOwner() {
-        return owner;
+        return this.owner;
     }
 
     private String getMaterialOwner() {
@@ -755,7 +755,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public void setExtension() {
-            isExtension = !isExtension;
+            this.isExtension = !this.isExtension;
         }
 
         public static int getPrefixDataRaw(OrePrefixes prefixes) {
@@ -764,7 +764,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public boolean isExtension() {
-            return isExtension;
+            return this.isExtension;
         }
 
         // public byte toGenerateSecondary = 0b0000000;
@@ -1032,7 +1032,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public int getDurOverride() {
-            return durOverride;
+            return this.durOverride;
         }
 
         public Werkstoff.Stats setDurOverride(int durOverride) {
@@ -1041,7 +1041,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public float getSpeedOverride() {
-            return speedOverride;
+            return this.speedOverride;
         }
 
         public Werkstoff.Stats setSpeedOverride(float speedOverride) {
@@ -1050,7 +1050,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public byte getQualityOverride() {
-            return qualityOverride;
+            return this.qualityOverride;
         }
 
         public Werkstoff.Stats setQualityOverride(byte qualityOverride) {
@@ -1073,7 +1073,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         float durMod = 1f;
 
         public float getDurMod() {
-            return durMod;
+            return this.durMod;
         }
 
         public void setDurMod(float durMod) {
@@ -1159,7 +1159,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         byte enchantmentlvl = 3;
 
         public byte getEnchantmentlvl() {
-            return enchantmentlvl;
+            return this.enchantmentlvl;
         }
 
         public Werkstoff.Stats setEnchantmentlvl(byte enchantmentlvl) {
@@ -1193,7 +1193,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public int getMeltingVoltage() {
-            return meltingVoltage;
+            return this.meltingVoltage;
         }
 
         public boolean isElektrolysis() {

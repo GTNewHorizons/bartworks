@@ -185,9 +185,9 @@ public class BW_NEI_OreHandler extends TemplateRecipeHandler {
         public List<PositionedStack> getOtherStacks() {
             List<PositionedStack> ret = new ArrayList<>();
             int x = 0;
-            for (int i = 0; i < (small ? 1 : 4); i++) {
+            for (int i = 0; i < (this.small ? 1 : 4); i++) {
                 x += 20;
-                ret.add(new PositionedStack(worldGen.getStacks().get(i), x, 12));
+                ret.add(new PositionedStack(this.worldGen.getStacks().get(i), x, 12));
             }
             return ret;
         }
@@ -196,12 +196,12 @@ public class BW_NEI_OreHandler extends TemplateRecipeHandler {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (!(o instanceof CachedOreRecipe that)) return false;
-            return Objects.equals(worldGen, that.worldGen);
+            return Objects.equals(this.worldGen, that.worldGen);
         }
 
         @Override
         public int hashCode() {
-            return worldGen.hashCode();
+            return this.worldGen.hashCode();
         }
     }
 }

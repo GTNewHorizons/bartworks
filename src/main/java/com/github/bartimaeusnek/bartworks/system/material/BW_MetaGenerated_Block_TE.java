@@ -67,7 +67,7 @@ public abstract class BW_MetaGenerated_Block_TE extends TileEntity implements IT
             rList.add(new ItemStack(Blocks.cobblestone, 1, 0));
             return rList;
         }
-        rList.add(new ItemStack(GetProperBlock(), 1, this.mMetaData));
+        rList.add(new ItemStack(this.GetProperBlock(), 1, this.mMetaData));
         return rList;
     }
 }

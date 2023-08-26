@@ -192,7 +192,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         this.type = aNBT.getCompoundTag("Type");
-        imprintedItemName = GT_LanguageManager.getTranslateableItemStackName(ItemStack.loadItemStackFromNBT(this.type));
+        this.imprintedItemName = GT_LanguageManager.getTranslateableItemStackName(ItemStack.loadItemStackFromNBT(this.type));
         super.loadNBTData(aNBT);
     }
 
@@ -221,12 +221,12 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     @NotNull
     @Override
     public CheckRecipeResult checkProcessing() {
-        if (this.type.equals(new NBTTagCompound()) && !this.imprintMachine(getControllerSlot()))
+        if (this.type.equals(new NBTTagCompound()) && !this.imprintMachine(this.getControllerSlot()))
             return SimpleCheckRecipeResult.ofFailure("no_imprint");
-        if (imprintedItemName == null || imprintedStack == null) {
-            imprintedStack = new ItemStack(BW_Meta_Items.getNEWCIRCUITS(), 1, 0);
-            imprintedStack.setTagCompound(type);
-            imprintedItemName = GT_LanguageManager.getTranslateableItemStackName(imprintedStack);
+        if (this.imprintedItemName == null || this.imprintedStack == null) {
+            this.imprintedStack = new ItemStack(BW_Meta_Items.getNEWCIRCUITS(), 1, 0);
+            this.imprintedStack.setTagCompound(this.type);
+            this.imprintedItemName = GT_LanguageManager.getTranslateableItemStackName(this.imprintedStack);
         }
         return super.checkProcessing();
     }
@@ -234,7 +234,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     @Override
     protected void setupProcessingLogic(ProcessingLogic logic) {
         super.setupProcessingLogic(logic);
-        logic.setSpecialSlotItem(imprintedStack);
+        logic.setSpecialSlotItem(this.imprintedStack);
     }
 
     @Override
@@ -245,8 +245,8 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     @Override
     public ArrayList<ItemStack> getStoredInputs() {
         ArrayList<ItemStack> rList = new ArrayList<>();
-        for (GT_MetaTileEntity_Hatch_InputBus tHatch : mInputBusses) {
-            tHatch.mRecipeMap = getRecipeMap();
+        for (GT_MetaTileEntity_Hatch_InputBus tHatch : this.mInputBusses) {
+            tHatch.mRecipeMap = this.getRecipeMap();
             if (isValidMetaTileEntity(tHatch)) {
                 for (int i = 0; i < tHatch.getBaseMetaTileEntity().getSizeInventory(); i++) {
                     if (tHatch.getBaseMetaTileEntity().getStackInSlot(i) != null) {
@@ -322,15 +322,15 @@ public class GT_TileEntity_CircuitAssemblyLine extends
 
     @Override
     public String[] getInfoData() {
-        if (infoDataBuffer != null) return infoDataBuffer;
+        if (this.infoDataBuffer != null) return this.infoDataBuffer;
 
         String[] oldInfo = super.getInfoData();
-        infoDataBuffer = new String[oldInfo.length + 1];
-        System.arraycopy(oldInfo, 0, infoDataBuffer, 0, oldInfo.length);
-        infoDataBuffer[oldInfo.length] = StatCollector.translateToLocal("tooltip.cal.imprintedWith") + " "
+        this.infoDataBuffer = new String[oldInfo.length + 1];
+        System.arraycopy(oldInfo, 0, this.infoDataBuffer, 0, oldInfo.length);
+        this.infoDataBuffer[oldInfo.length] = StatCollector.translateToLocal("tooltip.cal.imprintedWith") + " "
                 + EnumChatFormatting.YELLOW
-                + getTypeForDisplay();
-        return infoDataBuffer;
+                + this.getTypeForDisplay();
+        return this.infoDataBuffer;
     }
 
     @Override
@@ -381,14 +381,14 @@ public class GT_TileEntity_CircuitAssemblyLine extends
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (mMachine) return -1;
+        if (this.mMachine) return -1;
         int built;
-        built = survivialBuildPiece(STRUCTURE_PIECE_FIRST, stackSize, 0, 0, 0, elementBudget, env, false, true);
+        built = this.survivialBuildPiece(STRUCTURE_PIECE_FIRST, stackSize, 0, 0, 0, elementBudget, env, false, true);
         if (built >= 0) return built;
         int tLength = Math.min(stackSize.stackSize + 1, 7);
 
         for (int i = 1; i < tLength; ++i) {
-            built = survivialBuildPiece(STRUCTURE_PIECE_NEXT, stackSize, -i, 0, 0, elementBudget, env, false, true);
+            built = this.survivialBuildPiece(STRUCTURE_PIECE_NEXT, stackSize, -i, 0, 0, elementBudget, env, false, true);
             if (built >= 0) return built;
         }
         return -1;
@@ -410,7 +410,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         super.addUIWidgets(builder, buildContext);
-        builder.widget(new FakeSyncWidget.StringSyncer(() -> imprintedItemName, val -> imprintedItemName = val));
+        builder.widget(new FakeSyncWidget.StringSyncer(() -> this.imprintedItemName, val -> this.imprintedItemName = val));
     }
 
     @Override
@@ -425,7 +425,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
 
     @Override
     public boolean isRecipeLockingEnabled() {
-        return imprintedItemName != null && !imprintedItemName.equals("");
+        return this.imprintedItemName != null && !this.imprintedItemName.equals("");
     }
 
     @Override
@@ -444,7 +444,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
             int z) {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        String imprintedWith = getTypeForDisplay();
+        String imprintedWith = this.getTypeForDisplay();
         if (!imprintedWith.isEmpty()) tag.setString("ImprintedWith", imprintedWith);
     }
 

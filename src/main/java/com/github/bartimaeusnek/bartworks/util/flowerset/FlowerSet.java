@@ -109,7 +109,7 @@ public class FlowerSet<T> implements Set<T> {
         public FlowerNode(V value, FlowerSet<V> map) {
             this.value = value;
             this.map = map;
-            links = new FlowerNode[map.petals];
+            this.links = new FlowerNode[map.petals];
         }
 
         private static final int DEPTH = 20480;
@@ -118,21 +118,21 @@ public class FlowerSet<T> implements Set<T> {
             if (depth > DEPTH) throw new IllegalStateException("Recursive Call went too deep.");
             if (node.links[place] == null) node.links[place] = toset;
             else {
-                TryToSetSingleNode(node.links[place], toset, place, depth);
+                this.TryToSetSingleNode(node.links[place], toset, place, depth);
                 depth++;
             }
         }
 
         public void TryToSetSingleNode(FlowerNode<V> node, FlowerNode<V> toset, int place) {
             if (node.links[place] == null) node.links[place] = toset;
-            else TryToSetSingleNode(node.links[place], toset, place, 0);
+            else this.TryToSetSingleNode(node.links[place], toset, place, 0);
         }
 
         @SafeVarargs
         public final void SetUpLinks(FlowerNode<V>... links) {
             for (FlowerNode<V> node : links) {
-                int place = map.comparerison.apply(node);
-                TryToSetSingleNode(this, node, place);
+                int place = this.map.comparerison.apply(node);
+                this.TryToSetSingleNode(this, node, place);
             }
         }
     }

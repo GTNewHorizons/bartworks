@@ -48,7 +48,7 @@ public class TT_TileEntity_ManualTrafo extends GT_TileEntity_ManualTrafo {
         if (aEU <= 0L) {
             return true;
         }
-        return mTTDynamos.size() > 0
+        return this.mTTDynamos.size() > 0
                 || this.mDynamoHatches.size() > 0 && this.addEnergyOutputMultipleDynamos(aEU, true);
     }
 

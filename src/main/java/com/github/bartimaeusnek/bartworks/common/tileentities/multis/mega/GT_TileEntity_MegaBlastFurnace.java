@@ -174,7 +174,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
                 .addInfo(
                         "For each perfect overclock the EBF will reduce recipe time 4 times (instead of 2) (100% efficiency)")
                 .addInfo("Additionally gives +100K for every tier past MV")
-                .addPollutionAmount(20 * getPollutionPerTick(null)).addSeparator().beginStructureBlock(15, 20, 15, true)
+                .addPollutionAmount(20 * this.getPollutionPerTick(null)).addSeparator().beginStructureBlock(15, 20, 15, true)
                 .addController("3rd layer center").addCasingInfoRange("Heat Proof Machine Casing", 0, 279, false)
                 .addOtherStructurePart("864x Heating Coils", "Inner 13x18x13 (Hollow)")
                 .addOtherStructurePart("1007x Borosilicate Glass", "Outer 15x18x15")
@@ -195,10 +195,10 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         super.loadNBTData(aNBT);
         this.glassTier = aNBT.getByte("glasTier");
         if (!aNBT.hasKey(INPUT_SEPARATION_NBT_KEY)) {
-            inputSeparation = aNBT.getBoolean("isBussesSeparate");
+            this.inputSeparation = aNBT.getBoolean("isBussesSeparate");
         }
         if (!aNBT.hasKey(BATCH_MODE_NBT_KEY)) {
-            batchMode = aNBT.getBoolean("mUseMultiparallelMode");
+            this.batchMode = aNBT.getBoolean("mUseMultiparallelMode");
         }
     }
 
@@ -206,14 +206,14 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     public boolean onWireCutterRightClick(ForgeDirection side, ForgeDirection wrenchingSide, EntityPlayer aPlayer,
             float aX, float aY, float aZ) {
         if (!aPlayer.isSneaking()) {
-            inputSeparation = !inputSeparation;
+            this.inputSeparation = !this.inputSeparation;
             GT_Utility.sendChatToPlayer(
                     aPlayer,
-                    StatCollector.translateToLocal("GT5U.machines.separatebus") + " " + inputSeparation);
+                    StatCollector.translateToLocal("GT5U.machines.separatebus") + " " + this.inputSeparation);
             return true;
         }
-        batchMode = !batchMode;
-        if (batchMode) {
+        this.batchMode = !this.batchMode;
+        if (this.batchMode) {
             GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOn"));
         } else {
             GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("misc.BatchModeTextOff"));
@@ -240,7 +240,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setByte("glasTier", glassTier);
+        aNBT.setByte("glasTier", this.glassTier);
     }
 
     @Override
@@ -254,7 +254,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         if (aMetaTileEntity == null) return false;
         if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Output) {
             ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-            return mPollutionOutputHatches.add((GT_MetaTileEntity_Hatch_Output) aMetaTileEntity);
+            return this.mPollutionOutputHatches.add((GT_MetaTileEntity_Hatch_Output) aMetaTileEntity);
         }
         return false;
     }
@@ -263,7 +263,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     protected String[] getExtendedInfoData() {
         return new String[] { StatCollector.translateToLocal("GT5U.EBF.heat") + ": "
                 + EnumChatFormatting.GREEN
-                + GT_Utility.formatNumbers(mHeatingCapacity)
+                + GT_Utility.formatNumbers(this.mHeatingCapacity)
                 + EnumChatFormatting.RESET
                 + " K" };
     }
@@ -276,12 +276,12 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
             @Override
             protected GT_OverclockCalculator createOverclockCalculator(@Nonnull GT_Recipe recipe) {
                 return super.createOverclockCalculator(recipe).setRecipeHeat(recipe.mSpecialValue)
-                        .setMultiHeat(mHeatingCapacity).setHeatOC(true).setHeatDiscount(true);
+                        .setMultiHeat(GT_TileEntity_MegaBlastFurnace.this.mHeatingCapacity).setHeatOC(true).setHeatDiscount(true);
             }
 
             @Override
             protected @Nonnull CheckRecipeResult validateRecipe(@Nonnull GT_Recipe recipe) {
-                return recipe.mSpecialValue <= mHeatingCapacity ? CheckRecipeResultRegistry.SUCCESSFUL
+                return recipe.mSpecialValue <= GT_TileEntity_MegaBlastFurnace.this.mHeatingCapacity ? CheckRecipeResultRegistry.SUCCESSFUL
                         : CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
             }
         }.setMaxParallel(ConfigHandler.megaMachinesMax);
@@ -299,24 +299,24 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        buildPiece("main", stackSize, hintsOnly, 7, 17, 0);
+        this.buildPiece("main", stackSize, hintsOnly, 7, 17, 0);
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, IItemSource source, EntityPlayerMP actor) {
-        if (mMachine) return -1;
+        if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-        glassTier = 0;
-        setCoilLevel(HeatingCoilLevel.None);
-        return survivialBuildPiece("main", stackSize, 7, 17, 0, realBudget, source, actor, false, true);
+        this.glassTier = 0;
+        this.setCoilLevel(HeatingCoilLevel.None);
+        return this.survivialBuildPiece("main", stackSize, 7, 17, 0, realBudget, source, actor, false, true);
     }
 
     public void setCoilLevel(HeatingCoilLevel aCoilLevel) {
-        mCoilLevel = aCoilLevel;
+        this.mCoilLevel = aCoilLevel;
     }
 
     public HeatingCoilLevel getCoilLevel() {
-        return mCoilLevel;
+        return this.mCoilLevel;
     }
 
     @Override
@@ -324,7 +324,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         if (aLiquid == null) return false;
         FluidStack tLiquid = aLiquid.copy();
         boolean isOutputPollution = false;
-        for (FluidStack pollutionFluidStack : pollutionFluidStacks) {
+        for (FluidStack pollutionFluidStack : this.pollutionFluidStacks) {
             if (!tLiquid.isFluidEqual(pollutionFluidStack)) continue;
 
             isOutputPollution = true;
@@ -334,7 +334,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
         if (isOutputPollution) {
             tOutputHatches = this.mPollutionOutputHatches;
             int pollutionReduction = 0;
-            for (GT_MetaTileEntity_Hatch_Muffler tHatch : mMufflerHatches) {
+            for (GT_MetaTileEntity_Hatch_Muffler tHatch : this.mMufflerHatches) {
                 if (!isValidMetaTileEntity(tHatch)) continue;
                 pollutionReduction = 100 - tHatch.calculatePollutionReduction(100);
                 break;
@@ -349,26 +349,26 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
     @Override
     public boolean checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
         this.mHeatingCapacity = 0;
-        glassTier = 0;
+        this.glassTier = 0;
 
-        setCoilLevel(HeatingCoilLevel.None);
+        this.setCoilLevel(HeatingCoilLevel.None);
 
         this.mPollutionOutputHatches.clear();
 
-        if (!checkPiece("main", 7, 17, 0) || (getCoilLevel() == HeatingCoilLevel.None) || (mMaintenanceHatches.size() != 1)) return false;
+        if (!this.checkPiece("main", 7, 17, 0) || (this.getCoilLevel() == HeatingCoilLevel.None) || (this.mMaintenanceHatches.size() != 1)) return false;
 
-        if (glassTier < 8) {
-            for (GT_MetaTileEntity_Hatch hatch : mExoticEnergyHatches) {
+        if (this.glassTier < 8) {
+            for (GT_MetaTileEntity_Hatch hatch : this.mExoticEnergyHatches) {
                 if (hatch.getConnectionType() == GT_MetaTileEntity_Hatch.ConnectionType.LASER) {
                     return false;
                 }
-                if (glassTier < hatch.mTier) {
+                if (this.glassTier < hatch.mTier) {
                     return false;
                 }
             }
         }
 
-        this.mHeatingCapacity = (int) getCoilLevel().getHeat() + 100 * (BW_Util.getTier(getMaxInputEu()) - 2);
+        this.mHeatingCapacity = (int) this.getCoilLevel().getHeat() + 100 * (BW_Util.getTier(this.getMaxInputEu()) - 2);
 
         return true;
     }

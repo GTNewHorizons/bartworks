@@ -141,13 +141,13 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 }
 
                 private Pair<Block, Integer> getTier(ItemStack trigger) {
-                    return tiers.get(Math.min(Math.max(trigger.stackSize, 1), tiers.size()) - 1);
+                    return this.tiers.get(Math.min(Math.max(trigger.stackSize, 1), this.tiers.size()) - 1);
                 }
 
                 @Override
                 public boolean spawnHint(GT_TileEntity_ElectricImplosionCompressor te, World world, int x, int y, int z,
                         ItemStack itemStack) {
-                    Pair<Block, Integer> tier = getTier(itemStack);
+                    Pair<Block, Integer> tier = this.getTier(itemStack);
                     if (te.piston) StructureLibAPI.hintParticle(world, x, y, z, tier.getKey(), tier.getValue());
                     return true;
                 }
@@ -155,7 +155,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 @Override
                 public boolean placeBlock(GT_TileEntity_ElectricImplosionCompressor te, World world, int x, int y,
                         int z, ItemStack itemStack) {
-                    Pair<Block, Integer> tier = getTier(itemStack);
+                    Pair<Block, Integer> tier = this.getTier(itemStack);
                     if (te.piston) world.setBlock(x, y, z, tier.getKey(), tier.getValue(), 3);
                     else world.setBlockToAir(x, y, z);
                     return true;
@@ -180,11 +180,11 @@ public class GT_TileEntity_ElectricImplosionCompressor
             private static final long serialVersionUID = 8171991663102417651L;
 
             {
-                add(Pair.of(GregTech_API.sBlockMetal5, 2));
-                add(Pair.of(LudicrousBlocks.resource_block, 1));
-                add(Pair.of(GregTech_API.sBlockMetal9, 4));
-                add(Pair.of(GregTech_API.sBlockMetal9, 3));
-                add(Pair.of(GregTech_API.sBlockMetal9, 8));
+                this.add(Pair.of(GregTech_API.sBlockMetal5, 2));
+                this.add(Pair.of(LudicrousBlocks.resource_block, 1));
+                this.add(Pair.of(GregTech_API.sBlockMetal9, 4));
+                this.add(Pair.of(GregTech_API.sBlockMetal9, 3));
+                this.add(Pair.of(GregTech_API.sBlockMetal9, 8));
             }
 
         };
@@ -218,11 +218,11 @@ public class GT_TileEntity_ElectricImplosionCompressor
     }
 
     private void setBlockTier(int tier) {
-        mBlockTier = tier;
+        this.mBlockTier = tier;
     }
 
     private int getBlockTier() {
-        return mBlockTier;
+        return this.mBlockTier;
     }
 
     @Override
@@ -269,22 +269,22 @@ public class GT_TileEntity_ElectricImplosionCompressor
             @Override
             protected GT_OverclockCalculator createOverclockCalculator(@NotNull GT_Recipe recipe) {
                 // For overclocking we'll allow all power to be used
-                return super.createOverclockCalculator(recipe).setEUt(getMaxInputEu()).setAmperage(1);
+                return super.createOverclockCalculator(recipe).setEUt(GT_TileEntity_ElectricImplosionCompressor.this.getMaxInputEu()).setAmperage(1);
             }
-        }.setMaxParallelSupplier(() -> (int) Math.pow(4, Math.max(mBlockTier - 1, 0)));
+        }.setMaxParallelSupplier(() -> (int) Math.pow(4, Math.max(this.mBlockTier - 1, 0)));
     }
 
     @Override
     protected void setProcessingLogicPower(ProcessingLogic logic) {
-        long amperage = getMaxInputAmps();
-        long voltage = getAverageInputVoltage();
+        long amperage = this.getMaxInputAmps();
+        long voltage = this.getAverageInputVoltage();
         // We allow one OC, if there is enough amperage, no matter which type of hatch is used
         logic.setAvailableVoltage(amperage >= 4 ? voltage * 4 : voltage);
         logic.setAvailableAmperage(amperage >= 4 ? amperage / 4 : amperage);
     }
 
     private void updateChunkCoordinates() {
-        chunkCoordinates.clear();
+        this.chunkCoordinates.clear();
 
         for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) {
             if (!(Math.abs(x) == 1 && Math.abs(z) == 1)) {
@@ -294,7 +294,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
                 xyz[0] += this.getBaseMetaTileEntity().getXCoord();
                 xyz[1] += this.getBaseMetaTileEntity().getYCoord();
                 xyz[2] += this.getBaseMetaTileEntity().getZCoord();
-                chunkCoordinates.add(new ChunkCoordinates(xyz[0], xyz[1], xyz[2]));
+                this.chunkCoordinates.add(new ChunkCoordinates(xyz[0], xyz[1], xyz[2]));
             }
         }
     }
@@ -302,7 +302,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick(aBaseMetaTileEntity);
-        updateChunkCoordinates();
+        this.updateChunkCoordinates();
     }
 
     @Override
@@ -310,7 +310,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
         super.onPostTick(aBaseMetaTileEntity, aTick);
 
         if (pistonEnabled && aBaseMetaTileEntity.isActive() && aTick % 20 == 0) {
-            if (aBaseMetaTileEntity.isClientSide()) animatePiston(aBaseMetaTileEntity);
+            if (aBaseMetaTileEntity.isClientSide()) this.animatePiston(aBaseMetaTileEntity);
             else if (aBaseMetaTileEntity.hasMufflerUpgrade()) MainMod.BW_Network_instance.sendPacketToAllPlayersInRange(
                     aBaseMetaTileEntity.getWorld(),
                     new EICPacket(
@@ -328,7 +328,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
     public void setExtendedFacing(ExtendedFacing newExtendedFacing) {
         super.setExtendedFacing(newExtendedFacing); // Will call stopMachine
 
-        updateChunkCoordinates();
+        this.updateChunkCoordinates();
     }
 
     @Override
@@ -348,8 +348,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
         if (!aBaseMetaTileEntity.isServerSide()) return;
         if (!this.piston) {
             List<Pair<Block, Integer>> tiers = getAllBlockTiers();
-            Pair<Block, Integer> tieredBlock = tiers.get(Math.min(mBlockTier, tiers.size()) - 1);
-            chunkCoordinates.forEach(c -> {
+            Pair<Block, Integer> tieredBlock = tiers.get(Math.min(this.mBlockTier, tiers.size()) - 1);
+            this.chunkCoordinates.forEach(c -> {
                 // Don't replace real blocks in case user has placed something (e.g. tier upgrade)
                 if (aBaseMetaTileEntity.getWorld().isAirBlock(c.posX, c.posY, c.posZ)) {
                     aBaseMetaTileEntity.getWorld()
@@ -365,7 +365,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
         IGregTechTileEntity aBaseMetaTileEntity = this.getBaseMetaTileEntity();
         if (!aBaseMetaTileEntity.isServerSide()) return;
         if (this.piston) {
-            chunkCoordinates.forEach(c -> aBaseMetaTileEntity.getWorld().setBlockToAir(c.posX, c.posY, c.posZ));
+            this.chunkCoordinates.forEach(c -> aBaseMetaTileEntity.getWorld().setBlockToAir(c.posX, c.posY, c.posZ));
             this.piston = !this.piston;
         }
     }
@@ -373,19 +373,19 @@ public class GT_TileEntity_ElectricImplosionCompressor
     private void animatePiston(IGregTechTileEntity aBaseMetaTileEntity) {
         if (!aBaseMetaTileEntity.getWorld().isRemote) return;
 
-        if (!getBaseMetaTileEntity().hasMufflerUpgrade()) GT_Utility.doSoundAtClient(
+        if (!this.getBaseMetaTileEntity().hasMufflerUpgrade()) GT_Utility.doSoundAtClient(
                 sound,
                 10,
                 1f,
                 1f,
-                chunkCoordinates.get(0).posX,
-                chunkCoordinates.get(0).posY,
-                chunkCoordinates.get(0).posZ);
-        spawnVisualPistonBlocks(
+                this.chunkCoordinates.get(0).posX,
+                this.chunkCoordinates.get(0).posY,
+                this.chunkCoordinates.get(0).posZ);
+        this.spawnVisualPistonBlocks(
                 aBaseMetaTileEntity.getWorld(),
-                chunkCoordinates.get(2).posX,
-                chunkCoordinates.get(2).posY,
-                chunkCoordinates.get(2).posZ,
+                this.chunkCoordinates.get(2).posX,
+                this.chunkCoordinates.get(2).posY,
+                this.chunkCoordinates.get(2).posZ,
                 10);
     }
 
@@ -411,20 +411,20 @@ public class GT_TileEntity_ElectricImplosionCompressor
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         this.mCasing = 0;
         this.mMaxHatchTier = 0;
-        setBlockTier(0);
-        boolean isOK = checkPiece(STRUCTURE_PIECE_MAIN, 1, 6, 0);
+        this.setBlockTier(0);
+        boolean isOK = this.checkPiece(STRUCTURE_PIECE_MAIN, 1, 6, 0);
 
-        List<GT_MetaTileEntity_Hatch> energyHatches = getExoticAndNormalEnergyHatchList();
+        List<GT_MetaTileEntity_Hatch> energyHatches = this.getExoticAndNormalEnergyHatchList();
         for (GT_MetaTileEntity_Hatch hatch : energyHatches) {
-            mMaxHatchTier = Math.max(mMaxHatchTier, hatch.mTier);
+            this.mMaxHatchTier = Math.max(this.mMaxHatchTier, hatch.mTier);
         }
 
         isOK = isOK && this.mMaintenanceHatches.size() == 1 && energyHatches.size() >= 1;
         if (isOK) {
-            activatePiston();
+            this.activatePiston();
             return true;
         }
-        resetPiston();
+        this.resetPiston();
         return false;
     }
 
@@ -471,13 +471,13 @@ public class GT_TileEntity_ElectricImplosionCompressor
 
     @Override
     public void construct(ItemStack itemStack, boolean b) {
-        buildPiece(STRUCTURE_PIECE_MAIN, itemStack, b, 1, 6, 0);
+        this.buildPiece(STRUCTURE_PIECE_MAIN, itemStack, b, 1, 6, 0);
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (mMachine) return -1;
-        return survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 1, 6, 0, elementBudget, env, false, true);
+        if (this.mMachine) return -1;
+        return this.survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 1, 6, 0, elementBudget, env, false, true);
     }
 
     @Override

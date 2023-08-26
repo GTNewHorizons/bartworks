@@ -231,20 +231,20 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             @NotNull
             @Override
             protected CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
-                if (!BW_Util.areStacksEqualOrNull((ItemStack) recipe.mSpecialItems, getControllerSlot()))
+                if (!BW_Util.areStacksEqualOrNull((ItemStack) recipe.mSpecialItems, GT_TileEntity_BioVat.this.getControllerSlot()))
                     return CheckRecipeResultRegistry.NO_RECIPE;
                 int[] conditions = GT_TileEntity_BioVat.specialValueUnpack(recipe.mSpecialValue);
-                mNeededSievert = conditions[3];
+                GT_TileEntity_BioVat.this.mNeededSievert = conditions[3];
 
-                if (mGlassTier < conditions[0]) {
+                if (GT_TileEntity_BioVat.this.mGlassTier < conditions[0]) {
                     return CheckRecipeResultRegistry.insufficientMachineTier(conditions[0]);
                 }
 
                 if (conditions[2] == 0) {
-                    if (mSievert < mNeededSievert) {
-                        return ResultWrongSievert.insufficientSievert(mNeededSievert);
+                    if (GT_TileEntity_BioVat.this.mSievert < GT_TileEntity_BioVat.this.mNeededSievert) {
+                        return ResultWrongSievert.insufficientSievert(GT_TileEntity_BioVat.this.mNeededSievert);
                     }
-                } else if (mSievert != conditions[3]) {
+                } else if (GT_TileEntity_BioVat.this.mSievert != conditions[3]) {
                     return ResultWrongSievert.wrongSievert(conditions[3]);
                 }
 
@@ -259,14 +259,14 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
                     return result;
                 }
                 // We already made sure the recipe runs. Now the vat looks for as many "parallels" as it can do
-                mExpectedMultiplier = getExpectedMultiplier(lastRecipe.getFluidOutput(0), true);
-                mTimes = 1;
-                for (int i = 1; i < mExpectedMultiplier; i++) {
-                    if (depleteInput(lastRecipe.mFluidInputs[0])) {
-                        mTimes++;
+                GT_TileEntity_BioVat.this.mExpectedMultiplier = GT_TileEntity_BioVat.this.getExpectedMultiplier(this.lastRecipe.getFluidOutput(0), true);
+                GT_TileEntity_BioVat.this.mTimes = 1;
+                for (int i = 1; i < GT_TileEntity_BioVat.this.mExpectedMultiplier; i++) {
+                    if (GT_TileEntity_BioVat.this.depleteInput(this.lastRecipe.mFluidInputs[0])) {
+                        GT_TileEntity_BioVat.this.mTimes++;
                     }
                 }
-                this.outputFluids[0].amount *= mTimes;
+                this.outputFluids[0].amount *= GT_TileEntity_BioVat.this.mTimes;
                 return result;
             }
         };
@@ -275,7 +275,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     @Override
     protected void setupProcessingLogic(ProcessingLogic logic) {
         super.setupProcessingLogic(logic);
-        logic.setSpecialSlotItem(getControllerSlot());
+        logic.setSpecialSlotItem(this.getControllerSlot());
     }
 
     public FluidStack getStoredFluidOutputs() {
@@ -303,7 +303,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         this.mGlassTier = 0;
         this.mCasing = 0;
 
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, 2, 3, 0)) return false;
+        if (!this.checkPiece(STRUCTURE_PIECE_MAIN, 2, 3, 0)) return false;
 
         return this.mCasing >= 19 && this.mRadHatches.size() <= 1
                 && this.mOutputHatches.size() == 1
@@ -336,8 +336,8 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     }
 
     private void sendPackagesOrRenewRenderer(int x, int y, int z, BioCulture lCulture) {
-        int xDir = getXDir();
-        int zDir = getZDir();
+        int xDir = this.getXDir();
+        int zDir = this.getZDir();
 
         GT_TileEntity_BioVat.staticColorMap.remove(
                 new Coords(
@@ -407,9 +407,9 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     }
 
     private void placeFluid() {
-        isVisibleFluid = true;
-        int xDir = getXDir();
-        int zDir = getZDir();
+        this.isVisibleFluid = true;
+        int xDir = this.getXDir();
+        int zDir = this.getZDir();
         this.height = this.reCalculateHeight();
         if (this.mFluid != null && this.height > 1 && this.reCalculateFluidAmmount() > 0) for (int x = -1; x < 2; x++) {
             for (int y = 0; y < this.height; y++) {
@@ -431,7 +431,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     }
 
     private void removeFluid(int xDir, int zDir) {
-        isVisibleFluid = false;
+        this.isVisibleFluid = false;
 
         for (int x = -1; x < 2; x++) {
             for (int y = 1; y < 3; y++) {
@@ -472,8 +472,8 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             if (this.mMachine) {
                 ItemStack aStack = this.mInventory[1];
                 BioCulture lCulture = null;
-                int xDir = getXDir();
-                int zDir = getZDir();
+                int xDir = this.getXDir();
+                int zDir = this.getZDir();
 
                 if (this.getBaseMetaTileEntity().getTimer() % 200 == 0) {
                     this.check_Chunk();
@@ -561,13 +561,13 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
 
     @Override
     public void onRemoval() {
-        if (isVisibleFluid) {
-            int xDir = getXDir();
-            int zDir = getZDir();
-            removeFluid(xDir, zDir);
-            sendRenderPackets(xDir, zDir);
+        if (this.isVisibleFluid) {
+            int xDir = this.getXDir();
+            int zDir = this.getZDir();
+            this.removeFluid(xDir, zDir);
+            this.sendRenderPackets(xDir, zDir);
         } else if (this.getBaseMetaTileEntity().getWorld().getWorldTime() % 20 == 7) {
-            sendRenderPackets();
+            this.sendRenderPackets();
         }
 
         super.onRemoval();
@@ -582,9 +582,9 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     }
 
     private void sendRenderPackets() {
-        int xDir = getXDir();
-        int zDir = getZDir();
-        sendRenderPackets(xDir, zDir);
+        int xDir = this.getXDir();
+        int zDir = this.getZDir();
+        this.sendRenderPackets(xDir, zDir);
     }
 
     private void sendRenderPackets(int xDir, int zDir) {
@@ -650,7 +650,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
 
     @Override
     public void construct(ItemStack itemStack, boolean b) {
-        buildPiece(STRUCTURE_PIECE_MAIN, itemStack, b, 2, 3, 0);
+        this.buildPiece(STRUCTURE_PIECE_MAIN, itemStack, b, 2, 3, 0);
     }
 
     @Override
@@ -662,13 +662,13 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         // here we must check the machine is well-formed as otherwise getExpectedMultiplier might error out!
         infoData[infoData.length - 2] = StatCollector.translateToLocal("BW.infoData.BioVat.expectedProduction") + ": "
                 + EnumChatFormatting.GREEN
-                + (mMachine ? (mMaxProgresstime <= 0 ? getExpectedMultiplier(null, false) : mExpectedMultiplier) * 100
+                + (this.mMachine ? (this.mMaxProgresstime <= 0 ? this.getExpectedMultiplier(null, false) : this.mExpectedMultiplier) * 100
                         : -1)
                 + EnumChatFormatting.RESET
                 + " %";
         infoData[infoData.length - 1] = StatCollector.translateToLocal("BW.infoData.BioVat.production") + ": "
                 + EnumChatFormatting.GREEN
-                + (mMaxProgresstime <= 0 ? 0 : mTimes) * 100
+                + (this.mMaxProgresstime <= 0 ? 0 : this.mTimes) * 100
                 + EnumChatFormatting.RESET
                 + " %";
         return infoData;

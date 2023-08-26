@@ -57,7 +57,7 @@ public class TileEntity_GTDataServer extends TileEntity
     @Callback
     public Object[] listData(Context context, Arguments args) {
         Set<String> ret = new HashSet<>();
-        for (Map.Entry<Long, GT_NBT_DataBase> entry : OrbDataBase.entrySet()) {
+        for (Map.Entry<Long, GT_NBT_DataBase> entry : this.OrbDataBase.entrySet()) {
             ret.add((entry.getValue().getId() + Long.MAX_VALUE) + ". " + entry.getValue().getmDataTitle());
         }
         return ret.toArray(new String[0]);

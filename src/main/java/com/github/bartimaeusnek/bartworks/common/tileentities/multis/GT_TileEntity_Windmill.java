@@ -135,13 +135,13 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                                 @Override
                                 public boolean check(GT_TileEntity_Windmill gt_tileEntity_windmill, World world, int x,
                                         int y, int z) {
-                                    return delegate.check(gt_tileEntity_windmill, world, x, y, z);
+                                    return this.delegate.check(gt_tileEntity_windmill, world, x, y, z);
                                 }
 
                                 @Override
                                 public boolean spawnHint(GT_TileEntity_Windmill gt_tileEntity_windmill, World world,
                                         int x, int y, int z, ItemStack trigger) {
-                                    return delegate.spawnHint(gt_tileEntity_windmill, world, x, y, z, trigger);
+                                    return this.delegate.spawnHint(gt_tileEntity_windmill, world, x, y, z, trigger);
                                 }
                             })))
             .addElement('b', ofBlock(Blocks.brick_block, 0))
@@ -210,7 +210,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
     @Override
     public boolean onRunningTick(ItemStack aStack) {
         if (this.mMaxProgresstime > 0) this.mProgresstime += this.rotorBlock.getGrindPower();
-        if (!rotorBlock.rotorSlot.isEmpty()) this.setRotorDamage(rotorBlock, this.rotorBlock.getGrindPower());
+        if (!this.rotorBlock.rotorSlot.isEmpty()) this.setRotorDamage(this.rotorBlock, this.rotorBlock.getGrindPower());
         return this.rotorBlock.getGrindPower() > 0;
     }
 
@@ -291,13 +291,13 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
             }
             this.updateSlots();
             this.mOutputItems[0] = tRecipe.getOutput(0);
-            float[] mRecipe = multiplierRecipe(itemStack);
+            float[] mRecipe = this.multiplierRecipe(itemStack);
             float multiper = Math.min(
                     mRecipe[1],
                     Math.max(
                             mRecipe[0],
                             2f * ((float) Math.sqrt((float) 1 / (this.rotorBlock.getWindStrength() + 1)))
-                                    * OutputMultiplier(rotorBlock)
+                                    * this.OutputMultiplier(this.rotorBlock)
                                     * (mRecipe[0] + mRecipe[1])));
             int amount = (int) Math.floor(multiper * (this.mOutputItems[0].stackSize * this.mMulti));
 
@@ -312,16 +312,16 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
             ItemStack tmp = this.mOutputItems[0].copy();
             tmp.stackSize = amount;
             splitStacks.add(tmp);
-            mOutputItems = splitStacks.toArray(new ItemStack[splitStacks.size()]);
+            this.mOutputItems = splitStacks.toArray(new ItemStack[splitStacks.size()]);
         }
-        this.mMaxProgresstime = (tRecipe.mDuration * 2 * 100 * this.mMulti) / getSpeed(rotorBlock);
+        this.mMaxProgresstime = (tRecipe.mDuration * 2 * 100 * this.mMulti) / this.getSpeed(this.rotorBlock);
         this.mMulti = 16;
         return true;
     }
 
     @Override
     public void stopMachine() {
-        getBaseMetaTileEntity().disableWorking();
+        this.getBaseMetaTileEntity().disableWorking();
     }
 
     public boolean addDispenserToOutputSet(TileEntity aTileEntity) {
@@ -376,7 +376,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
         this.mDoor = 0;
         this.mHardenedClay = 0;
 
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, 3, 11, 0) || this.tileEntityDispensers.isEmpty() || this.mDoor > 2 || this.mHardenedClay < 40) return false;
+        if (!this.checkPiece(STRUCTURE_PIECE_MAIN, 3, 11, 0) || this.tileEntityDispensers.isEmpty() || this.mDoor > 2 || this.mHardenedClay < 40) return false;
 
         this.mWrench = true;
         this.mScrewdriver = true;
@@ -505,13 +505,13 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
 
     @Override
     public void construct(ItemStack itemStack, boolean b) {
-        buildPiece(STRUCTURE_PIECE_MAIN, itemStack, b, 3, 11, 0);
+        this.buildPiece(STRUCTURE_PIECE_MAIN, itemStack, b, 3, 11, 0);
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (mMachine) return -1;
-        return survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 3, 11, 0, elementBudget, env, false, true);
+        if (this.mMachine) return -1;
+        return this.survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 3, 11, 0, elementBudget, env, false, true);
     }
 
     public float OutputMultiplier(BW_RotorBlock rotorBlock) {
@@ -556,13 +556,13 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
 
     @Override
     public int getTitleColor() {
-        return COLOR_TITLE_WHITE.get();
+        return this.COLOR_TITLE_WHITE.get();
     }
 
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         builder.widget(
-                new SlotWidget(inventoryHandler, 1).setBackground(getGUITextureSet().getItemSlot()).setPos(59, 35))
+                new SlotWidget(this.inventoryHandler, 1).setBackground(this.getGUITextureSet().getItemSlot()).setPos(59, 35))
                 .widget(new DrawableWidget() {
 
                     private static final int DIVIDER = 125;
@@ -570,24 +570,24 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                     @Override
                     public void onScreenUpdate() {
                         super.onScreenUpdate();
-                        if (mMaxProgresstime > 0) {
+                        if (GT_TileEntity_Windmill.this.mMaxProgresstime > 0) {
                             if (System.currentTimeMillis() / DIVIDER % 40 == 30)
-                                setDrawable(BW_UITextures.PICTURE_WINDMILL_ROTATING[3]);
+                                this.setDrawable(BW_UITextures.PICTURE_WINDMILL_ROTATING[3]);
                             else if (System.currentTimeMillis() / DIVIDER % 40 == 20)
-                                setDrawable(BW_UITextures.PICTURE_WINDMILL_ROTATING[2]);
+                                this.setDrawable(BW_UITextures.PICTURE_WINDMILL_ROTATING[2]);
                             else if (System.currentTimeMillis() / DIVIDER % 40 == 10)
-                                setDrawable(BW_UITextures.PICTURE_WINDMILL_ROTATING[1]);
+                                this.setDrawable(BW_UITextures.PICTURE_WINDMILL_ROTATING[1]);
                             else if (System.currentTimeMillis() / DIVIDER % 40 == 0)
-                                setDrawable(BW_UITextures.PICTURE_WINDMILL_ROTATING[0]);
+                                this.setDrawable(BW_UITextures.PICTURE_WINDMILL_ROTATING[0]);
                         } else {
-                            setDrawable(BW_UITextures.PICTURE_WINDMILL_EMPTY);
+                            this.setDrawable(BW_UITextures.PICTURE_WINDMILL_EMPTY);
                         }
                     }
                 }.setDrawable(BW_UITextures.PICTURE_WINDMILL_EMPTY).setPos(85, 27).setSize(32, 32))
-                .widget(new FakeSyncWidget.IntegerSyncer(() -> mMaxProgresstime, val -> mMaxProgresstime = val))
+                .widget(new FakeSyncWidget.IntegerSyncer(() -> this.mMaxProgresstime, val -> this.mMaxProgresstime = val))
                 .widget(
                         new ItemDrawable(
-                                () -> mMachine && !getBaseMetaTileEntity().isActive()
+                                () -> this.mMachine && !this.getBaseMetaTileEntity().isActive()
                                         ? GT_MetaGenerated_Tool_01.INSTANCE.getToolWithStats(
                                                 GT_MetaGenerated_Tool_01.SOFTMALLET,
                                                 1,
@@ -597,12 +597,12 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                                         : null).asWidget().setPos(66, 66))
                 .widget(
                         new FakeSyncWidget.BooleanSyncer(
-                                () -> getBaseMetaTileEntity().isActive(),
-                                val -> getBaseMetaTileEntity().setActive(val)))
+                                () -> this.getBaseMetaTileEntity().isActive(),
+                                val -> this.getBaseMetaTileEntity().setActive(val)))
                 .widget(
                         new TextWidget(GT_Utility.trans("138", "Incomplete Structure."))
-                                .setDefaultColor(COLOR_TEXT_WHITE.get()).setMaxWidth(150)
-                                .setEnabled(widget -> !mMachine).setPos(92, 22))
-                .widget(new FakeSyncWidget.BooleanSyncer(() -> mMachine, val -> mMachine = val));
+                                .setDefaultColor(this.COLOR_TEXT_WHITE.get()).setMaxWidth(150)
+                                .setEnabled(widget -> !this.mMachine).setPos(92, 22))
+                .widget(new FakeSyncWidget.BooleanSyncer(() -> this.mMachine, val -> this.mMachine = val));
     }
 }

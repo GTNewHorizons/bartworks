@@ -157,13 +157,13 @@ public class BW_MetaGenerated_Items extends GT_MetaGenerated_Item implements IRa
         int aMetaData = aStack.getItemDamage();
         Werkstoff werkstoff = werkstoffHashMap.get((short) aMetaData);
         if (werkstoff == null) werkstoff = Werkstoff.default_null_Werkstoff;
-        return itemTypeLocalizedName.replace("%material", werkstoff.getLocalizedName());
+        return this.itemTypeLocalizedName.replace("%material", werkstoff.getLocalizedName());
     }
 
     @Override
     public IIconContainer getIconContainer(int aMetaData) {
         if (werkstoffHashMap.get((short) aMetaData) == null) return null;
-        if (this.orePrefixes.mTextureIndex == -1) return getIconContainerBartWorks(aMetaData);
+        if (this.orePrefixes.mTextureIndex == -1) return this.getIconContainerBartWorks(aMetaData);
         return werkstoffHashMap.get((short) aMetaData).getTexSet().mTextures[this.orePrefixes.mTextureIndex];
     }
 

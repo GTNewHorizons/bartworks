@@ -50,11 +50,11 @@ public abstract class BW_MetaGenerated_Blocks extends BW_TileEntityContainer {
         this.setResistance(5.0F);
         this.setBlockTextureName("stone");
         this.setCreativeTab(metaTab);
-        _prefixes = types;
-        if (_prefixes != null) {
+        this._prefixes = types;
+        if (this._prefixes != null) {
             this.blockTypeLocalizedName = GT_LanguageManager.addStringLocalization(
-                    "bw.blocktype." + _prefixes,
-                    _prefixes.mLocalizedMaterialPre + "%material" + _prefixes.mLocalizedMaterialPost);
+                    "bw.blocktype." + this._prefixes,
+                    this._prefixes.mLocalizedMaterialPre + "%material" + this._prefixes.mLocalizedMaterialPost);
         }
         Werkstoff.werkstoffHashSet.forEach(this::doRegistrationStuff);
     }
@@ -69,7 +69,7 @@ public abstract class BW_MetaGenerated_Blocks extends BW_TileEntityContainer {
 
     @SideOnly(Side.CLIENT)
     public final BW_MetaGenerated_Block_TE getProperTileEntityForRendering() {
-        return (BW_MetaGenerated_Block_TE) createNewTileEntity(null, 0);
+        return (BW_MetaGenerated_Block_TE) this.createNewTileEntity(null, 0);
     }
 
     protected abstract void doRegistrationStuff(Werkstoff w);

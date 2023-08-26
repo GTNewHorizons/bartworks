@@ -127,7 +127,7 @@ public abstract class MapGenRuins extends WorldGenerator {
     protected TileEntity reSetGTTileEntity(IGregTechTileEntity bte, World worldObj, int x, int y, int z, int meta) {
         worldObj.removeTileEntity(x, y, z);
         this.setBlock(worldObj, x, y, z, Blocks.air, 0);
-        return setGTMachineBlock(worldObj, x, y, z, meta);
+        return this.setGTMachineBlock(worldObj, x, y, z, meta);
     }
 
     protected void setGTMachineBlockWChance(World worldObj, int x, int y, int z, Random rand, int airchance, int meta) {
@@ -147,12 +147,12 @@ public abstract class MapGenRuins extends WorldGenerator {
         try {
             GT_Runnable_MachineBlockUpdate.setDisabled();
         } catch (Throwable ignored) {}
-        setGTMachineBlock(worldObj, x, y, z, meta);
+        this.setGTMachineBlock(worldObj, x, y, z, meta);
         BaseMetaTileEntity BTE = (BaseMetaTileEntity) worldObj.getTileEntity(x, y, z);
         BTE.setOwnerName(ownerName);
         BTE.setFrontFacing(facing);
         BTE = (BaseMetaTileEntity) worldObj.getTileEntity(x, y, z);
-        checkTile(BTE, worldObj, x, y, z, meta, ownerName, facing, 0);
+        this.checkTile(BTE, worldObj, x, y, z, meta, ownerName, facing, 0);
         try {
             GT_Runnable_MachineBlockUpdate.setEnabled();
         } catch (Throwable ignored) {}
@@ -162,8 +162,8 @@ public abstract class MapGenRuins extends WorldGenerator {
             ForgeDirection facing, int depth) {
         if (depth < 25) {
             if (BTE.getMetaTileID() != meta || worldObj.getTileEntity(x, y, z) != BTE || BTE.isInvalid()) {
-                redoTile(BTE, worldObj, x, y, z, meta, ownerName, facing);
-                checkTile(BTE, worldObj, x, y, z, meta, ownerName, facing, depth);
+                this.redoTile(BTE, worldObj, x, y, z, meta, ownerName, facing);
+                this.checkTile(BTE, worldObj, x, y, z, meta, ownerName, facing, depth);
                 depth++;
             }
         } else {
@@ -174,7 +174,7 @@ public abstract class MapGenRuins extends WorldGenerator {
 
     private void redoTile(BaseMetaTileEntity BTE, World worldObj, int x, int y, int z, int meta, String ownerName,
             ForgeDirection facing) {
-        reSetGTTileEntity(BTE, worldObj, x, y, z, meta);
+        this.reSetGTTileEntity(BTE, worldObj, x, y, z, meta);
         BTE = (BaseMetaTileEntity) worldObj.getTileEntity(x, y, z);
         BTE.setOwnerName(ownerName);
         BTE.setFrontFacing(facing);
@@ -184,7 +184,7 @@ public abstract class MapGenRuins extends WorldGenerator {
         try {
             GT_Runnable_MachineBlockUpdate.setDisabled();
         } catch (Throwable ignored) {}
-        BaseMetaPipeEntity BTE = (BaseMetaPipeEntity) setGTMachineBlock(worldObj, x, y, z, meta);
+        BaseMetaPipeEntity BTE = (BaseMetaPipeEntity) this.setGTMachineBlock(worldObj, x, y, z, meta);
         MetaPipeEntity MPE = (MetaPipeEntity) BTE.getMetaTileEntity();
         BTE.mConnections |= (byte) (1 << (byte) 4);
         BTE.mConnections |= (byte) (1 << (ForgeDirection.getOrientation(4).getOpposite().ordinal()));

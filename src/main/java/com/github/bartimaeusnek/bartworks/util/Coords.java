@@ -74,6 +74,6 @@ public class Coords {
 
     @Override
     public String toString() {
-        return x + "," + y + "," + z + "," + wID;
+        return this.x + "," + this.y + "," + this.z + "," + this.wID;
     }
 }

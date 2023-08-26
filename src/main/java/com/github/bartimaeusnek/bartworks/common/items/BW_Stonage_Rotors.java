@@ -129,11 +129,11 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
     }
 
     public int getSpeed() {
-        return speed;
+        return this.speed;
     }
 
     public float getmRotor() {
-        return mRotor;
+        return this.mRotor;
     }
 
     public void setDamageForStack(ItemStack stack, int advDmg) {
@@ -161,6 +161,6 @@ public class BW_Stonage_Rotors extends Item implements IKineticRotor {
     }
 
     public void damageItemStack(ItemStack stack, int Dmg) {
-        setDamageForStack(stack, getDamageOfStack(stack) + Dmg);
+        this.setDamageForStack(stack, this.getDamageOfStack(stack) + Dmg);
     }
 }

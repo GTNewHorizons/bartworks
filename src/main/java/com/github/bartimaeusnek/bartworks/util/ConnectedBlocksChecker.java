@@ -51,36 +51,36 @@ public class ConnectedBlocksChecker {
 
         int wID = w.provider.dimensionId;
 
-        byte sides = check_sourroundings(w, x, y, z, b);
+        byte sides = this.check_sourroundings(w, x, y, z, b);
 
-        if (((sides | 0b111011) == 0b111111) && !hashset.contains(new Coords(x + 1, y, z, wID))) {
+        if (((sides | 0b111011) == 0b111111) && !this.hashset.contains(new Coords(x + 1, y, z, wID))) {
             ret++;
-            ret += get_connected(w, x + 1, y, z, b);
+            ret += this.get_connected(w, x + 1, y, z, b);
         }
 
-        if (((sides | 0b110111) == 0b111111) && !hashset.contains(new Coords(x - 1, y, z, wID))) {
+        if (((sides | 0b110111) == 0b111111) && !this.hashset.contains(new Coords(x - 1, y, z, wID))) {
             ret++;
-            ret += get_connected(w, x - 1, y, z, b);
+            ret += this.get_connected(w, x - 1, y, z, b);
         }
 
-        if (((sides | 0b101111) == 0b111111) && !hashset.contains(new Coords(x, y, z + 1, wID))) {
+        if (((sides | 0b101111) == 0b111111) && !this.hashset.contains(new Coords(x, y, z + 1, wID))) {
             ret++;
-            ret += get_connected(w, x, y, z + 1, b);
+            ret += this.get_connected(w, x, y, z + 1, b);
         }
 
-        if (((sides | 0b011111) == 0b111111) && !hashset.contains(new Coords(x, y, z - 1, wID))) {
+        if (((sides | 0b011111) == 0b111111) && !this.hashset.contains(new Coords(x, y, z - 1, wID))) {
             ret++;
-            ret += get_connected(w, x, y, z - 1, b);
+            ret += this.get_connected(w, x, y, z - 1, b);
         }
 
-        if (((sides | 0b111110) == 0b111111) && !hashset.contains(new Coords(x, y + 1, z, wID))) {
+        if (((sides | 0b111110) == 0b111111) && !this.hashset.contains(new Coords(x, y + 1, z, wID))) {
             ret++;
-            ret += get_connected(w, x, y + 1, z, b);
+            ret += this.get_connected(w, x, y + 1, z, b);
         }
 
-        if (((sides | 0b111101) == 0b111111) && !hashset.contains(new Coords(x, y - 1, z, wID))) {
+        if (((sides | 0b111101) == 0b111111) && !this.hashset.contains(new Coords(x, y - 1, z, wID))) {
             ret++;
-            ret += get_connected(w, x, y - 1, z, b);
+            ret += this.get_connected(w, x, y - 1, z, b);
         }
 
         return ret;
@@ -91,9 +91,9 @@ public class ConnectedBlocksChecker {
         byte ret = 0;
         int wID = w.provider.dimensionId;
 
-        if (hashset.contains(new Coords(x, y, z, wID))) return ret;
+        if (this.hashset.contains(new Coords(x, y, z, wID))) return ret;
 
-        hashset.add(new Coords(x, y, z, wID));
+        this.hashset.add(new Coords(x, y, z, wID));
 
         if (w.getBlock(x + 1, y, z).equals(b)) ret = (byte) (ret | 0b000100);
 
@@ -115,7 +115,7 @@ public class ConnectedBlocksChecker {
         int wID = w.provider.dimensionId;
         Coords Controller = new Coords(xyz[0], xyz[1], xyz[2], wID);
 
-        for (Coords C : hashset) {
+        for (Coords C : this.hashset) {
             if (GT) {
                 TileEntity t;
                 t = w.getTileEntity(C.x, C.y + 1, C.z);

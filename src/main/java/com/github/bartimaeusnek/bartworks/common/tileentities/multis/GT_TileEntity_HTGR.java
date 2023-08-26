@@ -197,13 +197,13 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        buildPiece("main", stackSize, hintsOnly, 5, 11, 0);
+        this.buildPiece("main", stackSize, hintsOnly, 5, 11, 0);
     }
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         this.mCasing = 0;
-        return (checkPiece("main", 5, 11, 0) && this.mCasing >= 500
+        return (this.checkPiece("main", 5, 11, 0) && this.mCasing >= 500
                 && this.mMaintenanceHatches.size() == 1
                 && this.mInputHatches.size() > 0
                 && this.mOutputHatches.size() > 0
@@ -248,7 +248,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 }
             }
             if (this.fuelsupply < maxcapacity) {
-                startRecipeProcessing();
+                this.startRecipeProcessing();
                 for (ItemStack itemStack : this.getStoredInputs()) {
                     int type = -1;
                     if ((itemStack == null) || (itemStack.getItem() != HTGRMaterials.aHTGR_Materials)) continue;
@@ -263,7 +263,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                     itemStack.stackSize -= toget;
                     updateneeded = true;
                 }
-                endRecipeProcessing();
+                this.endRecipeProcessing();
             }
             if (updateneeded) this.updateSlots();
         }
@@ -283,7 +283,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         if (!(this.HeliumSupply >= GT_TileEntity_HTGR.HELIUM_NEEDED && this.fuelsupply >= mincapacity)) return false;
 
         double eff = Math.min(Math.pow((double) this.fuelsupply / (double) mincapacity, 2D), 100D) / 100D
-                - ((double) (getIdealStatus() - getRepairStatus()) / 10D);
+                - ((double) (this.getIdealStatus() - this.getRepairStatus()) / 10D);
 
         if (eff <= 0) return false;
 
@@ -297,7 +297,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         ItemStack[] toOutput = new ItemStack[] { new ItemStack(HTGRMaterials.aHTGR_Materials, burnedballs, meta),
                 new ItemStack(HTGRMaterials.aHTGR_Materials, toReduce, meta + 1) };
-        if (!canOutputAll(toOutput)) return false;
+        if (!this.canOutputAll(toOutput)) return false;
 
         this.fuelsupply -= originalToReduce;
         this.mOutputItems = toOutput;
@@ -317,11 +317,11 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
     @Override
     public boolean onRunningTick(ItemStack aStack) {
-        runningtick++;
+        this.runningtick++;
 
         if (this.empty) {
-            if (emptyticksnodiff > 20 && emptyticksnodiff % 20 != 0) {
-                emptyticksnodiff++;
+            if (this.emptyticksnodiff > 20 && this.emptyticksnodiff % 20 != 0) {
+                this.emptyticksnodiff++;
                 return true;
             }
             if (this.HeliumSupply > 0) {
@@ -342,10 +342,10 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                     }
                 }
                 if (!storedAll) {
-                    if (this.fuelsupply == iStack.stackSize) emptyticksnodiff++;
+                    if (this.fuelsupply == iStack.stackSize) this.emptyticksnodiff++;
                     else {
                         this.fuelsupply = iStack.stackSize;
-                        emptyticksnodiff = 0;
+                        this.emptyticksnodiff = 0;
                     }
                 } else {
                     this.fuelsupply = 0;
@@ -356,13 +356,13 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             return true;
         }
         // USE DA POWAH
-        if (!drainEnergyInput(-mEUt)) {
-            criticalStopMachine();
+        if (!this.drainEnergyInput(-this.mEUt)) {
+            this.criticalStopMachine();
             return false;
         }
 
-        if (runningtick % 20 == 0) {
-            int takecoolant = coolanttaking;
+        if (this.runningtick % 20 == 0) {
+            int takecoolant = this.coolanttaking;
             int drainedamount = 0;
 
             for (GT_MetaTileEntity_Hatch_Input tHatch : this.mInputHatches) {
@@ -377,7 +377,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 }
             }
 
-            if (drainedamount > 0) addOutput(FluidRegistry.getFluidStack("ic2hotcoolant", drainedamount));
+            if (drainedamount > 0) this.addOutput(FluidRegistry.getFluidStack("ic2hotcoolant", drainedamount));
 
             this.updateSlots();
 
@@ -424,7 +424,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 GT_Utility.formatNumbers(this.HeliumSupply) + "L / "
                         + GT_Utility.formatNumbers(GT_TileEntity_HTGR.HELIUM_NEEDED)
                         + "L",
-                "Coolant:", GT_Utility.formatNumbers(coolanttaking) + "L/s", "Problems:",
+                "Coolant:", GT_Utility.formatNumbers(this.coolanttaking) + "L/s", "Problems:",
                 String.valueOf(this.getIdealStatus() - this.getRepairStatus()) };
     }
 
@@ -478,7 +478,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             @Override
             @SuppressWarnings({ "unchecked", "rawtypes" })
             public void addInformation(ItemStack p_77624_1_, EntityPlayer p_77624_2_, List aList, boolean p_77624_4_) {
-                if (tooltip.containsKey(getDamage(p_77624_1_))) aList.add(tooltip.get(getDamage(p_77624_1_)));
+                if (this.tooltip.containsKey(this.getDamage(p_77624_1_))) aList.add(this.tooltip.get(this.getDamage(p_77624_1_)));
                 aList.add("Material for High Temperature Gas-cooled Reactor");
                 super.addInformation(p_77624_1_, p_77624_2_, aList, p_77624_4_);
             }

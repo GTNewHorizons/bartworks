@@ -168,13 +168,13 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, 5, 11, 0);
+        this.buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, 5, 11, 0);
     }
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         this.mCasing = 0;
-        return (checkPiece(STRUCTURE_PIECE_MAIN, 5, 11, 0) && this.mCasing >= 500
+        return (this.checkPiece(STRUCTURE_PIECE_MAIN, 5, 11, 0) && this.mCasing >= 500
                 && this.mMaintenanceHatches.size() == 1
                 && this.mInputHatches.size() > 0
                 && this.mOutputHatches.size() > 0
@@ -217,7 +217,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 }
             }
             if (this.fuelsupply < maxcapacity) {
-                startRecipeProcessing();
+                this.startRecipeProcessing();
                 for (ItemStack itemStack : this.getStoredInputs()) {
                     if (GT_Utility.areStacksEqual(
                             itemStack,
@@ -228,7 +228,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         this.fuelsupply += toget;
                     }
                 }
-                endRecipeProcessing();
+                this.endRecipeProcessing();
                 this.updateSlots();
             }
         }
@@ -249,7 +249,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         double eff = Math.min(
                 Math.pow((double) (this.fuelsupply - mincapacity) / ((maxcapacity - mincapacity) / 10D), 2D) + 1,
-                100D) / 100D - ((double) (getIdealStatus() - getRepairStatus()) / 10D);
+                100D) / 100D - ((double) (this.getIdealStatus() - this.getRepairStatus()) / 10D);
         if (eff <= 0D) return false;
 
         int toReduce = MathUtils.floorInt((double) this.fuelsupply * 0.005D * eff);
@@ -262,7 +262,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         ItemStack[] toOutput = new ItemStack[] { new ItemStack(THTRMaterials.aTHTR_Materials, burnedballs, meta),
                 new ItemStack(THTRMaterials.aTHTR_Materials, toReduce, meta + 1) };
-        if (!canOutputAll(toOutput)) return false;
+        if (!this.canOutputAll(toOutput)) return false;
 
         this.fuelsupply -= originalToReduce;
         this.mOutputItems = toOutput;
@@ -291,7 +291,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         if (!super.onRunningTick(aStack)) return false;
 
-        int takecoolant = coolanttaking;
+        int takecoolant = this.coolanttaking;
         int drainedamount = 0;
 
         for (GT_MetaTileEntity_Hatch_Input tHatch : this.mInputHatches) {
@@ -306,7 +306,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             }
         }
 
-        if (drainedamount > 0) addOutput(FluidRegistry.getFluidStack("ic2hotcoolant", drainedamount));
+        if (drainedamount > 0) this.addOutput(FluidRegistry.getFluidStack("ic2hotcoolant", drainedamount));
 
         this.updateSlots();
 
@@ -352,7 +352,7 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 GT_Utility.formatNumbers(this.HeliumSupply) + "L / "
                         + GT_Utility.formatNumbers(GT_TileEntity_THTR.HELIUM_NEEDED)
                         + "L",
-                "Coolant/t:", GT_Utility.formatNumbers(this.mProgresstime == 0 ? 0 : coolanttaking) + "L/t",
+                "Coolant/t:", GT_Utility.formatNumbers(this.mProgresstime == 0 ? 0 : this.coolanttaking) + "L/t",
                 "Problems:", String.valueOf(this.getIdealStatus() - this.getRepairStatus()) };
     }
 

@@ -138,26 +138,26 @@ public abstract class BW_OreLayer extends GT_Worldgen {
                     int i;
                     if (this.mSecondaryMeta > 0) {
                         for (i = tMinY - 1; i < tMinY + 2; ++i) {
-                            if (shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ)) {
+                            if (this.shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ)) {
                                 wasPlaced = this.setOreBlock(aWorld, tX, i, tZ, this.mSecondaryMeta, false);
                             }
                         }
                     }
 
-                    if (this.mBetweenMeta > 0 && shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ)) {
+                    if (this.mBetweenMeta > 0 && this.shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ)) {
                         wasPlaced = this
                                 .setOreBlock(aWorld, tX, tMinY + 2 + aRandom.nextInt(2), tZ, this.mBetweenMeta, false);
                     }
 
                     if (this.mPrimaryMeta > 0) {
                         for (i = tMinY + 3; i < tMinY + 6; ++i) {
-                            if (shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ)) {
+                            if (this.shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ)) {
                                 wasPlaced = this.setOreBlock(aWorld, tX, i, tZ, this.mPrimaryMeta, false);
                             }
                         }
                     }
 
-                    if (this.mSporadicMeta > 0 && (shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ))) {
+                    if (this.mSporadicMeta > 0 && (this.shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ))) {
                         wasPlaced = this
                                 .setOreBlock(aWorld, tX, tMinY - 1 + aRandom.nextInt(7), tZ, this.mSporadicMeta, false);
                     }
@@ -239,21 +239,21 @@ public abstract class BW_OreLayer extends GT_Worldgen {
         if (this == o) return true;
         if (!(o instanceof BW_OreLayer that)) return false;
 
-        if ((bwOres != that.bwOres) || (mMinY != that.mMinY) || (mWeight != that.mWeight) || (mDensity != that.mDensity)) return false;
-        if (mSize != that.mSize) return false;
-        if (mMaxY != that.mMaxY) return false;
-        if (mPrimaryMeta != that.mPrimaryMeta) return false;
-        if (mSecondaryMeta != that.mSecondaryMeta) return false;
-        if (mBetweenMeta != that.mBetweenMeta) return false;
-        return mSporadicMeta == that.mSporadicMeta;
+        if ((this.bwOres != that.bwOres) || (this.mMinY != that.mMinY) || (this.mWeight != that.mWeight) || (this.mDensity != that.mDensity)) return false;
+        if (this.mSize != that.mSize) return false;
+        if (this.mMaxY != that.mMaxY) return false;
+        if (this.mPrimaryMeta != that.mPrimaryMeta) return false;
+        if (this.mSecondaryMeta != that.mSecondaryMeta) return false;
+        if (this.mBetweenMeta != that.mBetweenMeta) return false;
+        return this.mSporadicMeta == that.mSporadicMeta;
     }
 
     @Override
     public int hashCode() {
         return MurmurHash3.murmurhash3_x86_32(
-                ByteBuffer.allocate(37).put(bwOres).putInt(mMinY).putInt(mWeight).putInt(mDensity).putInt(mSize)
-                        .putInt(mMaxY).putInt(mPrimaryMeta).putInt(mSecondaryMeta).putInt(mBetweenMeta)
-                        .putInt(mSporadicMeta).array(),
+                ByteBuffer.allocate(37).put(this.bwOres).putInt(this.mMinY).putInt(this.mWeight).putInt(this.mDensity).putInt(this.mSize)
+                        .putInt(this.mMaxY).putInt(this.mPrimaryMeta).putInt(this.mSecondaryMeta).putInt(this.mBetweenMeta)
+                        .putInt(this.mSporadicMeta).array(),
                 0,
                 37,
                 31);

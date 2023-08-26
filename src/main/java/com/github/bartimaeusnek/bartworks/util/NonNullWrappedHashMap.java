@@ -44,7 +44,7 @@ public class NonNullWrappedHashMap<K, V> extends HashMap<K, V> {
 
     @Override
     public V get(Object key) {
-        return getOrDefault(key, defaultValue);
+        return this.getOrDefault(key, this.defaultValue);
     }
 
     @Override

@@ -70,7 +70,7 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
     private static final ITexture[][] iTextures = new ITexture[4][1];
     public ConnectedBlocksChecker connectedcells;
     public final ItemStack[] circuits = new ItemStack[5];
-    private final ItemStackHandler circuitsInventoryHandler = new ItemStackHandler(circuits) {
+    private final ItemStackHandler circuitsInventoryHandler = new ItemStackHandler(this.circuits) {
 
         @Override
         public int getSlotLimit(int slot) {
@@ -454,29 +454,29 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         builder.widget(
                 new DrawableWidget().setDrawable(GT_UITextures.PICTURE_SCREEN_BLACK).setPos(7, 4).setSize(118, 67))
-                .widget(new SlotWidget(new BaseSlot(inventoryHandler, 1) {
+                .widget(new SlotWidget(new BaseSlot(this.inventoryHandler, 1) {
 
                     @Override
                     public int getSlotStackLimit() {
                         return 1;
                     }
-                }).setBackground(getGUITextureSet().getItemSlot(), GT_UITextures.OVERLAY_SLOT_IN).setPos(127, 13))
-                .widget(new SlotWidget(new BaseSlot(inventoryHandler, 0) {
+                }).setBackground(this.getGUITextureSet().getItemSlot(), GT_UITextures.OVERLAY_SLOT_IN).setPos(127, 13))
+                .widget(new SlotWidget(new BaseSlot(this.inventoryHandler, 0) {
 
                     @Override
                     public int getSlotStackLimit() {
                         return 1;
                     }
-                }).setBackground(getGUITextureSet().getItemSlot(), GT_UITextures.OVERLAY_SLOT_CHARGER).setPos(127, 49));
+                }).setBackground(this.getGUITextureSet().getItemSlot(), GT_UITextures.OVERLAY_SLOT_CHARGER).setPos(127, 49));
         for (int i = 0; i < 4; i++) {
             builder.widget(
-                    new SlotWidget(circuitsInventoryHandler, i)
-                            .setBackground(getGUITextureSet().getItemSlot(), GT_UITextures.OVERLAY_SLOT_INT_CIRCUIT)
+                    new SlotWidget(this.circuitsInventoryHandler, i)
+                            .setBackground(this.getGUITextureSet().getItemSlot(), GT_UITextures.OVERLAY_SLOT_INT_CIRCUIT)
                             .setPos(151, 4 + i * 18));
         }
 
         final DynamicPositionedColumn screenElements = new DynamicPositionedColumn();
-        drawTexts(screenElements);
+        this.drawTexts(screenElements);
         builder.widget(screenElements);
 
         builder.widget(
@@ -484,8 +484,8 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
                 .widget(
                         new ProgressBar()
                                 .setProgress(
-                                        () -> (float) getBaseMetaTileEntity().getStoredEU()
-                                                / getBaseMetaTileEntity().getEUCapacity())
+                                        () -> (float) this.getBaseMetaTileEntity().getStoredEU()
+                                                / this.getBaseMetaTileEntity().getEUCapacity())
                                 .setDirection(ProgressBar.Direction.RIGHT)
                                 .setTexture(BW_UITextures.PROGRESSBAR_STORED_EU_116, 116).setPos(8, 73)
                                 .setSize(116, 5));
@@ -498,38 +498,38 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
                 .widget(
                         TextWidget
                                 .dynamicString(
-                                        () -> "EU: " + GT_Utility.formatNumbers(getBaseMetaTileEntity().getStoredEU()))
-                                .setDefaultColor(COLOR_TEXT_WHITE.get()))
+                                        () -> "EU: " + GT_Utility.formatNumbers(this.getBaseMetaTileEntity().getStoredEU()))
+                                .setDefaultColor(this.COLOR_TEXT_WHITE.get()))
                 .widget(
                         TextWidget.dynamicString(
-                                () -> "MAX: " + (getBaseMetaTileEntity().isActive()
-                                        ? GT_Utility.formatNumbers(getBaseMetaTileEntity().getOutputVoltage())
+                                () -> "MAX: " + (this.getBaseMetaTileEntity().isActive()
+                                        ? GT_Utility.formatNumbers(this.getBaseMetaTileEntity().getOutputVoltage())
                                                 + String.valueOf(ConfigHandler.energyPerCell).substring(1)
                                         : Integer.toString(0)))
-                                .setDefaultColor(COLOR_TEXT_WHITE.get()))
+                                .setDefaultColor(this.COLOR_TEXT_WHITE.get()))
                 .widget(
                         TextWidget
                                 .dynamicString(
                                         () -> "MAX EU/t IN: "
-                                                + GT_Utility.formatNumbers(getBaseMetaTileEntity().getInputVoltage()))
-                                .setDefaultColor(COLOR_TEXT_WHITE.get()))
+                                                + GT_Utility.formatNumbers(this.getBaseMetaTileEntity().getInputVoltage()))
+                                .setDefaultColor(this.COLOR_TEXT_WHITE.get()))
                 .widget(
                         TextWidget
                                 .dynamicString(
                                         () -> "EU/t OUT: "
-                                                + GT_Utility.formatNumbers(getBaseMetaTileEntity().getOutputVoltage()))
-                                .setDefaultColor(COLOR_TEXT_WHITE.get()))
+                                                + GT_Utility.formatNumbers(this.getBaseMetaTileEntity().getOutputVoltage()))
+                                .setDefaultColor(this.COLOR_TEXT_WHITE.get()))
                 .widget(
                         TextWidget
                                 .dynamicString(
                                         () -> "AMP/t IN/OUT: "
-                                                + GT_Utility.formatNumbers(getBaseMetaTileEntity().getInputAmperage()))
-                                .setDefaultColor(COLOR_TEXT_WHITE.get()))
+                                                + GT_Utility.formatNumbers(this.getBaseMetaTileEntity().getInputAmperage()))
+                                .setDefaultColor(this.COLOR_TEXT_WHITE.get()))
                 .widget(
                         new TextWidget(Text.localised("tooltip.LESU.0.name")).setDefaultColor(Color.YELLOW.getRGB())
-                                .setEnabled(widget -> maxEUStore() >= Long.MAX_VALUE - 1))
+                                .setEnabled(widget -> this.maxEUStore() >= Long.MAX_VALUE - 1))
                 .widget(
                         new TextWidget(Text.localised("tooltip.LESU.1.name")).setDefaultColor(Color.RED.getRGB())
-                                .setEnabled(widget -> !getBaseMetaTileEntity().isActive()));
+                                .setEnabled(widget -> !this.getBaseMetaTileEntity().isActive()));
     }
 }

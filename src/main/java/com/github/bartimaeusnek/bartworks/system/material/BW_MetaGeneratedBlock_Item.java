@@ -60,7 +60,7 @@ public class BW_MetaGeneratedBlock_Item extends BW_ItemBlocks {
                         .replace("%material", werkstoff.getLocalizedName());
             }
         }
-        return GT_LanguageManager.getTranslation(getUnlocalizedName(aStack) + ".name");
+        return GT_LanguageManager.getTranslation(this.getUnlocalizedName(aStack) + ".name");
     }
 
     @Override

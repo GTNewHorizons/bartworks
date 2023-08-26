@@ -34,45 +34,45 @@ public class ConnectedBlocksCheckerIteration {
     private final Queue<Coords> kwoe = new LinkedList<>();
 
     public long get_connected(World w, int x, int y, int z, Block b) {
-        kwoe.add(new Coords(x, y, z, w.provider.dimensionId));
-        hashset.add(new Coords(x, y, z, w.provider.dimensionId));
-        while (!kwoe.isEmpty()) {
-            Coords tocheck = kwoe.poll();
+        this.kwoe.add(new Coords(x, y, z, w.provider.dimensionId));
+        this.hashset.add(new Coords(x, y, z, w.provider.dimensionId));
+        while (!this.kwoe.isEmpty()) {
+            Coords tocheck = this.kwoe.poll();
             int wID = w.provider.dimensionId;
-            checked.add(tocheck);
+            this.checked.add(tocheck);
             Coords c;
-            if (!checked.contains(c = new Coords(tocheck.x + 1, tocheck.y, tocheck.z, wID))
+            if (!this.checked.contains(c = new Coords(tocheck.x + 1, tocheck.y, tocheck.z, wID))
                     && w.getBlock(tocheck.x + 1, tocheck.y, tocheck.z).equals(b)) {
-                kwoe.add(c);
-                hashset.add(c);
+                this.kwoe.add(c);
+                this.hashset.add(c);
             }
-            if (!checked.contains(c = new Coords(tocheck.x - 1, tocheck.y, tocheck.z, wID))
+            if (!this.checked.contains(c = new Coords(tocheck.x - 1, tocheck.y, tocheck.z, wID))
                     && w.getBlock(tocheck.x - 1, tocheck.y, tocheck.z).equals(b)) {
-                kwoe.add(c);
-                hashset.add(c);
+                this.kwoe.add(c);
+                this.hashset.add(c);
             }
-            if (!checked.contains(c = new Coords(tocheck.x, tocheck.y, tocheck.z + 1, wID))
+            if (!this.checked.contains(c = new Coords(tocheck.x, tocheck.y, tocheck.z + 1, wID))
                     && w.getBlock(tocheck.x, tocheck.y, tocheck.z + 1).equals(b)) {
-                kwoe.add(c);
-                hashset.add(c);
+                this.kwoe.add(c);
+                this.hashset.add(c);
             }
-            if (!checked.contains(c = new Coords(tocheck.x, tocheck.y, tocheck.z - 1, wID))
+            if (!this.checked.contains(c = new Coords(tocheck.x, tocheck.y, tocheck.z - 1, wID))
                     && w.getBlock(tocheck.x, tocheck.y, tocheck.z - 1).equals(b)) {
-                kwoe.add(c);
-                hashset.add(c);
+                this.kwoe.add(c);
+                this.hashset.add(c);
             }
-            if (!checked.contains(c = new Coords(tocheck.x, tocheck.y + 1, tocheck.z, wID))
+            if (!this.checked.contains(c = new Coords(tocheck.x, tocheck.y + 1, tocheck.z, wID))
                     && w.getBlock(tocheck.x, tocheck.y + 1, tocheck.z).equals(b)) {
-                kwoe.add(c);
-                hashset.add(c);
+                this.kwoe.add(c);
+                this.hashset.add(c);
             }
-            if (!checked.contains(c = new Coords(tocheck.x, tocheck.y - 1, tocheck.z, wID))
+            if (!this.checked.contains(c = new Coords(tocheck.x, tocheck.y - 1, tocheck.z, wID))
                     && w.getBlock(tocheck.x, tocheck.y - 1, tocheck.z).equals(b)) {
-                kwoe.add(c);
-                hashset.add(c);
+                this.kwoe.add(c);
+                this.hashset.add(c);
             }
         }
-        return hashset.size();
+        return this.hashset.size();
     }
 
     public boolean get_meta_of_sideblocks(World w, int n, int[] xyz, boolean GT) {
@@ -80,7 +80,7 @@ public class ConnectedBlocksCheckerIteration {
         int wID = w.provider.dimensionId;
         Coords Controller = new Coords(xyz[0], xyz[1], xyz[2], wID);
 
-        for (Coords C : hashset) {
+        for (Coords C : this.hashset) {
             if (GT) {
                 TileEntity t;
                 t = w.getTileEntity(C.x, C.y + 1, C.z);

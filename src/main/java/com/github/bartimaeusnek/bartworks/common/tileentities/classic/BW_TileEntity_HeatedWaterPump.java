@@ -122,14 +122,14 @@ public class BW_TileEntity_HeatedWaterPump extends TileEntity implements ITileDr
     public void updateEntity() {
         if (this.worldObj.isRemote) return;
 
-        pushWaterToAdjacentTiles();
-        fakestack.setStackDisplayName(outputstack.amount + "L Water");
-        if (checkPreUpdate()) return;
+        this.pushWaterToAdjacentTiles();
+        this.fakestack.setStackDisplayName(this.outputstack.amount + "L Water");
+        if (this.checkPreUpdate()) return;
 
-        fixUnderlflow();
-        handleRefuel();
-        handleWaterGeneration();
-        causePollution();
+        this.fixUnderlflow();
+        this.handleRefuel();
+        this.handleWaterGeneration();
+        this.causePollution();
     }
 
     private void pushWaterToAdjacentTiles() {
@@ -359,7 +359,7 @@ public class BW_TileEntity_HeatedWaterPump extends TileEntity implements ITileDr
                 new SlotWidget(invWrapper, 0).setFilter(stack -> TileEntityFurnace.getItemBurnTime(stack) > 0)
                         .setPos(55, 52))
                 .widget(SlotWidget.phantom(invWrapper, 1).disableInteraction().setPos(85, 32)).widget(
-                        new ProgressBar().setProgress(() -> (float) fuel / maxfuel)
+                        new ProgressBar().setProgress(() -> (float) this.fuel / this.maxfuel)
                                 .setTexture(BW_UITextures.PROGRESSBAR_FUEL, 14).setDirection(ProgressBar.Direction.UP)
                                 .setPos(56, 36).setSize(14, 14));
 

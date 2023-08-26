@@ -89,9 +89,9 @@ public class ChunkProviderRoss128ba extends ChunkProviderMoon {
     public void generateTerrain(int chunkX, int chunkZ, Block[] idArray, byte[] metaArray) {
         for (int x = 0; x < 16; ++x) {
             for (int z = 0; z < 16; ++z) {
-                double d = noiseGen.getNoise(x + chunkX * 16, z + chunkZ * 16);
-                double d2 = noiseGen2.getNoise(x + chunkX * 16, z + chunkZ * 16);
-                double d3 = noiseGen3.getCosNoise(x + chunkX * 16, z + chunkZ * 16);
+                double d = this.noiseGen.getNoise(x + chunkX * 16, z + chunkZ * 16);
+                double d2 = this.noiseGen2.getNoise(x + chunkX * 16, z + chunkZ * 16);
+                double d3 = this.noiseGen3.getCosNoise(x + chunkX * 16, z + chunkZ * 16);
 
                 double yDev = d * 4 + d2 * 2 + d3;
 

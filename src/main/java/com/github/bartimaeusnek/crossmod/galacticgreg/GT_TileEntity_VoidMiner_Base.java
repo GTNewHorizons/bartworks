@@ -104,24 +104,24 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
 
     public GT_TileEntity_VoidMiner_Base(int aID, String aName, String aNameRegional, int tier) {
         super(aID, aName, aNameRegional);
-        TIER_MULTIPLIER = (byte) Math.max(tier, 1);
+        this.TIER_MULTIPLIER = (byte) Math.max(tier, 1);
     }
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setBoolean("mBlacklist", mBlacklist);
+        aNBT.setBoolean("mBlacklist", this.mBlacklist);
     }
 
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        mBlacklist = aNBT.getBoolean("mBlacklist");
+        this.mBlacklist = aNBT.getBoolean("mBlacklist");
     }
 
     public GT_TileEntity_VoidMiner_Base(String aName, int tier) {
         super(aName);
-        TIER_MULTIPLIER = (byte) tier;
+        this.TIER_MULTIPLIER = (byte) tier;
     }
 
     @Override
@@ -154,20 +154,20 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     protected boolean workingAtBottom(ItemStack aStack, int xDrill, int yDrill, int zDrill, int xPipe, int zPipe,
             int yHead, int oldYHead) {
         // if the dropmap has never been initialised or if the dropmap is empty
-        if (dropmap == null || totalWeight == 0) calculateDropMap();
+        if (this.dropmap == null || this.totalWeight == 0) this.calculateDropMap();
 
-        if (totalWeight != 0.f) {
-            handleFluidConsumption();
-            handleOutputs();
+        if (this.totalWeight != 0.f) {
+            this.handleFluidConsumption();
+            this.handleOutputs();
             return true;
         }
-        stopMachine();
+        this.stopMachine();
         return false;
     }
 
     @Override
     protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        String casings = getCasingBlockItem().get(0).getDisplayName();
+        String casings = this.getCasingBlockItem().get(0).getDisplayName();
 
         final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
         tt.addMachineType("Miner").addInfo("Controller Block for the Void Miner " + GT_Values.VN[this.getMinTier()])
@@ -175,7 +175,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                 .addInfo(
                         "Can be supplied with 2L/s of Neon(x4), Krypton(x8), Xenon(x16) or Oganesson(x64) for higher outputs.")
                 .addInfo(
-                        "Will output " + (2 * TIER_MULTIPLIER)
+                        "Will output " + (2 * this.TIER_MULTIPLIER)
                                 + " Ores per Second depending on the Dimension it is build in")
                 .addInfo("Put the Ore into the input bus to set the Whitelist/Blacklist")
                 .addInfo("Use a screwdriver to toggle Whitelist/Blacklist")
@@ -183,8 +183,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                 .beginStructureBlock(3, 7, 3, false).addController("Front bottom")
                 .addOtherStructurePart(casings, "form the 3x1x3 Base")
                 .addOtherStructurePart(casings, "1x3x1 pillar above the center of the base (2 minimum total)")
-                .addOtherStructurePart(getFrameMaterial().mName + " Frame Boxes", "Each pillar's side and 1x3x1 on top")
-                .addEnergyHatch(VN[getMinTier()] + "+, Any base casing").addMaintenanceHatch("Any base casing")
+                .addOtherStructurePart(this.getFrameMaterial().mName + " Frame Boxes", "Each pillar's side and 1x3x1 on top")
+                .addEnergyHatch(VN[this.getMinTier()] + "+, Any base casing").addMaintenanceHatch("Any base casing")
                 .addInputBus("Mining Pipes or Ores, optional, any base casing")
                 .addInputHatch("Optional noble gas, any base casing").addOutputBus("Any base casing")
                 .toolTipFinisher(MULTIBLOCK_ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS);
@@ -253,15 +253,15 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      * @param value the non normalised weight
      */
     private void addDrop(Pair<Integer, Boolean> key, float value) {
-        final ItemStack ore = getOreItemStack(key);
+        final ItemStack ore = this.getOreItemStack(key);
         if (ConfigHandler.voidMinerBlacklist.contains(
                 String.format(
                         "%s:%d",
                         GameRegistry.findUniqueIdentifierFor(ore.getItem()).toString(),
                         ore.getItemDamage())))
             return;
-        if (!dropmap.containsKey(key)) dropmap.put(key, value);
-        else dropmap.put(key, dropmap.get(key) + value);
+        if (!this.dropmap.containsKey(key)) this.dropmap.put(key, value);
+        else this.dropmap.put(key, this.dropmap.get(key) + value);
     }
 
     /**
@@ -272,10 +272,10 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     private void getDropsVanillaVeins(Predicate<GT_Worldgen_GT_Ore_Layer> oreLayerPredicate) {
         GT_Worldgen_GT_Ore_Layer.sList.stream()
                 .filter(gt_worldgen -> gt_worldgen.mEnabled && oreLayerPredicate.test(gt_worldgen)).forEach(element -> {
-                    addDrop(new Pair<>((int) element.mPrimaryMeta, false), (float) element.mWeight);
-                    addDrop(new Pair<>((int) element.mSecondaryMeta, false), (float) element.mWeight);
-                    addDrop(new Pair<>((int) element.mSporadicMeta, false), (element.mWeight / 8f));
-                    addDrop(new Pair<>((int) element.mBetweenMeta, false), (element.mWeight / 8f));
+                    this.addDrop(new Pair<>((int) element.mPrimaryMeta, false), (float) element.mWeight);
+                    this.addDrop(new Pair<>((int) element.mSecondaryMeta, false), (float) element.mWeight);
+                    this.addDrop(new Pair<>((int) element.mSporadicMeta, false), (element.mWeight / 8f));
+                    this.addDrop(new Pair<>((int) element.mBetweenMeta, false), (element.mWeight / 8f));
                 });
     }
 
@@ -287,7 +287,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     private void getDropsVanillaSmallOres(Predicate<GT_Worldgen_GT_Ore_SmallPieces> smallOresPredicate) {
         GT_Worldgen_GT_Ore_SmallPieces.sList.stream()
                 .filter(gt_worldgen -> gt_worldgen.mEnabled && smallOresPredicate.test(gt_worldgen))
-                .forEach(element -> addDrop(new Pair<>((int) element.mMeta, false), (float) element.mAmount));
+                .forEach(element -> this.addDrop(new Pair<>((int) element.mMeta, false), (float) element.mAmount));
     }
 
     /**
@@ -302,10 +302,10 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                                 && gt_worldgen instanceof GT_Worldgen_GT_Ore_Layer_Space oreLayerSpace
                                 && oreLayerSpace.isEnabledForDim(finalDef))
                 .map(gt_worldgen -> (GT_Worldgen_GT_Ore_Layer_Space) gt_worldgen).forEach(element -> {
-                    addDrop(new Pair<>((int) element.mPrimaryMeta, false), (float) element.mWeight);
-                    addDrop(new Pair<>((int) element.mSecondaryMeta, false), (float) element.mWeight);
-                    addDrop(new Pair<>((int) element.mSporadicMeta, false), (element.mWeight / 8f));
-                    addDrop(new Pair<>((int) element.mBetweenMeta, false), (element.mWeight / 8f));
+                    this.addDrop(new Pair<>((int) element.mPrimaryMeta, false), (float) element.mWeight);
+                    this.addDrop(new Pair<>((int) element.mSecondaryMeta, false), (float) element.mWeight);
+                    this.addDrop(new Pair<>((int) element.mSporadicMeta, false), (element.mWeight / 8f));
+                    this.addDrop(new Pair<>((int) element.mBetweenMeta, false), (element.mWeight / 8f));
                 });
     }
 
@@ -321,7 +321,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                                 && gt_worldgen instanceof GT_Worldgen_GT_Ore_SmallPieces_Space oreSmallPiecesSpace
                                 && oreSmallPiecesSpace.isEnabledForDim(finalDef))
                 .map(gt_worldgen -> (GT_Worldgen_GT_Ore_SmallPieces_Space) gt_worldgen)
-                .forEach(element -> addDrop(new Pair<>((int) element.mMeta, false), (float) element.mAmount));
+                .forEach(element -> this.addDrop(new Pair<>((int) element.mMeta, false), (float) element.mAmount));
     }
 
     /**
@@ -332,8 +332,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     private Pair<Integer, Boolean> getOreDamage() {
         float curentWeight = 0.f;
         while (true) {
-            float randomnumber = XSTR.XSTR_INSTANCE.nextFloat() * totalWeight;
-            for (Map.Entry<Pair<Integer, Boolean>, Float> entry : dropmap.entrySet()) {
+            float randomnumber = XSTR.XSTR_INSTANCE.nextFloat() * this.totalWeight;
+            for (Map.Entry<Pair<Integer, Boolean>, Float> entry : this.dropmap.entrySet()) {
                 curentWeight += entry.getValue();
                 if (randomnumber < curentWeight) return entry.getKey();
             }
@@ -350,7 +350,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
             for (int i = 0; i < NOBLE_GASSES.length; i++) {
                 FluidStack ng = NOBLE_GASSES[i];
                 if (ng.isFluidEqual(s)) {
-                    multiplier = TIER_MULTIPLIER * (2 << (i == NOBLE_GASSES.length - 1 ? (i + 2) : (i + 1)));
+                    this.multiplier = this.TIER_MULTIPLIER * (2 << (i == NOBLE_GASSES.length - 1 ? (i + 2) : (i + 1)));
                     return s;
                 }
             }
@@ -379,8 +379,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      * handler for the fluid consumption
      */
     private void handleFluidConsumption() {
-        FluidStack storedNobleGas = getNobleGasInputAndSetMultiplier();
-        if (storedNobleGas == null || !consumeNobleGas(storedNobleGas)) multiplier = TIER_MULTIPLIER;
+        FluidStack storedNobleGas = this.getNobleGasInputAndSetMultiplier();
+        if (storedNobleGas == null || !this.consumeNobleGas(storedNobleGas)) this.multiplier = this.TIER_MULTIPLIER;
     }
 
     /**
@@ -389,7 +389,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      * @param aID dim id of Ross128b or Ross128ba
      */
     private void getDropMapRoss(int aID) {
-        Consumer<BW_OreLayer> addToList = makeAddToList();
+        Consumer<BW_OreLayer> addToList = this.makeAddToList();
         BW_OreLayer.sList.stream()
                 .filter(
                         gt_worldgen -> gt_worldgen.mEnabled && gt_worldgen instanceof BW_OreLayer
@@ -406,8 +406,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
         return element -> {
             List<Pair<Integer, Boolean>> data = element.getStacksRawData();
             for (int i = 0; i < data.size(); i++) {
-                if (i < data.size() - 2) addDrop(data.get(i), (float) element.mWeight);
-                else addDrop(data.get(i), (element.mWeight / 8f));
+                if (i < data.size() - 2) this.addDrop(data.get(i), (float) element.mWeight);
+                else this.addDrop(data.get(i), (element.mWeight / 8f));
             }
         };
     }
@@ -456,7 +456,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                                     && gt_worldgen instanceof BW_Worldgen_Ore_SmallOre_Space smallOreSpace
                                     && smallOreSpace.isEnabledForDim(finalDef))
                     .map(gt_worldgen -> (BW_Worldgen_Ore_SmallOre_Space) gt_worldgen).forEach(
-                            element -> addDrop(
+                            element -> this.addDrop(
                                     new Pair<>(element.mPrimaryMeta, element.bwOres != 0),
                                     (float) element.mDensity));
         } catch (NullPointerException ignored) {}
@@ -469,15 +469,15 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      */
     private void handleExtraDrops(int id) {
         Optional.ofNullable(getExtraDropsDimMap().get(id))
-                .ifPresent(e -> e.forEach(f -> addDrop(f.getKey(), f.getValue())));
+                .ifPresent(e -> e.forEach(f -> this.addDrop(f.getKey(), f.getValue())));
     }
 
     /**
      * Computes the total weight for normalisation
      */
     private void calculateTotalWeight() {
-        totalWeight = 0.0f;
-        dropmap.values().forEach(f -> totalWeight += f);
+        this.totalWeight = 0.0f;
+        this.dropmap.values().forEach(f -> this.totalWeight += f);
     }
 
     /**
@@ -488,24 +488,24 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     private void handleModDimDef(int id) {
         // vanilla dims or TF
         if ((id <= 1 && id >= -1) || id == 7) {
-            getDropsVanillaVeins(makeOreLayerPredicate());
-            getDropsVanillaSmallOres(makeSmallOresPredicate());
+            this.getDropsVanillaVeins(this.makeOreLayerPredicate());
+            this.getDropsVanillaSmallOres(this.makeSmallOresPredicate());
 
             // ross dims
         } else if (id == ConfigHandler.ross128BID || id == ConfigHandler.ross128BAID) {
-            getDropMapRoss(id);
+            this.getDropMapRoss(id);
 
             // other space dims
         } else {
-            Optional.ofNullable(makeModDimDef()).ifPresent(def -> {
+            Optional.ofNullable(this.makeModDimDef()).ifPresent(def -> {
                 // normal space dim
-                getDropsOreVeinsSpace(def);
-                getDropsSmallOreSpace(def);
+                this.getDropsOreVeinsSpace(def);
+                this.getDropsSmallOreSpace(def);
 
                 // BW space dim
-                Consumer<BW_OreLayer> addToList = makeAddToList();
-                addOresVeinsBartworks(def, addToList);
-                addSmallOresBartworks(def);
+                Consumer<BW_OreLayer> addToList = this.makeAddToList();
+                this.addOresVeinsBartworks(def, addToList);
+                this.addSmallOresBartworks(def);
             });
         }
     }
@@ -515,11 +515,11 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      * totalweight for normalisation
      */
     private void calculateDropMap() {
-        dropmap = new HashMap<>();
+        this.dropmap = new HashMap<>();
         int id = this.getBaseMetaTileEntity().getWorld().provider.dimensionId;
-        handleModDimDef(id);
-        handleExtraDrops(id);
-        calculateTotalWeight();
+        this.handleModDimDef(id);
+        this.handleExtraDrops(id);
+        this.calculateTotalWeight();
     }
 
     /**
@@ -528,10 +528,10 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     private void handleOutputs() {
         final List<ItemStack> inputOres = this.getStoredInputs().stream().filter(GT_Utility::isOre)
                 .collect(Collectors.toList());
-        final ItemStack output = getOreItemStack(getOreDamage());
+        final ItemStack output = this.getOreItemStack(this.getOreDamage());
         if (inputOres.size() == 0
-                || (mBlacklist && inputOres.stream().allMatch(is -> !GT_Utility.areStacksEqual(is, output)))
-                || (!mBlacklist && inputOres.stream().anyMatch(is -> GT_Utility.areStacksEqual(is, output))))
+                || (this.mBlacklist && inputOres.stream().allMatch(is -> !GT_Utility.areStacksEqual(is, output)))
+                || (!this.mBlacklist && inputOres.stream().anyMatch(is -> GT_Utility.areStacksEqual(is, output))))
             this.addOutput(output);
         this.updateSlots();
     }
@@ -546,13 +546,13 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     private ItemStack getOreItemStack(Pair<Integer, Boolean> stats) {
         return new ItemStack(
                 stats.getValue() ? WerkstoffLoader.BWOres : GregTech_API.sBlockOres1,
-                multiplier,
+                this.multiplier,
                 stats.getKey());
     }
 
     @Override
     public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
-        mBlacklist = !mBlacklist;
-        GT_Utility.sendChatToPlayer(aPlayer, "Mode: " + (mBlacklist ? "Blacklist" : "Whitelist"));
+        this.mBlacklist = !this.mBlacklist;
+        GT_Utility.sendChatToPlayer(aPlayer, "Mode: " + (this.mBlacklist ? "Blacklist" : "Whitelist"));
     }
 }

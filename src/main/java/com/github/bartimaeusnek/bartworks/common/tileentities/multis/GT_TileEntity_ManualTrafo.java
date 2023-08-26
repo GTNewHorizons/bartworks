@@ -242,7 +242,7 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
         this.upstep = this.mode % 2 == 0;
         boolean tapmode = this.mode > 1;
 
-        if (!checkPiece(STRUCTURE_PIECE_BASE, 1, 0, 0) || (this.mEnergyHatches.size() == 0)) return false;
+        if (!this.checkPiece(STRUCTURE_PIECE_BASE, 1, 0, 0) || (this.mEnergyHatches.size() == 0)) return false;
 
         byte intier = this.mEnergyHatches.get(0).mTier;
         for (GT_MetaTileEntity_Hatch_Energy in : this.mEnergyHatches) if (in.mTier != intier) return false;
@@ -251,13 +251,13 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
         for (mHeight = 1; mHeight <= 8; mHeight++) {
             if (tapmode) {
                 this.mTiers = mHeight;
-                if (!checkPiece(STRUCTURE_PIECE_TAP_LAYER, 2, mHeight, 1)) break;
-            } else if (!checkPiece(STRUCTURE_PIECE_LAYER, 1, mHeight, 0)) break;
+                if (!this.checkPiece(STRUCTURE_PIECE_TAP_LAYER, 2, mHeight, 1)) break;
+            } else if (!this.checkPiece(STRUCTURE_PIECE_LAYER, 1, mHeight, 0)) break;
         }
-        if (!checkPiece(STRUCTURE_PIECE_TOP, 1, mHeight, 0)) return false;
+        if (!this.checkPiece(STRUCTURE_PIECE_TOP, 1, mHeight, 0)) return false;
         this.mTiers = mHeight - 1;
 
-        if (this.mDynamoHatches.size() == 0 || mMaintenanceHatches.size() != 1 || this.mTiers == 0) return false;
+        if (this.mDynamoHatches.size() == 0 || this.mMaintenanceHatches.size() != 1 || this.mTiers == 0) return false;
 
         byte outtier = this.mDynamoHatches.get(0).mTier;
         for (GT_MetaTileEntity_Hatch_Dynamo out : this.mDynamoHatches) {
@@ -331,11 +331,11 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
         else this.mode = (byte) Math.min(3, this.mInventory[1].getItemDamage());
         int mHeight = Math.min(itemStack.stackSize, 8);
         boolean tapmode = this.mode > 1;
-        buildPiece(STRUCTURE_PIECE_BASE, itemStack, b, 1, 0, 0);
+        this.buildPiece(STRUCTURE_PIECE_BASE, itemStack, b, 1, 0, 0);
         for (int i = 0; i < mHeight; i++) {
-            if (tapmode) buildPiece(STRUCTURE_PIECE_TAP_LAYER, itemStack, b, 2, i + 1, 1);
-            else buildPiece(STRUCTURE_PIECE_LAYER, itemStack, b, 1, i + 1, 0);
+            if (tapmode) this.buildPiece(STRUCTURE_PIECE_TAP_LAYER, itemStack, b, 2, i + 1, 1);
+            else this.buildPiece(STRUCTURE_PIECE_LAYER, itemStack, b, 1, i + 1, 0);
         }
-        buildPiece(STRUCTURE_PIECE_TOP, itemStack, b, 1, mHeight + 1, 0);
+        this.buildPiece(STRUCTURE_PIECE_TOP, itemStack, b, 1, mHeight + 1, 0);
     }
 }

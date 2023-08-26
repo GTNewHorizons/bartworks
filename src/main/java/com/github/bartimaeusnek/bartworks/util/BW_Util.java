@@ -807,13 +807,13 @@ public class BW_Util {
 
             @Override
             public boolean placeBlock(T t, World world, int x, int y, int z, ItemStack trigger) {
-                return placementDelegate.placeBlock(t, world, x, y, z, trigger);
+                return this.placementDelegate.placeBlock(t, world, x, y, z, trigger);
             }
 
             @Override
             public PlaceResult survivalPlaceBlock(T t, World world, int x, int y, int z, ItemStack trigger,
                     AutoPlaceEnvironment env) {
-                return placementDelegate.survivalPlaceBlock(t, world, x, y, z, trigger, env);
+                return this.placementDelegate.survivalPlaceBlock(t, world, x, y, z, trigger, env);
             }
         };
     }
@@ -841,13 +841,13 @@ public class BW_Util {
 
             @Override
             public boolean placeBlock(T t, World world, int x, int y, int z, ItemStack trigger) {
-                return placementDelegate.placeBlock(t, world, x, y, z, trigger);
+                return this.placementDelegate.placeBlock(t, world, x, y, z, trigger);
             }
 
             @Override
             public PlaceResult survivalPlaceBlock(T t, World world, int x, int y, int z, ItemStack trigger,
                     AutoPlaceEnvironment env) {
-                return placementDelegate.survivalPlaceBlock(t, world, x, y, z, trigger, env);
+                return this.placementDelegate.survivalPlaceBlock(t, world, x, y, z, trigger, env);
             }
         };
     }

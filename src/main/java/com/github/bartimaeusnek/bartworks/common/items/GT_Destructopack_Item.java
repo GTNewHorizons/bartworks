@@ -76,7 +76,7 @@ public class GT_Destructopack_Item extends GT_Generic_Item implements IItemWithM
 
             @Override
             public void putStack(ItemStack stack) {
-                onSlotChanged();
+                this.onSlotChanged();
             }
         }).setBackground(ModularUITextures.ITEM_SLOT, BW_UITextures.OVERLAY_SLOT_CROSS).setPos(79, 16)).widget(
                 new DrawableWidget().setDrawable(GT_UITextures.PICTURE_GT_LOGO_17x17_TRANSPARENT).setSize(17, 17)
