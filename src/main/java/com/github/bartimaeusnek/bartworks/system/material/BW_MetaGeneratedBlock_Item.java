@@ -70,7 +70,7 @@ public class BW_MetaGeneratedBlock_Item extends BW_ItemBlocks {
             return;
         }
         if (aList == null) {
-            aList = new ArrayList<String>();
+            aList = new ArrayList<>();
         }
         Werkstoff werkstoff = Werkstoff.werkstoffHashMap.get((short) aStack.getItemDamage());
         if (werkstoff != null) {

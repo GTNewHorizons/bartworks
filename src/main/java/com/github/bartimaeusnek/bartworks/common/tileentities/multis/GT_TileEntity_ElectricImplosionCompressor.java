@@ -175,7 +175,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
             }).build();
 
     public static List<Pair<Block, Integer>> getAllBlockTiers() {
-        return new ArrayList<Pair<Block, Integer>>() {
+        return new ArrayList<>() {
 
             private static final long serialVersionUID = 8171991663102417651L;
 

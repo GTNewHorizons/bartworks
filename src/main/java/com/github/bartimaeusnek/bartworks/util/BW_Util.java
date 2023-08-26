@@ -783,7 +783,7 @@ public class BW_Util {
 
     public static <T> IStructureElement<T> ofGlassTiered(byte mintier, byte maxtier, byte notset,
             BiConsumer<T, Byte> setter, Function<T, Byte> getter, int aDots) {
-        return new IStructureElement<T>() {
+        return new IStructureElement<>() {
 
             private final IStructureElement<T> placementDelegate = BorosilicateGlass
                     .ofBoroGlass(notset, mintier, maxtier, setter, getter);
@@ -819,7 +819,7 @@ public class BW_Util {
     }
 
     public static <T> IStructureElement<T> ofGlassTieredMixed(byte mintier, byte maxtier, int aDots) {
-        return new IStructureElement<T>() {
+        return new IStructureElement<>() {
 
             private final IStructureElement<T> placementDelegate = BorosilicateGlass
                     .ofBoroGlass((byte) 0, mintier, maxtier, (v1, v2) -> {}, v1 -> (byte) 0);
