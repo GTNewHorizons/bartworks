@@ -32,8 +32,7 @@ public class CircuitData {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CircuitData)) return false;
-        CircuitData that = (CircuitData) o;
+        if (!(o instanceof CircuitData that)) return false;
         if ((this.getaVoltage() != that.getaVoltage()) || (this.getaSpecial() != that.getaSpecial())) return false;
         return this.getaTier() == that.getaTier();
     }

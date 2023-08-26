@@ -195,8 +195,7 @@ public class BW_NEI_OreHandler extends TemplateRecipeHandler {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof CachedOreRecipe)) return false;
-            CachedOreRecipe that = (CachedOreRecipe) o;
+            if (!(o instanceof CachedOreRecipe that)) return false;
             return Objects.equals(worldGen, that.worldGen);
         }
 

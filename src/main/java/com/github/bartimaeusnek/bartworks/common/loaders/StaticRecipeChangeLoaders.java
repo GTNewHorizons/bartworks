@@ -215,8 +215,7 @@ public class StaticRecipeChangeLoaders {
                                     recipe.mOutputs[i] = GT_Utility
                                             .copyAmount(recipe.mOutputs[i].stackSize, replacement);
                                 }
-                                if (recipe.mSpecialItems instanceof ItemStack) {
-                                    ItemStack specialItemStack = (ItemStack) recipe.mSpecialItems;
+                                if (recipe.mSpecialItems instanceof ItemStack specialItemStack) {
                                     if (!GT_Utility.areStacksEqual(specialItemStack, toReplace)) continue;
                                     if (removal) {
                                         iterator.remove();

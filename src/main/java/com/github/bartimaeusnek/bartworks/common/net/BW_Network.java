@@ -114,11 +114,10 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
         if (!aWorld.isRemote) {
 
             for (Object tObject : aWorld.playerEntities) {
-                if (!(tObject instanceof EntityPlayerMP)) {
+                if (!(tObject instanceof EntityPlayerMP tPlayer)) {
                     break;
                 }
 
-                EntityPlayerMP tPlayer = (EntityPlayerMP) tObject;
                 Chunk tChunk = aWorld.getChunkFromBlockCoords(aX, aZ);
                 if (tPlayer.getServerForPlayer().getPlayerManager()
                         .isPlayerWatchingChunk(tPlayer, tChunk.xPosition, tChunk.zPosition)) {

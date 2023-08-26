@@ -68,8 +68,7 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
 
     @Override
     public boolean hitEntity(ItemStack aStack, EntityLivingBase aTarget, EntityLivingBase aPlayer) {
-        if (aTarget instanceof EntityLiving && ElectricItem.manager.canUse(aStack, 9000000)) {
-            EntityLiving tTarget = (EntityLiving) aTarget;
+        if (aTarget instanceof EntityLiving tTarget && ElectricItem.manager.canUse(aStack, 9000000)) {
             ElectricItem.manager.use(aStack, 9000000, aPlayer);
             for (int i = 1; i < 5; ++i) {
                 if (tTarget.getEquipmentInSlot(i) != null

@@ -96,11 +96,10 @@ public class GT_MetaTileEntity_Transistor extends GT_MetaTileEntity_TieredMachin
             final ForgeDirection side = ForgeDirection.EAST;
             if (aBaseMetaTileEntity.inputEnergyFrom(side)) {
                 TileEntity tTileEntity = aBaseMetaTileEntity.getTileEntityAtSide(side);
-                if (!(tTileEntity instanceof IBasicEnergyContainer)) {
+                if (!(tTileEntity instanceof IBasicEnergyContainer tileAtSide)) {
                     this.powered = false;
                     return;
                 }
-                IBasicEnergyContainer tileAtSide = (IBasicEnergyContainer) tTileEntity;
                 if (!tileAtSide.outputsEnergyTo(ForgeDirection.WEST) || !tileAtSide.isUniversalEnergyStored(4L) || !tileAtSide.decreaseStoredEnergyUnits(4, false)) {
                     this.powered = false;
                     return;

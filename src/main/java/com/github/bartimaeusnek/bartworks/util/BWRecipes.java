@@ -849,9 +849,7 @@ public class BWRecipes {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof BWRecipes.BWNBTDependantCraftingRecipe)) return false;
-
-            BWRecipes.BWNBTDependantCraftingRecipe that = (BWRecipes.BWNBTDependantCraftingRecipe) o;
+            if (!(o instanceof BWRecipes.BWNBTDependantCraftingRecipe that)) return false;
 
             if (!Objects.equals(this.result, that.result) || !Objects.equals(this.charToStackMap, that.charToStackMap)) return false;
             // Probably incorrect - comparing Object[] arrays with Arrays.equals

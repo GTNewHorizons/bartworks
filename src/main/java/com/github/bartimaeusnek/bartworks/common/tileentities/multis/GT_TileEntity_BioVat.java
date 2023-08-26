@@ -387,10 +387,9 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         if (!aWorld.isRemote) {
 
             for (Object tObject : aWorld.playerEntities) {
-                if (!(tObject instanceof EntityPlayerMP)) {
+                if (!(tObject instanceof EntityPlayerMP tPlayer)) {
                     break;
                 }
-                EntityPlayerMP tPlayer = (EntityPlayerMP) tObject;
                 Chunk tChunk = aWorld.getChunkFromBlockCoords(
                         this.getBaseMetaTileEntity().getXCoord(),
                         this.getBaseMetaTileEntity().getZCoord());

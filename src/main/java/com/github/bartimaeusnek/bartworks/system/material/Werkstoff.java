@@ -1106,9 +1106,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof Werkstoff.Stats)) return false;
-
-            Werkstoff.Stats that = (Werkstoff.Stats) o;
+            if (!(o instanceof Werkstoff.Stats that)) return false;
 
             if ((this.boilingPoint != that.boilingPoint) || (this.meltingPoint != that.meltingPoint) || (this.mass != that.mass) || (this.protons != that.protons)) return false;
             if (this.neutrons != that.neutrons) return false;

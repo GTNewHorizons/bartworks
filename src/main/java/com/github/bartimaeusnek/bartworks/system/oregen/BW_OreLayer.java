@@ -237,9 +237,7 @@ public abstract class BW_OreLayer extends GT_Worldgen {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BW_OreLayer)) return false;
-
-        BW_OreLayer that = (BW_OreLayer) o;
+        if (!(o instanceof BW_OreLayer that)) return false;
 
         if ((bwOres != that.bwOres) || (mMinY != that.mMinY) || (mWeight != that.mWeight) || (mDensity != that.mDensity)) return false;
         if (mSize != that.mSize) return false;
