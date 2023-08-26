@@ -117,7 +117,10 @@ public class FlowerSet<T> implements Set<T> {
         public void TryToSetSingleNode(FlowerNode<V> node, FlowerNode<V> toset, int place, int depth) {
             if (depth > DEPTH) throw new IllegalStateException("Recursive Call went too deep.");
             if (node.links[place] == null) node.links[place] = toset;
-            else TryToSetSingleNode(node.links[place], toset, place, depth++);
+            else {
+                TryToSetSingleNode(node.links[place], toset, place, depth);
+                depth++;
+            }
         }
 
         public void TryToSetSingleNode(FlowerNode<V> node, FlowerNode<V> toset, int place) {

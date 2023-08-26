@@ -963,7 +963,8 @@ public class BW_Util {
             ArrayList<Object> tRecipeList = new ArrayList<>(Arrays.asList(aRecipe));
 
             while (aRecipe[idx] instanceof String) {
-                StringBuilder s = new StringBuilder((String) aRecipe[idx++]);
+                StringBuilder s = new StringBuilder((String) aRecipe[idx]);
+                idx++;
                 shape.append(s);
                 while (s.length() < 3) s.append(" ");
                 if (s.length() > 3) throw new IllegalArgumentException();
@@ -1103,7 +1104,10 @@ public class BW_Util {
             if (aReversible && aResult != null) {
                 ItemData[] tData = new ItemData[9];
                 int x = -1;
-                for (char chr : shape.toString().toCharArray()) tData[++x] = tItemDataMap.get(chr);
+                for (char chr : shape.toString().toCharArray()) {
+                    x++;
+                    tData[x] = tItemDataMap.get(chr);
+                }
                 if (GT_Utility.arrayContainsNonNull(tData))
                     GT_OreDictUnificator.addItemData(aResult, new ItemData(tData));
             }
@@ -1112,7 +1116,8 @@ public class BW_Util {
                 ItemStack[] tRecipe = new ItemStack[9];
                 int x = -1;
                 for (char chr : shape.toString().toCharArray()) {
-                    tRecipe[++x] = tItemStackMap.get(chr);
+                    x++;
+                    tRecipe[x] = tItemStackMap.get(chr);
                     if (tRecipe[x] != null && Items.feather.getDamage(tRecipe[x]) == W)
                         Items.feather.setDamage(tRecipe[x], 0);
                 }
@@ -1140,7 +1145,8 @@ public class BW_Util {
                 IRecipe tRecipe = tList.get(i);
                 if (GT_ModHandler.sSpecialRecipeClasses.contains(tRecipe.getClass().getName())) continue;
                 if (GT_Utility.areStacksEqual(GT_OreDictUnificator.get(tRecipe.getRecipeOutput()), aResult, true)) {
-                    tList.remove(i--);
+                    tList.remove(i);
+                    i--;
                     tList_sS = tList.size();
                     tThereWasARecipe = true;
                 }

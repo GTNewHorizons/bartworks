@@ -121,7 +121,8 @@ public final class MurmurHash3 {
         int nBytes = 0; // length in UTF8 bytes
 
         while (pos < end) {
-            int code = data.charAt(pos++);
+            int code = data.charAt(pos);
+            pos++;
             if (code < 0x80) {
                 k2 = code;
                 bits = 8;

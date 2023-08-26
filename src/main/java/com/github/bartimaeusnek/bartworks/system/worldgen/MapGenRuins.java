@@ -163,7 +163,8 @@ public abstract class MapGenRuins extends WorldGenerator {
         if (depth < 25) {
             if (BTE.getMetaTileID() != meta || worldObj.getTileEntity(x, y, z) != BTE || BTE.isInvalid()) {
                 redoTile(BTE, worldObj, x, y, z, meta, ownerName, facing);
-                checkTile(BTE, worldObj, x, y, z, meta, ownerName, facing, depth++);
+                checkTile(BTE, worldObj, x, y, z, meta, ownerName, facing, depth);
+                depth++;
             }
         } else {
             worldObj.removeTileEntity(x, y, z);
