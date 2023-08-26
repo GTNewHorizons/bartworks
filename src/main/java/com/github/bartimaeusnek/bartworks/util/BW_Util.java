@@ -865,7 +865,7 @@ public class BW_Util {
         return new IStructureElement<T>() {
 
             private final IStructureElement<T> placementDelegate = BorosilicateGlass
-                    .ofBoroGlass((byte) 0, mintier, maxtier, (v1, v2) -> {}, (v1) -> (byte) 0);
+                    .ofBoroGlass((byte) 0, mintier, maxtier, (v1, v2) -> {}, v1 -> (byte) 0);
 
             @Override
             public boolean check(T te, World world, int x, int y, int z) {
