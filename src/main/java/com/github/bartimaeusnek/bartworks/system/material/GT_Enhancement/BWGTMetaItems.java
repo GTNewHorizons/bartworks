@@ -63,12 +63,12 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
                 continue;
 
             if (OreDictionary
-                    .doesOreNameExist(this.orePrefixes.name() + material.mDefaultLocalName.replaceAll(" ", ""))) {
+                    .doesOreNameExist(this.orePrefixes.name() + material.mDefaultLocalName.replace(" ", ""))) {
                 this.hiddenThings.add(i);
                 continue;
             }
             GT_OreDictUnificator
-                    .registerOre(this.orePrefixes.name() + material.mDefaultLocalName.replaceAll(" ", ""), tStack);
+                    .registerOre(this.orePrefixes.name() + material.mDefaultLocalName.replace(" ", ""), tStack);
         }
 
         if (noSubIDMaterials != null) {
@@ -82,12 +82,12 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
                                 && (orePrefixes == OrePrefixes.capsule || orePrefixes == OrePrefixes.bottle))))
                     continue;
 
-                if (OreDictionary.doesOreNameExist(this.orePrefixes.name() + w.mDefaultLocalName.replaceAll(" ", ""))) {
+                if (OreDictionary.doesOreNameExist(this.orePrefixes.name() + w.mDefaultLocalName.replace(" ", ""))) {
                     this.hiddenThings.add(i);
                     continue;
                 }
                 GT_OreDictUnificator
-                        .registerOre(this.orePrefixes.name() + w.mDefaultLocalName.replaceAll(" ", ""), tStack);
+                        .registerOre(this.orePrefixes.name() + w.mDefaultLocalName.replace(" ", ""), tStack);
             }
         }
     }

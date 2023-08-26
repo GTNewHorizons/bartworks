@@ -140,7 +140,7 @@ public class BW_Meta_Items {
 
         ItemStack tStack = BW_Meta_Items.NEWCIRCUITS.addCircuit(aID, aName, tooltip, aTier);
 
-        GT_OreDictUnificator.registerOre((aOreDictPrefix + additionalOreDictData).replaceAll(" ", ""), tStack);
+        GT_OreDictUnificator.registerOre((aOreDictPrefix + additionalOreDictData).replace(" ", ""), tStack);
     }
 
     public static class BW_GT_MetaGenCircuits extends BW_Meta_Items.BW_GT_MetaGen_Item_Hook {

@@ -73,7 +73,7 @@ public class SimpleSubItemClass extends Item {
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         if (stack.getItemDamage() < this.tex.length)
-            return "item." + this.tex[stack.getItemDamage()].replaceAll("/", ".");
+            return "item." + this.tex[stack.getItemDamage()].replace('/', '.');
         return "WrongDamageItemDestroyIt";
     }
 }

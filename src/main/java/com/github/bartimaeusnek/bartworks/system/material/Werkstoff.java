@@ -505,7 +505,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
     }
 
     public String getVarName() {
-        return this.defaultName.replaceAll(" ", "");
+        return this.defaultName.replace(" ", "");
     }
 
     public String getToolTip() {

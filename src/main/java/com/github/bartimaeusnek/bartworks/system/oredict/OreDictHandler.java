@@ -70,15 +70,15 @@ public class OreDictHandler {
     }
 
     public static ItemStack getItemStack(String elementName, OrePrefixes prefixes, int amount) {
-        if (OreDictHandler.cache.get(prefixes + elementName.replaceAll(" ", "")) != null) {
-            Pair<Integer, Short> p = OreDictHandler.cache.get(prefixes + elementName.replaceAll(" ", ""));
+        if (OreDictHandler.cache.get(prefixes + elementName.replace(" ", "")) != null) {
+            Pair<Integer, Short> p = OreDictHandler.cache.get(prefixes + elementName.replace(" ", ""));
             return new ItemStack(Item.getItemById(p.getKey()), amount, p.getValue());
         }
-        if (!OreDictionary.getOres(prefixes + elementName.replaceAll(" ", "")).isEmpty()) {
+        if (!OreDictionary.getOres(prefixes + elementName.replace(" ", "")).isEmpty()) {
             ItemStack tmp = GT_OreDictUnificator
-                    .get(OreDictionary.getOres(prefixes + elementName.replaceAll(" ", "")).get(0).copy()).copy();
+                    .get(OreDictionary.getOres(prefixes + elementName.replace(" ", "")).get(0).copy()).copy();
             OreDictHandler.cache.put(
-                    prefixes + elementName.replaceAll(" ", ""),
+                    prefixes + elementName.replace(" ", ""),
                     new Pair<>(Item.getIdFromItem(tmp.getItem()), (short) tmp.getItemDamage()));
             tmp.stackSize = amount;
             return tmp;

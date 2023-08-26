@@ -134,7 +134,7 @@ public class LabParts extends SimpleSubItemClass {
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
         if (itemStack.getItemDamage() == 0 && itemStack.getTagCompound() != null)
-            return "filled.item." + this.tex[itemStack.getItemDamage()].replaceAll("/", ".");
+            return "filled.item." + this.tex[itemStack.getItemDamage()].replace('/', '.');
         return super.getUnlocalizedName(itemStack);
     }
 }
