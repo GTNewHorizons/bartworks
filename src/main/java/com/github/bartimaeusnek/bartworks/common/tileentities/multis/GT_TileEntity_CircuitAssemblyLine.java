@@ -425,7 +425,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
 
     @Override
     public boolean isRecipeLockingEnabled() {
-        return this.imprintedItemName != null && !this.imprintedItemName.equals("");
+        return this.imprintedItemName != null && !"".equals(this.imprintedItemName);
     }
 
     @Override

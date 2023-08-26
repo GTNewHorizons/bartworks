@@ -85,7 +85,7 @@ public class BWCoreTransformer implements IClassTransformer {
             nu.add(instruction);
             if (instruction.getOpcode() == INVOKEVIRTUAL) {
                 MethodInsnNode invokevirtual = (MethodInsnNode) instruction;
-                if (invokevirtual.name.equals("addVis")) {
+                if ("addVis".equals(invokevirtual.name)) {
                     AbstractInsnNode beginning = method.instructions.get(j - 7);
                     LabelNode label = new LabelNode();
                     nu.insertBefore(beginning, new VarInsnNode(ALOAD, 0));

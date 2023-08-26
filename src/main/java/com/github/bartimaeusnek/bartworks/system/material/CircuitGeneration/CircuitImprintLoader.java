@@ -117,7 +117,7 @@ public class CircuitImprintLoader {
 
     private static boolean isCircuitOreDict(ItemStack item) {
         return BW_Util.isTieredCircuit(item)
-                || BW_Util.getOreNames(item).stream().anyMatch(s -> s.equals("circuitPrimitiveArray"));
+                || BW_Util.getOreNames(item).stream().anyMatch(s -> "circuitPrimitiveArray".equals(s));
     }
 
     private static void exchangeRecipesInList(HashSet<GT_Recipe> toRem, HashSet<GT_Recipe> toAdd) {

@@ -58,8 +58,8 @@ public class ChangeConfig extends CommandBase {
                 }
                 f.setLong(null, l);
             } else if (c.equals(boolean.class)) {
-                if (args[1].equalsIgnoreCase("true") || args[1].equalsIgnoreCase("1")) f.setBoolean(null, true);
-                else if (args[1].equalsIgnoreCase("false") || args[1].equalsIgnoreCase("0")) f.setBoolean(null, false);
+                if ("true".equalsIgnoreCase(args[1]) || "1".equalsIgnoreCase(args[1])) f.setBoolean(null, true);
+                else if ("false".equalsIgnoreCase(args[1]) || "0".equalsIgnoreCase(args[1])) f.setBoolean(null, false);
                 else {
                     sender.addChatMessage(new ChatComponentText("booleans need to be set to true or false"));
                 }

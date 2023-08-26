@@ -93,7 +93,7 @@ public class BW_MetaGeneratedBlocks_Casing extends BW_MetaGenerated_Blocks
     public void getSubBlocks(Item aItem, CreativeTabs aTab, List<ItemStack> aList) {
         Werkstoff.werkstoffHashSet.stream()
                 .filter(
-                        pMaterial -> pMaterial.getType().equals(Werkstoff.Types.BIOLOGICAL)
+                        pMaterial -> Werkstoff.Types.BIOLOGICAL.equals(pMaterial.getType())
                                 && pMaterial.hasGenerationFeature(OrePrefixes.blockCasing)
                                 || pMaterial.doesOreDictedItemExists(OrePrefixes.plate)
                                         && pMaterial.doesOreDictedItemExists(OrePrefixes.screw)

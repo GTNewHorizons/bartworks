@@ -221,7 +221,7 @@ public class CellLoader implements IWerkstoffRunnable {
                     werkstoff.getStats().getMass() > 128 ? 64 : 30);
         }
 
-        if (werkstoff.getType().equals(Werkstoff.Types.ELEMENT)) {
+        if (Werkstoff.Types.ELEMENT.equals(werkstoff.getType())) {
             Materials werkstoffBridgeMaterial = null;
             boolean ElementSet = false;
             for (Element e : Element.values()) {

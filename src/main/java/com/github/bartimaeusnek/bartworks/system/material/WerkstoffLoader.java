@@ -1858,7 +1858,7 @@ public class WerkstoffLoader {
             Set<Map.Entry<IRecipeInput, RecipeOutput>> remset = new HashSet<>();
             for (Map.Entry<IRecipeInput, RecipeOutput> curr : Recipes.macerator.getRecipes().entrySet()) {
                 if (curr.getKey() instanceof RecipeInputOreDict) {
-                    if (((RecipeInputOreDict) curr.getKey()).input.equalsIgnoreCase("oreNULL")) {
+                    if ("oreNULL".equalsIgnoreCase(((RecipeInputOreDict) curr.getKey()).input)) {
                         remset.add(curr);
                     }
                     for (ItemStack stack : curr.getValue().items) {

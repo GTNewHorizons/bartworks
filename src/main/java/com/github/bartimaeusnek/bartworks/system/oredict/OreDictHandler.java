@@ -60,8 +60,8 @@ public class OreDictHandler {
                             (short) tmp.getItemDamage());
                     GameRegistry.UniqueIdentifier UI = GameRegistry.findUniqueIdentifierFor(tmp.getItem());
                     if (UI == null) UI = GameRegistry.findUniqueIdentifierFor(Block.getBlockFromItem(tmp.getItem()));
-                    if (!UI.modId.equals(MainMod.MOD_ID) && !UI.modId.equals(BartWorksCrossmod.MOD_ID)
-                            && !UI.modId.equals("BWCore")) {
+                    if (!MainMod.MOD_ID.equals(UI.modId) && !BartWorksCrossmod.MOD_ID.equals(UI.modId)
+                            && !"BWCore".equals(UI.modId)) {
                         OreDictHandler.cacheNonBW.add(p2);
                     }
                 }

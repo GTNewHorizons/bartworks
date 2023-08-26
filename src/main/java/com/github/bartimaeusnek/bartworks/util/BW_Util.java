@@ -366,9 +366,9 @@ public class BW_Util {
     }
 
     public static byte getByteFromRarity(EnumRarity rarity) {
-        if (rarity.equals(EnumRarity.uncommon)) return 1;
-        if (rarity.equals(EnumRarity.epic)) return 2;
-        else if (rarity.equals(EnumRarity.rare)) return 3;
+        if (EnumRarity.uncommon.equals(rarity)) return 1;
+        if (EnumRarity.epic.equals(rarity)) return 2;
+        else if (EnumRarity.rare.equals(rarity)) return 3;
         return 0;
     }
 
@@ -768,7 +768,7 @@ public class BW_Util {
         byte boroTier = BorosilicateGlass.getTier(block, meta);
         if (boroTier != -1) return boroTier;
 
-        if (block.getUnlocalizedName().equals("blockAlloyGlass")) return 4;
+        if ("blockAlloyGlass".equals(block.getUnlocalizedName())) return 4;
 
         if (block.equals(Blocks.glass)) return 3;
 

@@ -282,7 +282,7 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                                     this.mInventory[this.getInputSlot() + 2],
                                     ItemList.Tool_DataOrb.get(1L),
                                     true)
-                            && Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 2]).equals("DNA Sample")
+                            && "DNA Sample".equals(Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 2]))
                             && (!(Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 2]).isEmpty()))
                             && GT_Utility.isStackValid(this.mInventory[this.getInputSlot() + 3])
                             && GT_Utility.areStacksEqual(this.mInventory[this.getInputSlot() + 3], inp2)
@@ -370,7 +370,7 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                                     this.mInventory[this.getInputSlot() + 3],
                                     ItemList.Tool_DataOrb.get(1L),
                                     true)
-                            && Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 3]).equals("DNA Sample")
+                            && "DNA Sample".equals(Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 3]))
                             && this.mFluid.isFluidEqual(dnaFluid)
                             && (this.mFluid.amount >= 8000)) {
 

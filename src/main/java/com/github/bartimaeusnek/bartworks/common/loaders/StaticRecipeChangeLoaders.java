@@ -249,7 +249,7 @@ public class StaticRecipeChangeLoaders {
                 for (Map.Entry<GT_ItemStack, FluidContainerRegistry.FluidContainerData> entry : sFilledContainerToData
                         .entrySet()) {
                     final String MODID = GameRegistry.findUniqueIdentifierFor(data.filledContainer.getItem()).modId;
-                    if (MODID.equals(MainMod.MOD_ID) || MODID.equals(BartWorksCrossmod.MOD_ID)) continue;
+                    if (MainMod.MOD_ID.equals(MODID) || BartWorksCrossmod.MOD_ID.equals(MODID)) continue;
                     if (entry.getValue().fluid.equals(data.fluid)
                             && !entry.getValue().filledContainer.equals(data.filledContainer)) {
                         toReplace = entry.getValue().filledContainer;
@@ -530,10 +530,10 @@ public class StaticRecipeChangeLoaders {
                             && !GT_Utility.areStacksEqual(GT_Utility.getIntegratedCircuit(14), stack)
                             && !GT_Utility.areStacksEqual(GT_Utility.getIntegratedCircuit(19), stack)) {
                                 if (BW_Util.checkStackAndPrefix(stack))
-                                    circuitConfiguration = (byte) (GT_OreDictUnificator.getAssociation(stack).mPrefix
-                                            .equals(OrePrefixes.dustSmall) ? 4
-                                                    : GT_OreDictUnificator.getAssociation(stack).mPrefix
-                                                            .equals(OrePrefixes.dustTiny) ? 9 : 1);
+                                    circuitConfiguration = (byte) (OrePrefixes.dustSmall
+                                            .equals(GT_OreDictUnificator.getAssociation(stack).mPrefix) ? 4
+                                                    : OrePrefixes.dustTiny
+                                                            .equals(GT_OreDictUnificator.getAssociation(stack).mPrefix) ? 9 : 1);
                                 inputs.add(stack);
                             }
                 inputs.add(GT_Utility.getIntegratedCircuit(circuitConfiguration));

@@ -83,7 +83,7 @@ public class BW_GT_ItemRenderer implements IItemRenderer {
 
                 Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
                 GL11.glBlendFunc(770, 771);
-                if (type.equals(IItemRenderer.ItemRenderType.INVENTORY)) {
+                if (IItemRenderer.ItemRenderType.INVENTORY.equals(type)) {
                     if (aMetaData < CircuitImprintLoader.reverseIDs)
                         GT_RenderUtil.renderItemIcon(tIcon, 16.0D, 0.001D, 0.0F, 0.0F, -1.0F);
                     else {
@@ -115,7 +115,7 @@ public class BW_GT_ItemRenderer implements IItemRenderer {
                 if (tOverlay != null) {
                     Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
                     GL11.glBlendFunc(770, 771);
-                    if (type.equals(IItemRenderer.ItemRenderType.INVENTORY)) {
+                    if (IItemRenderer.ItemRenderType.INVENTORY.equals(type)) {
                         GT_RenderUtil.renderItemIcon(tOverlay, 16.0D, 0.001D, 0.0F, 0.0F, -1.0F);
                     } else {
                         ItemRenderer.renderItemIn2D(

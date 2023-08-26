@@ -95,8 +95,8 @@ public class RadioHatchCompat {
             Object[] arr = RadioHatchCompat.enu.getEnumConstants();
             for (Object o : arr) {
                 if (RadioHatchCompat.rod != null && RadioHatchCompat.longRod != null) break;
-                if (o.toString().equalsIgnoreCase("ROD")) RadioHatchCompat.rod = o;
-                else if (o.toString().equalsIgnoreCase("RODLONG")) RadioHatchCompat.longRod = o;
+                if ("ROD".equalsIgnoreCase(o.toString())) RadioHatchCompat.rod = o;
+                else if ("RODLONG".equalsIgnoreCase(o.toString())) RadioHatchCompat.longRod = o;
             }
 
         } catch (NoSuchFieldException | ClassNotFoundException e) {
@@ -127,7 +127,7 @@ public class RadioHatchCompat {
 
             for (ModContainer container : Loader.instance().getModList()) {
                 if (gtpp != null && bartworks != null) break;
-                if (container.getModId().equalsIgnoreCase(BartWorksCrossmod.MOD_ID)) bartworks = container;
+                if (BartWorksCrossmod.MOD_ID.equalsIgnoreCase(container.getModId())) bartworks = container;
                 else if (container.getModId().equalsIgnoreCase(GTPlusPlus.ID)) gtpp = container;
             }
 

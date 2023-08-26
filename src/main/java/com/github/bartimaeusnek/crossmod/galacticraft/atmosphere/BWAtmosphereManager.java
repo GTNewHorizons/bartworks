@@ -81,7 +81,7 @@ public final class BWAtmosphereManager {
     }
 
     private static boolean addGCGasToWorld(int worldID, IAtmosphericGas gas, int aNumber, int aMaxNumber) {
-        if (gas.equals(IAtmosphericGas.CO2)) {
+        if (IAtmosphericGas.CO2.equals(gas)) {
             BWAtmosphereManager.addGasToWorld(
                     worldID,
                     Materials.CarbonDioxide,

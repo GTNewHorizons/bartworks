@@ -644,7 +644,7 @@ public class AdditionalRecipes {
         Materials werkstoffBridgeMaterial = null;
         boolean aElementSet = false;
         for (Element e : Element.values()) {
-            if (e.toString().equals("Uuo")) {
+            if ("Uuo".equals(e.toString())) {
                 werkstoffBridgeMaterial = werkstoff.getBridgeMaterial() != null ? werkstoff.getBridgeMaterial()
                         : new Materials(
                                 -1,

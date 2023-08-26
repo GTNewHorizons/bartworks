@@ -81,7 +81,7 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
 
         long nominalV = this.getMaxInputEu();
         String tName = BW_Util.getTierNameFromVoltage(nominalV);
-        if (tName.equals("MAX+")) tName = EnumChatFormatting.OBFUSCATED + "MAX+";
+        if ("MAX+".equals(tName)) tName = EnumChatFormatting.OBFUSCATED + "MAX+";
 
         String[] extendedInfo = this.getExtendedInfoData();
 

@@ -217,7 +217,7 @@ public class Circuit_Programmer extends GT_Generic_Item implements IElectricItem
 
     private boolean isLVCircuit(ItemStack stack) {
         return BW_Util.checkStackAndPrefix(stack)
-                && GT_OreDictUnificator.getAssociation(stack).mPrefix.equals(OrePrefixes.circuit)
+                && OrePrefixes.circuit.equals(GT_OreDictUnificator.getAssociation(stack).mPrefix)
                 && GT_OreDictUnificator.getAssociation(stack).mMaterial.mMaterial.equals(Materials.Basic);
     }
 }
