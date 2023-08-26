@@ -932,7 +932,7 @@ public class PlatinumSludgeOverHaul {
     private static void setnewMaterialInRecipe(Object obj) {
         String inputName = "output";
         String inputItemName = "input";
-        if (!(obj instanceof ShapedOreRecipe || obj instanceof ShapelessOreRecipe)) {
+        if ((!(obj instanceof ShapedOreRecipe) && !(obj instanceof ShapelessOreRecipe))) {
             if (obj instanceof ShapedRecipes || (obj instanceof ShapelessRecipes)) {
                 inputName = "recipeOutput";
                 inputItemName = "recipeItems";
@@ -1065,8 +1065,7 @@ public class PlatinumSludgeOverHaul {
             try {
                 if (Class.forName("gtPlusPlus.core.item.base.BaseItemComponent")
                         .isAssignableFrom(stack.getItem().getClass())
-                        && !(stack.getUnlocalizedName().contains("dust")
-                                || stack.getUnlocalizedName().contains("Dust")))
+                        && (!stack.getUnlocalizedName().contains("dust") && !stack.getUnlocalizedName().contains("Dust")))
                     return true;
                 if (Class.forName("gtPlusPlus.core.block.base.BlockBaseModular")
                         .isAssignableFrom(Block.getBlockFromItem(stack.getItem()).getClass()))

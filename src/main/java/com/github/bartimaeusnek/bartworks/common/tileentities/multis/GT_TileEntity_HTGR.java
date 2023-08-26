@@ -253,7 +253,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                     int type = -1;
                     if ((itemStack == null) || (itemStack.getItem() != HTGRMaterials.aHTGR_Materials)) continue;
                     int damage = HTGRMaterials.aHTGR_Materials.getDamage(itemStack);
-                    if (!((damage + 1) % HTGRMaterials.MATERIALS_PER_FUEL == HTGRMaterials.USABLE_FUEL_INDEX + 1))
+                    if (((damage + 1) % HTGRMaterials.MATERIALS_PER_FUEL != HTGRMaterials.USABLE_FUEL_INDEX + 1))
                         continue; // is fuel
                     type = damage / HTGRMaterials.MATERIALS_PER_FUEL;
                     if (this.fueltype == -1) this.fueltype = type;
@@ -280,7 +280,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             }
             return false;
         }
-        if (!(this.HeliumSupply >= GT_TileEntity_HTGR.HELIUM_NEEDED && this.fuelsupply >= mincapacity)) return false;
+        if (((this.HeliumSupply < GT_TileEntity_HTGR.HELIUM_NEEDED) || (this.fuelsupply < mincapacity))) return false;
 
         double eff = Math.min(Math.pow((double) this.fuelsupply / (double) mincapacity, 2D), 100D) / 100D
                 - ((this.getIdealStatus() - this.getRepairStatus()) / 10D);

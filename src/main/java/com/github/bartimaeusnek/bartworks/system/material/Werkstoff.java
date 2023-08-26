@@ -140,7 +140,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                 materials.mIconSet,
                 (List) materials.mOreByProducts,
                 new Pair<>(materials, 1));
-        if (!(mID > 31_766 && mID <= 32_767)) throw new IllegalArgumentException();
+        if (((mID <= 31_766) || (mID > 32_767))) throw new IllegalArgumentException();
         this.stats.mass = materials.getMass();
         this.stats.protons = materials.getProtons();
         this.stats.meltingPoint = materials.mMeltingPoint;

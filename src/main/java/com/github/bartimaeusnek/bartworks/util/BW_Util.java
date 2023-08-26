@@ -608,88 +608,80 @@ public class BW_Util {
                                 : aBaseMetaTileEntity.getBlockOffset(xDir + x, y, zDir + z).equals(inside))
                                 && (aBaseMetaTileEntity.getMetaIDOffset(xDir + x, y, zDir + z) != dmginside
                                         || dmginside > (-1))) {
-                            if (!(allowHatches
-                                    && (((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                            .addDynamoToMachineList(
-                                                    aBaseMetaTileEntity
-                                                            .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
+                            if ((!allowHatches || (!((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
+                                    .addDynamoToMachineList(
+                                            aBaseMetaTileEntity
+                                                    .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
+                                            aBaseCasingIndex) && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
+                                    .getMetaTileEntity())
+                                            .addEnergyInputToMachineList(
+                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
+                                                            xDir + x,
+                                                            y,
+                                                            zDir + z),
                                                     aBaseCasingIndex)
-                                            || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addEnergyInputToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)
-                                            || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addMaintenanceToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)
-                                            || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addMufflerToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)
-                                            || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addInputToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)
-                                            || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
-                                                    .getMetaTileEntity())
-                                                            .addOutputToMachineList(
-                                                                    aBaseMetaTileEntity.getIGregTechTileEntityOffset(
-                                                                            xDir + x,
-                                                                            y,
-                                                                            zDir + z),
-                                                                    aBaseCasingIndex)))) {
+                                    && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
+                                            .getMetaTileEntity())
+                                                    .addMaintenanceToMachineList(
+                                                            aBaseMetaTileEntity.getIGregTechTileEntityOffset(
+                                                                    xDir + x,
+                                                                    y,
+                                                                    zDir + z),
+                                                            aBaseCasingIndex)
+                                    && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
+                                            .getMetaTileEntity())
+                                                    .addMufflerToMachineList(
+                                                            aBaseMetaTileEntity.getIGregTechTileEntityOffset(
+                                                                    xDir + x,
+                                                                    y,
+                                                                    zDir + z),
+                                                            aBaseCasingIndex)
+                                    && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
+                                            .getMetaTileEntity())
+                                                    .addInputToMachineList(
+                                                            aBaseMetaTileEntity.getIGregTechTileEntityOffset(
+                                                                    xDir + x,
+                                                                    y,
+                                                                    zDir + z),
+                                                            aBaseCasingIndex)
+                                    && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity
+                                            .getMetaTileEntity())
+                                                    .addOutputToMachineList(
+                                                            aBaseMetaTileEntity.getIGregTechTileEntityOffset(
+                                                                    xDir + x,
+                                                                    y,
+                                                                    zDir + z),
+                                                            aBaseCasingIndex)))) {
                                 return false;
                             }
                         }
                     }
                     if (!b && !aBaseMetaTileEntity.getBlockOffset(xDir + x, y, zDir + z).equals(block)
                             && (aBaseMetaTileEntity.getMetaIDOffset(xDir + x, y, zDir + z) != dmg || dmg > (-1))) {
-                        if (!(allowHatches
-                                && (((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                        .addDynamoToMachineList(
-                                                aBaseMetaTileEntity.getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                aBaseCasingIndex)
-                                        || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addEnergyInputToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)
-                                        || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addMaintenanceToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)
-                                        || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addMufflerToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)
-                                        || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addInputToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)
-                                        || ((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
-                                                .addOutputToMachineList(
-                                                        aBaseMetaTileEntity
-                                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                                        aBaseCasingIndex)))) {
+                        if ((!allowHatches || (!((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
+                                .addDynamoToMachineList(
+                                        aBaseMetaTileEntity.getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
+                                        aBaseCasingIndex) && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
+                                .addEnergyInputToMachineList(
+                                        aBaseMetaTileEntity
+                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
+                                        aBaseCasingIndex) && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
+                                .addMaintenanceToMachineList(
+                                        aBaseMetaTileEntity
+                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
+                                        aBaseCasingIndex) && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
+                                .addMufflerToMachineList(
+                                        aBaseMetaTileEntity
+                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
+                                        aBaseCasingIndex) && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
+                                .addInputToMachineList(
+                                        aBaseMetaTileEntity
+                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
+                                        aBaseCasingIndex) && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
+                                .addOutputToMachineList(
+                                        aBaseMetaTileEntity
+                                                .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
+                                        aBaseCasingIndex)))) {
                             return false;
                         }
                     }
@@ -903,10 +895,10 @@ public class BW_Util {
         for (byte i = 0; i < aRecipe.length; i++) {
             if (aRecipe[i] instanceof IItemContainer) aRecipe[i] = ((IItemContainer) aRecipe[i]).get(1);
             else if (aRecipe[i] instanceof Enum) aRecipe[i] = ((Enum<?>) aRecipe[i]).name();
-            else if (!(aRecipe[i] == null || aRecipe[i] instanceof ItemStack
-                    || aRecipe[i] instanceof ItemData
-                    || aRecipe[i] instanceof String
-                    || aRecipe[i] instanceof Character))
+            else if (((aRecipe[i] != null) && !(aRecipe[i] instanceof ItemStack)
+                    && !(aRecipe[i] instanceof ItemData)
+                    && !(aRecipe[i] instanceof String)
+                    && !(aRecipe[i] instanceof Character)))
                 aRecipe[i] = aRecipe[i].toString();
         }
 

@@ -146,8 +146,7 @@ public class BW_NEI_OreHandler extends TemplateRecipeHandler {
             BW_OreLayer.NEIMAP.get((short) result.getItemDamage()).stream()
                     .filter(
                             l -> !(ore instanceof BW_MetaGenerated_SmallOres)
-                                    || !(l.getClass().equals(BW_WorldGenRoss128b.class)
-                                            || l.getClass().equals(BW_WorldGenRoss128ba.class)))
+                                    || (!l.getClass().equals(BW_WorldGenRoss128b.class) && !l.getClass().equals(BW_WorldGenRoss128ba.class)))
                     .forEach(
                             l -> this.arecipes
                                     .add(new CachedOreRecipe(l, result, ore instanceof BW_MetaGenerated_SmallOres)));
