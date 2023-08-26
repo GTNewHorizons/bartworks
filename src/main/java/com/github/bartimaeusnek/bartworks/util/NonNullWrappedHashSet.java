@@ -21,11 +21,9 @@ public class NonNullWrappedHashSet<E> extends HashSet<E> {
     private static final long serialVersionUID = 8377161849188229010L;
 
     public NonNullWrappedHashSet() {
-        super();
     }
 
     public NonNullWrappedHashSet(Collection<? extends E> c) {
-        super();
         this.addAll(c);
     }
 
