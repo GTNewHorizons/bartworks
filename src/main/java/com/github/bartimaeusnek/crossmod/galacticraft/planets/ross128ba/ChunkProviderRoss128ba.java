@@ -50,7 +50,7 @@ public class ChunkProviderRoss128ba extends ChunkProviderMoon {
 
     @Override
     public Chunk provideChunk(int cx, int cz) {
-        this.rand.setSeed((long) cx * 341873128712L + (long) cz * 132897987541L);
+        this.rand.setSeed(cx * 341873128712L + cz * 132897987541L);
         Block[] ids = new Block[65536];
         byte[] meta = new byte[65536];
         Arrays.fill(ids, Blocks.air);
@@ -96,7 +96,7 @@ public class ChunkProviderRoss128ba extends ChunkProviderMoon {
                 double yDev = d * 4 + d2 * 2 + d3;
 
                 for (int y = 0; y < 128; ++y) {
-                    if ((double) y < 60.0D + yDev) {
+                    if (y < 60.0D + yDev) {
                         idArray[this.getIndex(x, y, z)] = this.lowerBlockID;
                         int var10001 = this.getIndex(x, y, z);
                         metaArray[var10001] = 4;

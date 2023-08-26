@@ -68,14 +68,14 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
                     null,
                     werkstoff.getMolten(36),
                     0,
-                    (int) ((double) werkstoff.getStats().getMass() / 4D),
+                    (int) (werkstoff.getStats().getMass() / 4D),
                     werkstoff.getStats().getMass() > 128 ? 64 : 30);
             GT_Values.RA.addFluidExtractionRecipe(
                     werkstoff.get(dustTiny),
                     null,
                     werkstoff.getMolten(16),
                     0,
-                    (int) ((double) werkstoff.getStats().getMass() / 9D),
+                    (int) (werkstoff.getStats().getMass() / 9D),
                     werkstoff.getStats().getMass() > 128 ? 64 : 30);
         } else {
 
@@ -92,7 +92,7 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
                     null,
                     werkstoff.getMolten(16),
                     0,
-                    (int) ((double) werkstoff.getStats().getMass() / 9D),
+                    (int) (werkstoff.getStats().getMass() / 9D),
                     werkstoff.getStats().getMass() > 128 ? 64 : 30);
 
             GT_Values.RA.addFluidSolidifierRecipe(
@@ -105,7 +105,7 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
                     ItemList.Shape_Mold_Nugget.get(0),
                     werkstoff.getMolten(16),
                     werkstoff.get(nugget),
-                    (int) ((double) werkstoff.getStats().getMass() / 9D),
+                    (int) (werkstoff.getStats().getMass() / 9D),
                     werkstoff.getStats().getMass() > 128 ? 64 : 30);
             GT_Values.RA.addFluidSolidifierRecipe(
                     ItemList.Shape_Mold_Block.get(0),
@@ -135,7 +135,7 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
                     null,
                     werkstoff.getMolten(72),
                     0,
-                    (int) ((double) werkstoff.getStats().getMass() / 2D),
+                    (int) (werkstoff.getStats().getMass() / 2D),
                     werkstoff.getStats().getMass() > 128 ? 64 : 30);
         }
 

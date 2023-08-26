@@ -131,7 +131,7 @@ public abstract class GT_TileEntity_MegaMultiBlockBase<T extends GT_TileEntity_M
                         + StatCollector.translateToLocal("GT5U.multiblock.efficiency")
                         + ": "
                         + EnumChatFormatting.YELLOW
-                        + (float) this.mEfficiency / 100.0F
+                        + this.mEfficiency / 100.0F
                         + EnumChatFormatting.RESET
                         + " %",
                 StatCollector.translateToLocal("GT5U.multiblock.pollution") + ": "

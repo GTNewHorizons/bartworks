@@ -93,18 +93,18 @@ public class TT_TileEntity_ManualTrafo extends GT_TileEntity_ManualTrafo {
                 aDynamo = var17.next();
             } while (!isValidMetaTileEntity(aDynamo));
 
-            long leftToInject = aEU - (long) injected;
+            long leftToInject = aEU - injected;
             aVoltage = aDynamo.maxEUOutput();
             int aAmpsToInject = (int) (leftToInject / aVoltage);
-            int aRemainder = (int) (leftToInject - (long) aAmpsToInject * aVoltage);
+            int aRemainder = (int) (leftToInject - aAmpsToInject * aVoltage);
             int ampsOnCurrentHatch = (int) Math.min(aDynamo.maxAmperesOut(), aAmpsToInject);
 
             for (int i = 0; i < ampsOnCurrentHatch; ++i) {
                 aDynamo.getBaseMetaTileEntity().increaseStoredEnergyUnits(aVoltage, false);
             }
 
-            injected = (int) ((long) injected + aVoltage * (long) ampsOnCurrentHatch);
-            if (aRemainder > 0 && (long) ampsOnCurrentHatch < aDynamo.maxAmperesOut()) {
+            injected = (int) (injected + aVoltage * ampsOnCurrentHatch);
+            if (aRemainder > 0 && ampsOnCurrentHatch < aDynamo.maxAmperesOut()) {
                 aDynamo.getBaseMetaTileEntity().increaseStoredEnergyUnits(aRemainder, false);
                 injected += aRemainder;
             }

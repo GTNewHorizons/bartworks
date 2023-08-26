@@ -64,7 +64,7 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
         aOutput.add(
                 new FMLProxyPacket(
                         Unpooled.buffer().writeByte(aPacket.getPacketID()).writeBytes(aPacket.encode()).copy(),
-                        (String) aContext.channel().attr(NetworkRegistry.FML_CHANNEL).get()));
+                        aContext.channel().attr(NetworkRegistry.FML_CHANNEL).get()));
     }
 
     @Override
@@ -76,37 +76,37 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
 
     @Override
     public void sendToPlayer(@Nonnull GT_Packet aPacket, @Nonnull EntityPlayerMP aPlayer) {
-        ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.PLAYER);
-        ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
+        this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
                 .set(aPlayer);
-        ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).writeAndFlush(aPacket);
+        this.mChannel.get(Side.SERVER).writeAndFlush(aPacket);
     }
 
     public void sendToAllPlayersinWorld(@Nonnull GT_Packet aPacket, World world) {
         for (String name : FMLServerHandler.instance().getServer().getAllUsernames()) {
-            ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).attr(FMLOutboundHandler.FML_MESSAGETARGET)
+            this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                     .set(FMLOutboundHandler.OutboundTarget.PLAYER);
-            ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
+            this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
                     .set(world.getPlayerEntityByName(name));
-            ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).writeAndFlush(aPacket);
+            this.mChannel.get(Side.SERVER).writeAndFlush(aPacket);
         }
     }
 
     @Override
     public void sendToAllAround(@Nonnull GT_Packet aPacket, NetworkRegistry.TargetPoint aPosition) {
-        ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
-        ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
+        this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
                 .set(aPosition);
-        ((FMLEmbeddedChannel) this.mChannel.get(Side.SERVER)).writeAndFlush(aPacket);
+        this.mChannel.get(Side.SERVER).writeAndFlush(aPacket);
     }
 
     @Override
     public void sendToServer(@Nonnull GT_Packet aPacket) {
-        ((FMLEmbeddedChannel) this.mChannel.get(Side.CLIENT)).attr(FMLOutboundHandler.FML_MESSAGETARGET)
+        this.mChannel.get(Side.CLIENT).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.TOSERVER);
-        ((FMLEmbeddedChannel) this.mChannel.get(Side.CLIENT)).writeAndFlush(aPacket);
+        this.mChannel.get(Side.CLIENT).writeAndFlush(aPacket);
     }
 
     @Override

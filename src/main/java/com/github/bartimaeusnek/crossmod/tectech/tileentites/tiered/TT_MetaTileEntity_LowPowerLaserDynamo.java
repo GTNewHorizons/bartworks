@@ -84,7 +84,7 @@ public class TT_MetaTileEntity_LowPowerLaserDynamo extends GT_MetaTileEntity_Hat
             byte Tick = (byte) ((int) (aTick % 20L));
             if (16 == Tick) {
                 if (aBaseMetaTileEntity.getStoredEU() > 0L) {
-                    this.setEUVar(aBaseMetaTileEntity.getStoredEU() - (long) this.Amperes);
+                    this.setEUVar(aBaseMetaTileEntity.getStoredEU() - this.Amperes);
                     if (aBaseMetaTileEntity.getStoredEU() < 0L) {
                         this.setEUVar(0L);
                     }

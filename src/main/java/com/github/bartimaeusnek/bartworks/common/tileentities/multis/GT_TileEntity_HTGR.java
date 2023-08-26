@@ -283,11 +283,11 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         if (!(this.HeliumSupply >= GT_TileEntity_HTGR.HELIUM_NEEDED && this.fuelsupply >= mincapacity)) return false;
 
         double eff = Math.min(Math.pow((double) this.fuelsupply / (double) mincapacity, 2D), 100D) / 100D
-                - ((double) (this.getIdealStatus() - this.getRepairStatus()) / 10D);
+                - ((this.getIdealStatus() - this.getRepairStatus()) / 10D);
 
         if (eff <= 0) return false;
 
-        int toReduce = MathUtils.floorInt((double) this.fuelsupply * 0.025D * eff);
+        int toReduce = MathUtils.floorInt(this.fuelsupply * 0.025D * eff);
 
         final int originalToReduce = toReduce;
         int burnedballs = toReduce / 64;

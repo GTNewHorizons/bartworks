@@ -272,8 +272,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     private void getDropsVanillaVeins(Predicate<GT_Worldgen_GT_Ore_Layer> oreLayerPredicate) {
         GT_Worldgen_GT_Ore_Layer.sList.stream()
                 .filter(gt_worldgen -> gt_worldgen.mEnabled && oreLayerPredicate.test(gt_worldgen)).forEach(element -> {
-                    this.addDrop(new Pair<>((int) element.mPrimaryMeta, false), (float) element.mWeight);
-                    this.addDrop(new Pair<>((int) element.mSecondaryMeta, false), (float) element.mWeight);
+                    this.addDrop(new Pair<>((int) element.mPrimaryMeta, false), element.mWeight);
+                    this.addDrop(new Pair<>((int) element.mSecondaryMeta, false), element.mWeight);
                     this.addDrop(new Pair<>((int) element.mSporadicMeta, false), (element.mWeight / 8f));
                     this.addDrop(new Pair<>((int) element.mBetweenMeta, false), (element.mWeight / 8f));
                 });
@@ -287,7 +287,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     private void getDropsVanillaSmallOres(Predicate<GT_Worldgen_GT_Ore_SmallPieces> smallOresPredicate) {
         GT_Worldgen_GT_Ore_SmallPieces.sList.stream()
                 .filter(gt_worldgen -> gt_worldgen.mEnabled && smallOresPredicate.test(gt_worldgen))
-                .forEach(element -> this.addDrop(new Pair<>((int) element.mMeta, false), (float) element.mAmount));
+                .forEach(element -> this.addDrop(new Pair<>((int) element.mMeta, false), element.mAmount));
     }
 
     /**
@@ -302,8 +302,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                                 && gt_worldgen instanceof GT_Worldgen_GT_Ore_Layer_Space oreLayerSpace
                                 && oreLayerSpace.isEnabledForDim(finalDef))
                 .map(gt_worldgen -> (GT_Worldgen_GT_Ore_Layer_Space) gt_worldgen).forEach(element -> {
-                    this.addDrop(new Pair<>((int) element.mPrimaryMeta, false), (float) element.mWeight);
-                    this.addDrop(new Pair<>((int) element.mSecondaryMeta, false), (float) element.mWeight);
+                    this.addDrop(new Pair<>((int) element.mPrimaryMeta, false), element.mWeight);
+                    this.addDrop(new Pair<>((int) element.mSecondaryMeta, false), element.mWeight);
                     this.addDrop(new Pair<>((int) element.mSporadicMeta, false), (element.mWeight / 8f));
                     this.addDrop(new Pair<>((int) element.mBetweenMeta, false), (element.mWeight / 8f));
                 });
@@ -321,7 +321,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                                 && gt_worldgen instanceof GT_Worldgen_GT_Ore_SmallPieces_Space oreSmallPiecesSpace
                                 && oreSmallPiecesSpace.isEnabledForDim(finalDef))
                 .map(gt_worldgen -> (GT_Worldgen_GT_Ore_SmallPieces_Space) gt_worldgen)
-                .forEach(element -> this.addDrop(new Pair<>((int) element.mMeta, false), (float) element.mAmount));
+                .forEach(element -> this.addDrop(new Pair<>((int) element.mMeta, false), element.mAmount));
     }
 
     /**
@@ -406,7 +406,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
         return element -> {
             List<Pair<Integer, Boolean>> data = element.getStacksRawData();
             for (int i = 0; i < data.size(); i++) {
-                if (i < data.size() - 2) this.addDrop(data.get(i), (float) element.mWeight);
+                if (i < data.size() - 2) this.addDrop(data.get(i), element.mWeight);
                 else this.addDrop(data.get(i), (element.mWeight / 8f));
             }
         };
@@ -458,7 +458,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                     .map(gt_worldgen -> (BW_Worldgen_Ore_SmallOre_Space) gt_worldgen).forEach(
                             element -> this.addDrop(
                                     new Pair<>(element.mPrimaryMeta, element.bwOres != 0),
-                                    (float) element.mDensity));
+                                    element.mDensity));
         } catch (NullPointerException ignored) {}
     }
 

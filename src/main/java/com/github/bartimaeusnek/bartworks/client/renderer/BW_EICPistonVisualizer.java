@@ -18,7 +18,7 @@ import gregtech.api.GregTech_API;
 public class BW_EICPistonVisualizer extends EntityFX {
 
     public BW_EICPistonVisualizer(World world, int x, int y, int z, int age) {
-        super(world, (double) x, ((double) y), (double) z);
+        super(world, x, (y), z);
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;

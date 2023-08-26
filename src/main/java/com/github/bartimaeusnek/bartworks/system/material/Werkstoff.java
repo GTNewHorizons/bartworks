@@ -591,8 +591,8 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         return this.stats
                 .getQualityOverride() > 0
                         ? this.stats.getQualityOverride()
-                        : (byte) ((15f * (((float) this.getStats().getProtons() / 188f)
-                                + (float) this.getStats().getMeltingPoint() / 10801f))
+                        : (byte) ((15f * ((this.getStats().getProtons() / 188f)
+                                + this.getStats().getMeltingPoint() / 10801f))
                                 / (float) this.getContents().getKey());
     }
 
@@ -600,18 +600,18 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         return this.stats.getSpeedOverride() > 0f ? this.stats.getSpeedOverride()
                 : Math.max(
                         1f,
-                        2f * ((float) -this.getStats().getMass() + 0.1f * (float) this.getStats().getMeltingPoint()
-                                + (float) this.getStats().getProtons())
+                        2f * (-this.getStats().getMass() + 0.1f * this.getStats().getMeltingPoint()
+                                + this.getStats().getProtons())
                                 * 0.1f
                                 / (float) this.getContents().getKey()
                                 * 0.1f
-                                * (float) this.getToolQuality());
+                                * this.getToolQuality());
     }
 
     public int getDurability() {
         return this.stats.getDurOverride() > 0 ? this.stats.getDurOverride()
                 : (int) (this.stats.durMod
-                        * ((0.01f * (float) this.getStats().getMeltingPoint() * (float) this.getStats().getMass())
+                        * ((0.01f * this.getStats().getMeltingPoint() * this.getStats().getMass())
                                 / (float) this.getContents().getKey()));
     }
 
@@ -814,19 +814,19 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 
         @Deprecated
         public Werkstoff.GenerationFeatures removeGems() {
-            if (this.hasGems()) this.toGenerate = (long) (this.toGenerate ^ 0b100);
+            if (this.hasGems()) this.toGenerate = this.toGenerate ^ 0b100;
             return this;
         }
 
         @Deprecated
         public Werkstoff.GenerationFeatures removeDusts() {
-            if (this.hasDusts()) this.toGenerate = (long) (this.toGenerate ^ 0b1);
+            if (this.hasDusts()) this.toGenerate = this.toGenerate ^ 0b1;
             return this;
         }
 
         @Deprecated
         public Werkstoff.GenerationFeatures removeOres() {
-            if (this.hasOres()) this.toGenerate = (long) (this.toGenerate ^ 0b1000);
+            if (this.hasOres()) this.toGenerate = this.toGenerate ^ 0b1000;
             return this;
         }
 
@@ -891,7 +891,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public Werkstoff.GenerationFeatures onlyDust() {
-            this.toGenerate = (long) (0b1);
+            this.toGenerate = (0b1);
             return this;
         }
 
@@ -899,17 +899,17 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
          * Automatically adds Simple Metal Working Items
          */
         public Werkstoff.GenerationFeatures addMetalItems() {
-            this.toGenerate = (long) (this.addSimpleMetalWorkingItems().toGenerate | 0b10);
+            this.toGenerate = this.addSimpleMetalWorkingItems().toGenerate | 0b10;
             return this;
         }
 
         public Werkstoff.GenerationFeatures disable() {
-            this.toGenerate = (long) (0);
+            this.toGenerate = (0);
             return this;
         }
 
         public Werkstoff.GenerationFeatures addCells() {
-            this.toGenerate = (long) (this.toGenerate | 0b10000);
+            this.toGenerate = this.toGenerate | 0b10000;
             return this;
         }
 
@@ -924,7 +924,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public Werkstoff.GenerationFeatures addMolten() {
-            this.toGenerate = (long) (this.toGenerate | 0b1000000);
+            this.toGenerate = this.toGenerate | 0b1000000;
             return this;
         }
 
@@ -932,17 +932,17 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
          * Automatically adds Simple Metal Working Items
          */
         public Werkstoff.GenerationFeatures addGems() {
-            this.toGenerate = (long) (this.addSimpleMetalWorkingItems().toGenerate | 0x4);
+            this.toGenerate = this.addSimpleMetalWorkingItems().toGenerate | 0x4;
             return this;
         }
 
         public Werkstoff.GenerationFeatures addSimpleMetalWorkingItems() {
-            this.toGenerate = (long) (this.toGenerate | 0b10000000);
+            this.toGenerate = this.toGenerate | 0b10000000;
             return this;
         }
 
         public Werkstoff.GenerationFeatures addCasings() {
-            this.toGenerate = (long) (this.toGenerate | 0x382);
+            this.toGenerate = this.toGenerate | 0x382;
             return this;
         }
 
@@ -952,22 +952,22 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public Werkstoff.GenerationFeatures addCraftingMetalWorkingItems() {
-            this.toGenerate = (long) (this.toGenerate | 0x100);
+            this.toGenerate = this.toGenerate | 0x100;
             return this;
         }
 
         public Werkstoff.GenerationFeatures addMultipleIngotMetalWorkingItems() {
-            this.toGenerate = (long) (this.toGenerate | 0x200);
+            this.toGenerate = this.toGenerate | 0x200;
             return this;
         }
 
         public Werkstoff.GenerationFeatures addPrefix(OrePrefixes prefixes) {
-            this.toGenerate = (long) (this.toGenerate | getPrefixDataRaw(prefixes));
+            this.toGenerate = this.toGenerate | getPrefixDataRaw(prefixes);
             return this;
         }
 
         public Werkstoff.GenerationFeatures removePrefix(OrePrefixes prefixes) {
-            this.toGenerate = (long) (this.toGenerate ^ getPrefixDataRaw(prefixes));
+            this.toGenerate = this.toGenerate ^ getPrefixDataRaw(prefixes);
             return this;
         }
     }

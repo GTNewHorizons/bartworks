@@ -396,9 +396,9 @@ public class StaticRecipeChangeLoaders {
     }
 
     private static int transformEBFGasRecipeTime(int originalDuration, long originalGasProtons, long newGasProtons) {
-        double protonTerm = (double) originalGasProtons * (newGasProtons >= originalGasProtons ? 1.0D : 2.75D)
-                - (double) newGasProtons;
-        return Math.max(1, (int) ((double) originalDuration / 200D * Math.max(200D + protonTerm, 1D)));
+        double protonTerm = originalGasProtons * (newGasProtons >= originalGasProtons ? 1.0D : 2.75D)
+                - newGasProtons;
+        return Math.max(1, (int) (originalDuration / 200D * Math.max(200D + protonTerm, 1D)));
     }
 
     private static int transformEBFGasRecipeTime(GT_Recipe recipe, Materials originalGas, Materials newGas) {
@@ -407,7 +407,7 @@ public class StaticRecipeChangeLoaders {
         if (newEbfMul < 0.0D || originalEbfMul < 0.0D) {
             return transformEBFGasRecipeTime(recipe.mDuration, originalGas.getProtons(), newGas.getProtons());
         }
-        return Math.max(1, (int) ((double) recipe.mDuration * newEbfMul / originalEbfMul));
+        return Math.max(1, (int) (recipe.mDuration * newEbfMul / originalEbfMul));
     }
 
     private static int transformEBFGasRecipeTime(GT_Recipe recipe, Materials originalGas, Werkstoff newGas) {
@@ -419,7 +419,7 @@ public class StaticRecipeChangeLoaders {
                     originalGas.getProtons(),
                     newGas.getStats().getProtons());
         }
-        return Math.max(1, (int) ((double) recipe.mDuration * newEbfMul / originalEbfMul));
+        return Math.max(1, (int) (recipe.mDuration * newEbfMul / originalEbfMul));
     }
 
     private static int transformEBFNoGasRecipeTime(GT_Recipe recipe, Materials originalGas) {
@@ -434,7 +434,7 @@ public class StaticRecipeChangeLoaders {
                 int gasAmount = Math.max(
                         1,
                         (int) Math.round(
-                                (double) recipe.mFluidInputs[0].amount
+                                recipe.mFluidInputs[0].amount
                                         * gtEbfGasRecipeConsumptionMultipliers.get(newGas)));
                 if (recipe.mFluidInputs != null && recipe.mFluidInputs.length == 1
                         && recipe.mFluidInputs[0].isFluidEqual(newGas.getGas(0))) {
@@ -479,7 +479,7 @@ public class StaticRecipeChangeLoaders {
                 int gasAmount = Math.max(
                         1,
                         (int) Math.round(
-                                (double) recipe.mFluidInputs[0].amount
+                                recipe.mFluidInputs[0].amount
                                         * newGas.getStats().getEbfGasRecipeConsumedAmountMultiplier()));
                 if (recipe.mFluidInputs != null && recipe.mFluidInputs.length == 1
                         && recipe.mFluidInputs[0]

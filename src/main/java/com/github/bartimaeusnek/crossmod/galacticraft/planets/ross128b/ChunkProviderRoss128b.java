@@ -67,7 +67,7 @@ public class ChunkProviderRoss128b extends ChunkProviderGenerate {
 
     @Override
     public Chunk provideChunk(int p_73154_1_, int p_73154_2_) {
-        this.rand.setSeed((long) p_73154_1_ * 341873128712L + (long) p_73154_2_ * 132897987541L);
+        this.rand.setSeed(p_73154_1_ * 341873128712L + p_73154_2_ * 132897987541L);
         Block[] ablock = new Block[65536];
         byte[] abyte = new byte[65536];
         this.func_147424_a(p_73154_1_, p_73154_2_, ablock);
@@ -113,7 +113,7 @@ public class ChunkProviderRoss128b extends ChunkProviderGenerate {
         if (p_73153_2_ % 4 == 0 || p_73153_3_ % 4 == 0) {
             long i1 = this.rand.nextLong() / 2L * 2L + 1L;
             long j1 = this.rand.nextLong() / 2L * 2L + 1L;
-            this.rand.setSeed((long) p_73153_2_ * i1 + (long) p_73153_3_ * j1 ^ this.worldObj.getSeed());
+            this.rand.setSeed(p_73153_2_ * i1 + p_73153_3_ * j1 ^ this.worldObj.getSeed());
         }
 
         MinecraftForge.EVENT_BUS

@@ -218,7 +218,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     }
 
     private int calcMod(double x) {
-        double y = (((double) this.getOutputCapacity()) / 2D), z = ConfigHandler.bioVatMaxParallelBonus;
+        double y = ((this.getOutputCapacity()) / 2D), z = ConfigHandler.bioVatMaxParallelBonus;
 
         int ret = MathUtils.ceilInt(((-1D / y * Math.pow((x - y), 2D) + y) / y * z));
         return MathUtils.clamp(1, ret, ConfigHandler.bioVatMaxParallelBonus);

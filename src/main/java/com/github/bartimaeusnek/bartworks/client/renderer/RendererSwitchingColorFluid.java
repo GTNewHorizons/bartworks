@@ -102,7 +102,7 @@ public class RendererSwitchingColorFluid implements ISimpleBlockRenderingHandler
             g = 0;
             b = 255;
         }
-        float red = ((float) r) / 255f, green = ((float) g) / 255f, blue = ((float) b) / 255f;
+        float red = (r) / 255f, green = (g) / 255f, blue = (b) / 255f;
 
         BlockFluidBase blockFluidBase = (BlockFluidBase) block;
         boolean renderTop = iBlockAccess.getBlock(x, y + 1, z) != blockFluidBase;

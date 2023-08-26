@@ -108,7 +108,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
     }
 
     public int getSievert() {
-        return this.sievert - MathUtils.ceilInt((float) this.sievert / 100f * (float) this.coverage);
+        return this.sievert - MathUtils.ceilInt(this.sievert / 100f * this.coverage);
     }
 
     public short[] getColorForGUI() {

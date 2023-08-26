@@ -43,7 +43,7 @@ public class PrintRecipeListToFile extends CommandBase {
             BufferedWriter fw = new BufferedWriter(new FileWriter(file));
             CraftingManager.getInstance().getRecipeList().forEach(e -> {
                 try {
-                    fw.write(e.toString() + " = " + ((IRecipe) e).getRecipeOutput().getDisplayName() + "\n");
+                    fw.write(e.toString() + " = " + e.getRecipeOutput().getDisplayName() + "\n");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
