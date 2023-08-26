@@ -90,7 +90,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                         StatCollector.translateToLocal("tooltip.tile.tiereddsc.3.name") + " "
                                 + (aTier - 2)
                                 + " "
-                                + ((aTier - 2) >= 2 ? StatCollector.translateToLocal("tooltip.bw.kg.1.name")
+                                + (aTier - 2 >= 2 ? StatCollector.translateToLocal("tooltip.bw.kg.1.name")
                                         : StatCollector.translateToLocal("tooltip.bw.kg.0.name")),
                         StatCollector.translateToLocal("tooltip.tile.radhatch.1.name"),
                         BW_Tooltip_Reference.ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS.get() });
@@ -159,14 +159,14 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTimer) {
-        BaseMetaTileEntity myMetaTileEntity = ((BaseMetaTileEntity) this.getBaseMetaTileEntity());
+        BaseMetaTileEntity myMetaTileEntity = (BaseMetaTileEntity) this.getBaseMetaTileEntity();
         if (myMetaTileEntity.isServerSide()) {
 
             if (this.mass > 0) {
                 ++this.timer;
             }
 
-            if ((this.mass > 0) && (this.decayTime == 0 || (this.decayTime > 0 && this.timer % this.decayTime == 0))) {
+            if (this.mass > 0 && (this.decayTime == 0 || this.decayTime > 0 && this.timer % this.decayTime == 0)) {
                 this.mass--;
                 if (this.mass == 0) {
                     this.material = StatCollector.translateToLocal("tooltip.bw.empty.name");
@@ -175,7 +175,7 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                 this.timer = 1;
             }
 
-            if ((myMetaTileEntity.mTickTimer > (myMetaTileEntity.mLastSoundTick + ticksBetweenSounds)) && (this.sievert > 0)) {
+            if (myMetaTileEntity.mTickTimer > myMetaTileEntity.mLastSoundTick + ticksBetweenSounds && this.sievert > 0) {
                 this.sendLoopStart((byte) 1);
                 myMetaTileEntity.mLastSoundTick = myMetaTileEntity.mTickTimer;
             }

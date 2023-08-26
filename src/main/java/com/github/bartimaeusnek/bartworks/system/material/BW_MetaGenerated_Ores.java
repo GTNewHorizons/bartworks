@@ -45,7 +45,7 @@ public class BW_MetaGenerated_Ores extends BW_MetaGenerated_Blocks {
     @Override
     protected void doRegistrationStuff(Werkstoff w) {
         if (w != null) {
-            if (!w.hasItemType(OrePrefixes.ore) || ((w.getGenerationFeatures().blacklist & 0b1000) != 0)) return;
+            if (!w.hasItemType(OrePrefixes.ore) || (w.getGenerationFeatures().blacklist & 0b1000) != 0) return;
             GT_ModHandler.addValuableOre(this, w.getmID(), 1);
         }
     }
@@ -58,7 +58,7 @@ public class BW_MetaGenerated_Ores extends BW_MetaGenerated_Blocks {
 
         Block tBlock = aWorld.getBlock(aX, aY, aZ);
         Block tOreBlock = WerkstoffLoader.BWOres;
-        if (aMetaData < 0 || tBlock == Blocks.air && !air || (Block.getIdFromBlock(tBlock) != Block.getIdFromBlock(block))) {
+        if (aMetaData < 0 || tBlock == Blocks.air && !air || Block.getIdFromBlock(tBlock) != Block.getIdFromBlock(block)) {
             return false;
         }
         final int aaY = aY;
@@ -98,8 +98,8 @@ public class BW_MetaGenerated_Ores extends BW_MetaGenerated_Blocks {
     @Override
     public void getSubBlocks(Item aItem, CreativeTabs aTab, List<ItemStack> aList) {
         for (Werkstoff tMaterial : Werkstoff.werkstoffHashSet) {
-            if ((tMaterial != null) && tMaterial.hasItemType(OrePrefixes.ore)
-                    && ((tMaterial.getGenerationFeatures().blacklist & 0x8) == 0)) {
+            if (tMaterial != null && tMaterial.hasItemType(OrePrefixes.ore)
+                    && (tMaterial.getGenerationFeatures().blacklist & 0x8) == 0) {
                 aList.add(new ItemStack(aItem, 1, tMaterial.getmID()));
             }
         }

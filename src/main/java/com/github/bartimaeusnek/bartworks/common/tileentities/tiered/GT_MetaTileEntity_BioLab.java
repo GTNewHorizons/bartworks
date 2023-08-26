@@ -283,12 +283,12 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                                     ItemList.Tool_DataOrb.get(1L),
                                     true)
                             && "DNA Sample".equals(Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 2]))
-                            && (!(Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 2]).isEmpty()))
+                            && !Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 2]).isEmpty()
                             && GT_Utility.isStackValid(this.mInventory[this.getInputSlot() + 3])
                             && GT_Utility.areStacksEqual(this.mInventory[this.getInputSlot() + 3], inp2)
                             && this.mFluid != null
                             && this.mFluid.isFluidEqual(dnaFluid)
-                            && (this.mFluid.amount >= 1000)) {
+                            && this.mFluid.amount >= 1000) {
                         BioData cultureDNABioData = BioData
                                 .getBioDataFromName(Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 2]));
                         if (cultureDNABioData == null) return super.checkRecipe(skipOC);
@@ -372,7 +372,7 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                                     true)
                             && "DNA Sample".equals(Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 3]))
                             && this.mFluid.isFluidEqual(dnaFluid)
-                            && (this.mFluid.amount >= 8000)) {
+                            && this.mFluid.amount >= 8000) {
 
                         BioData cultureDNABioData = BioData
                                 .getBioDataFromName(Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 3]));

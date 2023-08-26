@@ -98,7 +98,7 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
                 public boolean check(GT_TileEntity_ManualTrafo te, World world, int x, int y, int z) {
                     if (world.isAirBlock(x, y, z)) return true;
                     TileEntity tileEntity = world.getTileEntity(x, y, z);
-                    if ((tileEntity == null) || !(tileEntity instanceof IGregTechTileEntity)) return true;
+                    if (tileEntity == null || !(tileEntity instanceof IGregTechTileEntity)) return true;
                     IMetaTileEntity mte = ((IGregTechTileEntity) tileEntity).getMetaTileEntity();
                     if (mte instanceof GT_MetaTileEntity_Hatch_Dynamo
                             || mte instanceof GT_MetaTileEntity_Hatch_Energy) {
@@ -188,11 +188,11 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
         for (GT_MetaTileEntity_Hatch_Dynamo E : this.mDynamoHatches) {
             for (GT_MetaTileEntity_Hatch_Energy I : this.mEnergyHatches) {
 
-                long vtt = I.getEUVar() >= (V[E.mTier] / 2) && E.getEUVar() < E.maxEUStore() ? I.getEUVar() : 0;
+                long vtt = I.getEUVar() >= V[E.mTier] / 2 && E.getEUVar() < E.maxEUStore() ? I.getEUVar() : 0;
 
                 if (vtt == 0) continue;
 
-                long vtp = E.getEUVar() + (vtt);
+                long vtp = E.getEUVar() + vtt;
                 long avt = Math.min(vtp, E.maxEUStore());
                 E.setEUVar(avt);
                 I.setEUVar(I.getEUVar() - vtt);
@@ -242,7 +242,7 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
         this.upstep = this.mode % 2 == 0;
         boolean tapmode = this.mode > 1;
 
-        if (!this.checkPiece(STRUCTURE_PIECE_BASE, 1, 0, 0) || (this.mEnergyHatches.size() == 0)) return false;
+        if (!this.checkPiece(STRUCTURE_PIECE_BASE, 1, 0, 0) || this.mEnergyHatches.size() == 0) return false;
 
         byte intier = this.mEnergyHatches.get(0).mTier;
         for (GT_MetaTileEntity_Hatch_Energy in : this.mEnergyHatches) if (in.mTier != intier) return false;

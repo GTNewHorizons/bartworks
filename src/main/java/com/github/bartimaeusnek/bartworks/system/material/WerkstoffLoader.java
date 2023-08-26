@@ -1478,9 +1478,9 @@ public class WerkstoffLoader {
         MainMod.LOGGER.info(
                 "Making Meta Items for BW Materials took " + (timepost - timepre)
                         + "ns/"
-                        + ((timepost - timepre) / 1000000)
+                        + (timepost - timepre) / 1000000
                         + "ms/"
-                        + ((timepost - timepre) / 1000000000)
+                        + (timepost - timepre) / 1000000000
                         + "s!");
     }
 
@@ -1536,9 +1536,9 @@ public class WerkstoffLoader {
             MainMod.LOGGER.info(
                     "Loading Processing Recipes for BW Materials took " + (timepost - timepre)
                             + "ns/"
-                            + ((timepost - timepre) / 1000000)
+                            + (timepost - timepre) / 1000000
                             + "ms/"
-                            + ((timepost - timepre) / 1000000000)
+                            + (timepost - timepre) / 1000000000
                             + "s!");
             registered = true;
         }
@@ -1651,12 +1651,12 @@ public class WerkstoffLoader {
                     && (werkstoff.getGenerationFeatures().toGenerate & p.mMaterialGenerationBits) != 0
                     && OreDictHandler.getItemStack(werkstoff.getDefaultName(), p, 1) != null) {
                         DebugLog.log(
-                                "Found: " + (p + werkstoff.getVarName())
+                                "Found: " + p + werkstoff.getVarName()
                                         + " in GT material system, disable and reroute my Items to that, also add a Tooltip.");
                         werkstoff.getGenerationFeatures().setBlacklist(p);
                     }
-            WerkstoffLoader.toGenerateGlobal = (WerkstoffLoader.toGenerateGlobal
-                    | werkstoff.getGenerationFeatures().toGenerate);
+            WerkstoffLoader.toGenerateGlobal = WerkstoffLoader.toGenerateGlobal
+                    | werkstoff.getGenerationFeatures().toGenerate;
         }
         DebugLog.log("GlobalGeneration: " + WerkstoffLoader.toGenerateGlobal);
         if ((WerkstoffLoader.toGenerateGlobal & 0b1) != 0) {

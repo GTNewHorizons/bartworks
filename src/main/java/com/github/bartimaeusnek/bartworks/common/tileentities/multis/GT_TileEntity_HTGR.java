@@ -203,13 +203,13 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         this.mCasing = 0;
-        return (this.checkPiece("main", 5, 11, 0) && this.mCasing >= 500
+        return this.checkPiece("main", 5, 11, 0) && this.mCasing >= 500
                 && this.mMaintenanceHatches.size() == 1
                 && this.mInputHatches.size() > 0
                 && this.mOutputHatches.size() > 0
                 && this.mInputBusses.size() > 0
                 && this.mOutputBusses.size() > 0
-                && this.mEnergyHatches.size() > 0);
+                && this.mEnergyHatches.size() > 0;
     }
 
     @Override
@@ -251,9 +251,9 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 this.startRecipeProcessing();
                 for (ItemStack itemStack : this.getStoredInputs()) {
                     int type = -1;
-                    if ((itemStack == null) || (itemStack.getItem() != HTGRMaterials.aHTGR_Materials)) continue;
+                    if (itemStack == null || itemStack.getItem() != HTGRMaterials.aHTGR_Materials) continue;
                     int damage = HTGRMaterials.aHTGR_Materials.getDamage(itemStack);
-                    if (((damage + 1) % HTGRMaterials.MATERIALS_PER_FUEL != HTGRMaterials.USABLE_FUEL_INDEX + 1))
+                    if ((damage + 1) % HTGRMaterials.MATERIALS_PER_FUEL != HTGRMaterials.USABLE_FUEL_INDEX + 1)
                         continue; // is fuel
                     type = damage / HTGRMaterials.MATERIALS_PER_FUEL;
                     if (this.fueltype == -1) this.fueltype = type;
@@ -280,10 +280,10 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             }
             return false;
         }
-        if (((this.HeliumSupply < GT_TileEntity_HTGR.HELIUM_NEEDED) || (this.fuelsupply < mincapacity))) return false;
+        if (this.HeliumSupply < GT_TileEntity_HTGR.HELIUM_NEEDED || this.fuelsupply < mincapacity) return false;
 
         double eff = Math.min(Math.pow((double) this.fuelsupply / (double) mincapacity, 2D), 100D) / 100D
-                - ((this.getIdealStatus() - this.getRepairStatus()) / 10D);
+                - (this.getIdealStatus() - this.getRepairStatus()) / 10D;
 
         if (eff <= 0) return false;
 
@@ -293,7 +293,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         int burnedballs = toReduce / 64;
         if (burnedballs > 0) toReduce -= burnedballs * 64;
 
-        int meta = (this.fueltype * HTGRMaterials.MATERIALS_PER_FUEL) + HTGRMaterials.BURNED_OUT_FUEL_INDEX;
+        int meta = this.fueltype * HTGRMaterials.MATERIALS_PER_FUEL + HTGRMaterials.BURNED_OUT_FUEL_INDEX;
 
         ItemStack[] toOutput = { new ItemStack(HTGRMaterials.aHTGR_Materials, burnedballs, meta),
                 new ItemStack(HTGRMaterials.aHTGR_Materials, toReduce, meta + 1) };
@@ -304,12 +304,12 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
 
         // this.updateSlots(); // not needed ?
 
-        this.coolanttaking = (int) (4000D * (((this.fueltype * 0.5D) + 1)) * eff);
+        this.coolanttaking = (int) (4000D * (this.fueltype * 0.5D + 1) * eff);
 
         this.mEfficiency = (int) (eff * 10000D);
         this.mEfficiencyIncrease = 0;
         this.mEUt = -powerUsage;
-        this.mMaxProgresstime = (int) (72000 * (1d - (eff / 2d)));
+        this.mMaxProgresstime = (int) (72000 * (1d - eff / 2d));
         return true;
     }
 
@@ -332,7 +332,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 ItemStack iStack = new ItemStack(
                         HTGRMaterials.aHTGR_Materials,
                         this.fuelsupply,
-                        (HTGRMaterials.MATERIALS_PER_FUEL * this.fueltype) + HTGRMaterials.USABLE_FUEL_INDEX);
+                        HTGRMaterials.MATERIALS_PER_FUEL * this.fueltype + HTGRMaterials.USABLE_FUEL_INDEX);
                 boolean storedAll = false;
                 for (GT_MetaTileEntity_Hatch_OutputBus tHatch : this.mOutputBusses) {
                     if (!isValidMetaTileEntity(tHatch)) continue;
@@ -419,7 +419,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         + GT_Utility.formatNumbers(this.mMaxProgresstime / 20)
                         + "s",
                 "Fuel type:",
-                (this.fueltype == -1 ? "NONE" : ("TRISO (" + HTGRMaterials.sHTGR_Fuel[this.fueltype].sEnglish) + ")"),
+                this.fueltype == -1 ? "NONE" : "TRISO (" + HTGRMaterials.sHTGR_Fuel[this.fueltype].sEnglish + ")",
                 "Fuel amount:", GT_Utility.formatNumbers(this.fuelsupply) + " pcs.", "Helium-Level:",
                 GT_Utility.formatNumbers(this.HeliumSupply) + "L / "
                         + GT_Utility.formatNumbers(GT_TileEntity_HTGR.HELIUM_NEEDED)
@@ -585,7 +585,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                         new LangEntry_(
                                 "item." + sHTGR_Materials[i] + ".name",
                                 base.sEnglish + " (" + fuel.sEnglish + ")"));
-                if (((i + 1) % MATERIALS_PER_FUEL == (USABLE_FUEL_INDEX + 1)) && fuel.tooltip != null
+                if ((i + 1) % MATERIALS_PER_FUEL == USABLE_FUEL_INDEX + 1 && fuel.tooltip != null
                         && !fuel.tooltip.isEmpty())
                     tooltip.put(i, fuel.tooltip);
                 i++;

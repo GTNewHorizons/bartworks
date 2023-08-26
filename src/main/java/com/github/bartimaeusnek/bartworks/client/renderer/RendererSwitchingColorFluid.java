@@ -76,9 +76,9 @@ public class RendererSwitchingColorFluid implements ISimpleBlockRenderingHandler
                 return RendererSwitchingColorFluid.THREE_QUARTERS_FILLED;
             }
         }
-        return (!world.getBlock(x, y, z).getMaterial().isSolid() && world.getBlock(x, y + 1, z) == block)
+        return !world.getBlock(x, y, z).getMaterial().isSolid() && world.getBlock(x, y + 1, z) == block
                 ? RendererSwitchingColorFluid.LIGHT_Y_POS
-                : (block.getQuantaPercentage(world, x, y, z) * RendererSwitchingColorFluid.THREE_QUARTERS_FILLED);
+                : block.getQuantaPercentage(world, x, y, z) * RendererSwitchingColorFluid.THREE_QUARTERS_FILLED;
     }
 
     public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {}
@@ -86,7 +86,7 @@ public class RendererSwitchingColorFluid implements ISimpleBlockRenderingHandler
     @SideOnly(Side.CLIENT)
     public boolean renderWorldBlock(IBlockAccess iBlockAccess, int x, int y, int z, Block block, int modelId,
             RenderBlocks renderer) {
-        if ((!(block instanceof BioFluidBlock))) return false;
+        if (!(block instanceof BioFluidBlock)) return false;
         Tessellator tessellator = Tessellator.instance;
         Coords blockat = new Coords(x, y, z, iBlockAccess.getTileEntity(x, y, z).getWorldObj().provider.dimensionId);
         Integer rgb = GT_TileEntity_BioVat.staticColorMap.get(blockat);
@@ -94,15 +94,15 @@ public class RendererSwitchingColorFluid implements ISimpleBlockRenderingHandler
         int r, g, b;
 
         if (rgb != null) {
-            r = (rgb >> 16) & 0xFF;
-            g = (rgb >> 8) & 0xFF;
+            r = rgb >> 16 & 0xFF;
+            g = rgb >> 8 & 0xFF;
             b = rgb & 0xFF;
         } else {
             r = 0;
             g = 0;
             b = 255;
         }
-        float red = (r) / 255f, green = (g) / 255f, blue = (b) / 255f;
+        float red = r / 255f, green = g / 255f, blue = b / 255f;
 
         BlockFluidBase blockFluidBase = (BlockFluidBase) block;
         boolean renderTop = iBlockAccess.getBlock(x, y + 1, z) != blockFluidBase;

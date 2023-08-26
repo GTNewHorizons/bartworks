@@ -157,7 +157,7 @@ public class GT_TileEntity_MegaChemicalReactor
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         this.glassTier = 0;
 
-        if (!this.checkPiece(STRUCTURE_PIECE_MAIN, 2, 2, 0) || (this.mMaintenanceHatches.size() != 1)) return false;
+        if (!this.checkPiece(STRUCTURE_PIECE_MAIN, 2, 2, 0) || this.mMaintenanceHatches.size() != 1) return false;
 
         if (this.glassTier < 8) {
             for (GT_MetaTileEntity_Hatch hatch : this.mExoticEnergyHatches) {

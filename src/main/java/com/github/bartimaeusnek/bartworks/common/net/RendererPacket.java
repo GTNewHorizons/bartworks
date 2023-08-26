@@ -50,9 +50,9 @@ public class RendererPacket extends GT_Packet_New {
     @Override
     public void encode(ByteBuf aOut) {
 
-        byte r = (byte) (((this.integer >> 16) & 0xFF) + Byte.MIN_VALUE);
-        byte g = (byte) (((this.integer >> 8) & 0xFF) + Byte.MIN_VALUE);
-        byte b = (byte) (((this.integer) & 0xFF) + Byte.MIN_VALUE);
+        byte r = (byte) ((this.integer >> 16 & 0xFF) + Byte.MIN_VALUE);
+        byte g = (byte) ((this.integer >> 8 & 0xFF) + Byte.MIN_VALUE);
+        byte b = (byte) ((this.integer & 0xFF) + Byte.MIN_VALUE);
         byte checksum = (byte) (this.coords.x % 25 + this.coords.y % 25
                 + this.coords.z % 25
                 + this.coords.wID % 25

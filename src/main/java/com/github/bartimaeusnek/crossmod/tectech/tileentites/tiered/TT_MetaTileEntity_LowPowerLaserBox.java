@@ -58,7 +58,7 @@ public class TT_MetaTileEntity_LowPowerLaserBox extends TT_Abstract_LowPowerLase
 
     @Override
     public long maxAmperesIn() {
-        return this.getBaseMetaTileEntity().isAllowedToWork() ? this.AMPERES + (this.AMPERES / 4) : 0;
+        return this.getBaseMetaTileEntity().isAllowedToWork() ? this.AMPERES + this.AMPERES / 4 : 0;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class TT_MetaTileEntity_LowPowerLaserBox extends TT_Abstract_LowPowerLase
         if (aBaseMetaTileEntity.isServerSide()) {
             aBaseMetaTileEntity.setActive(aBaseMetaTileEntity.isAllowedToWork());
 
-            byte Tick = (byte) ((int) (aTick % 20L));
+            byte Tick = (byte) (int) (aTick % 20L);
             if (16 == Tick) {
                 if (aBaseMetaTileEntity.getStoredEU() > 0L) {
                     this.setEUVar(aBaseMetaTileEntity.getStoredEU() - this.AMPERES);
@@ -109,7 +109,7 @@ public class TT_MetaTileEntity_LowPowerLaserBox extends TT_Abstract_LowPowerLase
                         this.setEUVar(0L);
                     }
                 }
-                if (this.getBaseMetaTileEntity().isAllowedToWork() && (aBaseMetaTileEntity.getStoredEU() > this.getMinimumStoredEU())) {
+                if (this.getBaseMetaTileEntity().isAllowedToWork() && aBaseMetaTileEntity.getStoredEU() > this.getMinimumStoredEU()) {
                     this.moveAroundLowPower(aBaseMetaTileEntity);
                 }
             }

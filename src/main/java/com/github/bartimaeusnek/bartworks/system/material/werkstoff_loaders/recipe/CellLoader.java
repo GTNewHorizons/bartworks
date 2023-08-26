@@ -123,7 +123,7 @@ public class CellLoader implements IWerkstoffRunnable {
                             stOutputs.add(
                                     ((Werkstoff) container.getKey()).get(
                                             dust,
-                                            (tracker.get(container.getKey()).getKey() + container.getValue())));
+                                            tracker.get(container.getKey()).getKey() + container.getValue()));
                             stOutputs.remove(tracker.get(container.getKey()).getValue() + 1);
                         }
                     }

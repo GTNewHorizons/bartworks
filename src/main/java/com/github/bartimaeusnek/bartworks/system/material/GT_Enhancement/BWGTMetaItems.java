@@ -57,9 +57,9 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
         for (int i = 0; i < Materials.values().length; i++) {
             ItemStack tStack = new ItemStack(this, 1, i);
             Materials material = Materials.values()[i];
-            if (((material.getMolten(1) == null && orePrefixes == OrePrefixes.capsuleMolten)
-                    || ((material.getFluid(1) == null && material.getGas(1) == null)
-                            && (orePrefixes == OrePrefixes.capsule || orePrefixes == OrePrefixes.bottle))))
+            if (material.getMolten(1) == null && orePrefixes == OrePrefixes.capsuleMolten
+                    || material.getFluid(1) == null && material.getGas(1) == null
+                            && (orePrefixes == OrePrefixes.capsule || orePrefixes == OrePrefixes.bottle))
                 continue;
 
             if (OreDictionary
@@ -77,9 +77,9 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
             for (int i = 0; i < noSubIDMaterials.size(); i++) {
                 ItemStack tStack = new ItemStack(this, 1, i + 1001);
                 Materials w = noSubIDMaterials.get(i);
-                if (((w.getMolten(1) == null && orePrefixes == OrePrefixes.capsuleMolten)
-                        || ((w.getFluid(1) == null && w.getGas(1) == null)
-                                && (orePrefixes == OrePrefixes.capsule || orePrefixes == OrePrefixes.bottle))))
+                if (w.getMolten(1) == null && orePrefixes == OrePrefixes.capsuleMolten
+                        || w.getFluid(1) == null && w.getGas(1) == null
+                                && (orePrefixes == OrePrefixes.capsule || orePrefixes == OrePrefixes.bottle))
                     continue;
 
                 if (OreDictionary.doesOreNameExist(this.orePrefixes.name() + w.mDefaultLocalName.replace(" ", ""))) {
@@ -167,24 +167,24 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
     public void getSubItems(Item var1, CreativeTabs aCreativeTab, List<ItemStack> aList) {
         for (int i = 0; i < Materials.values().length; i++) {
             Materials w = Materials.values()[i];
-            if ((w == null) || (w.mTypes & Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes)) == 0
+            if (w == null || (w.mTypes & Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes)) == 0
                     && Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes) != 0)
                 continue;
-            if (((w.getMolten(1) == null && this.orePrefixes == OrePrefixes.capsuleMolten)
-                    || ((w.getFluid(1) == null && w.getGas(1) == null)
-                            && (this.orePrefixes == OrePrefixes.capsule || this.orePrefixes == OrePrefixes.bottle))))
+            if (w.getMolten(1) == null && this.orePrefixes == OrePrefixes.capsuleMolten
+                    || w.getFluid(1) == null && w.getGas(1) == null
+                            && (this.orePrefixes == OrePrefixes.capsule || this.orePrefixes == OrePrefixes.bottle))
                 continue;
             else if (this.hiddenThings.contains(i)) continue;
             aList.add(new ItemStack(this, 1, i));
         }
         if (this.hasList) for (int i = 0; i < NoMetaValue.size(); i++) {
             Materials w = NoMetaValue.get(i);
-            if ((w == null) || (w.mTypes & Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes)) == 0
+            if (w == null || (w.mTypes & Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes)) == 0
                     && Werkstoff.GenerationFeatures.getPrefixDataRaw(this.orePrefixes) != 0)
                 continue;
-            if (((w.getMolten(1) == null && this.orePrefixes == OrePrefixes.capsuleMolten)
-                    || ((w.getFluid(1) == null && w.getGas(1) == null)
-                            && (this.orePrefixes == OrePrefixes.capsule || this.orePrefixes == OrePrefixes.bottle))))
+            if (w.getMolten(1) == null && this.orePrefixes == OrePrefixes.capsuleMolten
+                    || w.getFluid(1) == null && w.getGas(1) == null
+                            && (this.orePrefixes == OrePrefixes.capsule || this.orePrefixes == OrePrefixes.bottle))
                 continue;
             else if (this.hiddenThings.contains(i)) continue;
             aList.add(new ItemStack(this, 1, i + 1001));

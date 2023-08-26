@@ -89,16 +89,16 @@ public class BW_MetaGenerated_Items extends GT_MetaGenerated_Item implements IRa
         if (this.orePrefixes == OrePrefixes.dustImpure || this.orePrefixes == OrePrefixes.dustPure
                 || this.orePrefixes == OrePrefixes.crushed) {
             int aDamage = aItemEntity.getEntityItem().getItemDamage();
-            if ((aDamage >= 0) && (!aItemEntity.worldObj.isRemote)) {
+            if (aDamage >= 0 && !aItemEntity.worldObj.isRemote) {
                 Werkstoff aMaterial = werkstoffHashMap.get((short) aDamage);
-                if ((aMaterial != null) && (aMaterial != Werkstoff.default_null_Werkstoff)) {
+                if (aMaterial != null && aMaterial != Werkstoff.default_null_Werkstoff) {
                     int tX = MathHelper.floor_double(aItemEntity.posX);
                     int tY = MathHelper.floor_double(aItemEntity.posY);
                     int tZ = MathHelper.floor_double(aItemEntity.posZ);
                     Block tBlock = aItemEntity.worldObj.getBlock(tX, tY, tZ);
                     byte tMetaData = (byte) aItemEntity.worldObj.getBlockMetadata(tX, tY, tZ);
-                    if ((tBlock == Blocks.cauldron) && (tMetaData > 0)) {
-                        if ((this.orePrefixes == OrePrefixes.dustImpure) || (this.orePrefixes == OrePrefixes.dustPure)) {
+                    if (tBlock == Blocks.cauldron && tMetaData > 0) {
+                        if (this.orePrefixes == OrePrefixes.dustImpure || this.orePrefixes == OrePrefixes.dustPure) {
                             aItemEntity.setEntityItemStack(
                                     WerkstoffLoader.getCorrespondingItemStack(
                                             OrePrefixes.dust,

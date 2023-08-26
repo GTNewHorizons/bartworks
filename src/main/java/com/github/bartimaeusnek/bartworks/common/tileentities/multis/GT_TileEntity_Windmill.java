@@ -296,7 +296,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                     mRecipe[1],
                     Math.max(
                             mRecipe[0],
-                            2f * ((float) Math.sqrt((float) 1 / (this.rotorBlock.getWindStrength() + 1)))
+                            2f * (float) Math.sqrt((float) 1 / (this.rotorBlock.getWindStrength() + 1))
                                     * this.OutputMultiplier(this.rotorBlock)
                                     * (mRecipe[0] + mRecipe[1])));
             int amount = (int) Math.floor(multiper * (this.mOutputItems[0].stackSize * this.mMulti));
@@ -314,7 +314,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
             splitStacks.add(tmp);
             this.mOutputItems = splitStacks.toArray(new ItemStack[splitStacks.size()]);
         }
-        this.mMaxProgresstime = (tRecipe.mDuration * 2 * 100 * this.mMulti) / this.getSpeed(this.rotorBlock);
+        this.mMaxProgresstime = tRecipe.mDuration * 2 * 100 * this.mMulti / this.getSpeed(this.rotorBlock);
         this.mMulti = 16;
         return true;
     }

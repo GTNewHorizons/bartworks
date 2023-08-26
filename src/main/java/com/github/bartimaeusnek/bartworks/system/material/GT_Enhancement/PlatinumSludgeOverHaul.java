@@ -690,7 +690,7 @@ public class PlatinumSludgeOverHaul {
             if (GT_Utility.isStackValid(realEntry.getKey())
                     && BW_Util.checkStackAndPrefix((ItemStack) realEntry.getKey())) {
                 ItemData association = GT_OreDictUnificator.getAssociation((ItemStack) realEntry.getKey());
-                if ((!dust.equals(association.mPrefix) && !dustTiny.equals(association.mPrefix))
+                if (!dust.equals(association.mPrefix) && !dustTiny.equals(association.mPrefix)
                         || !association.mMaterial.mMaterial.equals(Materials.Platinum))
                     if (GT_Utility.isStackValid(realEntry.getValue())
                             && BW_Util.checkStackAndPrefix((ItemStack) realEntry.getValue())) {
@@ -928,8 +928,8 @@ public class PlatinumSludgeOverHaul {
     private static void setnewMaterialInRecipe(Object obj) {
         String inputName = "output";
         String inputItemName = "input";
-        if ((!(obj instanceof ShapedOreRecipe) && !(obj instanceof ShapelessOreRecipe))) {
-            if (obj instanceof ShapedRecipes || (obj instanceof ShapelessRecipes)) {
+        if (!(obj instanceof ShapedOreRecipe) && !(obj instanceof ShapelessOreRecipe)) {
+            if (obj instanceof ShapedRecipes || obj instanceof ShapelessRecipes) {
                 inputName = "recipeOutput";
                 inputItemName = "recipeItems";
             } else if (GTPlusPlus.isModLoaded()) {
@@ -1012,7 +1012,7 @@ public class PlatinumSludgeOverHaul {
             }
 
             for (Object stack : stacks) {
-                if ((stack instanceof ItemStack) && GT_Utility.areStacksEqual(GT_OreDictUnificator.get(crateGtDust, mat, 1), (ItemStack) stack))
+                if (stack instanceof ItemStack && GT_Utility.areStacksEqual(GT_OreDictUnificator.get(crateGtDust, mat, 1), (ItemStack) stack))
                     return true;
             }
 
@@ -1032,7 +1032,7 @@ public class PlatinumSludgeOverHaul {
     }
 
     private static boolean isInBlackList(ItemStack stack) {
-        if ((stack == null) || (stack.getItem() instanceof BW_MetaGenerated_Items) || MainMod.MOD_ID.equals(GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId) || BartWorksCrossmod.MOD_ID.equals(GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId)) return true;
+        if (stack == null || stack.getItem() instanceof BW_MetaGenerated_Items || MainMod.MOD_ID.equals(GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId) || BartWorksCrossmod.MOD_ID.equals(GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId)) return true;
 
         if (GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId.equals(NewHorizonsCoreMod.ID)
                 && !stack.getUnlocalizedName().contains("dust")
@@ -1049,8 +1049,8 @@ public class PlatinumSludgeOverHaul {
 
         if (stack.getItem() instanceof GT_Generic_Item) {
             if (!BW_Util.checkStackAndPrefix(stack)) return false;
-            return (!Arrays.asList(PlatinumSludgeOverHaul.OPBLACKLIST)
-                    .contains(GT_OreDictUnificator.getAssociation(stack).mPrefix))
+            return !Arrays.asList(PlatinumSludgeOverHaul.OPBLACKLIST)
+                    .contains(GT_OreDictUnificator.getAssociation(stack).mPrefix)
                     || Arrays.asList(PlatinumSludgeOverHaul.BLACKLIST)
                             .contains(GT_OreDictUnificator.getAssociation(stack).mMaterial.mMaterial);
         }
@@ -1059,7 +1059,7 @@ public class PlatinumSludgeOverHaul {
             try {
                 if (Class.forName("gtPlusPlus.core.item.base.BaseItemComponent")
                         .isAssignableFrom(stack.getItem().getClass())
-                        && (!stack.getUnlocalizedName().contains("dust") && !stack.getUnlocalizedName().contains("Dust")))
+                        && !stack.getUnlocalizedName().contains("dust") && !stack.getUnlocalizedName().contains("Dust"))
                     return true;
                 if (Class.forName("gtPlusPlus.core.block.base.BlockBaseModular")
                         .isAssignableFrom(Block.getBlockFromItem(stack.getItem()).getClass()))

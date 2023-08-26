@@ -175,7 +175,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                 .addInfo(
                         "Can be supplied with 2L/s of Neon(x4), Krypton(x8), Xenon(x16) or Oganesson(x64) for higher outputs.")
                 .addInfo(
-                        "Will output " + (2 * this.TIER_MULTIPLIER)
+                        "Will output " + 2 * this.TIER_MULTIPLIER
                                 + " Ores per Second depending on the Dimension it is build in")
                 .addInfo("Put the Ore into the input bus to set the Whitelist/Blacklist")
                 .addInfo("Use a screwdriver to toggle Whitelist/Blacklist")
@@ -274,8 +274,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                 .filter(gt_worldgen -> gt_worldgen.mEnabled && oreLayerPredicate.test(gt_worldgen)).forEach(element -> {
                     this.addDrop(new Pair<>((int) element.mPrimaryMeta, false), element.mWeight);
                     this.addDrop(new Pair<>((int) element.mSecondaryMeta, false), element.mWeight);
-                    this.addDrop(new Pair<>((int) element.mSporadicMeta, false), (element.mWeight / 8f));
-                    this.addDrop(new Pair<>((int) element.mBetweenMeta, false), (element.mWeight / 8f));
+                    this.addDrop(new Pair<>((int) element.mSporadicMeta, false), element.mWeight / 8f);
+                    this.addDrop(new Pair<>((int) element.mBetweenMeta, false), element.mWeight / 8f);
                 });
     }
 
@@ -304,8 +304,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                 .map(gt_worldgen -> (GT_Worldgen_GT_Ore_Layer_Space) gt_worldgen).forEach(element -> {
                     this.addDrop(new Pair<>((int) element.mPrimaryMeta, false), element.mWeight);
                     this.addDrop(new Pair<>((int) element.mSecondaryMeta, false), element.mWeight);
-                    this.addDrop(new Pair<>((int) element.mSporadicMeta, false), (element.mWeight / 8f));
-                    this.addDrop(new Pair<>((int) element.mBetweenMeta, false), (element.mWeight / 8f));
+                    this.addDrop(new Pair<>((int) element.mSporadicMeta, false), element.mWeight / 8f);
+                    this.addDrop(new Pair<>((int) element.mBetweenMeta, false), element.mWeight / 8f);
                 });
     }
 
@@ -350,7 +350,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
             for (int i = 0; i < NOBLE_GASSES.length; i++) {
                 FluidStack ng = NOBLE_GASSES[i];
                 if (ng.isFluidEqual(s)) {
-                    this.multiplier = this.TIER_MULTIPLIER * (2 << (i == NOBLE_GASSES.length - 1 ? (i + 2) : (i + 1)));
+                    this.multiplier = this.TIER_MULTIPLIER * (2 << (i == NOBLE_GASSES.length - 1 ? i + 2 : i + 1));
                     return s;
                 }
             }
@@ -407,7 +407,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
             List<Pair<Integer, Boolean>> data = element.getStacksRawData();
             for (int i = 0; i < data.size(); i++) {
                 if (i < data.size() - 2) this.addDrop(data.get(i), element.mWeight);
-                else this.addDrop(data.get(i), (element.mWeight / 8f));
+                else this.addDrop(data.get(i), element.mWeight / 8f);
             }
         };
     }
@@ -487,7 +487,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      */
     private void handleModDimDef(int id) {
         // vanilla dims or TF
-        if ((id <= 1 && id >= -1) || id == 7) {
+        if (id <= 1 && id >= -1 || id == 7) {
             this.getDropsVanillaVeins(this.makeOreLayerPredicate());
             this.getDropsVanillaSmallOres(this.makeSmallOresPredicate());
 
@@ -530,8 +530,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                 .collect(Collectors.toList());
         final ItemStack output = this.getOreItemStack(this.getOreDamage());
         if (inputOres.size() == 0
-                || (this.mBlacklist && inputOres.stream().allMatch(is -> !GT_Utility.areStacksEqual(is, output)))
-                || (!this.mBlacklist && inputOres.stream().anyMatch(is -> GT_Utility.areStacksEqual(is, output))))
+                || this.mBlacklist && inputOres.stream().allMatch(is -> !GT_Utility.areStacksEqual(is, output))
+                || !this.mBlacklist && inputOres.stream().anyMatch(is -> GT_Utility.areStacksEqual(is, output)))
             this.addOutput(output);
         this.updateSlots();
     }

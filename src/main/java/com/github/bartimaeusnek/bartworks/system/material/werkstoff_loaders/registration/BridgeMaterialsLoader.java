@@ -73,8 +73,8 @@ public class BridgeMaterialsLoader implements IWerkstoffRunnable {
                                 1,
                                 null);
         for (OrePrefixes prefixes : values()) {
-            if (((prefixes != cell) || !Werkstoff.Types.ELEMENT.equals(werkstoff.getType()))) {
-                if ((prefixes == dust && Werkstoff.Types.ELEMENT.equals(werkstoff.getType())) && Werkstoff.Types.ELEMENT.equals(werkstoff.getType())) {
+            if (prefixes != cell || !Werkstoff.Types.ELEMENT.equals(werkstoff.getType())) {
+                if (prefixes == dust && Werkstoff.Types.ELEMENT.equals(werkstoff.getType()) && Werkstoff.Types.ELEMENT.equals(werkstoff.getType())) {
                     boolean ElementSet = false;
                     for (Element e : Element.values()) {
                         if (e.toString().equals(werkstoff.getToolTip())) {

@@ -83,10 +83,10 @@ public class MetaBlockPacket extends GT_Packet_New {
     public void process(IBlockAccess iBlockAccess) {
         if (iBlockAccess != null) {
             TileEntity tTileEntity = iBlockAccess.getTileEntity(this.x, this.y, this.z);
-            if ((tTileEntity instanceof BW_MetaGenerated_Block_TE)) {
+            if (tTileEntity instanceof BW_MetaGenerated_Block_TE) {
                 ((BW_MetaGenerated_Block_TE) tTileEntity).mMetaData = this.meta;
             }
-            if (((iBlockAccess instanceof World)) && (((World) iBlockAccess).isRemote)) {
+            if (iBlockAccess instanceof World && ((World) iBlockAccess).isRemote) {
                 ((World) iBlockAccess).markBlockForUpdate(this.x, this.y, this.z);
             }
         }

@@ -218,9 +218,9 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     }
 
     private int calcMod(double x) {
-        double y = ((this.getOutputCapacity()) / 2D), z = ConfigHandler.bioVatMaxParallelBonus;
+        double y = this.getOutputCapacity() / 2D, z = ConfigHandler.bioVatMaxParallelBonus;
 
-        int ret = MathUtils.ceilInt(((-1D / y * Math.pow((x - y), 2D) + y) / y * z));
+        int ret = MathUtils.ceilInt((-1D / y * Math.pow(x - y, 2D) + y) / y * z);
         return MathUtils.clamp(1, ret, ConfigHandler.bioVatMaxParallelBonus);
     }
 
@@ -289,7 +289,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             return false;
         }
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-        if ((aMetaTileEntity == null) || !(aMetaTileEntity instanceof GT_MetaTileEntity_RadioHatch)) {
+        if (aMetaTileEntity == null || !(aMetaTileEntity instanceof GT_MetaTileEntity_RadioHatch)) {
             return false;
         } else {
             ((GT_MetaTileEntity_RadioHatch) aMetaTileEntity).updateTexture(CasingIndex);
@@ -462,9 +462,9 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
     }
 
     private int reCalculateHeight() {
-        return (this.reCalculateFluidAmmount() > ((this.getCapacity() / 4) - 1)
-                ? (this.reCalculateFluidAmmount() >= this.getCapacity() / 2 ? 3 : 2)
-                : 1);
+        return this.reCalculateFluidAmmount() > this.getCapacity() / 4 - 1
+                ? this.reCalculateFluidAmmount() >= this.getCapacity() / 2 ? 3 : 2
+                : 1;
     }
 
     public void doAllVisualThings() {
@@ -490,8 +490,8 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
 
                 this.height = this.reCalculateHeight();
                 if (this.mFluid != null && this.height > 1 && this.reCalculateFluidAmmount() > 0) {
-                    if ((!(BW_Util.areStacksEqualOrNull(aStack, this.mStack))) || (this.needsVisualUpdate
-                            && this.getBaseMetaTileEntity().getTimer() % GT_TileEntity_BioVat.TIMERDIVIDER == 1)) {
+                    if (!BW_Util.areStacksEqualOrNull(aStack, this.mStack) || this.needsVisualUpdate
+                            && this.getBaseMetaTileEntity().getTimer() % GT_TileEntity_BioVat.TIMERDIVIDER == 1) {
                         for (int x = -1; x < 2; x++) {
                             for (int y = 1; y < this.height; y++) {
                                 for (int z = -1; z < 2; z++) {
@@ -535,7 +535,7 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             if (this.getBaseMetaTileEntity().isActive() && this.mNeededSievert > this.mSievert)
                 this.mOutputFluids = null;
         }
-        if (aBaseMetaTileEntity.isServerSide() && (this.mMaxProgresstime <= 0)) {
+        if (aBaseMetaTileEntity.isServerSide() && this.mMaxProgresstime <= 0) {
             this.mTimes = 0;
             this.mMaxProgresstime = 0;
         }

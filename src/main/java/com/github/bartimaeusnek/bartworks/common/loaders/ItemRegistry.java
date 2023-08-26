@@ -283,15 +283,15 @@ public class ItemRegistry {
                 "Electric Implosion Compressor").getStackForm(1L);
 
         // EIC depend on neutronium block to pass on structure updates
-        int bitmask = GregTech_API.sMachineIDs.getOrDefault(GregTech_API.sBlockMetal5, 0) | (1 << 2);
+        int bitmask = GregTech_API.sMachineIDs.getOrDefault(GregTech_API.sBlockMetal5, 0) | 1 << 2;
         GregTech_API.registerMachineBlock(GregTech_API.sBlockMetal5, bitmask);
 
         // Also spacetime, transcendent metal, and universium
-        bitmask = GregTech_API.sMachineIDs.getOrDefault(GregTech_API.sBlockMetal9, 0) | (1 << 3) | (1 << 4) | (1 << 8);
+        bitmask = GregTech_API.sMachineIDs.getOrDefault(GregTech_API.sBlockMetal9, 0) | 1 << 3 | 1 << 4 | 1 << 8;
         GregTech_API.registerMachineBlock(GregTech_API.sBlockMetal9, bitmask);
 
         // Also infinity
-        bitmask = GregTech_API.sMachineIDs.getOrDefault(LudicrousBlocks.resource_block, 0) | (1 << 1);
+        bitmask = GregTech_API.sMachineIDs.getOrDefault(LudicrousBlocks.resource_block, 0) | 1 << 1;
         GregTech_API.registerMachineBlock(LudicrousBlocks.resource_block, bitmask);
 
         ItemRegistry.THTR = new GT_TileEntity_THTR(

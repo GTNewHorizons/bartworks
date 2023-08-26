@@ -355,7 +355,7 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
 
         this.mPollutionOutputHatches.clear();
 
-        if (!this.checkPiece("main", 7, 17, 0) || (this.getCoilLevel() == HeatingCoilLevel.None) || (this.mMaintenanceHatches.size() != 1)) return false;
+        if (!this.checkPiece("main", 7, 17, 0) || this.getCoilLevel() == HeatingCoilLevel.None || this.mMaintenanceHatches.size() != 1) return false;
 
         if (this.glassTier < 8) {
             for (GT_MetaTileEntity_Hatch hatch : this.mExoticEnergyHatches) {

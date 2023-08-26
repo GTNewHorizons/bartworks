@@ -111,7 +111,7 @@ public class BW_TileEntity_HeatedWaterPump extends TileEntity implements ITileDr
             ++this.tick;
             --this.fuel;
             if (this.tick % 20 == 0) {
-                if (this.outputstack.amount <= (8000 - ConfigHandler.mbWaterperSec))
+                if (this.outputstack.amount <= 8000 - ConfigHandler.mbWaterperSec)
                     this.outputstack.amount += ConfigHandler.mbWaterperSec;
                 this.tick = 0;
             }

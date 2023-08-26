@@ -245,7 +245,7 @@ public class BWRecipes {
         if (x == 43) ret = 5000;
         else if (x == 61) ret = 4500;
         else if (x <= 100) ret = MathUtils.ceilLong((8000D * Math.tanh(-x / 20D) + 8000D) * 1000D);
-        else ret = MathUtils.ceilLong(((8000D * Math.tanh(-x / 65D) + 8000D)));
+        else ret = MathUtils.ceilLong(8000D * Math.tanh(-x / 65D) + 8000D);
         return ret;
     }
 

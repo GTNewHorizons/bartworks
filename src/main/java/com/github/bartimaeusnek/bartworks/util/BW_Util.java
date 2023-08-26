@@ -109,10 +109,10 @@ public class BW_Util {
         int newTime = recipe.mDuration;
         int newVoltage = recipe.mEUt;
         if (tier < oldTier) {
-            newTime <<= (oldTier - tier);
+            newTime <<= oldTier - tier;
             newVoltage >>= 2 * (oldTier - tier);
         } else {
-            newTime >>= (tier - oldTier);
+            newTime >>= tier - oldTier;
             newVoltage <<= 2 * (tier - oldTier);
         }
         recipe.mEUt = newVoltage;
@@ -207,13 +207,13 @@ public class BW_Util {
     public static byte specialToByte(int aSpecialValue) {
         byte special = 0;
         switch (aSpecialValue) {
-            case (LOWGRAVITY):
+            case LOWGRAVITY:
                 special = 1;
                 break;
-            case (CLEANROOM):
+            case CLEANROOM:
                 special = 2;
                 break;
-            case (LOWGRAVITY | CLEANROOM):
+            case LOWGRAVITY | CLEANROOM:
                 special = 3;
                 break;
             default:
@@ -247,8 +247,8 @@ public class BW_Util {
             if (pair.getMaterials().equals(materials)) return pair.getSievert();
         }
         return (int) (materials.getProtons() == 43L
-                ? (materials.equals(Materials.NaquadahEnriched) ? 140
-                        : materials.equals(Materials.Naquadria) ? 150 : materials.equals(Materials.Naquadah) ? 130 : 43)
+                ? materials.equals(Materials.NaquadahEnriched) ? 140
+                        : materials.equals(Materials.Naquadria) ? 150 : materials.equals(Materials.Naquadah) ? 130 : 43
                 : materials.getProtons());
     }
 
@@ -327,7 +327,7 @@ public class BW_Util {
     }
 
     public static int getMachineVoltageFromTier(int tier) {
-        return (int) (30 * Math.pow(4, (tier - 1)));
+        return (int) (30 * Math.pow(4, tier - 1));
     }
 
     public static long getTierVoltage(int tier) {
@@ -335,7 +335,7 @@ public class BW_Util {
     }
 
     public static long getTierVoltage(byte tier) {
-        return 8L << (2 * tier);
+        return 8L << 2 * tier;
     }
 
     public static byte getTier(long voltage) {
@@ -358,7 +358,7 @@ public class BW_Util {
     }
 
     public static boolean areStacksEqualOrNull(ItemStack aStack1, ItemStack aStack2) {
-        return (aStack1 == null && aStack2 == null) || GT_Utility.areStacksEqual(aStack1, aStack2);
+        return aStack1 == null && aStack2 == null || GT_Utility.areStacksEqual(aStack1, aStack2);
     }
 
     public static boolean areStacksEqualOrEachNull(ItemStack aStack1, ItemStack aStack2) {
@@ -414,7 +414,7 @@ public class BW_Util {
         byte mTier = (byte) Math.max(0, GT_Utility.getTier(maxInputVoltage));
         if (mTier == 0) {
             // Long time calculation
-            long xMaxProgresstime = ((long) aDuration) << 1;
+            long xMaxProgresstime = (long) aDuration << 1;
             if (xMaxProgresstime > Integer.MAX_VALUE - 1) {
                 // make impossible if too long
                 base.mEUt = Integer.MAX_VALUE - 1;
@@ -600,15 +600,15 @@ public class BW_Util {
         for (int x = -radius; x <= radius; x++) {
             for (int y = yLevel; y < height; y++) {
                 for (int z = -radius; z <= radius; z++) {
-                    if (freeCorners && (((Math.abs(x) == radius && Math.abs(z) == radius)))) continue;
-                    if (controllerLayer && (xDir + x == 0 && zDir + z == 0)) continue;
+                    if (freeCorners && Math.abs(x) == radius && Math.abs(z) == radius) continue;
+                    if (controllerLayer && xDir + x == 0 && zDir + z == 0) continue;
                     boolean b = Math.abs(x) < radius && Math.abs(z) != radius;
                     if (insideCheck && b) {
                         if (!(inside.equals(Blocks.air) ? aBaseMetaTileEntity.getAirOffset(xDir + x, y, zDir + z)
                                 : aBaseMetaTileEntity.getBlockOffset(xDir + x, y, zDir + z).equals(inside))
                                 && (aBaseMetaTileEntity.getMetaIDOffset(xDir + x, y, zDir + z) != dmginside
-                                        || dmginside > (-1))) {
-                            if ((!allowHatches || (!((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
+                                        || dmginside > -1)) {
+                            if (!allowHatches || !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
                                     .addDynamoToMachineList(
                                             aBaseMetaTileEntity
                                                     .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
@@ -651,14 +651,14 @@ public class BW_Util {
                                                                     xDir + x,
                                                                     y,
                                                                     zDir + z),
-                                                            aBaseCasingIndex)))) {
+                                                            aBaseCasingIndex)) {
                                 return false;
                             }
                         }
                     }
                     if (!b && !aBaseMetaTileEntity.getBlockOffset(xDir + x, y, zDir + z).equals(block)
-                            && (aBaseMetaTileEntity.getMetaIDOffset(xDir + x, y, zDir + z) != dmg || dmg > (-1))) {
-                        if ((!allowHatches || (!((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
+                            && (aBaseMetaTileEntity.getMetaIDOffset(xDir + x, y, zDir + z) != dmg || dmg > -1)) {
+                        if (!allowHatches || !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
                                 .addDynamoToMachineList(
                                         aBaseMetaTileEntity.getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
                                         aBaseCasingIndex) && !((GT_MetaTileEntity_MultiBlockBase) aBaseMetaTileEntity.getMetaTileEntity())
@@ -681,7 +681,7 @@ public class BW_Util {
                                 .addOutputToMachineList(
                                         aBaseMetaTileEntity
                                                 .getIGregTechTileEntityOffset(xDir + x, y, zDir + z),
-                                        aBaseCasingIndex)))) {
+                                        aBaseCasingIndex)) {
                             return false;
                         }
                     }
@@ -699,8 +699,8 @@ public class BW_Util {
         for (int x = -radius; x <= radius; x++) {
             for (int y = yLevel; y < height; y++) {
                 for (int z = -radius; z <= radius; z++) {
-                    if (freeCorners && (((Math.abs(x) == radius && Math.abs(z) == radius)))) continue;
-                    if (controllerLayer && (xDir + x == 0 && zDir + z == 0)) continue;
+                    if (freeCorners && Math.abs(x) == radius && Math.abs(z) == radius) continue;
+                    if (controllerLayer && xDir + x == 0 && zDir + z == 0) continue;
                     final boolean inside = Math.abs(x) < radius && Math.abs(z) != radius;
                     if (insideCheck && inside) ret.add(aBaseMetaTileEntity.getMetaIDOffset(xDir + x, y, zDir + z));
                     if (!inside) {
@@ -786,7 +786,7 @@ public class BW_Util {
                 byte glasstier = BW_Util
                         .calculateGlassTier(world.getBlock(x, y, z), (byte) world.getBlockMetadata(x, y, z));
                  // is not a glass ?
-                if ((glasstier == 0) || (glasstier == notset) || (glasstier < mintier) || (glasstier > maxtier)) return false;
+                if (glasstier == 0 || glasstier == notset || glasstier < mintier || glasstier > maxtier) return false;
                 if (getter.apply(te) == notset) setter.accept(te, glasstier);
                 return getter.apply(te) == glasstier;
             }
@@ -895,10 +895,10 @@ public class BW_Util {
         for (byte i = 0; i < aRecipe.length; i++) {
             if (aRecipe[i] instanceof IItemContainer) aRecipe[i] = ((IItemContainer) aRecipe[i]).get(1);
             else if (aRecipe[i] instanceof Enum) aRecipe[i] = ((Enum<?>) aRecipe[i]).name();
-            else if (((aRecipe[i] != null) && !(aRecipe[i] instanceof ItemStack)
+            else if (aRecipe[i] != null && !(aRecipe[i] instanceof ItemStack)
                     && !(aRecipe[i] instanceof ItemData)
                     && !(aRecipe[i] instanceof String)
-                    && !(aRecipe[i] instanceof Character)))
+                    && !(aRecipe[i] instanceof Character))
                 aRecipe[i] = aRecipe[i].toString();
         }
 

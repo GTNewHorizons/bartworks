@@ -298,8 +298,8 @@ public class CircuitImprintLoader {
                 BW_Util.getMachineVoltageFromTier(
                         BW_Util.getCircuitTierFromOreDictName(
                                 OreDictionary.getOreName(
-                                        (OreDictionary.getOreIDs(stack) != null
-                                                && OreDictionary.getOreIDs(stack).length > 0)
+                                        OreDictionary.getOreIDs(stack) != null
+                                                && OreDictionary.getOreIDs(stack).length > 0
                                                         ? OreDictionary.getOreIDs(stack)[0]
                                                         : -1))));
         GT_Recipe slicingRecipe = new BWRecipes.DynamicGTRecipe(

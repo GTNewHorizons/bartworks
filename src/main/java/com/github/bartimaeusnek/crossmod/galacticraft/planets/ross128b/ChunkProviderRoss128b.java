@@ -128,8 +128,8 @@ public class ChunkProviderRoss128b extends ChunkProviderGenerate {
             y1 = this.rand.nextInt(256);
             z1 = l + this.rand.nextInt(16) + 8;
             int rni = this.rand.nextInt(8);
-            if (rni == 0) (new WorldGenLakes(Blocks.ice)).generate(this.worldObj, this.rand, x1, y1, z1);
-            else if (rni == 4) (new WorldGenLakes(Blocks.water)).generate(this.worldObj, this.rand, x1, y1, z1);
+            if (rni == 0) new WorldGenLakes(Blocks.ice).generate(this.worldObj, this.rand, x1, y1, z1);
+            else if (rni == 4) new WorldGenLakes(Blocks.water).generate(this.worldObj, this.rand, x1, y1, z1);
         }
         if (biomegenbase != BiomeGenBase.ocean && biomegenbase != BiomeGenBase.deepOcean
                 && biomegenbase != BiomeGenBase.river

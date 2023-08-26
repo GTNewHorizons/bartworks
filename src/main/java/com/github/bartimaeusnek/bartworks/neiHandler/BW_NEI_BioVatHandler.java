@@ -53,7 +53,7 @@ public class BW_NEI_BioVatHandler extends GT_NEI_DefaultHandler {
             // dirty way of finding the special slot item
             // see constructor of CachedDefaultRecipe on why relx==120 and rely==52 means special slot
             for (PositionedStack stack : recipe.mInputs) {
-                if ((stack.relx == 120 && stack.rely == 52) && NEI_BW_Config.checkRecipe(aResult, Collections.singletonList(stack))) this.arecipes.add(recipe);
+                if (stack.relx == 120 && stack.rely == 52 && NEI_BW_Config.checkRecipe(aResult, Collections.singletonList(stack))) this.arecipes.add(recipe);
             }
         }
     }

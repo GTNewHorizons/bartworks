@@ -284,7 +284,7 @@ public class GT_TileEntity_CircuitAssemblyLine extends
             return false;
         }
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-        if ((aMetaTileEntity == null) || !(aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input)) {
+        if (aMetaTileEntity == null || !(aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input)) {
             return false;
         } else {
             ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);

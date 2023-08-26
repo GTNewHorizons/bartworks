@@ -140,7 +140,7 @@ public class Assembler implements Runnable {
                         new ItemStack[] {
                                 new ItemStack(
                                         ItemRegistry.TecTechPipeEnergyLowPower.getItem(),
-                                        ((j + 1) * 16),
+                                        (j + 1) * 16,
                                         ItemRegistry.TecTechPipeEnergyLowPower.getItemDamage()),
                                 WerkstoffLoader.CubicZirconia.get(OrePrefixes.lens),
                                 GT_OreDictUnificator.get(prefixes[j], cables[i + 4], 8), emitters[i].get(2 * (j + 1)),
@@ -153,7 +153,7 @@ public class Assembler implements Runnable {
                         new ItemStack[] {
                                 new ItemStack(
                                         ItemRegistry.TecTechPipeEnergyLowPower.getItem(),
-                                        ((j + 1) * 16),
+                                        (j + 1) * 16,
                                         ItemRegistry.TecTechPipeEnergyLowPower.getItemDamage()),
                                 WerkstoffLoader.CubicZirconia.get(OrePrefixes.lens),
                                 GT_OreDictUnificator.get(prefixes[j], cables[i + 4], 8), sensors[i].get(2 * (j + 1)),
@@ -166,7 +166,7 @@ public class Assembler implements Runnable {
                         new ItemStack[] {
                                 new ItemStack(
                                         ItemRegistry.TecTechPipeEnergyLowPower.getItem(),
-                                        ((j + 1) * 16),
+                                        (j + 1) * 16,
                                         ItemRegistry.TecTechPipeEnergyLowPower.getItemDamage()),
                                 WerkstoffLoader.CubicZirconia.get(OrePrefixes.lens),
                                 GT_OreDictUnificator.get(prefixes[j], cables[i + 4], 8), emitters[i].get(2 * (j + 1)),

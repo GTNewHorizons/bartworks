@@ -140,7 +140,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                 materials.mIconSet,
                 (List) materials.mOreByProducts,
                 new Pair<>(materials, 1));
-        if (((mID <= 31_766) || (mID > 32_767))) throw new IllegalArgumentException();
+        if (mID <= 31_766 || mID > 32_767) throw new IllegalArgumentException();
         this.stats.mass = materials.getMass();
         this.stats.protons = materials.getProtons();
         this.stats.meltingPoint = materials.mMeltingPoint;
@@ -292,7 +292,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                         if (((Materials) p.getKey()).mMaterialList.size() > 1 && p.getValue() > 1)
                             this.toolTip += "(" + getFormula((Materials) p.getKey())
                                     + ")"
-                                    + (BW_Util.subscriptNumber(p.getValue()));
+                                    + BW_Util.subscriptNumber(p.getValue());
                         else this.toolTip += getFormula((Materials) p.getKey())
                                 + (p.getValue() > 1 ? BW_Util.subscriptNumber(p.getValue()) : "");
                     }
@@ -300,7 +300,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
                         if (((Werkstoff) p.getKey()).CONTENTS.size() > 1 && p.getValue() > 1)
                             this.toolTip += "(" + getFormula((Werkstoff) p.getKey())
                                     + ")"
-                                    + (BW_Util.subscriptNumber(p.getValue()));
+                                    + BW_Util.subscriptNumber(p.getValue());
                         else this.toolTip += getFormula((Werkstoff) p.getKey())
                                 + (p.getValue() > 1 ? BW_Util.subscriptNumber(p.getValue()) : "");
                     }
@@ -591,8 +591,8 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         return this.stats
                 .getQualityOverride() > 0
                         ? this.stats.getQualityOverride()
-                        : (byte) ((15f * ((this.getStats().getProtons() / 188f)
-                                + this.getStats().getMeltingPoint() / 10801f))
+                        : (byte) (15f * (this.getStats().getProtons() / 188f
+                                + this.getStats().getMeltingPoint() / 10801f)
                                 / (float) this.getContents().getKey());
     }
 
@@ -611,7 +611,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
     public int getDurability() {
         return this.stats.getDurOverride() > 0 ? this.stats.getDurOverride()
                 : (int) (this.stats.durMod
-                        * ((0.01f * this.getStats().getMeltingPoint() * this.getStats().getMass())
+                        * (0.01f * this.getStats().getMeltingPoint() * this.getStats().getMass()
                                 / (float) this.getContents().getKey()));
     }
 
@@ -891,7 +891,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public Werkstoff.GenerationFeatures onlyDust() {
-            this.toGenerate = (0b1);
+            this.toGenerate = 0b1;
             return this;
         }
 
@@ -904,7 +904,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
         }
 
         public Werkstoff.GenerationFeatures disable() {
-            this.toGenerate = (0);
+            this.toGenerate = 0;
             return this;
         }
 
@@ -1104,7 +1104,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
             if (this == o) return true;
             if (!(o instanceof Werkstoff.Stats that)) return false;
 
-            if ((this.boilingPoint != that.boilingPoint) || (this.meltingPoint != that.meltingPoint) || (this.mass != that.mass) || (this.protons != that.protons)) return false;
+            if (this.boilingPoint != that.boilingPoint || this.meltingPoint != that.meltingPoint || this.mass != that.mass || this.protons != that.protons) return false;
             if (this.neutrons != that.neutrons) return false;
             if (this.electrons != that.electrons) return false;
             if (Math.abs(this.ebfGasRecipeTimeMultiplier - that.ebfGasRecipeTimeMultiplier) > 1.0e-6D) return false;

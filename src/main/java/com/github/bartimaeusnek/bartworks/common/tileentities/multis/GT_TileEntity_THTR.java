@@ -174,13 +174,13 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack itemStack) {
         this.mCasing = 0;
-        return (this.checkPiece(STRUCTURE_PIECE_MAIN, 5, 11, 0) && this.mCasing >= 500
+        return this.checkPiece(STRUCTURE_PIECE_MAIN, 5, 11, 0) && this.mCasing >= 500
                 && this.mMaintenanceHatches.size() == 1
                 && this.mInputHatches.size() > 0
                 && this.mOutputHatches.size() > 0
                 && this.mInputBusses.size() > 0
                 && this.mOutputBusses.size() > 0
-                && this.mEnergyHatches.size() > 0);
+                && this.mEnergyHatches.size() > 0;
     }
 
     @Override
@@ -245,11 +245,11 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
             }
             return false;
         }
-        if (((this.HeliumSupply < GT_TileEntity_THTR.HELIUM_NEEDED) || (this.fuelsupply < mincapacity))) return false;
+        if (this.HeliumSupply < GT_TileEntity_THTR.HELIUM_NEEDED || this.fuelsupply < mincapacity) return false;
 
         double eff = Math.min(
                 Math.pow((this.fuelsupply - mincapacity) / ((maxcapacity - mincapacity) / 10D), 2D) + 1,
-                100D) / 100D - ((this.getIdealStatus() - this.getRepairStatus()) / 10D);
+                100D) / 100D - (this.getIdealStatus() - this.getRepairStatus()) / 10D;
         if (eff <= 0D) return false;
 
         int toReduce = MathUtils.floorInt(this.fuelsupply * 0.005D * eff);

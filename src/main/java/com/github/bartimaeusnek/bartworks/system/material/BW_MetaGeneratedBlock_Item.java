@@ -51,7 +51,7 @@ public class BW_MetaGeneratedBlock_Item extends BW_ItemBlocks {
     @Override
     public String getItemStackDisplayName(ItemStack aStack) {
         Block block = Block.getBlockFromItem(aStack.getItem());
-        if ((block != null) && (block instanceof BW_MetaGenerated_Blocks)) {
+        if (block != null && block instanceof BW_MetaGenerated_Blocks) {
             int aMetaData = aStack.getItemDamage();
             Werkstoff werkstoff = werkstoffHashMap.get((short) aMetaData);
             if (werkstoff == null) werkstoff = Werkstoff.default_null_Werkstoff;

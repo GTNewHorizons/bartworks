@@ -67,7 +67,7 @@ public class GT_MetaTileEntity_EnergyDistributor extends GT_MetaTileEntity_Trans
 
     @Override
     public long maxEUStore() {
-        return 512L + (GT_Values.V[this.mTier] * 320L);
+        return 512L + GT_Values.V[this.mTier] * 320L;
     }
 
     @Override

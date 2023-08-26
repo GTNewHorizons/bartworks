@@ -210,7 +210,7 @@ public class AccessPriorityList<E> implements List<E>, Deque<E>, Set<E> {
     }
 
     AccessPriorityListNode<E> getNode(int index) {
-        if (index <= (this.size / 2)) {
+        if (index <= this.size / 2) {
             AccessPriorityListNode<E> x = this.head;
             for (int i = 0; i < index; i++) x = x.getNext();
             return x;
@@ -318,7 +318,7 @@ public class AccessPriorityList<E> implements List<E>, Deque<E>, Set<E> {
 
     public void addPrioToNode(AccessPriorityListNode<E> node, long prio) {
         long current = node.getPriority();
-        if (current == Long.MAX_VALUE || (current > 0 && prio > 0 && prio + current < 0))
+        if (current == Long.MAX_VALUE || current > 0 && prio > 0 && prio + current < 0)
             node.setPriority(Long.MAX_VALUE);
         else node.setPriority(current + prio);
         while (node.getBefore() != null && node.getPriority() >= node.getBefore().getPriority()) {

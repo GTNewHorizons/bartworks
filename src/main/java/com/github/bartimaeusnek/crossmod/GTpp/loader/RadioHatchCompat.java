@@ -226,8 +226,8 @@ public class RadioHatchCompat {
             try {
                 List<?> pureElements = RadioHatchCompat.GTPPRadAdapter.getElemets(m);
                 for (Object materialObj : pureElements) if (RadioHatchCompat.isRadioactive.getBoolean(materialObj))
-                    ret += (RadioHatchCompat.radlevel.getByte(m) + RadioHatchCompat.GTPPRadAdapter
-                            .clampToZero(RadioHatchCompat.protons.getLong(materialObj)));
+                    ret += RadioHatchCompat.radlevel.getByte(m) + RadioHatchCompat.GTPPRadAdapter
+                            .clampToZero(RadioHatchCompat.protons.getLong(materialObj));
                 else ret += RadioHatchCompat.radlevel.getByte(m);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();

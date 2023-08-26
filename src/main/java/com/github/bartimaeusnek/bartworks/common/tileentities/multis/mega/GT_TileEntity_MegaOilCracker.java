@@ -225,7 +225,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
         this.mOutputOnSide = -1;
         this.mMiddleInputHatches.clear();
 
-        if (!this.checkPiece(STRUCTURE_PIECE_MAIN, 6, 6, 0) || (this.mMaintenanceHatches.size() != 1)) return false;
+        if (!this.checkPiece(STRUCTURE_PIECE_MAIN, 6, 6, 0) || this.mMaintenanceHatches.size() != 1) return false;
 
         if (this.glassTier < 8) {
             for (GT_MetaTileEntity_Hatch hatch : this.mExoticEnergyHatches) {
@@ -326,7 +326,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
         ArrayList<FluidStack> rList = new ArrayList<>();
         for (GT_MetaTileEntity_Hatch_Input tHatch : this.mInputHatches) {
             tHatch.mRecipeMap = this.getRecipeMap();
-            if ((isValidMetaTileEntity(tHatch) && tHatch.getFillableStack() != null) && !GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tHatch.getFillableStack())) {
+            if (isValidMetaTileEntity(tHatch) && tHatch.getFillableStack() != null && !GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tHatch.getFillableStack())) {
                 rList.add(tHatch.getFillableStack());
             }
         }

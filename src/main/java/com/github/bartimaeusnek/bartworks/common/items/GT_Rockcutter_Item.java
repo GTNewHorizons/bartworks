@@ -59,7 +59,7 @@ public class GT_Rockcutter_Item extends ItemTool implements IElectricItem {
     public GT_Rockcutter_Item(int aTier) {
         super(2 * aTier, Item.ToolMaterial.EMERALD, GT_Rockcutter_Item.mineableBlocks);
         this.mTier = aTier;
-        this.multi = (int) Math.pow(10, (this.mTier - 1));
+        this.multi = (int) Math.pow(10, this.mTier - 1);
         GT_Rockcutter_Item.mineableBlocks = new HashSet<>();
         this.maxStackSize = 1;
         this.mCharge = 10000 * this.multi;

@@ -69,13 +69,13 @@ public class GTMetaItemEnhancer {
                         GT_Values.NF,
                         m.getMolten(144));
             }
-            if ((m.getFluid(1) == null && m.getGas(1) == null) || OreDictionary.doesOreNameExist("capsule" + m.mName)) continue;
+            if (m.getFluid(1) == null && m.getGas(1) == null || OreDictionary.doesOreNameExist("capsule" + m.mName)) continue;
             addFluidData(m, GT_ModHandler.getModItem(Forestry.ID, "waxCapsule", 1), capsuls, 1000, i, true);
             // addFluidData(m, new ItemStack(Items.glass_bottle), bottles, 250, i, false);
         }
         for (int i = 0, valuesLength = NoMetaValue.size(); i < valuesLength; i++) {
             Materials m = NoMetaValue.get(i);
-            if ((m.getFluid(1) == null && m.getGas(1) == null) || OreDictionary.doesOreNameExist("capsule" + m.mName)) continue;
+            if (m.getFluid(1) == null && m.getGas(1) == null || OreDictionary.doesOreNameExist("capsule" + m.mName)) continue;
             addFluidData(m, GT_ModHandler.getModItem(Forestry.ID, "waxCapsule", 1), capsuls, 1000, i + 1001, true);
             // addFluidData(m, new ItemStack(Items.glass_bottle), bottles, 250, i + 1001, false);
         }

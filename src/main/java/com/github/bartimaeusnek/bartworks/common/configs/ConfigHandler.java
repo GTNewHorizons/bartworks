@@ -147,7 +147,7 @@ public class ConfigHandler {
                 "This switch sets the lowest unnerfed Circuit Recipe Tier. -1 to disable it completely.",
                 -1,
                 VOLTAGE_NAMES.length).getInt(5);
-        ConfigHandler.cutoffTier = (ConfigHandler.cutoffTier == -1 ? VOLTAGE_NAMES.length : ConfigHandler.cutoffTier);
+        ConfigHandler.cutoffTier = ConfigHandler.cutoffTier == -1 ? VOLTAGE_NAMES.length : ConfigHandler.cutoffTier;
         ConfigHandler.disableExtraGassesForEBF = ConfigHandler.c
                 .get(
                         "System",

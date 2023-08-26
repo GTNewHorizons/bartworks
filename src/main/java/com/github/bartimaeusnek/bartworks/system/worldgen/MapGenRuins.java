@@ -187,7 +187,7 @@ public abstract class MapGenRuins extends WorldGenerator {
         BaseMetaPipeEntity BTE = (BaseMetaPipeEntity) this.setGTMachineBlock(worldObj, x, y, z, meta);
         MetaPipeEntity MPE = (MetaPipeEntity) BTE.getMetaTileEntity();
         BTE.mConnections |= (byte) (1 << (byte) 4);
-        BTE.mConnections |= (byte) (1 << (ForgeDirection.getOrientation(4).getOpposite().ordinal()));
+        BTE.mConnections |= (byte) (1 << ForgeDirection.getOrientation(4).getOpposite().ordinal());
         BaseMetaTileEntity BPE = (BaseMetaTileEntity) worldObj.getTileEntity(x, y, z - 1);
         if (BPE != null) {
             BTE.mConnections |= (byte) (1 << (byte) 2);
@@ -248,7 +248,7 @@ public abstract class MapGenRuins extends WorldGenerator {
                                         rand,
                                         5,
                                         this.ToBuildWith[3][0]);
-                            } else if ((dx == 0) && dz == -5 && (dy == 1 || dy == 2)) {
+                            } else if (dx == 0 && dz == -5 && (dy == 1 || dy == 2)) {
                                 if (dy == 1) this.setBlock(worldObj, x + dx, y + 1, z + -5, Blocks.iron_door, 1);
                                 if (dy == 2) this.setBlock(worldObj, x + dx, y + 2, z + dz, Blocks.iron_door, 8);
                             } else if (Math.abs(dx) == 5 && Math.abs(dz) < 5 || Math.abs(dz) == 5 && Math.abs(dx) < 5) {
@@ -260,7 +260,7 @@ public abstract class MapGenRuins extends WorldGenerator {
                                         rand,
                                         25,
                                         this.ToBuildWith[1]);
-                                if ((dy == 2) && (rand.nextInt(100) < 12)) if (useColor) this.setRandomBlockWAirChance(
+                                if (dy == 2 && rand.nextInt(100) < 12) if (useColor) this.setRandomBlockWAirChance(
                                         worldObj,
                                         x + dx,
                                         y + 2,

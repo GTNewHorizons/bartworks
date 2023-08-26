@@ -37,7 +37,7 @@ public class BW_MetaGenerated_SmallOres extends BW_MetaGenerated_Ores {
     @Override
     protected void doRegistrationStuff(Werkstoff w) {
         if (w != null) {
-            if (!w.hasItemType(OrePrefixes.ore) || ((w.getGenerationFeatures().blacklist & 0b1000) != 0)) return;
+            if (!w.hasItemType(OrePrefixes.ore) || (w.getGenerationFeatures().blacklist & 0b1000) != 0) return;
             GT_ModHandler.addValuableOre(this, w.getmID(), 1);
         }
     }
@@ -55,7 +55,7 @@ public class BW_MetaGenerated_SmallOres extends BW_MetaGenerated_Ores {
 
         Block tBlock = aWorld.getBlock(aX, aY, aZ);
         Block tOreBlock = WerkstoffLoader.BWSmallOres;
-        if (aMetaData < 0 || tBlock == Blocks.air && !air || (Block.getIdFromBlock(tBlock) != Block.getIdFromBlock(block))) {
+        if (aMetaData < 0 || tBlock == Blocks.air && !air || Block.getIdFromBlock(tBlock) != Block.getIdFromBlock(block)) {
             return false;
         }
         final int aaY = aY;

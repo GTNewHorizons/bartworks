@@ -52,7 +52,7 @@ public class CircuitProgrammerPacket extends GT_Packet_New {
 
     @Override
     public void encode(ByteBuf aOut) {
-        aOut.writeInt(this.dimID).writeInt(this.playerID).writeByte((this.hasChip ? this.chipCfg : -1));
+        aOut.writeInt(this.dimID).writeInt(this.playerID).writeByte(this.hasChip ? this.chipCfg : -1);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class CircuitProgrammerPacket extends GT_Packet_New {
         World w = DimensionManager.getWorld(this.dimID);
         if (w != null && w.getEntityByID(this.playerID) instanceof EntityPlayer) {
             ItemStack stack = ((EntityPlayer) w.getEntityByID(this.playerID)).getHeldItem();
-            if ((stack != null) && (stack.stackSize > 0)) {
+            if (stack != null && stack.stackSize > 0) {
                 Item item = stack.getItem();
                 if (item instanceof Circuit_Programmer) {
                     NBTTagCompound nbt = stack.getTagCompound();

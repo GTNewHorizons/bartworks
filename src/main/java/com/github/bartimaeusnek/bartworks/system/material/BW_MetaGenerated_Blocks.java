@@ -93,7 +93,7 @@ public abstract class BW_MetaGenerated_Blocks extends BW_TileEntityContainer {
     @Override
     public int getDamageValue(World aWorld, int aX, int aY, int aZ) {
         TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
-        if (((tTileEntity instanceof BW_MetaGenerated_Block_TE))) {
+        if (tTileEntity instanceof BW_MetaGenerated_Block_TE) {
             return ((BW_MetaGenerated_Block_TE) tTileEntity).mMetaData;
         }
         return 0;
@@ -112,7 +112,7 @@ public abstract class BW_MetaGenerated_Blocks extends BW_TileEntityContainer {
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
         TileEntity tTileEntity = world.getTileEntity(x, y, z);
-        if ((tTileEntity instanceof BW_MetaGenerated_Block_TE)) {
+        if (tTileEntity instanceof BW_MetaGenerated_Block_TE) {
             mTemporaryTileEntity.set((BW_MetaGenerated_Block_TE) tTileEntity);
         }
         super.breakBlock(world, x, y, z, block, meta);
@@ -121,7 +121,7 @@ public abstract class BW_MetaGenerated_Blocks extends BW_TileEntityContainer {
     @Override
     public ArrayList<ItemStack> getDrops(World aWorld, int aX, int aY, int aZ, int aMeta, int aFortune) {
         TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
-        if ((tTileEntity instanceof BW_MetaGenerated_Block_TE)) {
+        if (tTileEntity instanceof BW_MetaGenerated_Block_TE) {
             return ((BW_MetaGenerated_Block_TE) tTileEntity).getDrops(aFortune);
         }
         return mTemporaryTileEntity.get() == null ? new ArrayList<>() : mTemporaryTileEntity.get().getDrops(aFortune);

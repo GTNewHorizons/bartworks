@@ -52,7 +52,7 @@ public interface LowPowerLaser extends IMetaTileEntity, IConnectsToEnergyTunnel 
     }
 
     default long getTotalPower() {
-        return this.getAMPERES() * Math.max(this.maxEUOutput(), this.maxEUInput()) - (this.getAMPERES() / 20);
+        return this.getAMPERES() * Math.max(this.maxEUOutput(), this.maxEUInput()) - this.getAMPERES() / 20;
     }
 
     default void moveAroundLowPower(IGregTechTileEntity aBaseMetaTileEntity) {
@@ -107,7 +107,7 @@ public interface LowPowerLaser extends IMetaTileEntity, IConnectsToEnergyTunnel 
                     }
 
                     ((GT_MetaTileEntity_Pipe_Energy) aMetaTileEntity).markUsed();
-                } else if ((aMetaTileEntity instanceof LowPowerLaser && ((LowPowerLaser) aMetaTileEntity).isTunnel()) && !((LowPowerLaser) aMetaTileEntity).isConnectedCorrectly(front)) return;
+                } else if (aMetaTileEntity instanceof LowPowerLaser && ((LowPowerLaser) aMetaTileEntity).isTunnel() && !((LowPowerLaser) aMetaTileEntity).isConnectedCorrectly(front)) return;
             }
         }
     }

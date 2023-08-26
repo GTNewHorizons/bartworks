@@ -157,7 +157,7 @@ public abstract class BW_OreLayer extends GT_Worldgen {
                         }
                     }
 
-                    if (this.mSporadicMeta > 0 && (this.shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ))) {
+                    if (this.mSporadicMeta > 0 && this.shouldPlace(aRandom, cX, eX, tX, cZ, eZ, tZ)) {
                         wasPlaced = this
                                 .setOreBlock(aWorld, tX, tMinY - 1 + aRandom.nextInt(7), tZ, this.mSporadicMeta, false);
                     }
@@ -173,9 +173,9 @@ public abstract class BW_OreLayer extends GT_Worldgen {
     }
 
     private boolean shouldPlace(Random aRandom, int cX, int eX, int tX, int cZ, int eZ, int tZ) {
-        if ((aRandom.nextInt(
-                Math.max(1, Math.max(MathHelper.abs_int(cZ - tZ), MathHelper.abs_int(eZ - tZ)) / this.mDensity)) == 0) || (aRandom.nextInt(
-                Math.max(1, Math.max(MathHelper.abs_int(cX - tX), MathHelper.abs_int(eX - tX)) / this.mDensity)) == 0))
+        if (aRandom.nextInt(
+                Math.max(1, Math.max(MathHelper.abs_int(cZ - tZ), MathHelper.abs_int(eZ - tZ)) / this.mDensity)) == 0 || aRandom.nextInt(
+                Math.max(1, Math.max(MathHelper.abs_int(cX - tX), MathHelper.abs_int(eX - tX)) / this.mDensity)) == 0)
             return true;
         return false;
     }
@@ -185,10 +185,10 @@ public abstract class BW_OreLayer extends GT_Worldgen {
         TileEntity te = aWorld.getTileEntity(aX, aY, aZ);
         if (te instanceof BW_MetaGeneratedOreTE || te instanceof GT_TileEntity_Ores) return true;
 
-        if ((aMetaData == this.mSporadicMeta && (this.bwOres & 0b0001) != 0)
-                || (aMetaData == this.mBetweenMeta && (this.bwOres & 0b0010) != 0)
-                || (aMetaData == this.mPrimaryMeta && (this.bwOres & 0b1000) != 0)
-                || (aMetaData == this.mSecondaryMeta && (this.bwOres & 0b0100) != 0)) {
+        if (aMetaData == this.mSporadicMeta && (this.bwOres & 0b0001) != 0
+                || aMetaData == this.mBetweenMeta && (this.bwOres & 0b0010) != 0
+                || aMetaData == this.mPrimaryMeta && (this.bwOres & 0b1000) != 0
+                || aMetaData == this.mSecondaryMeta && (this.bwOres & 0b0100) != 0) {
             return isSmallOre
                     ? BW_MetaGenerated_SmallOres.setOreBlock(
                             aWorld,
@@ -239,7 +239,7 @@ public abstract class BW_OreLayer extends GT_Worldgen {
         if (this == o) return true;
         if (!(o instanceof BW_OreLayer that)) return false;
 
-        if ((this.bwOres != that.bwOres) || (this.mMinY != that.mMinY) || (this.mWeight != that.mWeight) || (this.mDensity != that.mDensity)) return false;
+        if (this.bwOres != that.bwOres || this.mMinY != that.mMinY || this.mWeight != that.mWeight || this.mDensity != that.mDensity) return false;
         if (this.mSize != that.mSize) return false;
         if (this.mMaxY != that.mMaxY) return false;
         if (this.mPrimaryMeta != that.mPrimaryMeta) return false;

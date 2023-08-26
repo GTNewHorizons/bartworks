@@ -100,7 +100,7 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
 
     @Override
     public long maxEUStore() {
-        return (this.mStorage >= Long.MAX_VALUE - 1 || this.mStorage < 0) ? Long.MAX_VALUE - 1 : this.mStorage;
+        return this.mStorage >= Long.MAX_VALUE - 1 || this.mStorage < 0 ? Long.MAX_VALUE - 1 : this.mStorage;
     }
 
     @Override
@@ -253,14 +253,14 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
 
     @Override
     public ItemStack getStackInSlot(int slotIn) {
-        if (slotIn > 1) return this.circuits[(slotIn - 2)];
+        if (slotIn > 1) return this.circuits[slotIn - 2];
         return this.mInventory[slotIn];
     }
 
     @Override
     public void setInventorySlotContents(int index, ItemStack stack) {
         if (index < 2) this.mInventory[index] = stack;
-        else this.circuits[(index - 2)] = stack;
+        else this.circuits[index - 2] = stack;
     }
 
     @Override
@@ -384,8 +384,8 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
         }
 
         this.mEfficiency = this.getMaxEfficiency(null);
-        this.mStorage = (ConfigHandler.energyPerCell * this.connectedcells.hashset.size() >= Long.MAX_VALUE - 1
-                || ConfigHandler.energyPerCell * this.connectedcells.hashset.size() < 0) ? Long.MAX_VALUE - 1
+        this.mStorage = ConfigHandler.energyPerCell * this.connectedcells.hashset.size() >= Long.MAX_VALUE - 1
+                || ConfigHandler.energyPerCell * this.connectedcells.hashset.size() < 0 ? Long.MAX_VALUE - 1
                         : ConfigHandler.energyPerCell * this.connectedcells.hashset.size();
         this.mMaxProgresstime = 1;
         this.mProgresstime = 0;
@@ -405,7 +405,7 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
         if (finishedTime - startingTime > 5000000) MainMod.LOGGER.warn(
                 "LESU LookUp took longer than 5ms!(" + (finishedTime - startingTime)
                         + "ns / "
-                        + ((finishedTime - startingTime) / 1000000)
+                        + (finishedTime - startingTime) / 1000000
                         + "ms) Owner:"
                         + this.getBaseMetaTileEntity().getOwnerName()
                         + " Check at x:"

@@ -201,7 +201,7 @@ public class Circuit_Programmer extends GT_Generic_Item implements IElectricItem
                         && this.isProgrammedCircuit(circuitSlotWidget.getMcSlot().getStack())) {
                     circuitSlotWidget.getMcSlot().putStack(this.createRealCircuit(index + 1));
                 }
-            }).setPos(32 + (i % 12) * 18, 21 + (i / 12) * 18).setSize(18, 18));
+            }).setPos(32 + i % 12 * 18, 21 + i / 12 * 18).setSize(18, 18));
         }
 
         return builder.build();

@@ -162,7 +162,7 @@ public class BWCoreTransformer implements IClassTransformer {
                     for (int i = 0; i < methods.size(); i++) {
                         if (ASMUtils.isCorrectMethod(methods.get(i), name_deObfs, name_Obfs, name_src)
                                 && ASMUtils.isCorrectMethod(methods.get(i), dsc_deObfs, dsc_Obfs)) {
-                            BWCore.BWCORE_LOG.info("Found " + (name_deObfs) + "! Patching!");
+                            BWCore.BWCORE_LOG.info("Found " + name_deObfs + "! Patching!");
                             MethodNode toPatch = methods.get(i);
                             InsnList insnList = new InsnList();
                             insnList.add(new InsnNode(ACONST_NULL));
@@ -186,7 +186,7 @@ public class BWCoreTransformer implements IClassTransformer {
                     for (MethodNode toPatch : methods) {
                         if (ASMUtils.isCorrectMethod(toPatch, name_deObfs, name_Obfs, name_src)
                                 && ASMUtils.isCorrectMethod(toPatch, dsc_universal)) {
-                            BWCore.BWCORE_LOG.info("Found " + (name_deObfs) + "! Patching!");
+                            BWCore.BWCORE_LOG.info("Found " + name_deObfs + "! Patching!");
                             InsnList nu = new InsnList();
                             LabelNode[] LabelNodes = { new LabelNode(), new LabelNode() };
 
@@ -305,7 +305,7 @@ public class BWCoreTransformer implements IClassTransformer {
                     for (int i = 0; i < methods.size(); i++) {
                         if (ASMUtils.isCorrectMethod(methods.get(i), name_deObfs, name_Obfs, name_src)
                                 && ASMUtils.isCorrectMethod(methods.get(i), dsc_universal, dsc_universal)) {
-                            BWCore.BWCORE_LOG.info("Found " + (name_deObfs) + "! Patching!");
+                            BWCore.BWCORE_LOG.info("Found " + name_deObfs + "! Patching!");
                             methods.set(i, BWCoreTransformer.transformThaumcraftWandPedestal(methods.get(i)));
                             break scase;
                         }
@@ -319,7 +319,7 @@ public class BWCoreTransformer implements IClassTransformer {
                     String name_deObfs = "getNewNoise";
                     for (MethodNode toPatch : methods) {
                         if (ASMUtils.isCorrectMethod(toPatch, name_deObfs)) {
-                            BWCore.BWCORE_LOG.info("Found " + (name_deObfs) + "! Patching!");
+                            BWCore.BWCORE_LOG.info("Found " + name_deObfs + "! Patching!");
                             LabelNode[] LabelNodes = { new LabelNode(), new LabelNode() };
                             InsnList nu = new InsnList();
                             // if (x < -28675) x %= -28675;

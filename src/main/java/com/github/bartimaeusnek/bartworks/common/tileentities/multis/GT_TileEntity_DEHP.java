@@ -110,7 +110,7 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
         } else {
             tt.addInfo("0 Idle, 1 & 2 Coolant Heating Mode (no Difference between them), 3 Retract")
                     .addInfo("Explodes when it runs out of Coolant").addInfo(
-                            "Heats up " + (long) (this.mTier * 24 * ((double) GT_TileEntity_DEHP.nulearHeatMod)) * 20
+                            "Heats up " + (long) (this.mTier * 24 * (double) GT_TileEntity_DEHP.nulearHeatMod) * 20
                                     + "L/s Coolant(minus 10% per Maintenance Problem)");
         }
         tt.addSeparator().beginStructureBlock(3, 7, 3, false).addController("Front bottom")
@@ -212,8 +212,8 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
             if (this.mMode == 0) this.mMode = 1;
             if (ConfigHandler.DEHPDirectSteam) {
                 if (this.mMode == 1) {
-                    long steamProduced = (this.mTier * 600 * 2L * this.mEfficiency / 10000L);
-                    long waterConsume = ((steamProduced + 160) / 160);
+                    long steamProduced = this.mTier * 600 * 2L * this.mEfficiency / 10000L;
+                    long waterConsume = (steamProduced + 160) / 160;
 
                     if (this.getWaterFromHatches(false) - waterConsume > 0) {
                         this.consumeFluid(FluidRegistry.WATER, waterConsume);
@@ -223,8 +223,8 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
                         return false;
                     }
                 } else if (this.mMode == 2) {
-                    long steamProduced = (this.mTier * 300 * 2L * this.mEfficiency / 10000L);
-                    long waterConsume = ((steamProduced + 160) / 160);
+                    long steamProduced = this.mTier * 300 * 2L * this.mEfficiency / 10000L;
+                    long waterConsume = (steamProduced + 160) / 160;
 
                     if (this.getWaterFromHatches(true) - waterConsume > 0) {
                         this.consumeFluid(GT_ModHandler.getDistilledWater(1).getFluid(), waterConsume);
@@ -236,7 +236,7 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
                 }
             } else if (this.mMode == 1 || this.mMode == 2) {
                 long coolantConverted = (long) (this.mTier * 24
-                        * ((double) GT_TileEntity_DEHP.nulearHeatMod)
+                        * (double) GT_TileEntity_DEHP.nulearHeatMod
                         * this.mEfficiency
                         / 10000L);
                 if (this.getFluidFromHatches(FluidRegistry.getFluid("ic2coolant")) - coolantConverted > 0) {

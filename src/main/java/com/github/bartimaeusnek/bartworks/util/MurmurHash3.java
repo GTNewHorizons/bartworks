@@ -35,14 +35,14 @@ public final class MurmurHash3 {
      * Gets a long from a byte buffer in little endian byte order.
      */
     public static long getLongLittleEndian(byte[] buf, int offset) {
-        return ((long) buf[offset + 7] << 56) // no mask needed
-                | ((buf[offset + 6] & 0xffL) << 48)
-                | ((buf[offset + 5] & 0xffL) << 40)
-                | ((buf[offset + 4] & 0xffL) << 32)
-                | ((buf[offset + 3] & 0xffL) << 24)
-                | ((buf[offset + 2] & 0xffL) << 16)
-                | ((buf[offset + 1] & 0xffL) << 8)
-                | ((buf[offset] & 0xffL)); // no shift needed
+        return (long) buf[offset + 7] << 56 // no mask needed
+                | (buf[offset + 6] & 0xffL) << 48
+                | (buf[offset + 5] & 0xffL) << 40
+                | (buf[offset + 4] & 0xffL) << 32
+                | (buf[offset + 3] & 0xffL) << 24
+                | (buf[offset + 2] & 0xffL) << 16
+                | (buf[offset + 1] & 0xffL) << 8
+                | buf[offset] & 0xffL; // no shift needed
     }
 
     /**
@@ -58,15 +58,15 @@ public final class MurmurHash3 {
 
         for (int i = offset; i < roundedEnd; i += 4) {
             // little endian load order
-            int k1 = (data[i] & 0xff) | ((data[i + 1] & 0xff) << 8)
-                    | ((data[i + 2] & 0xff) << 16)
-                    | (data[i + 3] << 24);
+            int k1 = data[i] & 0xff | (data[i + 1] & 0xff) << 8
+                    | (data[i + 2] & 0xff) << 16
+                    | data[i + 3] << 24;
             k1 *= c1;
-            k1 = (k1 << 15) | (k1 >>> 17); // ROTL32(k1,15);
+            k1 = k1 << 15 | k1 >>> 17; // ROTL32(k1,15);
             k1 *= c2;
 
             h1 ^= k1;
-            h1 = (h1 << 13) | (h1 >>> 19); // ROTL32(h1,13);
+            h1 = h1 << 13 | h1 >>> 19; // ROTL32(h1,13);
             h1 = h1 * 5 + 0xe6546b64;
         }
 
@@ -81,9 +81,9 @@ public final class MurmurHash3 {
                 k1 |= (data[roundedEnd + 1] & 0xff) << 8;
                 // fallthrough
             case 1:
-                k1 |= (data[roundedEnd] & 0xff);
+                k1 |= data[roundedEnd] & 0xff;
                 k1 *= c1;
-                k1 = (k1 << 15) | (k1 >>> 17); // ROTL32(k1,15);
+                k1 = k1 << 15 | k1 >>> 17; // ROTL32(k1,15);
                 k1 *= c2;
                 h1 ^= k1;
         }
@@ -138,20 +138,20 @@ public final class MurmurHash3 {
                  * shift = 0; nBytes += 4; k1 = 0; } else { k1 |= code << shift; shift += 8; } continue;
                  ***/
             } else if (code < 0x800) {
-                k2 = (0xC0 | (code >> 6)) | ((0x80 | (code & 0x3F)) << 8);
+                k2 = 0xC0 | code >> 6 | (0x80 | code & 0x3F) << 8;
                 bits = 16;
             } else if (code < 0xD800 || code > 0xDFFF || pos >= end) {
                 // we check for pos>=end to encode an unpaired surrogate as 3 bytes.
-                k2 = (0xE0 | (code >> 12)) | ((0x80 | ((code >> 6) & 0x3F)) << 8) | ((0x80 | (code & 0x3F)) << 16);
+                k2 = 0xE0 | code >> 12 | (0x80 | code >> 6 & 0x3F) << 8 | (0x80 | code & 0x3F) << 16;
                 bits = 24;
             } else {
                 // surrogate pair
                 // int utf32 = pos < end ? (int) data.charAt(pos++) : 0;
                 int utf32 = data.charAt(pos++);
-                utf32 = ((code - 0xD7C0) << 10) + (utf32 & 0x3FF);
-                k2 = (0xff & (0xF0 | (utf32 >> 18))) | ((0x80 | ((utf32 >> 12) & 0x3F))) << 8
-                        | ((0x80 | ((utf32 >> 6) & 0x3F))) << 16
-                        | (0x80 | (utf32 & 0x3F)) << 24;
+                utf32 = (code - 0xD7C0 << 10) + (utf32 & 0x3FF);
+                k2 = 0xff & (0xF0 | utf32 >> 18) | (0x80 | utf32 >> 12 & 0x3F) << 8
+                        | (0x80 | utf32 >> 6 & 0x3F) << 16
+                        | (0x80 | utf32 & 0x3F) << 24;
                 bits = 32;
             }
 
@@ -165,17 +165,17 @@ public final class MurmurHash3 {
                 // mix after we have a complete word
 
                 k1 *= c1;
-                k1 = (k1 << 15) | (k1 >>> 17); // ROTL32(k1,15);
+                k1 = k1 << 15 | k1 >>> 17; // ROTL32(k1,15);
                 k1 *= c2;
 
                 h1 ^= k1;
-                h1 = (h1 << 13) | (h1 >>> 19); // ROTL32(h1,13);
+                h1 = h1 << 13 | h1 >>> 19; // ROTL32(h1,13);
                 h1 = h1 * 5 + 0xe6546b64;
 
                 shift -= 32;
                 // unfortunately, java won't let you shift 32 bits off, so we need to check for 0
                 if (shift != 0) {
-                    k1 = k2 >>> (bits - shift); // bits used == bits - newshift
+                    k1 = k2 >>> bits - shift; // bits used == bits - newshift
                 } else {
                     k1 = 0;
                 }
@@ -187,7 +187,7 @@ public final class MurmurHash3 {
         if (shift > 0) {
             nBytes += shift >> 3;
             k1 *= c1;
-            k1 = (k1 << 15) | (k1 >>> 17); // ROTL32(k1,15);
+            k1 = k1 << 15 | k1 >>> 17; // ROTL32(k1,15);
             k1 *= c2;
             h1 ^= k1;
         }
@@ -254,13 +254,13 @@ public final class MurmurHash3 {
             case 10:
                 k2 |= (key[roundedEnd + 9] & 0xffL) << 8;
             case 9:
-                k2 |= (key[roundedEnd + 8] & 0xffL);
+                k2 |= key[roundedEnd + 8] & 0xffL;
                 k2 *= c2;
                 k2 = Long.rotateLeft(k2, 33);
                 k2 *= c1;
                 h2 ^= k2;
             case 8:
-                k1 = ((long) key[roundedEnd + 7]) << 56;
+                k1 = (long) key[roundedEnd + 7] << 56;
             case 7:
                 k1 |= (key[roundedEnd + 6] & 0xffL) << 48;
             case 6:
@@ -274,7 +274,7 @@ public final class MurmurHash3 {
             case 2:
                 k1 |= (key[roundedEnd + 1] & 0xffL) << 8;
             case 1:
-                k1 |= (key[roundedEnd] & 0xffL);
+                k1 |= key[roundedEnd] & 0xffL;
                 k1 *= c1;
                 k1 = Long.rotateLeft(k1, 31);
                 k1 *= c2;

@@ -152,17 +152,17 @@ public class BW_ColorUtil {
 
     public static boolean isBlueScale(short[] rgba) {
         rgba = correctCorlorArray(rgba);
-        return (rgba[2] * 2) >= (rgba[1] + rgba[0]);
+        return rgba[2] * 2 >= rgba[1] + rgba[0];
     }
 
     public static boolean isGrenScale(short[] rgba) {
         rgba = correctCorlorArray(rgba);
-        return (rgba[1] * 2) >= (rgba[0] + rgba[2]);
+        return rgba[1] * 2 >= rgba[0] + rgba[2];
     }
 
     public static boolean isRedScale(short[] rgba) {
         rgba = correctCorlorArray(rgba);
-        return (rgba[0] * 2) >= (rgba[1] + rgba[2]);
+        return rgba[0] * 2 >= rgba[1] + rgba[2];
     }
 
     public static boolean isGrayScale(short[] rgba, int magin) {
@@ -204,15 +204,15 @@ public class BW_ColorUtil {
     }
 
     public static short[] splitColorToRBGArray(int rgb) {
-        return new short[] { (short) ((rgb >> 16) & 0xFF), (short) ((rgb >> 8) & 0xFF), (short) (rgb & 0xFF) };
+        return new short[] { (short) (rgb >> 16 & 0xFF), (short) (rgb >> 8 & 0xFF), (short) (rgb & 0xFF) };
     }
 
     public static int getColorFromRGBArray(short[] color) {
-        return ((color[0] & 0x0ff) << 16) | ((color[1] & 0x0ff) << 8) | (color[2] & 0x0ff);
+        return (color[0] & 0x0ff) << 16 | (color[1] & 0x0ff) << 8 | color[2] & 0x0ff;
     }
 
     public static int getColorFromRGBArray(int[] color) {
-        return ((color[0] & 0x0ff) << 16) | ((color[1] & 0x0ff) << 8) | (color[2] & 0x0ff);
+        return (color[0] & 0x0ff) << 16 | (color[1] & 0x0ff) << 8 | color[2] & 0x0ff;
     }
 
     public static String getColorForTier(int tier) {

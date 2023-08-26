@@ -152,7 +152,7 @@ public class BW_Meta_Items {
         public final ItemStack addCircuit(int aID, String aEnglish, String aToolTip, int tier) {
             CircuitImprintLoader.bwCircuitTagMap.put(
                     new CircuitData(
-                            BW_Util.getMachineVoltageFromTier(Math.min(1, (tier - 2))),
+                            BW_Util.getMachineVoltageFromTier(Math.min(1, tier - 2)),
                             tier > 2 ? BW_Util.CLEANROOM : 0,
                             (byte) tier),
                     new ItemStack(BW_Meta_Items.NEWCIRCUITS, 1, aID));
@@ -295,7 +295,7 @@ public class BW_Meta_Items {
             Object tRandomData;
             for (var9 = 0; var9 < var8; ++var9) {
                 tRandomData = var7[var9];
-                if ((tRandomData instanceof SubTag) && (tRandomData == SubTag.NO_UNIFICATION)) {
+                if (tRandomData instanceof SubTag && tRandomData == SubTag.NO_UNIFICATION) {
                     GT_OreDictUnificator.addToBlacklist(rStack);
                 }
             }

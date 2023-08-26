@@ -50,7 +50,7 @@ public class GemLoader implements IWerkstoffRunnable {
     public void run(Werkstoff werkstoff) {
         if (werkstoff.hasItemType(gem)) {
             if (werkstoff.getGenerationFeatures().hasSifterRecipes()
-                    || (werkstoff.hasItemType(ore) && werkstoff.hasItemType(dust))) {
+                    || werkstoff.hasItemType(ore) && werkstoff.hasItemType(dust)) {
 
                 GT_ModHandler.addCompressionRecipe(werkstoff.get(gem, 9), werkstoff.get(block));
                 GT_Values.RA.addForgeHammerRecipe(werkstoff.get(block), werkstoff.get(gem, 9), 100, 24);
