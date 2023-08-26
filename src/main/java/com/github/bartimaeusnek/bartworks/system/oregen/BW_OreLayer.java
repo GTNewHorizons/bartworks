@@ -173,11 +173,9 @@ public abstract class BW_OreLayer extends GT_Worldgen {
     }
 
     private boolean shouldPlace(Random aRandom, int cX, int eX, int tX, int cZ, int eZ, int tZ) {
-        if (aRandom.nextInt(
-                Math.max(1, Math.max(MathHelper.abs_int(cZ - tZ), MathHelper.abs_int(eZ - tZ)) / this.mDensity)) == 0)
-            return true;
-        if (aRandom.nextInt(
-                Math.max(1, Math.max(MathHelper.abs_int(cX - tX), MathHelper.abs_int(eX - tX)) / this.mDensity)) == 0)
+        if ((aRandom.nextInt(
+                Math.max(1, Math.max(MathHelper.abs_int(cZ - tZ), MathHelper.abs_int(eZ - tZ)) / this.mDensity)) == 0) || (aRandom.nextInt(
+                Math.max(1, Math.max(MathHelper.abs_int(cX - tX), MathHelper.abs_int(eX - tX)) / this.mDensity)) == 0))
             return true;
         return false;
     }
@@ -243,10 +241,7 @@ public abstract class BW_OreLayer extends GT_Worldgen {
 
         BW_OreLayer that = (BW_OreLayer) o;
 
-        if (bwOres != that.bwOres) return false;
-        if (mMinY != that.mMinY) return false;
-        if (mWeight != that.mWeight) return false;
-        if (mDensity != that.mDensity) return false;
+        if ((bwOres != that.bwOres) || (mMinY != that.mMinY) || (mWeight != that.mWeight) || (mDensity != that.mDensity)) return false;
         if (mSize != that.mSize) return false;
         if (mMaxY != that.mMaxY) return false;
         if (mPrimaryMeta != that.mPrimaryMeta) return false;

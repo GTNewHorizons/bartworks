@@ -284,14 +284,12 @@ public class GT_TileEntity_CircuitAssemblyLine extends
             return false;
         }
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-        if (aMetaTileEntity == null) {
+        if ((aMetaTileEntity == null) || !(aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input)) {
             return false;
-        } else if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input) {
+        } else {
             ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
             ((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity).mRecipeMap = this.getRecipeMap();
             return this.mInputHatches.add((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity);
-        } else {
-            return false;
         }
     }
 

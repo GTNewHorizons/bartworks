@@ -225,9 +225,7 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
         mOutputOnSide = -1;
         mMiddleInputHatches.clear();
 
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, 6, 6, 0)) return false;
-
-        if (mMaintenanceHatches.size() != 1) return false;
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, 6, 6, 0) || (mMaintenanceHatches.size() != 1)) return false;
 
         if (glassTier < 8) {
             for (GT_MetaTileEntity_Hatch hatch : mExoticEnergyHatches) {

@@ -248,9 +248,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                 || GT_OreDictUnificator.getAssociation(itemStack).mPrefix == null
                 || GT_OreDictUnificator.getAssociation(itemStack).mMaterial == null
                 || GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial == null
-                || GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial.getDust(1) == null)
-            return new float[] { 1f, 1f };
-        else if (OrePrefixes.ore.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                || GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial.getDust(1) == null) {} else if (OrePrefixes.ore.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
                 || OrePrefixes.oreNetherrack.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
                 || OrePrefixes.oreEndstone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
                 || OrePrefixes.oreBlackgranite.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
@@ -378,9 +376,7 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
         this.mDoor = 0;
         this.mHardenedClay = 0;
 
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, 3, 11, 0)) return false;
-
-        if (this.tileEntityDispensers.isEmpty() || this.mDoor > 2 || this.mHardenedClay < 40) return false;
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, 3, 11, 0) || this.tileEntityDispensers.isEmpty() || this.mDoor > 2 || this.mHardenedClay < 40) return false;
 
         this.mWrench = true;
         this.mScrewdriver = true;

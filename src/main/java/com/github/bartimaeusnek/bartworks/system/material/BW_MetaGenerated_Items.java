@@ -97,8 +97,8 @@ public class BW_MetaGenerated_Items extends GT_MetaGenerated_Item implements IRa
                     int tZ = MathHelper.floor_double(aItemEntity.posZ);
                     Block tBlock = aItemEntity.worldObj.getBlock(tX, tY, tZ);
                     byte tMetaData = (byte) aItemEntity.worldObj.getBlockMetadata(tX, tY, tZ);
-                    if ((this.orePrefixes == OrePrefixes.dustImpure) || (this.orePrefixes == OrePrefixes.dustPure)) {
-                        if ((tBlock == Blocks.cauldron) && (tMetaData > 0)) {
+                    if ((tBlock == Blocks.cauldron) && (tMetaData > 0)) {
+                        if ((this.orePrefixes == OrePrefixes.dustImpure) || (this.orePrefixes == OrePrefixes.dustPure)) {
                             aItemEntity.setEntityItemStack(
                                     WerkstoffLoader.getCorrespondingItemStack(
                                             OrePrefixes.dust,
@@ -106,15 +106,15 @@ public class BW_MetaGenerated_Items extends GT_MetaGenerated_Item implements IRa
                                             aItemEntity.getEntityItem().stackSize));
                             aItemEntity.worldObj.setBlockMetadataWithNotify(tX, tY, tZ, tMetaData - 1, 3);
                             return true;
+                        } else {
+                            aItemEntity.setEntityItemStack(
+                                    WerkstoffLoader.getCorrespondingItemStack(
+                                            OrePrefixes.crushedPurified,
+                                            aMaterial,
+                                            aItemEntity.getEntityItem().stackSize));
+                            aItemEntity.worldObj.setBlockMetadataWithNotify(tX, tY, tZ, tMetaData - 1, 3);
+                            return true;
                         }
-                    } else if ((tBlock == Blocks.cauldron) && (tMetaData > 0)) {
-                        aItemEntity.setEntityItemStack(
-                                WerkstoffLoader.getCorrespondingItemStack(
-                                        OrePrefixes.crushedPurified,
-                                        aMaterial,
-                                        aItemEntity.getEntityItem().stackSize));
-                        aItemEntity.worldObj.setBlockMetadataWithNotify(tX, tY, tZ, tMetaData - 1, 3);
-                        return true;
                     }
                 }
             }

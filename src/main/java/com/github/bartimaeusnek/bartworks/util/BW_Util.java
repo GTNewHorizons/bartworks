@@ -834,10 +834,8 @@ public class BW_Util {
                 if (world.isAirBlock(x, y, z)) return false;
                 byte glasstier = BW_Util
                         .calculateGlassTier(world.getBlock(x, y, z), (byte) world.getBlockMetadata(x, y, z));
-                if (glasstier == 0) return false; // is not a glass ?
-                if (glasstier == notset) return false;
-                if (glasstier < mintier) return false;
-                if (glasstier > maxtier) return false;
+                 // is not a glass ?
+                if ((glasstier == 0) || (glasstier == notset) || (glasstier < mintier) || (glasstier > maxtier)) return false;
                 if (getter.apply(te) == notset) setter.accept(te, glasstier);
                 return getter.apply(te) == glasstier;
             }

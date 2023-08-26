@@ -1110,10 +1110,7 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 
             Werkstoff.Stats that = (Werkstoff.Stats) o;
 
-            if (this.boilingPoint != that.boilingPoint) return false;
-            if (this.meltingPoint != that.meltingPoint) return false;
-            if (this.mass != that.mass) return false;
-            if (this.protons != that.protons) return false;
+            if ((this.boilingPoint != that.boilingPoint) || (this.meltingPoint != that.meltingPoint) || (this.mass != that.mass) || (this.protons != that.protons)) return false;
             if (this.neutrons != that.neutrons) return false;
             if (this.electrons != that.electrons) return false;
             if (Math.abs(this.ebfGasRecipeTimeMultiplier - that.ebfGasRecipeTimeMultiplier) > 1.0e-6D) return false;

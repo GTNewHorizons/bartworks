@@ -29,9 +29,7 @@ class TooltipCache {
 
     static boolean put(ItemStack itemStack, List<String> tooltip) {
         Pair<Integer, Short> p = new Pair<>(Item.getIdFromItem(itemStack.getItem()), (short) itemStack.getItemDamage());
-        if (TooltipCache.cache.containsKey(p)) return false;
-
-        if (tooltip.isEmpty()) {
+        if (TooltipCache.cache.containsKey(p) || tooltip.isEmpty()) {
             return false;
         }
         StringBuilder sb = new StringBuilder();

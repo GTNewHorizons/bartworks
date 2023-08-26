@@ -55,10 +55,7 @@ public class BW_MetaGenerated_SmallOres extends BW_MetaGenerated_Ores {
 
         Block tBlock = aWorld.getBlock(aX, aY, aZ);
         Block tOreBlock = WerkstoffLoader.BWSmallOres;
-        if (aMetaData < 0 || tBlock == Blocks.air && !air) {
-            return false;
-        }
-        if (Block.getIdFromBlock(tBlock) != Block.getIdFromBlock(block)) {
+        if (aMetaData < 0 || tBlock == Blocks.air && !air || (Block.getIdFromBlock(tBlock) != Block.getIdFromBlock(block))) {
             return false;
         }
         final int aaY = aY;

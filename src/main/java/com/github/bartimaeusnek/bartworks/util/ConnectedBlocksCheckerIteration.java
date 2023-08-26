@@ -114,11 +114,9 @@ public class ConnectedBlocksCheckerIteration {
                         if (((IGregTechTileEntity) t).getMetaTileID() == n) return true;
                 }
             } else {
-                if (n == w.getBlockMetadata(C.x, C.y + 1, C.z)
-                        && !new Coords(C.x, C.y + 1, C.z, wID).equals(Controller))
-                    return true;
-                if (n == w.getBlockMetadata(C.x, C.y - 1, C.z)
-                        && !new Coords(C.x, C.y - 1, C.z, wID).equals(Controller))
+                if ((n == w.getBlockMetadata(C.x, C.y + 1, C.z)
+                        && !new Coords(C.x, C.y + 1, C.z, wID).equals(Controller)) || (n == w.getBlockMetadata(C.x, C.y - 1, C.z)
+                        && !new Coords(C.x, C.y - 1, C.z, wID).equals(Controller)))
                     return true;
                 if (n == w.getBlockMetadata(C.x + 1, C.y, C.z)
                         && !new Coords(C.x + 1, C.y, C.z, wID).equals(Controller))

@@ -61,12 +61,11 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
         if (!aPlayer.isSneaking()) {
             --this.aAmps;
             if (this.aAmps < 0) this.aAmps = this.maxAmps;
-            GT_Utility.sendChatToPlayer(aPlayer, "Max Amps: " + this.aAmps);
         } else {
             ++this.aAmps;
             if (this.aAmps > this.maxAmps) this.aAmps = 0;
-            GT_Utility.sendChatToPlayer(aPlayer, "Max Amps: " + this.aAmps);
         }
+        GT_Utility.sendChatToPlayer(aPlayer, "Max Amps: " + this.aAmps);
     }
 
     @Override

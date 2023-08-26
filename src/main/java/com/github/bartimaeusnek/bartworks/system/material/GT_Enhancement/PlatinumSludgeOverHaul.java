@@ -734,9 +734,7 @@ public class PlatinumSludgeOverHaul {
                     if (map.equals(GT_Recipe.GT_Recipe_Map.sFluidExtractionRecipes)) continue maploop;
                     if (map.equals(GT_Recipe.GT_Recipe_Map.sMultiblockChemicalRecipes)
                             || map.equals(GT_Recipe.GT_Recipe_Map.sChemicalRecipes)) {
-                                if (GT_Utility.areFluidsEqual(Ruthenium.getMolten(1), recipe.mFluidOutputs[i]))
-                                    toDel.add(recipe);
-                                else if (GT_Utility.areFluidsEqual(Rhodium.getMolten(1), recipe.mFluidOutputs[i]))
+                                if (GT_Utility.areFluidsEqual(Ruthenium.getMolten(1), recipe.mFluidOutputs[i]) || GT_Utility.areFluidsEqual(Rhodium.getMolten(1), recipe.mFluidOutputs[i]))
                                     toDel.add(recipe);
                                 else if (GT_Utility
                                         .areFluidsEqual(Materials.Iridium.getMolten(1), recipe.mFluidOutputs[i])) {
@@ -754,19 +752,13 @@ public class PlatinumSludgeOverHaul {
                                                     recipe.mFluidOutputs[i] = AcidicOsmiumSolution.getFluidOrGas(1000);
                                                     recipe.reloadOwner();
                                                 }
-                            } else if (GT_Utility.areFluidsEqual(Ruthenium.getMolten(1), recipe.mFluidOutputs[i]))
+                            } else if (GT_Utility.areFluidsEqual(Ruthenium.getMolten(1), recipe.mFluidOutputs[i]) || GT_Utility.areFluidsEqual(Rhodium.getMolten(1), recipe.mFluidOutputs[i]) || GT_Utility
+                                    .areFluidsEqual(Materials.Iridium.getMolten(1), recipe.mFluidOutputs[i]) || GT_Utility
+                                    .areFluidsEqual(Materials.Platinum.getMolten(1), recipe.mFluidOutputs[i]))
                         toDel.add(recipe);
-                    else if (GT_Utility.areFluidsEqual(Rhodium.getMolten(1), recipe.mFluidOutputs[i]))
-                        toDel.add(recipe);
-                    else if (GT_Utility
-                            .areFluidsEqual(Materials.Iridium.getMolten(1), recipe.mFluidOutputs[i]))
-                        toDel.add(recipe);
-                    else if (GT_Utility
-                            .areFluidsEqual(Materials.Platinum.getMolten(1), recipe.mFluidOutputs[i]))
-                        toDel.add(recipe);
-                    else if (GT_Utility
-                            .areFluidsEqual(Materials.Osmium.getMolten(1), recipe.mFluidOutputs[i]))
-                        toDel.add(recipe);
+                            else if (GT_Utility
+                                    .areFluidsEqual(Materials.Osmium.getMolten(1), recipe.mFluidOutputs[i]))
+                                toDel.add(recipe);
                 }
                 for (int i = 0; i < recipe.mOutputs.length; i++) {
                     if (!GT_Utility.isStackValid(recipe.mOutputs[i])) continue;
@@ -1048,13 +1040,7 @@ public class PlatinumSludgeOverHaul {
     }
 
     private static boolean isInBlackList(ItemStack stack) {
-        if (stack == null) return true;
-
-        if (stack.getItem() instanceof BW_MetaGenerated_Items) return true;
-
-        if (GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId.equals(MainMod.MOD_ID)) return true;
-
-        if (GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId.equals(BartWorksCrossmod.MOD_ID)) return true;
+        if ((stack == null) || (stack.getItem() instanceof BW_MetaGenerated_Items) || GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId.equals(MainMod.MOD_ID) || GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId.equals(BartWorksCrossmod.MOD_ID)) return true;
 
         if (GameRegistry.findUniqueIdentifierFor(stack.getItem()).modId.equals(NewHorizonsCoreMod.ID)
                 && !stack.getUnlocalizedName().contains("dust")

@@ -251,8 +251,7 @@ public class GT_TileEntity_HTGR extends GT_MetaTileEntity_EnhancedMultiBlockBase
                 startRecipeProcessing();
                 for (ItemStack itemStack : this.getStoredInputs()) {
                     int type = -1;
-                    if (itemStack == null) continue;
-                    if (itemStack.getItem() != HTGRMaterials.aHTGR_Materials) continue;
+                    if ((itemStack == null) || (itemStack.getItem() != HTGRMaterials.aHTGR_Materials)) continue;
                     int damage = HTGRMaterials.aHTGR_Materials.getDamage(itemStack);
                     if (!((damage + 1) % HTGRMaterials.MATERIALS_PER_FUEL == HTGRMaterials.USABLE_FUEL_INDEX + 1))
                         continue; // is fuel

@@ -289,13 +289,11 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             return false;
         }
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-        if (aMetaTileEntity == null) {
+        if ((aMetaTileEntity == null) || !(aMetaTileEntity instanceof GT_MetaTileEntity_RadioHatch)) {
             return false;
-        } else if (aMetaTileEntity instanceof GT_MetaTileEntity_RadioHatch) {
+        } else {
             ((GT_MetaTileEntity_RadioHatch) aMetaTileEntity).updateTexture(CasingIndex);
             return this.mRadHatches.add((GT_MetaTileEntity_RadioHatch) aMetaTileEntity);
-        } else {
-            return false;
         }
     }
 

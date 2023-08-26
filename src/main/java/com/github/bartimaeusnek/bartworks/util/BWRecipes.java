@@ -853,8 +853,7 @@ public class BWRecipes {
 
             BWRecipes.BWNBTDependantCraftingRecipe that = (BWRecipes.BWNBTDependantCraftingRecipe) o;
 
-            if (!Objects.equals(this.result, that.result)) return false;
-            if (!Objects.equals(this.charToStackMap, that.charToStackMap)) return false;
+            if (!Objects.equals(this.result, that.result) || !Objects.equals(this.charToStackMap, that.charToStackMap)) return false;
             // Probably incorrect - comparing Object[] arrays with Arrays.equals
             return Arrays.equals(this.shape, that.shape);
         }

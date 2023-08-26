@@ -161,18 +161,17 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
                 j2 = 1;
                 k2 = 0;
             } // X Y Z order
-            else if (x0 >= z0) {
-                i1 = 1;
-                j1 = 0;
-                k1 = 0;
-                i2 = 1;
-                j2 = 0;
-                k2 = 1;
-            } // X Z Y order
-            else {
-                i1 = 0;
-                j1 = 0;
-                k1 = 1;
+ else {
+                if (x0 >= z0) {
+                    i1 = 1;
+                    j1 = 0;
+                    k1 = 0;
+                } // X Z Y order
+                else {
+                    i1 = 0;
+                    j1 = 0;
+                    k1 = 1;
+                }
                 i2 = 1;
                 j2 = 0;
                 k2 = 1;

@@ -203,8 +203,7 @@ public class BioCulture extends BioData implements IColorModulationContainer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (o == null || this.getClass() != o.getClass() || !super.equals(o)) return false;
         BioCulture culture = (BioCulture) o;
         return this.isBreedable() == culture.isBreedable() && Objects.equals(this.getColor(), culture.getColor())
                 && Objects.equals(this.getPlasmid(), culture.getPlasmid())
