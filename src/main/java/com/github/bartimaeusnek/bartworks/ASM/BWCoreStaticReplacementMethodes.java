@@ -86,8 +86,6 @@ public class BWCoreStaticReplacementMethodes {
             return iPossibleRecipe.getCraftingResult(inventoryCrafting);
         }
 
-        ItemStack stack = null;
-
         HashSet<IRecipe> recipeSet = new NonNullWrappedHashSet<>();
         List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
 
@@ -100,7 +98,7 @@ public class BWCoreStaticReplacementMethodes {
         if (arr.length == 0) return null;
 
         IRecipe recipe = (IRecipe) arr[0];
-        stack = recipe.getCraftingResult(inventoryCrafting);
+        ItemStack stack = recipe.getCraftingResult(inventoryCrafting);
 
         if (arr.length != 1) return stack;
 
