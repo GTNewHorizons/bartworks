@@ -175,7 +175,8 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                 this.timer = 1;
             }
 
-            if (myMetaTileEntity.mTickTimer > myMetaTileEntity.mLastSoundTick + ticksBetweenSounds && this.sievert > 0) {
+            if (myMetaTileEntity.mTickTimer > myMetaTileEntity.mLastSoundTick + ticksBetweenSounds
+                    && this.sievert > 0) {
                 this.sendLoopStart((byte) 1);
                 myMetaTileEntity.mLastSoundTick = myMetaTileEntity.mTickTimer;
             }
@@ -360,8 +361,18 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                     @Override
                     public void draw(float partialTicks) {
                         if (GT_MetaTileEntity_RadioHatch.this.decayTime > 0) {
-                            int height = MathUtils.ceilInt(48 * ((GT_MetaTileEntity_RadioHatch.this.decayTime - GT_MetaTileEntity_RadioHatch.this.timer % GT_MetaTileEntity_RadioHatch.this.decayTime) / (float) GT_MetaTileEntity_RadioHatch.this.decayTime));
-                            new Rectangle().setColor(Color.argb(GT_MetaTileEntity_RadioHatch.this.colorForGUI[0], GT_MetaTileEntity_RadioHatch.this.colorForGUI[1], GT_MetaTileEntity_RadioHatch.this.colorForGUI[2], 255))
+                            int height = MathUtils.ceilInt(
+                                    48 * ((GT_MetaTileEntity_RadioHatch.this.decayTime
+                                            - GT_MetaTileEntity_RadioHatch.this.timer
+                                                    % GT_MetaTileEntity_RadioHatch.this.decayTime)
+                                            / (float) GT_MetaTileEntity_RadioHatch.this.decayTime));
+                            new Rectangle()
+                                    .setColor(
+                                            Color.argb(
+                                                    GT_MetaTileEntity_RadioHatch.this.colorForGUI[0],
+                                                    GT_MetaTileEntity_RadioHatch.this.colorForGUI[1],
+                                                    GT_MetaTileEntity_RadioHatch.this.colorForGUI[2],
+                                                    255))
                                     .draw(new Pos2d(0, 48 - height), new Size(16, height), partialTicks);
                         }
                     }
@@ -391,10 +402,9 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                                 () -> StatCollector.translateToLocalFormatted("BW.NEI.display.radhatch.1", this.mass))
                                 .setTextAlignment(Alignment.Center).setPos(65, 62))
                 .widget(
-                        TextWidget
-                                .dynamicString(
-                                        () -> StatCollector
-                                                .translateToLocalFormatted("BW.NEI.display.radhatch.0", this.getSievert()))
+                        TextWidget.dynamicString(
+                                () -> StatCollector
+                                        .translateToLocalFormatted("BW.NEI.display.radhatch.0", this.getSievert()))
                                 .setTextAlignment(Alignment.Center).setPos(60, 72))
                 .widget(new ButtonWidget().setOnClick((clickData, widget) -> {
                     if (!widget.isClient()) {
@@ -414,14 +424,14 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
         builder.setBackground(ModularUITextures.VANILLA_BACKGROUND);
         builder.setGuiTint(this.getGUIColorization());
 
-        builder.widget(new TextWidget("Radiation Shutter Control").setDefaultColor(this.COLOR_TITLE.get()).setPos(10, 9))
+        builder.widget(
+                new TextWidget("Radiation Shutter Control").setDefaultColor(this.COLOR_TITLE.get()).setPos(10, 9))
                 .widget(
                         new DrawableWidget().setDrawable(BW_UITextures.PICTURE_RADIATION_SHUTTER_FRAME).setPos(14, 27)
                                 .setSize(55, 54))
                 .widget(
-                        new DrawableWidget()
-                                .setDrawable(
-                                        () -> this.coverage < 100 ? BW_UITextures.PICTURE_RADIATION_SHUTTER_INSIDE : null)
+                        new DrawableWidget().setDrawable(
+                                () -> this.coverage < 100 ? BW_UITextures.PICTURE_RADIATION_SHUTTER_INSIDE : null)
                                 .setPos(16, 29).setSize(51, 50).attachSyncer(
                                         new FakeSyncWidget.ByteSyncer(this::getCoverage, this::setCoverage),
                                         builder,
@@ -429,8 +439,9 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                                                 .setSize(51, 50 - this.coverage / 2)))
                 .widget(
                         new TextFieldWidget().setSetterInt(val -> this.coverage = val.byteValue())
-                                .setGetterInt(() -> (int) this.coverage).setNumbers(0, 100).setTextColor(Color.WHITE.dark(1))
-                                .setOnScrollNumbers(1, 5, 50).setTextAlignment(Alignment.CenterLeft)
+                                .setGetterInt(() -> (int) this.coverage).setNumbers(0, 100)
+                                .setTextColor(Color.WHITE.dark(1)).setOnScrollNumbers(1, 5, 50)
+                                .setTextAlignment(Alignment.CenterLeft)
                                 .setBackground(GT_UITextures.BACKGROUND_TEXT_FIELD.withOffset(-1, -1, 2, 2))
                                 .setPos(86, 27).setSize(30, 12))
                 .widget(ButtonWidget.closeWindowButton(true).setPos(176 - 15, 3));

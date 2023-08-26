@@ -174,8 +174,10 @@ public abstract class BW_OreLayer extends GT_Worldgen {
 
     private boolean shouldPlace(Random aRandom, int cX, int eX, int tX, int cZ, int eZ, int tZ) {
         if (aRandom.nextInt(
-                Math.max(1, Math.max(MathHelper.abs_int(cZ - tZ), MathHelper.abs_int(eZ - tZ)) / this.mDensity)) == 0 || aRandom.nextInt(
-                Math.max(1, Math.max(MathHelper.abs_int(cX - tX), MathHelper.abs_int(eX - tX)) / this.mDensity)) == 0)
+                Math.max(1, Math.max(MathHelper.abs_int(cZ - tZ), MathHelper.abs_int(eZ - tZ)) / this.mDensity)) == 0
+                || aRandom.nextInt(
+                        Math.max(1, Math.max(MathHelper.abs_int(cX - tX), MathHelper.abs_int(eX - tX)) / this.mDensity))
+                        == 0)
             return true;
         return false;
     }
@@ -239,7 +241,10 @@ public abstract class BW_OreLayer extends GT_Worldgen {
         if (this == o) return true;
         if (!(o instanceof BW_OreLayer that)) return false;
 
-        if (this.bwOres != that.bwOres || this.mMinY != that.mMinY || this.mWeight != that.mWeight || this.mDensity != that.mDensity) return false;
+        if (this.bwOres != that.bwOres || this.mMinY != that.mMinY
+                || this.mWeight != that.mWeight
+                || this.mDensity != that.mDensity)
+            return false;
         if (this.mSize != that.mSize) return false;
         if (this.mMaxY != that.mMaxY) return false;
         if (this.mPrimaryMeta != that.mPrimaryMeta) return false;
@@ -251,9 +256,9 @@ public abstract class BW_OreLayer extends GT_Worldgen {
     @Override
     public int hashCode() {
         return MurmurHash3.murmurhash3_x86_32(
-                ByteBuffer.allocate(37).put(this.bwOres).putInt(this.mMinY).putInt(this.mWeight).putInt(this.mDensity).putInt(this.mSize)
-                        .putInt(this.mMaxY).putInt(this.mPrimaryMeta).putInt(this.mSecondaryMeta).putInt(this.mBetweenMeta)
-                        .putInt(this.mSporadicMeta).array(),
+                ByteBuffer.allocate(37).put(this.bwOres).putInt(this.mMinY).putInt(this.mWeight).putInt(this.mDensity)
+                        .putInt(this.mSize).putInt(this.mMaxY).putInt(this.mPrimaryMeta).putInt(this.mSecondaryMeta)
+                        .putInt(this.mBetweenMeta).putInt(this.mSporadicMeta).array(),
                 0,
                 37,
                 31);

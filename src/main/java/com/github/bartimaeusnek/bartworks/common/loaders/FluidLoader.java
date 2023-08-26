@@ -71,9 +71,9 @@ public class FluidLoader {
 
         BioLabFluidCells = new ItemStack[BioLabFluidMaterials.length];
 
-        GT_MetaGenerated_Item_98.FluidCell[] fluidCells = {
-                GT_MetaGenerated_Item_98.FluidCell.FLUORESCENT_DNA, GT_MetaGenerated_Item_98.FluidCell.ENZYME_SOLUTION,
-                GT_MetaGenerated_Item_98.FluidCell.PENICILLIN, GT_MetaGenerated_Item_98.FluidCell.POLYMERASE, };
+        GT_MetaGenerated_Item_98.FluidCell[] fluidCells = { GT_MetaGenerated_Item_98.FluidCell.FLUORESCENT_DNA,
+                GT_MetaGenerated_Item_98.FluidCell.ENZYME_SOLUTION, GT_MetaGenerated_Item_98.FluidCell.PENICILLIN,
+                GT_MetaGenerated_Item_98.FluidCell.POLYMERASE, };
         for (int i = 0; i < fluidCells.length; i++) {
             BioLabFluidCells[i] = fluidCells[i].get();
         }

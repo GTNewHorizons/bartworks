@@ -143,10 +143,9 @@ public class BW_NEI_OreHandler extends TemplateRecipeHandler {
     public void loadCraftingRecipes(ItemStack result) {
         Block ore = Block.getBlockFromItem(result.getItem());
         if (ore instanceof BW_MetaGenerated_Ores) {
-            BW_OreLayer.NEIMAP.get((short) result.getItemDamage()).stream()
-                    .filter(
-                            l -> !(ore instanceof BW_MetaGenerated_SmallOres)
-                                    || !l.getClass().equals(BW_WorldGenRoss128b.class) && !l.getClass().equals(BW_WorldGenRoss128ba.class))
+            BW_OreLayer.NEIMAP.get((short) result.getItemDamage()).stream().filter(
+                    l -> !(ore instanceof BW_MetaGenerated_SmallOres) || !l.getClass().equals(BW_WorldGenRoss128b.class)
+                            && !l.getClass().equals(BW_WorldGenRoss128ba.class))
                     .forEach(
                             l -> this.arecipes
                                     .add(new CachedOreRecipe(l, result, ore instanceof BW_MetaGenerated_SmallOres)));

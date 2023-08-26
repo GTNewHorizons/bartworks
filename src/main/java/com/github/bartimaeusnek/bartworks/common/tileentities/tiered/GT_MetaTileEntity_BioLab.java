@@ -177,8 +177,9 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                             && GT_Utility.isStackValid(this.mInventory[this.getInputSlot() + 2])
                             && this.mInventory[this.getInputSlot() + 2].getItem() instanceof LabParts
                             && this.mInventory[this.getInputSlot() + 2].getItemDamage() == 3
-                            && GT_Utility
-                                    .areStacksEqual(this.mInventory[this.getInputSlot() + 3], Materials.Ethanol.getCells(1))
+                            && GT_Utility.areStacksEqual(
+                                    this.mInventory[this.getInputSlot() + 3],
+                                    Materials.Ethanol.getCells(1))
                             && this.mFluid != null
                             && this.mFluid.isFluidEqual(FluidRegistry.getFluidStack("ic2distilledwater", 1000))
                             && this.mFluid.amount >= 1000) {
@@ -220,8 +221,9 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                             && this.mInventory[this.getInputSlot()].getTagCompound() != null
                             && // checks if it is a Culture
                             GT_Utility.isStackValid(this.mInventory[this.getInputSlot() + 3])
-                            && GT_Utility
-                                    .areStacksEqual(this.mInventory[this.getInputSlot() + 3], ItemList.Tool_DataOrb.get(1L))
+                            && GT_Utility.areStacksEqual(
+                                    this.mInventory[this.getInputSlot() + 3],
+                                    ItemList.Tool_DataOrb.get(1L))
                             && GT_Utility.isStackValid(this.mInventory[this.getInputSlot() + 1])
                             && GT_Utility.areStacksEqual(
                                     this.mInventory[this.getInputSlot() + 1],
@@ -269,10 +271,13 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                     ItemStack inp2 = ItemList.Tool_DataOrb.get(1L);
                     Behaviour_DataOrb.setDataTitle(inp2, "DNA Sample");
                     Behaviour_DataOrb.setDataName(inp2, BioCultureLoader.BIO_DATA_BETA_LACMATASE.getName());
-                    if (GT_Utility.isStackValid(this.mInventory[this.getInputSlot()])
-                            && GT_Utility
-                                    .areStacksEqual(FluidLoader.BioLabFluidCells[1], this.mInventory[this.getInputSlot()])
-                            && // checks if it is a Culture
+                    if (GT_Utility.isStackValid(this.mInventory[this.getInputSlot()]) && GT_Utility
+                            .areStacksEqual(FluidLoader.BioLabFluidCells[1], this.mInventory[this.getInputSlot()]) && // checks
+                                                                                                                      // if
+                                                                                                                      // it
+                                                                                                                      // is
+                                                                                                                      // a
+                                                                                                                      // Culture
                             GT_Utility.isStackValid(this.mInventory[this.getInputSlot() + 1])
                             && GT_Utility.areStacksEqual(
                                     this.mInventory[this.getInputSlot() + 1],
@@ -282,15 +287,16 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                                     this.mInventory[this.getInputSlot() + 2],
                                     ItemList.Tool_DataOrb.get(1L),
                                     true)
-                            && "DNA Sample".equals(Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 2]))
+                            && "DNA Sample"
+                                    .equals(Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 2]))
                             && !Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 2]).isEmpty()
                             && GT_Utility.isStackValid(this.mInventory[this.getInputSlot() + 3])
                             && GT_Utility.areStacksEqual(this.mInventory[this.getInputSlot() + 3], inp2)
                             && this.mFluid != null
                             && this.mFluid.isFluidEqual(dnaFluid)
                             && this.mFluid.amount >= 1000) {
-                        BioData cultureDNABioData = BioData
-                                .getBioDataFromName(Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 2]));
+                        BioData cultureDNABioData = BioData.getBioDataFromName(
+                                Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 2]));
                         if (cultureDNABioData == null) return super.checkRecipe(skipOC);
                         if (this.mTier < 1 + rTier + cultureDNABioData.getTier())
                             return GT_MetaTileEntity_BasicMachine.FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;
@@ -356,11 +362,11 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                     ItemStack Outp = ItemList.Tool_DataOrb.get(1L);
                     Behaviour_DataOrb.setDataTitle(Outp, "DNA Sample");
 
-                    if (GT_Utility.isStackValid(this.mInventory[this.getInputSlot()])
-                            && GT_Utility
-                                    .areStacksEqual(this.mInventory[this.getInputSlot()], BioItemList.getPetriDish(null))
+                    if (GT_Utility.isStackValid(this.mInventory[this.getInputSlot()]) && GT_Utility
+                            .areStacksEqual(this.mInventory[this.getInputSlot()], BioItemList.getPetriDish(null))
                             && GT_Utility.isStackValid(this.mInventory[this.getInputSlot() + 1])
-                            && GT_Utility.areStacksEqual(this.mInventory[this.getInputSlot() + 1], BioItemList.getOther(4))
+                            && GT_Utility
+                                    .areStacksEqual(this.mInventory[this.getInputSlot() + 1], BioItemList.getOther(4))
                             && GT_Utility.isStackValid(this.mInventory[this.getInputSlot() + 2])
                             && GT_Utility.areStacksEqual(
                                     this.mInventory[this.getInputSlot() + 2],
@@ -370,12 +376,13 @@ public class GT_MetaTileEntity_BioLab extends GT_MetaTileEntity_BasicMachine {
                                     this.mInventory[this.getInputSlot() + 3],
                                     ItemList.Tool_DataOrb.get(1L),
                                     true)
-                            && "DNA Sample".equals(Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 3]))
+                            && "DNA Sample"
+                                    .equals(Behaviour_DataOrb.getDataTitle(this.mInventory[this.getInputSlot() + 3]))
                             && this.mFluid.isFluidEqual(dnaFluid)
                             && this.mFluid.amount >= 8000) {
 
-                        BioData cultureDNABioData = BioData
-                                .getBioDataFromName(Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 3]));
+                        BioData cultureDNABioData = BioData.getBioDataFromName(
+                                Behaviour_DataOrb.getDataName(this.mInventory[this.getInputSlot() + 3]));
                         if (cultureDNABioData == null) return super.checkRecipe(skipOC);
                         if (this.mTier < 3 + rTier + cultureDNABioData.getTier())
                             return GT_MetaTileEntity_BasicMachine.FOUND_RECIPE_BUT_DID_NOT_MEET_REQUIREMENTS;

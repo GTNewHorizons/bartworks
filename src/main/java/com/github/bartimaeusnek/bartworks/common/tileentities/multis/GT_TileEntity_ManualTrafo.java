@@ -177,10 +177,7 @@ public class GT_TileEntity_ManualTrafo extends GT_MetaTileEntity_EnhancedMultiBl
         }
 
         return this.drainEnergyInput(this.getInputTier() * 2 * this.mEnergyHatches.size()) && this.addEnergyOutput(
-                this.getInputTier() * 2
-                        * this.mEnergyHatches.size()
-                        * this.mEfficiency
-                        / this.getMaxEfficiency(null));
+                this.getInputTier() * 2 * this.mEnergyHatches.size() * this.mEfficiency / this.getMaxEfficiency(null));
     }
 
     public boolean onRunningTickTabbedMode() {

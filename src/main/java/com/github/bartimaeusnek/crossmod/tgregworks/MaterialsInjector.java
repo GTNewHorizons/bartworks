@@ -21,11 +21,11 @@ import vexatos.tgregworks.reference.Config;
         name = MaterialsInjector.NAME,
         version = MaterialsInjector.VERSION,
         dependencies = """
-        	required-after:IC2;\
-        	required-after:gregtech;\
-        	required-after:bartworks;\
-        	before:TGregworks;\
-        	before:miscutils;""")
+                required-after:IC2;\
+                required-after:gregtech;\
+                required-after:bartworks;\
+                before:TGregworks;\
+                before:miscutils;""")
 public class MaterialsInjector {
 
     public static final String NAME = "BartWorks Mod Additions - TGregworks Container";

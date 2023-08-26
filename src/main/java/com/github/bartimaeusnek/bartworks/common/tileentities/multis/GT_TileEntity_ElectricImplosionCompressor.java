@@ -81,6 +81,7 @@ public class GT_TileEntity_ElectricImplosionCompressor
     private final ArrayList<ChunkCoordinates> chunkCoordinates = new ArrayList<>(5);
     private int mBlockTier = 0;
     private int mCasing;
+
     public GT_TileEntity_ElectricImplosionCompressor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -267,7 +268,8 @@ public class GT_TileEntity_ElectricImplosionCompressor
             @Override
             protected GT_OverclockCalculator createOverclockCalculator(@NotNull GT_Recipe recipe) {
                 // For overclocking we'll allow all power to be used
-                return super.createOverclockCalculator(recipe).setEUt(GT_TileEntity_ElectricImplosionCompressor.this.getMaxInputEu()).setAmperage(1);
+                return super.createOverclockCalculator(recipe)
+                        .setEUt(GT_TileEntity_ElectricImplosionCompressor.this.getMaxInputEu()).setAmperage(1);
             }
         }.setMaxParallelSupplier(() -> (int) Math.pow(4, Math.max(this.mBlockTier - 1, 0)));
     }

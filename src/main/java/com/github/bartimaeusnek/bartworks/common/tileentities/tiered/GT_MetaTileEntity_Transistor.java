@@ -100,7 +100,8 @@ public class GT_MetaTileEntity_Transistor extends GT_MetaTileEntity_TieredMachin
                     this.powered = false;
                     return;
                 }
-                if (!tileAtSide.outputsEnergyTo(ForgeDirection.WEST) || !tileAtSide.isUniversalEnergyStored(4L) || !tileAtSide.decreaseStoredEnergyUnits(4, false)) {
+                if (!tileAtSide.outputsEnergyTo(ForgeDirection.WEST) || !tileAtSide.isUniversalEnergyStored(4L)
+                        || !tileAtSide.decreaseStoredEnergyUnits(4, false)) {
                     this.powered = false;
                     return;
                 }

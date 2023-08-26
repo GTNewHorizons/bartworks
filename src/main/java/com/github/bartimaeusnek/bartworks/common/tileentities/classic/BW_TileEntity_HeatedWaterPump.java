@@ -144,8 +144,7 @@ public class BW_TileEntity_HeatedWaterPump extends TileEntity implements ITileDr
                                     if (te instanceof IFluidHandler tank) {
                                         if (tank.canFill(direction.getOpposite(), this.outputstack.getFluid())) {
                                             int drainage = tank.fill(direction.getOpposite(), this.outputstack, false);
-                                            if (drainage
-                                                    > 0) {
+                                            if (drainage > 0) {
                                                 tank.fill(direction.getOpposite(), this.outputstack, true);
                                                 this.drain(drainage, true);
                                             }

@@ -82,7 +82,8 @@ public enum BW_NonMeta_MaterialItems implements IItemContainer {
     @Override
     public boolean isStackEqual(Object aStack, boolean aWildcard, boolean aIgnoreNBT) {
         if (GT_Utility.isStackInvalid(aStack)) return false;
-        return GT_Utility.areUnificationsEqual((ItemStack) aStack, aWildcard ? this.getWildcard(1) : this.get(1), aIgnoreNBT);
+        return GT_Utility
+                .areUnificationsEqual((ItemStack) aStack, aWildcard ? this.getWildcard(1) : this.get(1), aIgnoreNBT);
     }
 
     @Override
@@ -114,7 +115,8 @@ public enum BW_NonMeta_MaterialItems implements IItemContainer {
         if (this.mHasNotBeenSet)
             throw new IllegalAccessError("The Enum '" + this.name() + "' has not been set to an Item at this time!");
         if (GT_Utility.isStackInvalid(this.mStack)) return GT_Utility.copyAmount(aAmount, aReplacements);
-        return GT_Utility.copyAmountAndMetaData(aAmount, this.mStack.getMaxDamage() - 1, GT_OreDictUnificator.get(this.mStack));
+        return GT_Utility
+                .copyAmountAndMetaData(aAmount, this.mStack.getMaxDamage() - 1, GT_OreDictUnificator.get(this.mStack));
     }
 
     @Override

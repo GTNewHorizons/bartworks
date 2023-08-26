@@ -116,7 +116,9 @@ public class GT_TileEntity_DEHP extends GT_MetaTileEntity_DrillerBase {
         tt.addSeparator().beginStructureBlock(3, 7, 3, false).addController("Front bottom")
                 .addOtherStructurePart(casings, "form the 3x1x3 Base")
                 .addOtherStructurePart(casings, "1x3x1 pillar above the center of the base (2 minimum total)")
-                .addOtherStructurePart(this.getFrameMaterial().mName + " Frame Boxes", "Each pillar's side and 1x3x1 on top")
+                .addOtherStructurePart(
+                        this.getFrameMaterial().mName + " Frame Boxes",
+                        "Each pillar's side and 1x3x1 on top")
                 .addEnergyHatch(VN[this.getMinTier()] + "+, Any base casing").addMaintenanceHatch("Any base casing")
                 .addInputBus("Mining Pipes, optional, any base casing").addInputHatch("Any base casing")
                 .addOutputHatch("Any base casing").toolTipFinisher(MULTIBLOCK_ADDED_BY_BARTIMAEUSNEK_VIA_BARTWORKS);

@@ -247,9 +247,9 @@ public class GT_TileEntity_THTR extends GT_MetaTileEntity_EnhancedMultiBlockBase
         }
         if (this.HeliumSupply < GT_TileEntity_THTR.HELIUM_NEEDED || this.fuelsupply < mincapacity) return false;
 
-        double eff = Math.min(
-                Math.pow((this.fuelsupply - mincapacity) / ((maxcapacity - mincapacity) / 10D), 2D) + 1,
-                100D) / 100D - (this.getIdealStatus() - this.getRepairStatus()) / 10D;
+        double eff = Math
+                .min(Math.pow((this.fuelsupply - mincapacity) / ((maxcapacity - mincapacity) / 10D), 2D) + 1, 100D)
+                / 100D - (this.getIdealStatus() - this.getRepairStatus()) / 10D;
         if (eff <= 0D) return false;
 
         int toReduce = MathUtils.floorInt(this.fuelsupply * 0.005D * eff);

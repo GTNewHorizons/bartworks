@@ -248,24 +248,25 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                 || GT_OreDictUnificator.getAssociation(itemStack).mPrefix == null
                 || GT_OreDictUnificator.getAssociation(itemStack).mMaterial == null
                 || GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial == null
-                || GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial.getDust(1) == null) {} else if (OrePrefixes.ore.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.oreNetherrack.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.oreEndstone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.oreBlackgranite.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.oreRedgranite.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.oreMarble.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.oreBasalt.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix))
-            return new float[] { 0.5f, 1f };
-        else if (OrePrefixes.stone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.stoneBricks.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.stoneChiseled.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.stoneCobble.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.stoneCracked.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.stoneMossy.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.stoneMossyBricks.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.stoneSmooth.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
-                || OrePrefixes.cobblestone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix))
-            return new float[] { 1f, 1.5f };
+                || GT_OreDictUnificator.getAssociation(itemStack).mMaterial.mMaterial.getDust(1) == null) {} else
+            if (OrePrefixes.ore.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.oreNetherrack.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.oreEndstone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.oreBlackgranite.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.oreRedgranite.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.oreMarble.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.oreBasalt.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix))
+                return new float[] { 0.5f, 1f };
+            else if (OrePrefixes.stone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.stoneBricks.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.stoneChiseled.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.stoneCobble.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.stoneCracked.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.stoneMossy.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.stoneMossyBricks.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.stoneSmooth.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix)
+                    || OrePrefixes.cobblestone.equals(GT_OreDictUnificator.getAssociation(itemStack).mPrefix))
+                return new float[] { 1f, 1.5f };
         return new float[] { 1f, 1f };
     }
 
@@ -376,7 +377,10 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
         this.mDoor = 0;
         this.mHardenedClay = 0;
 
-        if (!this.checkPiece(STRUCTURE_PIECE_MAIN, 3, 11, 0) || this.tileEntityDispensers.isEmpty() || this.mDoor > 2 || this.mHardenedClay < 40) return false;
+        if (!this.checkPiece(STRUCTURE_PIECE_MAIN, 3, 11, 0) || this.tileEntityDispensers.isEmpty()
+                || this.mDoor > 2
+                || this.mHardenedClay < 40)
+            return false;
 
         this.mWrench = true;
         this.mScrewdriver = true;
@@ -562,7 +566,8 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         builder.widget(
-                new SlotWidget(this.inventoryHandler, 1).setBackground(this.getGUITextureSet().getItemSlot()).setPos(59, 35))
+                new SlotWidget(this.inventoryHandler, 1).setBackground(this.getGUITextureSet().getItemSlot())
+                        .setPos(59, 35))
                 .widget(new DrawableWidget() {
 
                     private static final int DIVIDER = 125;
@@ -584,7 +589,10 @@ public class GT_TileEntity_Windmill extends GT_MetaTileEntity_EnhancedMultiBlock
                         }
                     }
                 }.setDrawable(BW_UITextures.PICTURE_WINDMILL_EMPTY).setPos(85, 27).setSize(32, 32))
-                .widget(new FakeSyncWidget.IntegerSyncer(() -> this.mMaxProgresstime, val -> this.mMaxProgresstime = val))
+                .widget(
+                        new FakeSyncWidget.IntegerSyncer(
+                                () -> this.mMaxProgresstime,
+                                val -> this.mMaxProgresstime = val))
                 .widget(
                         new ItemDrawable(
                                 () -> this.mMachine && !this.getBaseMetaTileEntity().isActive()

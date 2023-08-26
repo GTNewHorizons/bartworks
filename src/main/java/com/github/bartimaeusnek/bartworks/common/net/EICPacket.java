@@ -53,7 +53,8 @@ public class EICPacket extends GT_Packet_New {
             if (!(te instanceof IGregTechTileEntity)) return;
             IMetaTileEntity mte = ((IGregTechTileEntity) te).getMetaTileEntity();
             if (!(mte instanceof GT_TileEntity_ElectricImplosionCompressor)) return;
-            if (this.bool && !((IGregTechTileEntity) te).hasMufflerUpgrade()) ((IGregTechTileEntity) te).addMufflerUpgrade();
+            if (this.bool && !((IGregTechTileEntity) te).hasMufflerUpgrade())
+                ((IGregTechTileEntity) te).addMufflerUpgrade();
         }
     }
 }

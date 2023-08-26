@@ -225,7 +225,7 @@ public class BioCulture extends BioData implements IColorModulationContainer {
 
     @Override
     public short[] getRGBA() {
-        return new short[] { (short) this.getColor().getRed(), (short) this.getColor().getGreen(), (short) this.getColor().getBlue(),
-                (short) this.getColor().getAlpha() };
+        return new short[] { (short) this.getColor().getRed(), (short) this.getColor().getGreen(),
+                (short) this.getColor().getBlue(), (short) this.getColor().getAlpha() };
     }
 }

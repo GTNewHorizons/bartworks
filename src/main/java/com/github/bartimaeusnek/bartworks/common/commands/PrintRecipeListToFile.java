@@ -21,7 +21,6 @@ import java.io.IOException;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
 
 public class PrintRecipeListToFile extends CommandBase {
 

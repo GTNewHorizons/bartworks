@@ -58,9 +58,7 @@ public final class MurmurHash3 {
 
         for (int i = offset; i < roundedEnd; i += 4) {
             // little endian load order
-            int k1 = data[i] & 0xff | (data[i + 1] & 0xff) << 8
-                    | (data[i + 2] & 0xff) << 16
-                    | data[i + 3] << 24;
+            int k1 = data[i] & 0xff | (data[i + 1] & 0xff) << 8 | (data[i + 2] & 0xff) << 16 | data[i + 3] << 24;
             k1 *= c1;
             k1 = k1 << 15 | k1 >>> 17; // ROTL32(k1,15);
             k1 *= c2;

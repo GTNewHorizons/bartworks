@@ -168,7 +168,8 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                     t.mTopState = 1;
                     // hatch adder
                     TileEntity tileEntity = world.getTileEntity(x, y, z);
-                    if (tileEntity instanceof IGregTechTileEntity entity && t.addLayerOutputHatch(entity, CASING_INDEX)) {
+                    if (tileEntity instanceof IGregTechTileEntity entity
+                            && t.addLayerOutputHatch(entity, CASING_INDEX)) {
                         t.onTopLayerFound(false);
                         return true;
                     }
@@ -282,8 +283,10 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
         if (!this.checkPiece(STRUCTURE_PIECE_BASE, 7, 0, 0)) return false;
 
         // check each layer
-        while (this.mHeight < 12 && this.checkPiece(STRUCTURE_PIECE_LAYER, 7, this.mHeight * 5, 0) && !this.mTopLayerFound) {
-            if (this.mOutputHatchesByLayer.size() < this.mHeight || this.mOutputHatchesByLayer.get(this.mHeight - 1).isEmpty())
+        while (this.mHeight < 12 && this.checkPiece(STRUCTURE_PIECE_LAYER, 7, this.mHeight * 5, 0)
+                && !this.mTopLayerFound) {
+            if (this.mOutputHatchesByLayer.size() < this.mHeight
+                    || this.mOutputHatchesByLayer.get(this.mHeight - 1).isEmpty())
                 // layer without output hatch
                 return false;
             this.mTopState = -1;
@@ -292,7 +295,9 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
         }
 
         // validate final invariants...
-        return this.mCasing >= 75 * this.mHeight + 10 && this.mHeight >= 2 && this.mTopLayerFound && this.mMaintenanceHatches.size() == 1;
+        return this.mCasing >= 75 * this.mHeight + 10 && this.mHeight >= 2
+                && this.mTopLayerFound
+                && this.mMaintenanceHatches.size() == 1;
     }
 
     @Override
@@ -310,17 +315,8 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
         this.mHeight = 0;
-        int built = this.survivialBuildPiece(
-                STRUCTURE_PIECE_BASE,
-                stackSize,
-                7,
-                0,
-                0,
-                realBudget,
-                source,
-                actor,
-                false,
-                true);
+        int built = this
+                .survivialBuildPiece(STRUCTURE_PIECE_BASE, stackSize, 7, 0, 0, realBudget, source, actor, false, true);
         if (built >= 0) return built;
         int tTotalHeight = Math.min(12, stackSize.stackSize + 2); // min 2 output layer, so at least 1 + 2 height
         for (int i = 1; i < tTotalHeight - 1; i++) {

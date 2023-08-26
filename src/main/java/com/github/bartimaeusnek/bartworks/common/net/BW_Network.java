@@ -78,8 +78,7 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
     public void sendToPlayer(@Nonnull GT_Packet aPacket, @Nonnull EntityPlayerMP aPlayer) {
         this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.PLAYER);
-        this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
-                .set(aPlayer);
+        this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(aPlayer);
         this.mChannel.get(Side.SERVER).writeAndFlush(aPacket);
     }
 
@@ -97,8 +96,7 @@ public class BW_Network extends MessageToMessageCodec<FMLProxyPacket, GT_Packet_
     public void sendToAllAround(@Nonnull GT_Packet aPacket, NetworkRegistry.TargetPoint aPosition) {
         this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGET)
                 .set(FMLOutboundHandler.OutboundTarget.ALLAROUNDPOINT);
-        this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS)
-                .set(aPosition);
+        this.mChannel.get(Side.SERVER).attr(FMLOutboundHandler.FML_MESSAGETARGETARGS).set(aPosition);
         this.mChannel.get(Side.SERVER).writeAndFlush(aPacket);
     }
 

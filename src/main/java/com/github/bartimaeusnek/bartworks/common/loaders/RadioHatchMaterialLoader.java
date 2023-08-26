@@ -42,8 +42,7 @@ public class RadioHatchMaterialLoader {
             }
         }
 
-        Materials[] spacialMaterial = { Materials.Naquadah, Materials.NaquadahEnriched,
-                Materials.Naquadria };
+        Materials[] spacialMaterial = { Materials.Naquadah, Materials.NaquadahEnriched, Materials.Naquadria };
         int[] spacialValue = { 130, 140, 150 };
 
         for (int i = 0; i < spacialMaterial.length; i++) {

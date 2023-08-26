@@ -588,12 +588,9 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
     }
 
     public byte getToolQuality() {
-        return this.stats
-                .getQualityOverride() > 0
-                        ? this.stats.getQualityOverride()
-                        : (byte) (15f * (this.getStats().getProtons() / 188f
-                                + this.getStats().getMeltingPoint() / 10801f)
-                                / (float) this.getContents().getKey());
+        return this.stats.getQualityOverride() > 0 ? this.stats.getQualityOverride()
+                : (byte) (15f * (this.getStats().getProtons() / 188f + this.getStats().getMeltingPoint() / 10801f)
+                        / (float) this.getContents().getKey());
     }
 
     public float getToolSpeed() {
@@ -610,9 +607,9 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
 
     public int getDurability() {
         return this.stats.getDurOverride() > 0 ? this.stats.getDurOverride()
-                : (int) (this.stats.durMod
-                        * (0.01f * this.getStats().getMeltingPoint() * this.getStats().getMass()
-                                / (float) this.getContents().getKey()));
+                : (int) (this.stats.durMod * (0.01f * this.getStats().getMeltingPoint()
+                        * this.getStats().getMass()
+                        / (float) this.getContents().getKey()));
     }
 
     /**
@@ -1104,7 +1101,10 @@ public class Werkstoff implements IColorModulationContainer, ISubTagContainer {
             if (this == o) return true;
             if (!(o instanceof Werkstoff.Stats that)) return false;
 
-            if (this.boilingPoint != that.boilingPoint || this.meltingPoint != that.meltingPoint || this.mass != that.mass || this.protons != that.protons) return false;
+            if (this.boilingPoint != that.boilingPoint || this.meltingPoint != that.meltingPoint
+                    || this.mass != that.mass
+                    || this.protons != that.protons)
+                return false;
             if (this.neutrons != that.neutrons) return false;
             if (this.electrons != that.electrons) return false;
             if (Math.abs(this.ebfGasRecipeTimeMultiplier - that.ebfGasRecipeTimeMultiplier) > 1.0e-6D) return false;

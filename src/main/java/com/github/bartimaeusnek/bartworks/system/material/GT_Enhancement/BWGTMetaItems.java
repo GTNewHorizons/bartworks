@@ -62,8 +62,7 @@ public class BWGTMetaItems extends BW_MetaGenerated_Items {
                             && (orePrefixes == OrePrefixes.capsule || orePrefixes == OrePrefixes.bottle))
                 continue;
 
-            if (OreDictionary
-                    .doesOreNameExist(this.orePrefixes.name() + material.mDefaultLocalName.replace(" ", ""))) {
+            if (OreDictionary.doesOreNameExist(this.orePrefixes.name() + material.mDefaultLocalName.replace(" ", ""))) {
                 this.hiddenThings.add(i);
                 continue;
             }

@@ -119,27 +119,33 @@ public class ConnectedBlocksChecker {
             if (GT) {
                 TileEntity t;
                 t = w.getTileEntity(C.x, C.y + 1, C.z);
-                if (t != null && !new Coords(C.x, C.y + 1, C.z, wID).equals(Controller) && t instanceof IGregTechTileEntity)
+                if (t != null && !new Coords(C.x, C.y + 1, C.z, wID).equals(Controller)
+                        && t instanceof IGregTechTileEntity)
                     if (((IGregTechTileEntity) t).getMetaTileID() == n) return true;
                 t = w.getTileEntity(C.x, C.y - 1, C.z);
-                if (t != null && !new Coords(C.x, C.y - 1, C.z, wID).equals(Controller) && t instanceof IGregTechTileEntity)
+                if (t != null && !new Coords(C.x, C.y - 1, C.z, wID).equals(Controller)
+                        && t instanceof IGregTechTileEntity)
                     if (((IGregTechTileEntity) t).getMetaTileID() == n) return true;
                 t = w.getTileEntity(C.x + 1, C.y, C.z);
-                if (t != null && !new Coords(C.x + 1, C.y, C.z, wID).equals(Controller) && t instanceof IGregTechTileEntity)
+                if (t != null && !new Coords(C.x + 1, C.y, C.z, wID).equals(Controller)
+                        && t instanceof IGregTechTileEntity)
                     if (((IGregTechTileEntity) t).getMetaTileID() == n) return true;
                 t = w.getTileEntity(C.x - 1, C.y, C.z);
-                if (t != null && !new Coords(C.x - 1, C.y, C.z, wID).equals(Controller) && t instanceof IGregTechTileEntity)
+                if (t != null && !new Coords(C.x - 1, C.y, C.z, wID).equals(Controller)
+                        && t instanceof IGregTechTileEntity)
                     if (((IGregTechTileEntity) t).getMetaTileID() == n) return true;
                 t = w.getTileEntity(C.x, C.y, C.z + 1);
-                if (t != null && !new Coords(C.x, C.y, C.z + 1, wID).equals(Controller) && t instanceof IGregTechTileEntity)
+                if (t != null && !new Coords(C.x, C.y, C.z + 1, wID).equals(Controller)
+                        && t instanceof IGregTechTileEntity)
                     if (((IGregTechTileEntity) t).getMetaTileID() == n) return true;
                 t = w.getTileEntity(C.x, C.y, C.z - 1);
-                if (t != null && !new Coords(C.x, C.y, C.z - 1, wID).equals(Controller) && t instanceof IGregTechTileEntity)
+                if (t != null && !new Coords(C.x, C.y, C.z - 1, wID).equals(Controller)
+                        && t instanceof IGregTechTileEntity)
                     if (((IGregTechTileEntity) t).getMetaTileID() == n) return true;
             } else {
-                if (n == w.getBlockMetadata(C.x, C.y + 1, C.z)
-                        && !new Coords(C.x, C.y + 1, C.z, wID).equals(Controller) || n == w.getBlockMetadata(C.x, C.y - 1, C.z)
-                        && !new Coords(C.x, C.y - 1, C.z, wID).equals(Controller))
+                if (n == w.getBlockMetadata(C.x, C.y + 1, C.z) && !new Coords(C.x, C.y + 1, C.z, wID).equals(Controller)
+                        || n == w.getBlockMetadata(C.x, C.y - 1, C.z)
+                                && !new Coords(C.x, C.y - 1, C.z, wID).equals(Controller))
                     return true;
                 if (n == w.getBlockMetadata(C.x + 1, C.y, C.z)
                         && !new Coords(C.x + 1, C.y, C.z, wID).equals(Controller))

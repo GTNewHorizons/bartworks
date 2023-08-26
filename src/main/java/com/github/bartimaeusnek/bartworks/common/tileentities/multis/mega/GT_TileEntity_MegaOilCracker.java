@@ -191,7 +191,8 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
             @Override
             @Nonnull
             public CheckRecipeResult process() {
-                this.setEuModifier(1.0F - Math.min(0.1F * (GT_TileEntity_MegaOilCracker.this.heatLevel.getTier() + 1), 0.5F));
+                this.setEuModifier(
+                        1.0F - Math.min(0.1F * (GT_TileEntity_MegaOilCracker.this.heatLevel.getTier() + 1), 0.5F));
                 return super.process();
             }
         }.setMaxParallel(ConfigHandler.megaMachinesMax);
@@ -214,7 +215,8 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
     public int survivalConstruct(ItemStack stackSize, int elementBudget, IItemSource source, EntityPlayerMP actor) {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-        return this.survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 6, 6, 0, realBudget, source, actor, false, true);
+        return this
+                .survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 6, 6, 0, realBudget, source, actor, false, true);
     }
     // -------------- TEC TECH COMPAT ----------------
 
@@ -326,7 +328,8 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
         ArrayList<FluidStack> rList = new ArrayList<>();
         for (GT_MetaTileEntity_Hatch_Input tHatch : this.mInputHatches) {
             tHatch.mRecipeMap = this.getRecipeMap();
-            if (isValidMetaTileEntity(tHatch) && tHatch.getFillableStack() != null && !GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tHatch.getFillableStack())) {
+            if (isValidMetaTileEntity(tHatch) && tHatch.getFillableStack() != null
+                    && !GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tHatch.getFillableStack())) {
                 rList.add(tHatch.getFillableStack());
             }
         }

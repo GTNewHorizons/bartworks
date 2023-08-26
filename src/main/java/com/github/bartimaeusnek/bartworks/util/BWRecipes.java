@@ -760,9 +760,10 @@ public class BWRecipes {
                 return null;
             }
             return aCheckForCollisions && isthere != null
-                    && BW_Util.areStacksEqualOrNull(
-                            (ItemStack) isthere.mSpecialItems,
-                            (ItemStack) aRecipe.mSpecialItems) ? null : this.add(aRecipe);
+                    && BW_Util
+                            .areStacksEqualOrNull((ItemStack) isthere.mSpecialItems, (ItemStack) aRecipe.mSpecialItems)
+                                    ? null
+                                    : this.add(aRecipe);
         }
 
         public GT_Recipe addRecipe(GT_Recipe aRecipe, boolean VanillaGT) {
@@ -845,7 +846,8 @@ public class BWRecipes {
             if (this == o) return true;
             if (!(o instanceof BWRecipes.BWNBTDependantCraftingRecipe that)) return false;
 
-            if (!Objects.equals(this.result, that.result) || !Objects.equals(this.charToStackMap, that.charToStackMap)) return false;
+            if (!Objects.equals(this.result, that.result) || !Objects.equals(this.charToStackMap, that.charToStackMap))
+                return false;
             // Probably incorrect - comparing Object[] arrays with Arrays.equals
             return Arrays.equals(this.shape, that.shape);
         }

@@ -87,7 +87,10 @@ public class DustLoader implements IWerkstoffRunnable {
                             }
                         } else {
                             if (((Materials) container.getKey()).getDust(container.getValue()) == null) {
-                                if (((Materials) container.getKey()).getCells(container.getValue()) == null || ((Materials) container.getKey()).getMolten(0) == null && ((Materials) container.getKey()).getSolid(0) == null) continue;
+                                if (((Materials) container.getKey()).getCells(container.getValue()) == null
+                                        || ((Materials) container.getKey()).getMolten(0) == null
+                                                && ((Materials) container.getKey()).getSolid(0) == null)
+                                    continue;
                                 FluidStack tmpFl = ((Materials) container.getKey())
                                         .getMolten(1000L * container.getValue());
                                 if (tmpFl == null || tmpFl.getFluid() == null) {
@@ -96,8 +99,7 @@ public class DustLoader implements IWerkstoffRunnable {
                                 flOutputs.add(tmpFl);
                                 if (flOutputs.size() > 1) {
                                     if (!tracker.containsKey(container.getKey())) {
-                                        stOutputs.add(
-                                                ((Materials) container.getKey()).getCells(container.getValue()));
+                                        stOutputs.add(((Materials) container.getKey()).getCells(container.getValue()));
                                         tracker.put(
                                                 container.getKey(),
                                                 new Pair<>(container.getValue(), stOutputs.size() - 1));

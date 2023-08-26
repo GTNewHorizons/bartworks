@@ -1495,8 +1495,8 @@ public class WerkstoffLoader {
             int size = 0;
             if (BetterLoadingScreen.isModLoaded()) clsArr = CLSCompat.initCls();
 
-            IWerkstoffRunnable[] werkstoffRunnables = { new ToolLoader(), new DustLoader(),
-                    new GemLoader(), new SimpleMetalLoader(), new CasingLoader(), new AspectLoader(), new OreLoader(),
+            IWerkstoffRunnable[] werkstoffRunnables = { new ToolLoader(), new DustLoader(), new GemLoader(),
+                    new SimpleMetalLoader(), new CasingLoader(), new AspectLoader(), new OreLoader(),
                     new CrushedLoader(), new CraftingMaterialLoader(), new CellLoader(), new MoltenCellLoader(),
                     new MultipleMetalLoader(), new MetalLoader(), new BlockLoader() };
 
@@ -1651,7 +1651,8 @@ public class WerkstoffLoader {
                     && (werkstoff.getGenerationFeatures().toGenerate & p.mMaterialGenerationBits) != 0
                     && OreDictHandler.getItemStack(werkstoff.getDefaultName(), p, 1) != null) {
                         DebugLog.log(
-                                "Found: " + p + werkstoff.getVarName()
+                                "Found: " + p
+                                        + werkstoff.getVarName()
                                         + " in GT material system, disable and reroute my Items to that, also add a Tooltip.");
                         werkstoff.getGenerationFeatures().setBlacklist(p);
                     }
@@ -1783,8 +1784,8 @@ public class WerkstoffLoader {
     }
 
     private static void runGTItemDataRegistrator() {
-        IWerkstoffRunnable[] registrations = { new BridgeMaterialsLoader(),
-                new AssociationLoader(), new CasingRegistrator() };
+        IWerkstoffRunnable[] registrations = { new BridgeMaterialsLoader(), new AssociationLoader(),
+                new CasingRegistrator() };
         for (Werkstoff werkstoff : Werkstoff.werkstoffHashSet) {
             for (IWerkstoffRunnable registration : registrations) {
                 registration.run(werkstoff);

@@ -78,7 +78,8 @@ public class TileEntity_GTDataServer extends TileEntity
         if (this.TickTimer++ % 20 != 0) return;
 
         if (this.isServerSide()) {
-            if (GT_Utility.areStacksEqual(this.mItems[0], ItemList.Tool_DataOrb.get(1)) && this.mItems[0].hasTagCompound()) {
+            if (GT_Utility.areStacksEqual(this.mItems[0], ItemList.Tool_DataOrb.get(1))
+                    && this.mItems[0].hasTagCompound()) {
                 if (GT_NBT_DataBase.getIdFromTag(this.mItems[0].getTagCompound()) == null) {
                     this.OrbDataBase.put(
                             GT_NBT_DataBase.getMaxID(),
@@ -91,7 +92,8 @@ public class TileEntity_GTDataServer extends TileEntity
                     this.OrbDataBase.put(id, GT_NBT_DataBase.getGTTagFromId(id));
                 }
             }
-            if (GT_Utility.areStacksEqual(this.mItems[0], ItemList.Tool_DataStick.get(1)) && this.mItems[0].hasTagCompound()) {
+            if (GT_Utility.areStacksEqual(this.mItems[0], ItemList.Tool_DataStick.get(1))
+                    && this.mItems[0].hasTagCompound()) {
 
                 String bookTitle = GT_Utility.ItemNBT.getBookTitle(this.mItems[0]);
                 String punchcardData = GT_Utility.ItemNBT.getPunchCardData(this.mItems[0]);

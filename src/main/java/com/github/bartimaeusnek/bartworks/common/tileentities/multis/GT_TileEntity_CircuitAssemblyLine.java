@@ -192,7 +192,8 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         this.type = aNBT.getCompoundTag("Type");
-        this.imprintedItemName = GT_LanguageManager.getTranslateableItemStackName(ItemStack.loadItemStackFromNBT(this.type));
+        this.imprintedItemName = GT_LanguageManager
+                .getTranslateableItemStackName(ItemStack.loadItemStackFromNBT(this.type));
         super.loadNBTData(aNBT);
     }
 
@@ -388,7 +389,8 @@ public class GT_TileEntity_CircuitAssemblyLine extends
         int tLength = Math.min(stackSize.stackSize + 1, 7);
 
         for (int i = 1; i < tLength; ++i) {
-            built = this.survivialBuildPiece(STRUCTURE_PIECE_NEXT, stackSize, -i, 0, 0, elementBudget, env, false, true);
+            built = this
+                    .survivialBuildPiece(STRUCTURE_PIECE_NEXT, stackSize, -i, 0, 0, elementBudget, env, false, true);
             if (built >= 0) return built;
         }
         return -1;
@@ -410,7 +412,8 @@ public class GT_TileEntity_CircuitAssemblyLine extends
     @Override
     public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
         super.addUIWidgets(builder, buildContext);
-        builder.widget(new FakeSyncWidget.StringSyncer(() -> this.imprintedItemName, val -> this.imprintedItemName = val));
+        builder.widget(
+                new FakeSyncWidget.StringSyncer(() -> this.imprintedItemName, val -> this.imprintedItemName = val));
     }
 
     @Override

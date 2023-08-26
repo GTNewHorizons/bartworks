@@ -280,7 +280,8 @@ public class StaticRecipeChangeLoaders {
                                     }
                                 }
                             }
-                            if (recipe.mSpecialItems instanceof ItemStack && GT_Utility.areStacksEqual((ItemStack) recipe.mSpecialItems, toReplace)) {
+                            if (recipe.mSpecialItems instanceof ItemStack
+                                    && GT_Utility.areStacksEqual((ItemStack) recipe.mSpecialItems, toReplace)) {
                                 toremRecipeList.add(recipe);
                                 // recipe.mSpecialItems = data.filledContainer;
                             }
@@ -296,7 +297,8 @@ public class StaticRecipeChangeLoaders {
     }
 
     private static void runUnficationDeleter(Werkstoff werkstoff) {
-        if (werkstoff.getType() == Werkstoff.Types.ELEMENT && werkstoff.getBridgeMaterial() != null && Element.get(werkstoff.getToolTip()) != Element._NULL) {
+        if (werkstoff.getType() == Werkstoff.Types.ELEMENT && werkstoff.getBridgeMaterial() != null
+                && Element.get(werkstoff.getToolTip()) != Element._NULL) {
             werkstoff.getBridgeMaterial().mElement = Element.get(werkstoff.getToolTip());
             Element.get(werkstoff.getToolTip()).mLinkedMaterials = new ArrayList<>();
             Element.get(werkstoff.getToolTip()).mLinkedMaterials.add(werkstoff.getBridgeMaterial());
@@ -312,7 +314,8 @@ public class StaticRecipeChangeLoaders {
     }
 
     private static void runMaterialLinker(Werkstoff werkstoff) {
-        if (werkstoff.getType() == Werkstoff.Types.ELEMENT && werkstoff.getBridgeMaterial() != null && Element.get(werkstoff.getToolTip()) != Element._NULL) {
+        if (werkstoff.getType() == Werkstoff.Types.ELEMENT && werkstoff.getBridgeMaterial() != null
+                && Element.get(werkstoff.getToolTip()) != Element._NULL) {
             werkstoff.getBridgeMaterial().mElement = Element.get(werkstoff.getToolTip());
             Element.get(werkstoff.getToolTip()).mLinkedMaterials = new ArrayList<>();
             Element.get(werkstoff.getToolTip()).mLinkedMaterials.add(werkstoff.getBridgeMaterial());
@@ -376,8 +379,7 @@ public class StaticRecipeChangeLoaders {
                                                         .getAssociation(recipe.mInputs[i]).mMaterial.mMaterial.equals(
                                                                 GT_OreDictUnificator.getAssociation(
                                                                         baseRe.mInputs[i]).mMaterial.mMaterial)
-                                                && GT_Utility
-                                                        .areStacksEqual(recipe.mOutputs[0], baseRe.mOutputs[0]))) {
+                                                && GT_Utility.areStacksEqual(recipe.mOutputs[0], baseRe.mOutputs[0]))) {
                             toAdd.add(recipe.mOutputs[0]);
                             repToAdd.put(tag, recipe);
                             continue recipeLoop;
@@ -390,8 +392,7 @@ public class StaticRecipeChangeLoaders {
     }
 
     private static int transformEBFGasRecipeTime(int originalDuration, long originalGasProtons, long newGasProtons) {
-        double protonTerm = originalGasProtons * (newGasProtons >= originalGasProtons ? 1.0D : 2.75D)
-                - newGasProtons;
+        double protonTerm = originalGasProtons * (newGasProtons >= originalGasProtons ? 1.0D : 2.75D) - newGasProtons;
         return Math.max(1, (int) (originalDuration / 200D * Math.max(200D + protonTerm, 1D)));
     }
 
@@ -428,8 +429,7 @@ public class StaticRecipeChangeLoaders {
                 int gasAmount = Math.max(
                         1,
                         (int) Math.round(
-                                recipe.mFluidInputs[0].amount
-                                        * gtEbfGasRecipeConsumptionMultipliers.get(newGas)));
+                                recipe.mFluidInputs[0].amount * gtEbfGasRecipeConsumptionMultipliers.get(newGas)));
                 if (recipe.mFluidInputs != null && recipe.mFluidInputs.length == 1
                         && recipe.mFluidInputs[0].isFluidEqual(newGas.getGas(0))) {
                     // preserve original recipe owner
@@ -525,9 +525,11 @@ public class StaticRecipeChangeLoaders {
                             && !GT_Utility.areStacksEqual(GT_Utility.getIntegratedCircuit(19), stack)) {
                                 if (BW_Util.checkStackAndPrefix(stack))
                                     circuitConfiguration = (byte) (OrePrefixes.dustSmall
-                                            .equals(GT_OreDictUnificator.getAssociation(stack).mPrefix) ? 4
-                                                    : OrePrefixes.dustTiny
-                                                            .equals(GT_OreDictUnificator.getAssociation(stack).mPrefix) ? 9 : 1);
+                                            .equals(GT_OreDictUnificator.getAssociation(stack).mPrefix)
+                                                    ? 4
+                                                    : OrePrefixes.dustTiny.equals(
+                                                            GT_OreDictUnificator.getAssociation(stack).mPrefix) ? 9
+                                                                    : 1);
                                 inputs.add(stack);
                             }
                 inputs.add(GT_Utility.getIntegratedCircuit(circuitConfiguration));

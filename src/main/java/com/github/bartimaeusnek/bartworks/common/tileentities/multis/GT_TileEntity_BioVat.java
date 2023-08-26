@@ -231,7 +231,9 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             @NotNull
             @Override
             protected CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
-                if (!BW_Util.areStacksEqualOrNull((ItemStack) recipe.mSpecialItems, GT_TileEntity_BioVat.this.getControllerSlot()))
+                if (!BW_Util.areStacksEqualOrNull(
+                        (ItemStack) recipe.mSpecialItems,
+                        GT_TileEntity_BioVat.this.getControllerSlot()))
                     return CheckRecipeResultRegistry.NO_RECIPE;
                 int[] conditions = GT_TileEntity_BioVat.specialValueUnpack(recipe.mSpecialValue);
                 GT_TileEntity_BioVat.this.mNeededSievert = conditions[3];
@@ -259,7 +261,8 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
                     return result;
                 }
                 // We already made sure the recipe runs. Now the vat looks for as many "parallels" as it can do
-                GT_TileEntity_BioVat.this.mExpectedMultiplier = GT_TileEntity_BioVat.this.getExpectedMultiplier(this.lastRecipe.getFluidOutput(0), true);
+                GT_TileEntity_BioVat.this.mExpectedMultiplier = GT_TileEntity_BioVat.this
+                        .getExpectedMultiplier(this.lastRecipe.getFluidOutput(0), true);
                 GT_TileEntity_BioVat.this.mTimes = 1;
                 for (int i = 1; i < GT_TileEntity_BioVat.this.mExpectedMultiplier; i++) {
                     if (GT_TileEntity_BioVat.this.depleteInput(this.lastRecipe.mFluidInputs[0])) {
@@ -660,7 +663,9 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
         // here we must check the machine is well-formed as otherwise getExpectedMultiplier might error out!
         infoData[infoData.length - 2] = StatCollector.translateToLocal("BW.infoData.BioVat.expectedProduction") + ": "
                 + EnumChatFormatting.GREEN
-                + (this.mMachine ? (this.mMaxProgresstime <= 0 ? this.getExpectedMultiplier(null, false) : this.mExpectedMultiplier) * 100
+                + (this.mMachine
+                        ? (this.mMaxProgresstime <= 0 ? this.getExpectedMultiplier(null, false)
+                                : this.mExpectedMultiplier) * 100
                         : -1)
                 + EnumChatFormatting.RESET
                 + " %";

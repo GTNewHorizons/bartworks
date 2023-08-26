@@ -174,8 +174,9 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
                 .addInfo(
                         "For each perfect overclock the EBF will reduce recipe time 4 times (instead of 2) (100% efficiency)")
                 .addInfo("Additionally gives +100K for every tier past MV")
-                .addPollutionAmount(20 * this.getPollutionPerTick(null)).addSeparator().beginStructureBlock(15, 20, 15, true)
-                .addController("3rd layer center").addCasingInfoRange("Heat Proof Machine Casing", 0, 279, false)
+                .addPollutionAmount(20 * this.getPollutionPerTick(null)).addSeparator()
+                .beginStructureBlock(15, 20, 15, true).addController("3rd layer center")
+                .addCasingInfoRange("Heat Proof Machine Casing", 0, 279, false)
                 .addOtherStructurePart("864x Heating Coils", "Inner 13x18x13 (Hollow)")
                 .addOtherStructurePart("1007x Borosilicate Glass", "Outer 15x18x15")
                 .addStructureInfo("The glass tier limits the Energy Input tier")
@@ -276,12 +277,14 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
             @Override
             protected GT_OverclockCalculator createOverclockCalculator(@Nonnull GT_Recipe recipe) {
                 return super.createOverclockCalculator(recipe).setRecipeHeat(recipe.mSpecialValue)
-                        .setMultiHeat(GT_TileEntity_MegaBlastFurnace.this.mHeatingCapacity).setHeatOC(true).setHeatDiscount(true);
+                        .setMultiHeat(GT_TileEntity_MegaBlastFurnace.this.mHeatingCapacity).setHeatOC(true)
+                        .setHeatDiscount(true);
             }
 
             @Override
             protected @Nonnull CheckRecipeResult validateRecipe(@Nonnull GT_Recipe recipe) {
-                return recipe.mSpecialValue <= GT_TileEntity_MegaBlastFurnace.this.mHeatingCapacity ? CheckRecipeResultRegistry.SUCCESSFUL
+                return recipe.mSpecialValue <= GT_TileEntity_MegaBlastFurnace.this.mHeatingCapacity
+                        ? CheckRecipeResultRegistry.SUCCESSFUL
                         : CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
             }
         }.setMaxParallel(ConfigHandler.megaMachinesMax);
@@ -355,7 +358,9 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
 
         this.mPollutionOutputHatches.clear();
 
-        if (!this.checkPiece("main", 7, 17, 0) || this.getCoilLevel() == HeatingCoilLevel.None || this.mMaintenanceHatches.size() != 1) return false;
+        if (!this.checkPiece("main", 7, 17, 0) || this.getCoilLevel() == HeatingCoilLevel.None
+                || this.mMaintenanceHatches.size() != 1)
+            return false;
 
         if (this.glassTier < 8) {
             for (GT_MetaTileEntity_Hatch hatch : this.mExoticEnergyHatches) {

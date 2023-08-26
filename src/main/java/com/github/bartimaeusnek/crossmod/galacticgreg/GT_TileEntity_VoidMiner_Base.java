@@ -183,7 +183,9 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                 .beginStructureBlock(3, 7, 3, false).addController("Front bottom")
                 .addOtherStructurePart(casings, "form the 3x1x3 Base")
                 .addOtherStructurePart(casings, "1x3x1 pillar above the center of the base (2 minimum total)")
-                .addOtherStructurePart(this.getFrameMaterial().mName + " Frame Boxes", "Each pillar's side and 1x3x1 on top")
+                .addOtherStructurePart(
+                        this.getFrameMaterial().mName + " Frame Boxes",
+                        "Each pillar's side and 1x3x1 on top")
                 .addEnergyHatch(VN[this.getMinTier()] + "+, Any base casing").addMaintenanceHatch("Any base casing")
                 .addInputBus("Mining Pipes or Ores, optional, any base casing")
                 .addInputHatch("Optional noble gas, any base casing").addOutputBus("Any base casing")
@@ -456,9 +458,8 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
                                     && gt_worldgen instanceof BW_Worldgen_Ore_SmallOre_Space smallOreSpace
                                     && smallOreSpace.isEnabledForDim(finalDef))
                     .map(gt_worldgen -> (BW_Worldgen_Ore_SmallOre_Space) gt_worldgen).forEach(
-                            element -> this.addDrop(
-                                    new Pair<>(element.mPrimaryMeta, element.bwOres != 0),
-                                    element.mDensity));
+                            element -> this
+                                    .addDrop(new Pair<>(element.mPrimaryMeta, element.bwOres != 0), element.mDensity));
         } catch (NullPointerException ignored) {}
     }
 
