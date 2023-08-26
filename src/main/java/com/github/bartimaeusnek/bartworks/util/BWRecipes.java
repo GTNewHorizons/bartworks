@@ -854,8 +854,7 @@ public class BWRecipes {
         public int hashCode() {
             int result1 = this.result != null ? this.result.hashCode() : 0;
             result1 = 31 * result1 + (this.charToStackMap != null ? this.charToStackMap.hashCode() : 0);
-            result1 = 31 * result1 + Arrays.hashCode(this.shape);
-            return result1;
+            return 31 * result1 + Arrays.hashCode(this.shape);
         }
 
         @Override
