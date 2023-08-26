@@ -214,10 +214,8 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
                     werkstoff.getStats().getMass() > 128 ? 64 : 30);
         }
 
-        if (werkstoff.getGenerationFeatures().hasMultipleMetalSolidifierRecipes()) {
-            if (!werkstoff.hasItemType(plateDouble)) return;
-            // No multiple plate molds
-        }
+        if (werkstoff.getGenerationFeatures().hasMultipleMetalSolidifierRecipes() && !werkstoff.hasItemType(plateDouble)) return;
+        // No multiple plate molds
 
         // Tank "Recipe"
         final FluidContainerRegistry.FluidContainerData data = new FluidContainerRegistry.FluidContainerData(

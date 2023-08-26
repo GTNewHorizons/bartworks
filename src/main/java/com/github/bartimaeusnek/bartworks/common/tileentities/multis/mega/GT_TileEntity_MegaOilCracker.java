@@ -326,10 +326,8 @@ public class GT_TileEntity_MegaOilCracker extends GT_TileEntity_MegaMultiBlockBa
         ArrayList<FluidStack> rList = new ArrayList<>();
         for (GT_MetaTileEntity_Hatch_Input tHatch : this.mInputHatches) {
             tHatch.mRecipeMap = this.getRecipeMap();
-            if (isValidMetaTileEntity(tHatch) && tHatch.getFillableStack() != null) {
-                if (!GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tHatch.getFillableStack())) {
-                    rList.add(tHatch.getFillableStack());
-                }
+            if ((isValidMetaTileEntity(tHatch) && tHatch.getFillableStack() != null) && !GT_Recipe.GT_Recipe_Map.sCrackingRecipes.isValidCatalystFluid(tHatch.getFillableStack())) {
+                rList.add(tHatch.getFillableStack());
             }
         }
         for (GT_MetaTileEntity_Hatch_Input tHatch : this.mMiddleInputHatches) {

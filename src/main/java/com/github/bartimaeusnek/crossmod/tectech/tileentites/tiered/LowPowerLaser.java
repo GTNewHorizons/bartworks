@@ -107,9 +107,7 @@ public interface LowPowerLaser extends IMetaTileEntity, IConnectsToEnergyTunnel 
                     }
 
                     ((GT_MetaTileEntity_Pipe_Energy) aMetaTileEntity).markUsed();
-                } else if (aMetaTileEntity instanceof LowPowerLaser && ((LowPowerLaser) aMetaTileEntity).isTunnel()) {
-                    if (!((LowPowerLaser) aMetaTileEntity).isConnectedCorrectly(front)) return;
-                }
+                } else if ((aMetaTileEntity instanceof LowPowerLaser && ((LowPowerLaser) aMetaTileEntity).isTunnel()) && !((LowPowerLaser) aMetaTileEntity).isConnectedCorrectly(front)) return;
             }
         }
     }

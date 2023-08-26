@@ -74,10 +74,8 @@ public class BW_TileEntityContainer_Multiple extends BlockContainer {
             if (tile instanceof IHasGui) {
                 return worldObj.isRemote || IC2.platform.launchGui(player, (IHasGui) tile);
             }
-            if (tile instanceof ITileWithModularUI) {
-                if (!worldObj.isRemote) {
-                    UIInfos.TILE_MODULAR_UI.open(player, worldObj, x, y, z);
-                }
+            if ((tile instanceof ITileWithModularUI) && !worldObj.isRemote) {
+                UIInfos.TILE_MODULAR_UI.open(player, worldObj, x, y, z);
             }
         }
 

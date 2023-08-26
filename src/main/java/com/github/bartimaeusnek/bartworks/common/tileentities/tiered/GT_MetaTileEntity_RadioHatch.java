@@ -166,22 +166,18 @@ public class GT_MetaTileEntity_RadioHatch extends GT_MetaTileEntity_Hatch implem
                 ++this.timer;
             }
 
-            if (this.mass > 0) {
-                if (this.decayTime == 0 || (this.decayTime > 0 && this.timer % this.decayTime == 0)) {
-                    this.mass--;
-                    if (this.mass == 0) {
-                        this.material = StatCollector.translateToLocal("tooltip.bw.empty.name");
-                        this.sievert = 0;
-                    }
-                    this.timer = 1;
+            if ((this.mass > 0) && (this.decayTime == 0 || (this.decayTime > 0 && this.timer % this.decayTime == 0))) {
+                this.mass--;
+                if (this.mass == 0) {
+                    this.material = StatCollector.translateToLocal("tooltip.bw.empty.name");
+                    this.sievert = 0;
                 }
+                this.timer = 1;
             }
 
-            if (myMetaTileEntity.mTickTimer > (myMetaTileEntity.mLastSoundTick + ticksBetweenSounds)) {
-                if (this.sievert > 0) {
-                    this.sendLoopStart((byte) 1);
-                    myMetaTileEntity.mLastSoundTick = myMetaTileEntity.mTickTimer;
-                }
+            if ((myMetaTileEntity.mTickTimer > (myMetaTileEntity.mLastSoundTick + ticksBetweenSounds)) && (this.sievert > 0)) {
+                this.sendLoopStart((byte) 1);
+                myMetaTileEntity.mLastSoundTick = myMetaTileEntity.mTickTimer;
             }
 
             if (this.mass == 0) {

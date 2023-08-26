@@ -78,41 +78,37 @@ public class TileEntity_GTDataServer extends TileEntity
         if (this.TickTimer++ % 20 != 0) return;
 
         if (this.isServerSide()) {
-            if (GT_Utility.areStacksEqual(this.mItems[0], ItemList.Tool_DataOrb.get(1))) {
-                if (this.mItems[0].hasTagCompound()) {
-                    if (GT_NBT_DataBase.getIdFromTag(this.mItems[0].getTagCompound()) == null) {
-                        this.OrbDataBase.put(
-                                GT_NBT_DataBase.getMaxID(),
-                                new GT_NBT_DataBase(
-                                        Behaviour_DataOrb.getDataName(this.mItems[0]),
-                                        Behaviour_DataOrb.getDataTitle(this.mItems[0]),
-                                        this.mItems[0].getTagCompound()));
-                    } else {
-                        long id = GT_NBT_DataBase.getIdFromTag(this.mItems[0].getTagCompound());
-                        this.OrbDataBase.put(id, GT_NBT_DataBase.getGTTagFromId(id));
-                    }
+            if (GT_Utility.areStacksEqual(this.mItems[0], ItemList.Tool_DataOrb.get(1)) && this.mItems[0].hasTagCompound()) {
+                if (GT_NBT_DataBase.getIdFromTag(this.mItems[0].getTagCompound()) == null) {
+                    this.OrbDataBase.put(
+                            GT_NBT_DataBase.getMaxID(),
+                            new GT_NBT_DataBase(
+                                    Behaviour_DataOrb.getDataName(this.mItems[0]),
+                                    Behaviour_DataOrb.getDataTitle(this.mItems[0]),
+                                    this.mItems[0].getTagCompound()));
+                } else {
+                    long id = GT_NBT_DataBase.getIdFromTag(this.mItems[0].getTagCompound());
+                    this.OrbDataBase.put(id, GT_NBT_DataBase.getGTTagFromId(id));
                 }
             }
-            if (GT_Utility.areStacksEqual(this.mItems[0], ItemList.Tool_DataStick.get(1))) {
-                if (this.mItems[0].hasTagCompound()) {
+            if (GT_Utility.areStacksEqual(this.mItems[0], ItemList.Tool_DataStick.get(1)) && this.mItems[0].hasTagCompound()) {
 
-                    String bookTitle = GT_Utility.ItemNBT.getBookTitle(this.mItems[0]);
-                    String punchcardData = GT_Utility.ItemNBT.getPunchCardData(this.mItems[0]);
-                    short mapID = GT_Utility.ItemNBT.getMapID(this.mItems[0]);
-                    byte data = (byte) (bookTitle.isEmpty() ? punchcardData.isEmpty() ? mapID != -1 ? 3 : -1 : 2 : 1);
+                String bookTitle = GT_Utility.ItemNBT.getBookTitle(this.mItems[0]);
+                String punchcardData = GT_Utility.ItemNBT.getPunchCardData(this.mItems[0]);
+                short mapID = GT_Utility.ItemNBT.getMapID(this.mItems[0]);
+                byte data = (byte) (bookTitle.isEmpty() ? punchcardData.isEmpty() ? mapID != -1 ? 3 : -1 : 2 : 1);
 
-                    String title = data == 1 ? bookTitle
-                            : data == 2 ? punchcardData : data == 3 ? "" + mapID : "Custom Data";
-                    String name = data == 1 ? "eBook"
-                            : data == 2 ? "Punch Card Data" : data == 3 ? "Map Data" : "Custom Data";
-                    if (GT_NBT_DataBase.getIdFromTag(this.mItems[0].getTagCompound()) == null) {
-                        this.OrbDataBase.put(
-                                GT_NBT_DataBase.getMaxID(),
-                                new GT_NBT_DataBase(name, title, this.mItems[0].getTagCompound()));
-                    } else {
-                        long id = GT_NBT_DataBase.getIdFromTag(this.mItems[0].getTagCompound());
-                        this.OrbDataBase.put(id, GT_NBT_DataBase.getGTTagFromId(id));
-                    }
+                String title = data == 1 ? bookTitle
+                        : data == 2 ? punchcardData : data == 3 ? "" + mapID : "Custom Data";
+                String name = data == 1 ? "eBook"
+                        : data == 2 ? "Punch Card Data" : data == 3 ? "Map Data" : "Custom Data";
+                if (GT_NBT_DataBase.getIdFromTag(this.mItems[0].getTagCompound()) == null) {
+                    this.OrbDataBase.put(
+                            GT_NBT_DataBase.getMaxID(),
+                            new GT_NBT_DataBase(name, title, this.mItems[0].getTagCompound()));
+                } else {
+                    long id = GT_NBT_DataBase.getIdFromTag(this.mItems[0].getTagCompound());
+                    this.OrbDataBase.put(id, GT_NBT_DataBase.getGTTagFromId(id));
                 }
             }
         }

@@ -535,11 +535,9 @@ public class GT_TileEntity_BioVat extends GT_MetaTileEntity_EnhancedMultiBlockBa
             if (this.getBaseMetaTileEntity().isActive() && this.mNeededSievert > this.mSievert)
                 this.mOutputFluids = null;
         }
-        if (aBaseMetaTileEntity.isServerSide()) {
-            if (this.mMaxProgresstime <= 0) {
-                this.mTimes = 0;
-                this.mMaxProgresstime = 0;
-            }
+        if (aBaseMetaTileEntity.isServerSide() && (this.mMaxProgresstime <= 0)) {
+            this.mTimes = 0;
+            this.mMaxProgresstime = 0;
         }
     }
 

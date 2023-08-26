@@ -168,11 +168,9 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
                     t.mTopState = 1;
                     // hatch adder
                     TileEntity tileEntity = world.getTileEntity(x, y, z);
-                    if (tileEntity instanceof IGregTechTileEntity entity) {
-                        if (t.addLayerOutputHatch(entity, CASING_INDEX)) {
-                            t.onTopLayerFound(false);
-                            return true;
-                        }
+                    if ((tileEntity instanceof IGregTechTileEntity entity) && t.addLayerOutputHatch(entity, CASING_INDEX)) {
+                        t.onTopLayerFound(false);
+                        return true;
                     }
                     // block adder
                     if (world.getBlock(x, y, z) == GregTech_API.sBlockCasings4

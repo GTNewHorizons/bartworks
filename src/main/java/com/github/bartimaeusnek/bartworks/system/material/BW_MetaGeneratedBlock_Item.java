@@ -51,14 +51,12 @@ public class BW_MetaGeneratedBlock_Item extends BW_ItemBlocks {
     @Override
     public String getItemStackDisplayName(ItemStack aStack) {
         Block block = Block.getBlockFromItem(aStack.getItem());
-        if (block != null) {
-            if (block instanceof BW_MetaGenerated_Blocks) {
-                int aMetaData = aStack.getItemDamage();
-                Werkstoff werkstoff = werkstoffHashMap.get((short) aMetaData);
-                if (werkstoff == null) werkstoff = Werkstoff.default_null_Werkstoff;
-                return ((BW_MetaGenerated_Blocks) block).blockTypeLocalizedName
-                        .replace("%material", werkstoff.getLocalizedName());
-            }
+        if ((block != null) && (block instanceof BW_MetaGenerated_Blocks)) {
+            int aMetaData = aStack.getItemDamage();
+            Werkstoff werkstoff = werkstoffHashMap.get((short) aMetaData);
+            if (werkstoff == null) werkstoff = Werkstoff.default_null_Werkstoff;
+            return ((BW_MetaGenerated_Blocks) block).blockTypeLocalizedName
+                    .replace("%material", werkstoff.getLocalizedName());
         }
         return GT_LanguageManager.getTranslation(this.getUnlocalizedName(aStack) + ".name");
     }

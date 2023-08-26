@@ -260,24 +260,22 @@ public abstract class MapGenRuins extends WorldGenerator {
                                         rand,
                                         25,
                                         this.ToBuildWith[1]);
-                                if (dy == 2) {
-                                    if (rand.nextInt(100) < 12) if (useColor) this.setRandomBlockWAirChance(
-                                            worldObj,
-                                            x + dx,
-                                            y + 2,
-                                            z + dz,
-                                            rand,
-                                            25,
-                                            new Pair<>(Blocks.stained_glass_pane, colored));
-                                    else this.setRandomBlockWAirChance(
-                                            worldObj,
-                                            x + dx,
-                                            y + dy,
-                                            z + dz,
-                                            rand,
-                                            25,
-                                            new Pair<>(Blocks.glass_pane, 0));
-                                }
+                                if ((dy == 2) && (rand.nextInt(100) < 12)) if (useColor) this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + 2,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        new Pair<>(Blocks.stained_glass_pane, colored));
+                                else this.setRandomBlockWAirChance(
+                                        worldObj,
+                                        x + dx,
+                                        y + dy,
+                                        z + dz,
+                                        rand,
+                                        25,
+                                        new Pair<>(Blocks.glass_pane, 0));
                             }
 
                             if (dy == 3 && Math.abs(dx) == 6) {

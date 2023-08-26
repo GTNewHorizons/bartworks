@@ -109,10 +109,9 @@ public class TT_MetaTileEntity_LowPowerLaserBox extends TT_Abstract_LowPowerLase
                         this.setEUVar(0L);
                     }
                 }
-                if (this.getBaseMetaTileEntity().isAllowedToWork())
-                    if (aBaseMetaTileEntity.getStoredEU() > this.getMinimumStoredEU()) {
-                        this.moveAroundLowPower(aBaseMetaTileEntity);
-                    }
+                if (this.getBaseMetaTileEntity().isAllowedToWork() && (aBaseMetaTileEntity.getStoredEU() > this.getMinimumStoredEU())) {
+                    this.moveAroundLowPower(aBaseMetaTileEntity);
+                }
             }
         }
     }

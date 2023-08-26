@@ -295,10 +295,8 @@ public class BW_Meta_Items {
             Object tRandomData;
             for (var9 = 0; var9 < var8; ++var9) {
                 tRandomData = var7[var9];
-                if (tRandomData instanceof SubTag) {
-                    if (tRandomData == SubTag.NO_UNIFICATION) {
-                        GT_OreDictUnificator.addToBlacklist(rStack);
-                    }
+                if ((tRandomData instanceof SubTag) && (tRandomData == SubTag.NO_UNIFICATION)) {
+                    GT_OreDictUnificator.addToBlacklist(rStack);
                 }
             }
 
