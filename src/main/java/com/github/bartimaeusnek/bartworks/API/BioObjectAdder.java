@@ -14,6 +14,8 @@
 package com.github.bartimaeusnek.bartworks.API;
 
 import static gregtech.api.enums.Mods.Gendustry;
+import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes;
+import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import java.awt.Color;
 
@@ -30,15 +32,10 @@ import gregtech.api.enums.FluidState;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
 import gregtech.api.fluid.GT_FluidFactory;
+import gregtech.api.enums.TierEU;
 import gregtech.api.util.GT_Utility;
 
 public final class BioObjectAdder {
-
-    // @Deprecated
-    // public static BioCulture createAndRegisterBioCulture(Color color, String name, long ID, BioPlasmid plasmid,
-    // BioDNA dna, EnumRarity rarity){
-    // return BioCulture.createAndRegisterBioCulture(color,name,ID,plasmid,dna,rarity);
-    // }
 
     /**
      * @param color     the color of the Culture
@@ -177,20 +174,10 @@ public final class BioObjectAdder {
                                         new short[] { (short) B.getColor().getRed(), (short) B.getColor().getBlue(),
                                                 (short) B.getColor().getGreen() })
                                 .withStateAndTemperature(FluidState.LIQUID, 300).buildAndRegister().asFluid());
-                GT_Values.RA.addCentrifugeRecipe(
-                        GT_Utility.getIntegratedCircuit(10),
-                        GT_Values.NI,
-                        new FluidStack(B.getFluid(), 1000),
-                        dnaFluid,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        GT_Values.NI,
-                        null,
-                        500,
-                        120);
+
+                GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(10)).noItemOutputs()
+                        .fluidInputs(new FluidStack(B.getFluid(), 1000)).fluidOutputs(dnaFluid).duration(25 * SECONDS)
+                        .eut(TierEU.RECIPE_MV).addTo(sCentrifugeRecipes);
             }
         }
     }
