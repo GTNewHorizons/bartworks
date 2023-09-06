@@ -31,8 +31,8 @@ import com.github.bartimaeusnek.bartworks.util.BioPlasmid;
 import gregtech.api.enums.FluidState;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
-import gregtech.api.fluid.GT_FluidFactory;
 import gregtech.api.enums.TierEU;
+import gregtech.api.fluid.GT_FluidFactory;
 import gregtech.api.util.GT_Utility;
 
 public final class BioObjectAdder {
