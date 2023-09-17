@@ -96,32 +96,31 @@ public class DustLoader implements IWerkstoffRunnable {
                             }
                         } else {
                             if (((Materials) container.getKey()).getDust(container.getValue()) == null) {
-                                if (((Materials) container.getKey()).getCells(container.getValue()) != null
-                                        && (((Materials) container.getKey()).getMolten(0) != null
-                                                || ((Materials) container.getKey()).getSolid(0) != null)) {
-                                    FluidStack tmpFl = ((Materials) container.getKey())
-                                            .getMolten(1000L * container.getValue());
-                                    if (tmpFl == null || tmpFl.getFluid() == null) {
-                                        tmpFl = ((Materials) container.getKey()).getSolid(1000L * container.getValue());
+                                if (((Materials) container.getKey()).getCells(container.getValue()) == null
+                                        || ((Materials) container.getKey()).getMolten(0) == null
+                                                && ((Materials) container.getKey()).getSolid(0) == null)
+                                    continue;
+                                FluidStack tmpFl = ((Materials) container.getKey())
+                                        .getMolten(1000L * container.getValue());
+                                if (tmpFl == null || tmpFl.getFluid() == null) {
+                                    tmpFl = ((Materials) container.getKey()).getSolid(1000L * container.getValue());
+                                }
+                                flOutputs.add(tmpFl);
+                                if (flOutputs.size() > 1) {
+                                    if (!tracker.containsKey(container.getKey())) {
+                                        stOutputs.add(((Materials) container.getKey()).getCells(container.getValue()));
+                                        tracker.put(
+                                                container.getKey(),
+                                                new Pair<>(container.getValue(), stOutputs.size() - 1));
+                                    } else {
+                                        stOutputs.add(
+                                                ((Materials) container.getKey()).getCells(
+                                                        tracker.get(container.getKey()).getKey()
+                                                                + container.getValue()));
+                                        stOutputs.remove(tracker.get(container.getKey()).getValue() + 1);
                                     }
-                                    flOutputs.add(tmpFl);
-                                    if (flOutputs.size() > 1) {
-                                        if (!tracker.containsKey(container.getKey())) {
-                                            stOutputs.add(
-                                                    ((Materials) container.getKey()).getCells(container.getValue()));
-                                            tracker.put(
-                                                    container.getKey(),
-                                                    new Pair<>(container.getValue(), stOutputs.size() - 1));
-                                        } else {
-                                            stOutputs.add(
-                                                    ((Materials) container.getKey()).getCells(
-                                                            tracker.get(container.getKey()).getKey()
-                                                                    + container.getValue()));
-                                            stOutputs.remove(tracker.get(container.getKey()).getValue() + 1);
-                                        }
-                                        cells += container.getValue();
-                                    }
-                                } else continue;
+                                    cells += container.getValue();
+                                }
                             }
                             if (!tracker.containsKey(container.getKey())) {
                                 stOutputs.add(((Materials) container.getKey()).getDust(container.getValue()));
@@ -166,7 +165,7 @@ public class DustLoader implements IWerkstoffRunnable {
                                 stOutputs.add(
                                         ((Werkstoff) container.getKey()).get(
                                                 dust,
-                                                (tracker.get(container.getKey()).getKey() + container.getValue())));
+                                                tracker.get(container.getKey()).getKey() + container.getValue()));
                                 stOutputs.remove(tracker.get(container.getKey()).getValue() + 1);
                             }
                         }

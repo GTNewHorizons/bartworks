@@ -114,7 +114,6 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick)).noItemOutputs().noFluidInputs()
                     .fluidOutputs(werkstoff.getMolten(72)).duration(15 * SECONDS).eut(2).addTo(sFluidExtractionRecipes);
-
         }
 
         if (werkstoff.getGenerationFeatures().hasMetalCraftingSolidifierRecipes()) {
@@ -183,11 +182,10 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
 
         }
 
-        if (werkstoff.getGenerationFeatures().hasMultipleMetalSolidifierRecipes()) {
-            if (!werkstoff.hasItemType(plateDouble)) {
-                return;
-            }
+        if (werkstoff.getGenerationFeatures().hasMultipleMetalSolidifierRecipes()
+                && !werkstoff.hasItemType(plateDouble)) {
             // No multiple plate molds
+            return;
         }
 
         // Tank "Recipe"

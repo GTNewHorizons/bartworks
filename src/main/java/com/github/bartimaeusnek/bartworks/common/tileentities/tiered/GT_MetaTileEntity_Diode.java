@@ -61,12 +61,11 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
         if (!aPlayer.isSneaking()) {
             --this.aAmps;
             if (this.aAmps < 0) this.aAmps = this.maxAmps;
-            GT_Utility.sendChatToPlayer(aPlayer, "Max Amps: " + this.aAmps);
         } else {
             ++this.aAmps;
             if (this.aAmps > this.maxAmps) this.aAmps = 0;
-            GT_Utility.sendChatToPlayer(aPlayer, "Max Amps: " + this.aAmps);
         }
+        GT_Utility.sendChatToPlayer(aPlayer, "Max Amps: " + this.aAmps);
     }
 
     @Override
@@ -102,7 +101,7 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
         if (meta > ConfigHandler.IDOffset + GT_Values.VN.length
                 && meta <= ConfigHandler.IDOffset + GT_Values.VN.length * 2)
             return 2L;
-        else if (meta > ConfigHandler.IDOffset + GT_Values.VN.length * 2
+        if (meta > ConfigHandler.IDOffset + GT_Values.VN.length * 2
                 && meta <= ConfigHandler.IDOffset + GT_Values.VN.length * 3)
             return 4L;
         else if (meta > ConfigHandler.IDOffset + GT_Values.VN.length * 3
@@ -117,6 +116,7 @@ public class GT_MetaTileEntity_Diode extends GT_MetaTileEntity_BasicHull {
         else return 0L;
     }
 
+    @Override
     @SuppressWarnings("deprecation")
     public String[] getDescription() {
         return new String[] { this.mDescription,
