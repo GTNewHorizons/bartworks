@@ -25,7 +25,6 @@ import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
-import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 
 import gregtech.api.enchants.Enchantment_Radioactivity;
 import gregtech.api.enums.Element;
@@ -130,7 +129,7 @@ public class BridgeMaterialsLoader implements IWerkstoffRunnable {
                         Behaviour_DataOrb.setDataName(scannerOutput, werkstoff.getToolTip());
                         GT_Recipe.GT_Recipe_Map.sScannerFakeRecipes.addFakeRecipe(
                                 false,
-                                new BWRecipes.DynamicGTRecipe(
+                                new GT_Recipe(
                                         false,
                                         new ItemStack[] { werkstoff.get(prefixes) },
                                         new ItemStack[] { scannerOutput },

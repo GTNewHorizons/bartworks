@@ -34,7 +34,6 @@ import net.minecraftforge.fluids.FluidStack;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
-import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.Pair;
 
 import gregtech.api.enums.Element;
@@ -140,7 +139,7 @@ public class CellLoader implements IWerkstoffRunnable {
 
             stOutputs.add(Materials.Empty.getCells(-cellEmpty));
             if (werkstoff.getStats().isElektrolysis()) GT_Recipe.GT_Recipe_Map.sElectrolyzerRecipes.add(
-                    new BWRecipes.DynamicGTRecipe(
+                    new GT_Recipe(
                             true,
                             new ItemStack[] { input, cellEmpty > 0 ? Materials.Empty.getCells(cellEmpty) : null },
                             stOutputs.toArray(new ItemStack[0]),
@@ -156,7 +155,7 @@ public class CellLoader implements IWerkstoffRunnable {
                             Math.min(4, werkstoff.getContents().getValue().size()) * 30,
                             0));
             if (werkstoff.getStats().isCentrifuge()) GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes.add(
-                    new BWRecipes.DynamicGTRecipe(
+                    new GT_Recipe(
                             true,
                             new ItemStack[] { input, cellEmpty > 0 ? Materials.Empty.getCells(cellEmpty) : null },
                             stOutputs.toArray(new ItemStack[0]),
@@ -249,7 +248,7 @@ public class CellLoader implements IWerkstoffRunnable {
             Behaviour_DataOrb.setDataName(scannerOutput, werkstoff.getToolTip());
             GT_Recipe.GT_Recipe_Map.sScannerFakeRecipes.addFakeRecipe(
                     false,
-                    new BWRecipes.DynamicGTRecipe(
+                    new GT_Recipe(
                             false,
                             new ItemStack[] { werkstoff.get(cell) },
                             new ItemStack[] { scannerOutput },

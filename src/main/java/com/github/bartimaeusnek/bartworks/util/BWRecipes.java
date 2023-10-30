@@ -255,7 +255,7 @@ public class BWRecipes {
 
     public boolean addRadHatch(ItemStack item, int radioLevel, int amount, short[] rgba) {
         return this.sRadHatch.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         false,
                         new ItemStack[] { item },
                         null,
@@ -271,7 +271,7 @@ public class BWRecipes {
 
     public boolean addRadHatch(ItemStack item, int radioLevel, int amount, int time, short[] rgba) {
         return this.sRadHatch.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         false,
                         new ItemStack[] { item },
                         null,
@@ -288,7 +288,7 @@ public class BWRecipes {
     public boolean addBioLabRecipe(ItemStack[] aInputs, ItemStack aOutput, ItemStack aSpecialItems, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
         return this.sBiolab.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         true,
                         aInputs,
                         new ItemStack[] { aOutput },
@@ -305,7 +305,7 @@ public class BWRecipes {
     public boolean addBioLabRecipeIncubation(ItemStack aInput, BioCulture aOutput, int[] aChances,
             FluidStack[] aFluidInputs, int aDuration, int aEUt, int aSpecialValue) {
         return this.sBiolab.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         true,
                         new ItemStack[] { BioItemList.getPetriDish(null), aInput },
                         new ItemStack[] { BioItemList.getPetriDish(aOutput) },
@@ -322,7 +322,7 @@ public class BWRecipes {
     public boolean addBioLabRecipeIncubation(ItemStack aInput, BioCulture aOutput, int[] aChances,
             FluidStack aFluidInputs, int aDuration, int aEUt, int aSpecialValue) {
         return this.sBiolab.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         true,
                         new ItemStack[] { BioItemList.getPetriDish(null), aInput },
                         new ItemStack[] { BioItemList.getPetriDish(aOutput) },
@@ -340,7 +340,7 @@ public class BWRecipes {
     public boolean addBioLabRecipeDNAExtraction(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
         return this.sBiolab.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         true,
                         aInputs,
                         new ItemStack[] { aOutput },
@@ -358,7 +358,7 @@ public class BWRecipes {
     public boolean addBioLabRecipePCRThermoclycling(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
         return this.sBiolab.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         true,
                         aInputs,
                         new ItemStack[] { aOutput },
@@ -376,7 +376,7 @@ public class BWRecipes {
     public boolean addBioLabRecipePlasmidSynthesis(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
         return this.sBiolab.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         true,
                         aInputs,
                         new ItemStack[] { aOutput },
@@ -394,7 +394,7 @@ public class BWRecipes {
     public boolean addBioLabRecipeTransformation(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
         return this.sBiolab.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         true,
                         aInputs,
                         new ItemStack[] { aOutput },
@@ -412,7 +412,7 @@ public class BWRecipes {
     public boolean addBioLabRecipeClonalCellularSynthesis(ItemStack[] aInputs, ItemStack aOutput, int[] aChances,
             FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt, int aSpecialValue) {
         return this.sBiolab.addRecipe(
-                new DynamicGTRecipe(
+                new GT_Recipe(
                         true,
                         aInputs,
                         new ItemStack[] { aOutput },
@@ -646,23 +646,6 @@ public class BWRecipes {
                 this.stackTraces = new ArrayList<>(originalRecipe.stackTraces);
                 this.setOwner(MainMod.MOD_ID);
             }
-        }
-
-        public DynamicGTRecipe(boolean aOptimize, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecialItems,
-                int[] aChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration, int aEUt,
-                int aSpecialValue) {
-            this(
-                    aOptimize,
-                    aInputs,
-                    aOutputs,
-                    aSpecialItems,
-                    aChances,
-                    aFluidInputs,
-                    aFluidOutputs,
-                    aDuration,
-                    aEUt,
-                    aSpecialValue,
-                    null);
         }
     }
 

@@ -34,7 +34,6 @@ import net.minecraftforge.fluids.FluidStack;
 import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
-import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.BW_Tooltip_Reference;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
 
@@ -79,7 +78,7 @@ public class BW_Meta_Items {
                 .addTo(sPressRecipes);
 
         GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes.add(
-                new BWRecipes.DynamicGTRecipe(
+                new GT_Recipe(
                         false,
                         new ItemStack[] { BW_Meta_Items.NEWCIRCUITS.getStack(2) },
                         new ItemStack[] { BW_Meta_Items.NEWCIRCUITS.getStack(3) },

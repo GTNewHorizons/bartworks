@@ -169,7 +169,7 @@ public class CircuitImprintLoader {
             return null;
         }
 
-        return new BWRecipes.DynamicGTRecipe(
+        return new GT_Recipe(
                 false,
                 in,
                 new ItemStack[] { getOutputMultiplied(original) },
@@ -302,7 +302,7 @@ public class CircuitImprintLoader {
                                                 && OreDictionary.getOreIDs(stack).length > 0
                                                         ? OreDictionary.getOreIDs(stack)[0]
                                                         : -1))));
-        GT_Recipe slicingRecipe = new BWRecipes.DynamicGTRecipe(
+        GT_Recipe slicingRecipe = new GT_Recipe(
                 true,
                 new ItemStack[] { stack, ItemList.Shape_Slicer_Flat.get(0) },
                 new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStackWithNBT(tag, 1, 1) },

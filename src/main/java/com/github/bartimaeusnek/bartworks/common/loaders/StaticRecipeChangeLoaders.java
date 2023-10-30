@@ -140,7 +140,7 @@ public class StaticRecipeChangeLoaders {
 
     private static void addConversionRecipe(Werkstoff werkstoff, FluidStack wrongNamedFluid) {
         GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes.add(
-                new BWRecipes.DynamicGTRecipe(
+                new GT_Recipe(
                         false,
                         null,
                         null,
@@ -450,7 +450,7 @@ public class StaticRecipeChangeLoaders {
                 } else {
                     // new recipe
                     toAdd.add(
-                            new BWRecipes.DynamicGTRecipe(
+                            new GT_Recipe(
                                     false,
                                     recipe.mInputs,
                                     recipe.mOutputs,
@@ -497,7 +497,7 @@ public class StaticRecipeChangeLoaders {
                 } else {
                     // new recipe
                     toAdd.add(
-                            new BWRecipes.DynamicGTRecipe(
+                            new GT_Recipe(
                                     false,
                                     recipe.mInputs,
                                     recipe.mOutputs,

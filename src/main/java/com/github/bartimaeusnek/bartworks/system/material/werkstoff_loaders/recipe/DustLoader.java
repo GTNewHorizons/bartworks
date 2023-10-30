@@ -41,7 +41,6 @@ import net.minecraftforge.fluids.FluidStack;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
-import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.Pair;
 
 import gregtech.api.enums.GT_Values;
@@ -152,7 +151,7 @@ public class DustLoader implements IWerkstoffRunnable {
                 ItemStack input = werkstoff.get(dust);
                 input.stackSize = werkstoff.getContents().getKey();
                 if (werkstoff.getStats().isElektrolysis()) {
-                    GT_Recipe tRecipe = new BWRecipes.DynamicGTRecipe(
+                    GT_Recipe tRecipe = new GT_Recipe(
                             true,
                             new ItemStack[] { input, cells > 0 ? Materials.Empty.getCells(cells) : null },
                             stOutputs.toArray(new ItemStack[0]),
@@ -172,7 +171,7 @@ public class DustLoader implements IWerkstoffRunnable {
                 }
                 if (werkstoff.getStats().isCentrifuge()) {
                     GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes.add(
-                            new BWRecipes.DynamicGTRecipe(
+                            new GT_Recipe(
                                     true,
                                     new ItemStack[] { input, cells > 0 ? Materials.Empty.getCells(cells) : null },
                                     stOutputs.toArray(new ItemStack[0]),
@@ -223,7 +222,7 @@ public class DustLoader implements IWerkstoffRunnable {
                     ItemStack circuit = circuitID == -1 ? null : GT_Utility.getIntegratedCircuit(circuitID);
                     if (circuit != null) stOutputs.add(circuit);
                     GT_Recipe.GT_Recipe_Map.sMixerRecipes.add(
-                            new BWRecipes.DynamicGTRecipe(
+                            new GT_Recipe(
                                     true,
                                     stOutputs.toArray(new ItemStack[0]),
                                     new ItemStack[] { input },

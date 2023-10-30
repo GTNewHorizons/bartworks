@@ -219,7 +219,7 @@ public class AdditionalRecipes {
                         // aOptimize, aInputs, aOutputs, aSpecialItems, aChances, aFluidInputs, aFluidOutputs,
                         // aDuration, aEUt, aSpecialValue
                         sBiolab.addRecipe(
-                                new BWRecipes.DynamicGTRecipe(
+                                new GT_Recipe(
                                         false,
                                         new ItemStack[] { BioItemList.getPetriDish(null),
                                                 fluidStack.equals(Materials.Water.getFluid(1000L))
@@ -422,7 +422,7 @@ public class AdditionalRecipes {
                 : FluidRegistry.getFluid("molten.solderingalloy");
         // ULV
         GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
-                new BWRecipes.DynamicGTRecipe(
+                new GT_Recipe(
                         false,
                         new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
                                 WerkstoffLoader.MagnetoResonaticDust.get(gem), ItemList.NandChip.get(1),
@@ -439,7 +439,7 @@ public class AdditionalRecipes {
         // LV-EV
         for (int i = 1; i <= 4; i++) {
             GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
-                    new BWRecipes.DynamicGTRecipe(
+                    new GT_Recipe(
                             false,
                             new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
                                     WerkstoffLoader.MagnetoResonaticDust.get(gem),
@@ -459,7 +459,7 @@ public class AdditionalRecipes {
         // IV-LuV
         for (int i = 5; i <= 6; i++) {
             GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
-                    new BWRecipes.DynamicGTRecipe(
+                    new GT_Recipe(
                             false,
                             new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
                                     WerkstoffLoader.MagnetoResonaticDust.get(gem),
@@ -478,7 +478,7 @@ public class AdditionalRecipes {
         }
         // ZPM
         GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
-                new BWRecipes.DynamicGTRecipe(
+                new GT_Recipe(
                         false,
                         new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
                                 WerkstoffLoader.MagnetoResonaticDust.get(gemExquisite, 1),
@@ -496,7 +496,7 @@ public class AdditionalRecipes {
                         CLEANROOM));
         // UV
         GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
-                new BWRecipes.DynamicGTRecipe(
+                new GT_Recipe(
                         false,
                         new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
                                 WerkstoffLoader.MagnetoResonaticDust.get(gemExquisite, 1),
@@ -515,7 +515,7 @@ public class AdditionalRecipes {
         // UHV-UEV
         for (int i = 9; i <= 10; i++) {
             GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
-                    new BWRecipes.DynamicGTRecipe(
+                    new GT_Recipe(
                             false,
                             new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
                                     WerkstoffLoader.MagnetoResonaticDust.get(gemExquisite, 1),

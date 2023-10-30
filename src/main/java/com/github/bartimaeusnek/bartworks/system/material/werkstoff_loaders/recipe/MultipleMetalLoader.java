@@ -24,7 +24,6 @@ import net.minecraft.item.ItemStack;
 
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWerkstoffRunnable;
-import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.GT_Values;
@@ -38,7 +37,7 @@ public class MultipleMetalLoader implements IWerkstoffRunnable {
     public void run(Werkstoff werkstoff) {
         if (werkstoff.hasItemType(plateDense)) {
             GT_Recipe.GT_Recipe_Map.sBenderRecipes.add(
-                    new BWRecipes.DynamicGTRecipe(
+                    new GT_Recipe(
                             true,
                             new ItemStack[] { werkstoff.get(ingot, 2), GT_Utility.getIntegratedCircuit(2) },
                             new ItemStack[] { werkstoff.get(plateDouble) },
