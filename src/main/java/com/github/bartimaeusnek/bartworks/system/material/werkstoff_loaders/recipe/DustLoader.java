@@ -52,6 +52,7 @@ import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.ISubTagContainer;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Recipe;
+import gregtech.api.util.GT_RecipeConstants;
 import gregtech.api.util.GT_Utility;
 
 public class DustLoader implements IWerkstoffRunnable {
@@ -205,37 +206,16 @@ public class DustLoader implements IWerkstoffRunnable {
                 }
                 if (werkstoff.getGenerationFeatures().hasChemicalRecipes()) {
                     if (cells > 0) stOutputs.add(Materials.Empty.getCells(cells));
-                    GT_Recipe.GT_Recipe_Map.sChemicalRecipes.add(
-                            new BWRecipes.DynamicGTRecipe(
-                                    true,
-                                    stOutputs.toArray(new ItemStack[0]),
-                                    new ItemStack[] { input },
-                                    null,
-                                    null,
-                                    new FluidStack[] { flOutputs.size() > 0 ? flOutputs.get(0) : null },
-                                    null,
+                    GT_Values.RA.stdBuilder().itemInputs(stOutputs.toArray(new ItemStack[0])).itemOutputs(input)
+                            .fluidInputs(flOutputs.toArray(new FluidStack[0]))
+                            .duration(
                                     (int) Math.max(
                                             1L,
                                             Math.abs(
                                                     werkstoff.getStats().getProtons()
-                                                            / werkstoff.getContents().getValue().size())),
-                                    Math.min(4, werkstoff.getContents().getValue().size()) * 30,
-                                    0));
-                    GT_Recipe.GT_Recipe_Map.sMultiblockChemicalRecipes.addRecipe(
-                            true,
-                            stOutputs.toArray(new ItemStack[0]),
-                            new ItemStack[] { input },
-                            null,
-                            null,
-                            new FluidStack[] { flOutputs.size() > 0 ? flOutputs.get(0) : null },
-                            null,
-                            (int) Math.max(
-                                    1L,
-                                    Math.abs(
-                                            werkstoff.getStats().getProtons()
-                                                    / werkstoff.getContents().getValue().size())),
-                            Math.min(4, werkstoff.getContents().getValue().size()) * 30,
-                            0);
+                                                            / werkstoff.getContents().getValue().size())))
+                            .eut(Math.min(4, werkstoff.getContents().getValue().size()) * 30)
+                            .addTo(GT_RecipeConstants.UniversalChemical);
                 }
                 if (werkstoff.getGenerationFeatures().hasMixerRecipes()) {
                     if (cells > 0) stOutputs.add(Materials.Empty.getCells(cells));
