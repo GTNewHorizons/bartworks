@@ -16,7 +16,6 @@ package com.github.bartimaeusnek.bartworks.system.material.processingLoaders;
 import static com.github.bartimaeusnek.bartworks.util.BW_Util.CLEANROOM;
 import static gregtech.api.enums.Mods.Gendustry;
 import static gregtech.api.enums.OrePrefixes.bolt;
-import static gregtech.api.enums.OrePrefixes.cell;
 import static gregtech.api.enums.OrePrefixes.crushed;
 import static gregtech.api.enums.OrePrefixes.crushedPurified;
 import static gregtech.api.enums.OrePrefixes.dust;
@@ -36,8 +35,6 @@ import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 
-import java.lang.reflect.Field;
-import java.util.Map;
 import java.util.Objects;
 
 import net.minecraft.init.Items;
@@ -55,7 +52,6 @@ import com.github.bartimaeusnek.bartworks.common.loaders.FluidLoader;
 import com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry;
 import com.github.bartimaeusnek.bartworks.system.material.BW_NonMeta_MaterialItems;
 import com.github.bartimaeusnek.bartworks.system.material.CircuitGeneration.BW_Meta_Items;
-import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
 import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
@@ -65,7 +61,6 @@ import com.github.bartimaeusnek.bartworks.util.BioData;
 import com.github.bartimaeusnek.bartworks.util.BioPlasmid;
 
 import gregtech.api.GregTech_API;
-import gregtech.api.enums.Element;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -638,73 +633,5 @@ public class AdditionalRecipes {
                 (int) TierEU.RECIPE_LuV);
 
         GregTech_API.sAfterGTPostload.add(new AddSomeRecipes());
-        AdditionalRecipes.oldGThelperMethod();
-    }
-
-    @SuppressWarnings("unchecked")
-    private static void oldGThelperMethod() {
-        // manual override for older GT
-        Werkstoff werkstoff = WerkstoffLoader.Oganesson;
-        Materials werkstoffBridgeMaterial = null;
-        boolean aElementSet = false;
-        for (Element e : Element.values()) {
-            if ("Uuo".equals(e.toString())) {
-                werkstoffBridgeMaterial = werkstoff.getBridgeMaterial() != null ? werkstoff.getBridgeMaterial()
-                        : new Materials(
-                                -1,
-                                werkstoff.getTexSet(),
-                                0,
-                                0,
-                                0,
-                                false,
-                                werkstoff.getDefaultName(),
-                                werkstoff.getDefaultName());
-                werkstoffBridgeMaterial.mElement = e;
-                e.mLinkedMaterials.add(werkstoffBridgeMaterial);
-                aElementSet = true;
-                werkstoff.setBridgeMaterial(werkstoffBridgeMaterial);
-                break;
-            }
-        }
-        if (!aElementSet) return;
-
-        GT_OreDictUnificator.addAssociation(cell, werkstoffBridgeMaterial, werkstoff.get(cell), false);
-        try {
-            Field f = Materials.class.getDeclaredField("MATERIALS_MAP");
-            f.setAccessible(true);
-            Map<String, Materials> MATERIALS_MAP = (Map<String, Materials>) f.get(null);
-            MATERIALS_MAP.remove(werkstoffBridgeMaterial.mName);
-        } catch (NoSuchFieldException | IllegalAccessException | ClassCastException e) {
-            e.printStackTrace();
-        }
-        ItemStack scannerOutput = ItemList.Tool_DataOrb.get(1L);
-        Behaviour_DataOrb.setDataTitle(scannerOutput, "Elemental-Scan");
-        Behaviour_DataOrb.setDataName(scannerOutput, werkstoff.getToolTip());
-        GT_Recipe.GT_Recipe_Map.sScannerFakeRecipes.addFakeRecipe(
-                false,
-                new BWRecipes.DynamicGTRecipe(
-                        false,
-                        new ItemStack[] { werkstoff.get(cell) },
-                        new ItemStack[] { scannerOutput },
-                        ItemList.Tool_DataOrb.get(1L),
-                        null,
-                        null,
-                        null,
-                        (int) (werkstoffBridgeMaterial.getMass() * 8192L),
-                        30,
-                        0));
-        GT_Recipe.GT_Recipe_Map.sReplicatorFakeRecipes.addFakeRecipe(
-                false,
-                new BWRecipes.DynamicGTRecipe(
-                        false,
-                        new ItemStack[] { Materials.Empty.getCells(1) },
-                        new ItemStack[] { werkstoff.get(cell) },
-                        scannerOutput,
-                        null,
-                        new FluidStack[] { Materials.UUMatter.getFluid(werkstoffBridgeMaterial.getMass()) },
-                        null,
-                        (int) (werkstoffBridgeMaterial.getMass() * 512L),
-                        30,
-                        0));
     }
 }
