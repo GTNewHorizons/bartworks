@@ -52,7 +52,6 @@ import com.github.bartimaeusnek.bartworks.common.loaders.RecipeLoader;
 import com.github.bartimaeusnek.bartworks.common.loaders.RegisterServerCommands;
 import com.github.bartimaeusnek.bartworks.common.loaders.StaticRecipeChangeLoaders;
 import com.github.bartimaeusnek.bartworks.common.net.BW_Network;
-import com.github.bartimaeusnek.bartworks.neiHandler.IMCForNEI;
 import com.github.bartimaeusnek.bartworks.server.EventHandler.ServerEventHandler;
 import com.github.bartimaeusnek.bartworks.system.material.CircuitGeneration.CircuitImprintLoader;
 import com.github.bartimaeusnek.bartworks.system.material.CircuitGeneration.CircuitPartLoader;
@@ -155,7 +154,6 @@ public final class MainMod {
         WerkstoffLoader.runInit();
 
         ItemRegistry.run();
-        IMCForNEI.IMCSender();
     }
 
     @Mod.EventHandler

@@ -35,6 +35,8 @@ import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import net.minecraft.init.Items;
@@ -44,7 +46,10 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
+import com.github.bartimaeusnek.bartworks.API.recipe.BartWorksRecipeMaps;
 import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.github.bartimaeusnek.bartworks.common.loaders.BioCultureLoader;
 import com.github.bartimaeusnek.bartworks.common.loaders.BioItemList;
@@ -53,7 +58,6 @@ import com.github.bartimaeusnek.bartworks.common.loaders.ItemRegistry;
 import com.github.bartimaeusnek.bartworks.system.material.BW_NonMeta_MaterialItems;
 import com.github.bartimaeusnek.bartworks.system.material.CircuitGeneration.BW_Meta_Items;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
-import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
 import com.github.bartimaeusnek.bartworks.util.BioCulture;
 import com.github.bartimaeusnek.bartworks.util.BioDNA;
@@ -69,16 +73,11 @@ import gregtech.api.enums.TierEU;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
+import gregtech.api.util.GT_RecipeConstants;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.items.behaviors.Behaviour_DataOrb;
 
 public class AdditionalRecipes {
-
-    private static BWRecipes.BW_Recipe_Map_LiquidFuel sAcidGenFuels = (BWRecipes.BW_Recipe_Map_LiquidFuel) BWRecipes.instance
-            .getMappingsFor((byte) 2);
-    private static BWRecipes.BacteriaVatRecipeMap sBacteriaVat = (BWRecipes.BacteriaVatRecipeMap) BWRecipes.instance
-            .getMappingsFor((byte) 1);
-    private static GT_Recipe.GT_Recipe_Map sBiolab = BWRecipes.instance.getMappingsFor((byte) 0);
 
     private static void runBWRecipes() {
 
@@ -92,7 +91,7 @@ public class AdditionalRecipes {
                     ItemStack Detergent = BioItemList.getOther(1);
                     ItemStack DNAFlask = BioItemList.getDNASampleFlask(null);
                     ItemStack EthanolCell = Materials.Ethanol.getCells(1);
-                    sBiolab.addFakeRecipe(
+                    BartWorksRecipeMaps.bioLabRecipes.addFakeRecipe(
                             false,
                             new ItemStack[] { stack, DNAFlask, Detergent, EthanolCell },
                             new ItemStack[] { BioItemList.getDNASampleFlask(BioDNA.convertDataToDNA(DNA)),
@@ -115,7 +114,7 @@ public class AdditionalRecipes {
                     Behaviour_DataOrb.setDataTitle(Outp, "DNA Sample");
                     Behaviour_DataOrb.setDataName(Outp, DNA.getName());
 
-                    sBiolab.addFakeRecipe(
+                    BartWorksRecipeMaps.bioLabRecipes.addFakeRecipe(
                             false,
                             new ItemStack[] { stack, FluidLoader.BioLabFluidCells[0], FluidLoader.BioLabFluidCells[3],
                                     ItemList.Tool_DataOrb.get(1L) },
@@ -141,7 +140,7 @@ public class AdditionalRecipes {
                     Behaviour_DataOrb.setDataTitle(inp2, "DNA Sample");
                     Behaviour_DataOrb.setDataName(inp2, BioCultureLoader.BIO_DATA_BETA_LACMATASE.getName());
 
-                    sBiolab.addFakeRecipe(
+                    BartWorksRecipeMaps.bioLabRecipes.addFakeRecipe(
                             false,
                             new ItemStack[] { FluidLoader.BioLabFluidCells[1], BioItemList.getPlasmidCell(null), inp,
                                     inp2 },
@@ -160,7 +159,7 @@ public class AdditionalRecipes {
                 BioData DNA = BioData.getBioDataFromNBTTag(stack.getTagCompound().getCompoundTag("DNA"));
                 BioData Plasmid = BioData.getBioDataFromNBTTag(stack.getTagCompound().getCompoundTag("Plasmid"));
                 if (!Objects.equals(DNA.getName(), Plasmid.getName())) {
-                    sBiolab.addFakeRecipe(
+                    BartWorksRecipeMaps.bioLabRecipes.addFakeRecipe(
                             true,
                             new ItemStack[] { BioItemList.getPetriDish(BioCulture.getBioCulture(DNA.getName())),
                                     BioItemList.getPlasmidCell(BioPlasmid.convertDataToPlasmid(Plasmid)),
@@ -180,7 +179,7 @@ public class AdditionalRecipes {
             Behaviour_DataOrb.setDataTitle(Outp, "DNA Sample");
             Behaviour_DataOrb.setDataName(Outp, "Any DNA");
             // Clonal Cellular Synthesis- [Liquid DNA] + Medium Petri Dish + Plasma Membrane + Stem Cells + Genome Data
-            sBiolab.addFakeRecipe(
+            BartWorksRecipeMaps.bioLabRecipes.addFakeRecipe(
                     false,
                     new ItemStack[] { BioItemList.getPetriDish(null), BioItemList.getOther(4),
                             ItemList.Circuit_Chip_Stemcell.get(2L), Outp },
@@ -199,11 +198,11 @@ public class AdditionalRecipes {
             for (FluidStack fluidStack : easyFluids) {
                 for (BioCulture bioCulture : BioCulture.BIO_CULTURE_ARRAY_LIST) {
                     if (bioCulture.isBreedable() && bioCulture.getTier() == 0) {
-                        sBacteriaVat.addRecipe(
+                        BartWorksRecipeMaps.bacterialVatRecipes.addRecipe(
                                 // boolean aOptimize, ItemStack[] aInputs, ItemStack[] aOutputs, Object aSpecialItems,
                                 // int[] aChances, FluidStack[] aFluidInputs, FluidStack[] aFluidOutputs, int aDuration,
                                 // int aEUt, int aSpecialValue
-                                new BWRecipes.BacteriaVatRecipe(
+                                new GT_Recipe(
                                         true,
                                         new ItemStack[] { GT_Utility.getIntegratedCircuit(1),
                                                 new ItemStack(Items.sugar, 64) },
@@ -214,11 +213,10 @@ public class AdditionalRecipes {
                                         new FluidStack[] { new FluidStack(bioCulture.getFluid(), 10) },
                                         1000,
                                         (int) TierEU.RECIPE_HV,
-                                        BW_Util.STANDART),
-                                true);
+                                        BW_Util.STANDART));
                         // aOptimize, aInputs, aOutputs, aSpecialItems, aChances, aFluidInputs, aFluidOutputs,
                         // aDuration, aEUt, aSpecialValue
-                        sBiolab.addRecipe(
+                        BartWorksRecipeMaps.bioLabRecipes.addRecipe(
                                 new GT_Recipe(
                                         false,
                                         new ItemStack[] { BioItemList.getPetriDish(null),
@@ -240,17 +238,25 @@ public class AdditionalRecipes {
             }
         }
 
-        sAcidGenFuels.addLiquidFuel(Materials.PhosphoricAcid, 36);
-        sAcidGenFuels.addLiquidFuel(Materials.DilutedHydrochloricAcid, 14);
-        sAcidGenFuels.addLiquidFuel(Materials.HypochlorousAcid, 30);
-        sAcidGenFuels.addLiquidFuel(Materials.HydrofluoricAcid, 40);
-        sAcidGenFuels.addLiquidFuel(Materials.HydrochloricAcid, 28);
-        sAcidGenFuels.addLiquidFuel(Materials.NitricAcid, 24);
-        sAcidGenFuels.addLiquidFuel(Materials.Mercury, 32);
-        sAcidGenFuels.addLiquidFuel(Materials.DilutedSulfuricAcid, 9);
-        sAcidGenFuels.addLiquidFuel(Materials.SulfuricAcid, 18);
-        sAcidGenFuels.addLiquidFuel(Materials.AceticAcid, 11);
-        sAcidGenFuels.addMoltenFuel(Materials.Redstone, 10);
+        List<Pair<Materials, Integer>> liquidFuels = Arrays.asList(
+                ImmutablePair.of(Materials.PhosphoricAcid, 36),
+                ImmutablePair.of(Materials.DilutedHydrochloricAcid, 14),
+                ImmutablePair.of(Materials.HypochlorousAcid, 30),
+                ImmutablePair.of(Materials.HydrofluoricAcid, 40),
+                ImmutablePair.of(Materials.HydrochloricAcid, 28),
+                ImmutablePair.of(Materials.NitricAcid, 24),
+                ImmutablePair.of(Materials.Mercury, 32),
+                ImmutablePair.of(Materials.DilutedSulfuricAcid, 9),
+                ImmutablePair.of(Materials.SulfuricAcid, 18),
+                ImmutablePair.of(Materials.AceticAcid, 11),
+                ImmutablePair.of(WerkstoffLoader.FormicAcid.getBridgeMaterial(), 40));
+        for (Pair<Materials, Integer> fuel : liquidFuels) {
+            GT_Values.RA.stdBuilder().itemInputs(fuel.getLeft().getCells(1)).itemOutputs(Materials.Empty.getCells(1))
+                    .metadata(GT_RecipeConstants.FUEL_VALUE, fuel.getRight()).addTo(BartWorksRecipeMaps.acidGenFuels);
+        }
+        GT_Values.RA.stdBuilder().itemInputs(GT_OreDictUnificator.get(OrePrefixes.cellMolten, Materials.Redstone, 1))
+                .itemOutputs(Materials.Empty.getCells(1)).metadata(GT_RecipeConstants.FUEL_VALUE, 10)
+                .addTo(BartWorksRecipeMaps.acidGenFuels);
     }
 
     @SuppressWarnings("deprecation")
@@ -261,8 +267,6 @@ public class AdditionalRecipes {
                 4,
                 WerkstoffLoader.AdemicSteel.get(dust),
                 null);
-        ((BWRecipes.BW_Recipe_Map_LiquidFuel) BWRecipes.instance.getMappingsFor((byte) 2))
-                .addLiquidFuel(WerkstoffLoader.FormicAcid.getBridgeMaterial(), 40);
         // Thorium/Yttrium Glas
         GT_Values.RA.addBlastRecipe(
                 WerkstoffLoader.YttriumOxide.get(dustSmall, 2),

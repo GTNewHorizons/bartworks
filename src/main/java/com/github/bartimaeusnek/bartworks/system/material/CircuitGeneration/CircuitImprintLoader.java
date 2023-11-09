@@ -28,10 +28,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import com.github.bartimaeusnek.bartworks.API.recipe.BWNBTDependantCraftingRecipe;
+import com.github.bartimaeusnek.bartworks.API.recipe.BartWorksRecipeMaps;
 import com.github.bartimaeusnek.bartworks.ASM.BWCoreStaticReplacementMethodes;
 import com.github.bartimaeusnek.bartworks.common.configs.ConfigHandler;
 import com.github.bartimaeusnek.bartworks.system.material.WerkstoffLoader;
-import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
 import com.github.bartimaeusnek.bartworks.util.Pair;
 import com.google.common.collect.ArrayListMultimap;
@@ -108,8 +109,7 @@ public class CircuitImprintLoader {
                     || circuitRecipe.mFluidInputs[0].isFluidEqual(new FluidStack(solderIndalloy, 0))
                     || circuitRecipe.mFluidInputs[0].isFluidEqual(new FluidStack(solderUEV, 0))) {
                 GT_Recipe newRecipe = CircuitImprintLoader.reBuildRecipe(circuitRecipe);
-                if (newRecipe != null)
-                    BWRecipes.instance.getMappingsFor(BWRecipes.CIRCUITASSEMBLYLINE).addRecipe(newRecipe);
+                if (newRecipe != null) BartWorksRecipeMaps.circuitAssemblyLineRecipes.addRecipe(newRecipe);
                 addCutoffRecipeToSets(toRem, toAdd, circuitRecipe);
             } else if (circuitRecipe.mEUt > BW_Util.getTierVoltage(ConfigHandler.cutoffTier)) toRem.add(circuitRecipe);
         }
@@ -323,7 +323,7 @@ public class CircuitImprintLoader {
                 'G', WerkstoffLoader.Prasiolite.get(OrePrefixes.gemExquisite, 1), 'X',
                 BW_Meta_Items.getNEWCIRCUITS().getStack(3) };
 
-        IRecipe bwrecipe = new BWRecipes.BWNBTDependantCraftingRecipe(circuit, imprintRecipe);
+        IRecipe bwrecipe = new BWNBTDependantCraftingRecipe(circuit, imprintRecipe);
         ShapedOreRecipe gtrecipe = BW_Util.createGTCraftingRecipe(
                 circuit,
                 GT_ModHandler.RecipeBits.DO_NOT_CHECK_FOR_COLLISIONS | GT_ModHandler.RecipeBits.KEEPNBT
@@ -349,7 +349,7 @@ public class CircuitImprintLoader {
     }
 
     private static void deleteCALRecipesAndTags() {
-        BWRecipes.instance.getMappingsFor(BWRecipes.CIRCUITASSEMBLYLINE).mRecipeList.clear();
+        BartWorksRecipeMaps.circuitAssemblyLineRecipes.getBackend().clearRecipes();
         recipeTagMap.clear();
     }
 }

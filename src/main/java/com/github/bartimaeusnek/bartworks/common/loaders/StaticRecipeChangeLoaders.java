@@ -41,9 +41,10 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.github.bartimaeusnek.bartworks.API.recipe.BartWorksRecipeMaps;
+import com.github.bartimaeusnek.bartworks.API.recipe.DynamicGTRecipe;
 import com.github.bartimaeusnek.bartworks.MainMod;
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
-import com.github.bartimaeusnek.bartworks.util.BWRecipes;
 import com.github.bartimaeusnek.bartworks.util.BW_Util;
 import com.github.bartimaeusnek.bartworks.util.StreamUtils;
 import com.github.bartimaeusnek.bartworks.util.log.DebugLog;
@@ -435,7 +436,7 @@ public class StaticRecipeChangeLoaders {
                         && recipe.mFluidInputs[0].isFluidEqual(newGas.getGas(0))) {
                     // preserve original recipe owner
                     toAdd.add(
-                            new BWRecipes.DynamicGTRecipe(
+                            new DynamicGTRecipe(
                                     false,
                                     recipe.mInputs,
                                     recipe.mOutputs,
@@ -481,7 +482,7 @@ public class StaticRecipeChangeLoaders {
                                 .isFluidEqual(new FluidStack(Objects.requireNonNull(fluids.get(newGas)), 0))) {
                     // preserve original recipe owner
                     toAdd.add(
-                            new BWRecipes.DynamicGTRecipe(
+                            new DynamicGTRecipe(
                                     false,
                                     recipe.mInputs,
                                     recipe.mOutputs,
@@ -535,7 +536,7 @@ public class StaticRecipeChangeLoaders {
                             }
                 inputs.add(GT_Utility.getIntegratedCircuit(circuitConfiguration));
                 toAdd.add(
-                        new BWRecipes.DynamicGTRecipe(
+                        new DynamicGTRecipe(
                                 false,
                                 inputs.toArray(new ItemStack[0]),
                                 recipe.mOutputs,
@@ -610,7 +611,7 @@ public class StaticRecipeChangeLoaders {
 
     public static void addElectricImplosionCompressorRecipes() {
         GT_Recipe.GT_Recipe_Map.sImplosionRecipes.mRecipeList.stream().filter(e -> e.mInputs != null).forEach(
-                recipe -> BWRecipes.instance.eicMap.addRecipe(
+                recipe -> BartWorksRecipeMaps.electricImplosionCompressorRecipes.addRecipe(
                         true,
                         Arrays.stream(recipe.mInputs).filter(e -> !StaticRecipeChangeLoaders.checkForExplosives(e))
                                 .distinct().toArray(ItemStack[]::new),
