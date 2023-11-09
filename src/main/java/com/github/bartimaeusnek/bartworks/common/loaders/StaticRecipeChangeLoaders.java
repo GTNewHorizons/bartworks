@@ -23,7 +23,6 @@ import static gregtech.api.enums.Mods.TinkerConstruct;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -34,7 +33,6 @@ import java.util.Set;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -118,66 +116,10 @@ public class StaticRecipeChangeLoaders {
                 }));
     }
 
-    private static void replaceWrongFluidOutput(Werkstoff werkstoff, GT_Recipe recipe, FluidStack wrongNamedFluid) {
-        for (int i = 0; i < recipe.mFluidOutputs.length; i++) {
-            if (GT_Utility.areFluidsEqual(recipe.mFluidOutputs[i], wrongNamedFluid)) {
-                recipe.mFluidOutputs[i] = werkstoff.getFluidOrGas(recipe.mFluidOutputs[i].amount);
-            }
-        }
-    }
-
-    private static void replaceWrongFluidInput(Werkstoff werkstoff, RecipeMap<?> map, GT_Recipe recipe,
-            FluidStack wrongNamedFluid) {
-        for (int i = 0; i < recipe.mFluidInputs.length; i++) {
-            if (GT_Utility.areFluidsEqual(recipe.mFluidInputs[i], wrongNamedFluid)) {
-                Collection<GT_Recipe> col = map.mRecipeFluidMap.get(wrongNamedFluid.getFluid().getName());
-                map.mRecipeFluidMap.remove(wrongNamedFluid.getFluid().getName());
-                map.mRecipeFluidMap.put(werkstoff.getFluidOrGas(1).getFluid().getName(), col);
-                recipe.mFluidInputs[i] = werkstoff.getFluidOrGas(recipe.mFluidInputs[i].amount);
-                map.mRecipeFluidNameMap.add(werkstoff.getFluidOrGas(1).getFluid().getName());
-            }
-        }
-    }
-
-    private static void addConversionRecipe(Werkstoff werkstoff, FluidStack wrongNamedFluid) {
-        RecipeMaps.centrifugeRecipes.add(
-                new GT_Recipe(
-                        false,
-                        null,
-                        null,
-                        null,
-                        null,
-                        new FluidStack[] { wrongNamedFluid },
-                        new FluidStack[] { werkstoff.getFluidOrGas(1) },
-                        1,
-                        1,
-                        0));
-    }
-
-    private static FluidStack getWrongNameFluid(Werkstoff werkstoff) {
-        String name = werkstoff.getFluidOrGas(1).getFluid().getName();
-        String wrongname = "molten." + name;
-        return FluidRegistry.getFluidStack(wrongname, 1);
-    }
-
-    private static void enforceNobleGas(Werkstoff werkstoff) {
-        FluidStack wrongNamedFluid = getWrongNameFluid(werkstoff);
-        if (wrongNamedFluid != null) {
-            RecipeMap.ALL_RECIPE_MAPS.values().forEach(map -> map.getAllRecipes().forEach(recipe -> {
-                replaceWrongFluidInput(werkstoff, map, recipe, wrongNamedFluid);
-                replaceWrongFluidOutput(werkstoff, recipe, wrongNamedFluid);
-            }));
-            addConversionRecipe(werkstoff, wrongNamedFluid);
-        }
-    }
-
     public static void unificationRecipeEnforcer() {
         for (Werkstoff werkstoff : Werkstoff.werkstoffHashSet) {
             StaticRecipeChangeLoaders.runMaterialLinker(werkstoff);
             if (werkstoff.getGenerationFeatures().enforceUnification) {
-
-                if (werkstoff.contains(NOBLE_GAS)) enforceNobleGas(werkstoff);
-
                 HashSet<String> oreDictNames = new HashSet<>(werkstoff.getADDITIONAL_OREDICT());
                 oreDictNames.add(werkstoff.getVarName());
                 StaticRecipeChangeLoaders.runMoltenUnificationEnfocement(werkstoff);
