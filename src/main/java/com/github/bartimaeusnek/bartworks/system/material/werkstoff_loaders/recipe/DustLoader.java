@@ -22,11 +22,11 @@ import static gregtech.api.enums.OrePrefixes.gem;
 import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.ingotHot;
 import static gregtech.api.enums.OrePrefixes.nugget;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBlastRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBoxinatorRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sVacuumRecipes;
+import static gregtech.api.recipe.RecipeMaps.blastFurnaceRecipes;
+import static gregtech.api.recipe.RecipeMaps.maceratorRecipes;
+import static gregtech.api.recipe.RecipeMaps.packagerRecipes;
+import static gregtech.api.recipe.RecipeMaps.primitiveBlastRecipes;
+import static gregtech.api.recipe.RecipeMaps.vacuumFreezerRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeConstants.ADDITIVE_AMOUNT;
 import static gregtech.api.util.GT_RecipeConstants.COIL_HEAT;
@@ -49,6 +49,7 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.TextureSet;
 import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.ISubTagContainer;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_RecipeConstants;
@@ -166,11 +167,11 @@ public class DustLoader implements IWerkstoffRunnable {
                                                     / werkstoff.getContents().getValue().size())),
                             Math.min(4, werkstoff.getContents().getValue().size()) * 30,
                             0);
-                    GT_Recipe.GT_Recipe_Map.sElectrolyzerRecipes.add(tRecipe);
-                    GT_Recipe.GT_Recipe_Map.sMultiblockElectrolyzerRecipes.add(tRecipe);
+                    RecipeMaps.electrolyzerRecipes.add(tRecipe);
+                    RecipeMaps.electrolyzerNonCellRecipes.add(tRecipe);
                 }
                 if (werkstoff.getStats().isCentrifuge()) {
-                    GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes.add(
+                    RecipeMaps.centrifugeRecipes.add(
                             new GT_Recipe(
                                     true,
                                     new ItemStack[] { input, cells > 0 ? Materials.Empty.getCells(cells) : null },
@@ -201,7 +202,7 @@ public class DustLoader implements IWerkstoffRunnable {
                                                     / werkstoff.getContents().getValue().size())),
                             Math.min(4, werkstoff.getContents().getValue().size()) * 30,
                             0);
-                    GT_Recipe.GT_Recipe_Map.sMultiblockCentrifugeRecipes.add(tRecipe);
+                    RecipeMaps.centrifugeNonCellRecipes.add(tRecipe);
                 }
                 if (werkstoff.getGenerationFeatures().hasChemicalRecipes()) {
                     if (cells > 0) stOutputs.add(Materials.Empty.getCells(cells));
@@ -221,7 +222,7 @@ public class DustLoader implements IWerkstoffRunnable {
                     short circuitID = werkstoff.getMixCircuit();
                     ItemStack circuit = circuitID == -1 ? null : GT_Utility.getIntegratedCircuit(circuitID);
                     if (circuit != null) stOutputs.add(circuit);
-                    GT_Recipe.GT_Recipe_Map.sMixerRecipes.add(
+                    RecipeMaps.mixerRecipes.add(
                             new GT_Recipe(
                                     true,
                                     stOutputs.toArray(new ItemStack[0]),
@@ -252,7 +253,7 @@ public class DustLoader implements IWerkstoffRunnable {
                                                     / werkstoff.getContents().getValue().size())),
                             Math.min(4, werkstoff.getContents().getValue().size()) * 30,
                             0);
-                    GT_Recipe.GT_Recipe_Map.sMultiblockMixerRecipes.add(tRecipe);
+                    RecipeMaps.mixerNonCellRecipes.add(tRecipe);
                 }
             }
 
@@ -271,16 +272,16 @@ public class DustLoader implements IWerkstoffRunnable {
                     new Object[] { "T  ", 'T', werkstoff.get(dust) });
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustTiny, 9), ItemList.Schematic_Dust.get(0L))
-                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(sBoxinatorRecipes);
+                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(packagerRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustSmall, 4), ItemList.Schematic_Dust.get(0L))
-                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(sBoxinatorRecipes);
+                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(packagerRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustTiny, 9), ItemList.Schematic_3by3.get(0L))
-                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(sBoxinatorRecipes);
+                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(packagerRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustSmall, 4), ItemList.Schematic_2by2.get(0L))
-                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(sBoxinatorRecipes);
+                    .itemOutputs(werkstoff.get(dust)).duration(5 * SECONDS).eut(4).addTo(packagerRecipes);
 
             if (werkstoff.hasItemType(ingot) && !werkstoff.getStats().isBlastFurnace()) {
                 GT_ModHandler.addSmeltingRecipe(werkstoff.get(dust), werkstoff.get(ingot));
@@ -298,7 +299,8 @@ public class DustLoader implements IWerkstoffRunnable {
                                             Math.max(werkstoff.getStats().getMass() / 40L, 1L)
                                                     * werkstoff.getStats().getMeltingPoint())
                                     .eut(werkstoff.getStats().getMeltingVoltage())
-                                    .metadata(COIL_HEAT, werkstoff.getStats().getMeltingPoint()).addTo(sBlastRecipes);
+                                    .metadata(COIL_HEAT, werkstoff.getStats().getMeltingPoint())
+                                    .addTo(blastFurnaceRecipes);
 
                         } else if (werkstoff.contains(WerkstoffLoader.NOBLE_GAS_SMELTING)) {
                             GT_Values.RA.stdBuilder()
@@ -311,7 +313,8 @@ public class DustLoader implements IWerkstoffRunnable {
                                             Math.max(werkstoff.getStats().getMass() / 40L, 1L)
                                                     * werkstoff.getStats().getMeltingPoint())
                                     .eut(werkstoff.getStats().getMeltingVoltage())
-                                    .metadata(COIL_HEAT, werkstoff.getStats().getMeltingPoint()).addTo(sBlastRecipes);
+                                    .metadata(COIL_HEAT, werkstoff.getStats().getMeltingPoint())
+                                    .addTo(blastFurnaceRecipes);
 
                         } else {
                             GT_Values.RA.stdBuilder()
@@ -323,7 +326,8 @@ public class DustLoader implements IWerkstoffRunnable {
                                             Math.max(werkstoff.getStats().getMass() / 40L, 1L)
                                                     * werkstoff.getStats().getMeltingPoint())
                                     .eut(werkstoff.getStats().getMeltingVoltage())
-                                    .metadata(COIL_HEAT, werkstoff.getStats().getMeltingPoint()).addTo(sBlastRecipes);
+                                    .metadata(COIL_HEAT, werkstoff.getStats().getMeltingPoint())
+                                    .addTo(blastFurnaceRecipes);
 
                             if (werkstoff.getStats().getMeltingPoint() <= 1000) {
                                 GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dust))
@@ -331,7 +335,7 @@ public class DustLoader implements IWerkstoffRunnable {
                                         .duration(
                                                 (int) Math.max(werkstoff.getStats().getMass() / 40L, 1L)
                                                         * werkstoff.getStats().getMeltingPoint())
-                                        .eut(0).metadata(ADDITIVE_AMOUNT, 9).addTo(sPrimitiveBlastRecipes);
+                                        .eut(0).metadata(ADDITIVE_AMOUNT, 9).addTo(primitiveBlastRecipes);
                             }
                         }
                     }
@@ -339,22 +343,22 @@ public class DustLoader implements IWerkstoffRunnable {
             if (werkstoff.getStats().isBlastFurnace() && werkstoff.getStats().getMeltingPoint() > 1750) {
                 GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingotHot)).itemOutputs(werkstoff.get(ingot))
                         .duration((int) Math.max(werkstoff.getStats().getMass() * 3L, 1L)).eut(TierEU.RECIPE_MV)
-                        .addTo(sVacuumRecipes);
+                        .addTo(vacuumFreezerRecipes);
             }
 
             if (werkstoff.hasItemType(ingot)) {
 
                 GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot)).itemOutputs(werkstoff.get(dust))
-                        .duration(20 * SECONDS).eut(2).addTo(sMaceratorRecipes);
+                        .duration(20 * SECONDS).eut(2).addTo(maceratorRecipes);
 
                 GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(nugget)).itemOutputs(werkstoff.get(dustTiny))
-                        .duration(20 * SECONDS).eut(2).addTo(sMaceratorRecipes);
+                        .duration(20 * SECONDS).eut(2).addTo(maceratorRecipes);
 
             }
             if (werkstoff.hasItemType(ingot) || werkstoff.hasItemType(gem)) {
 
                 GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(block)).itemOutputs(werkstoff.get(dust, 9))
-                        .duration(20 * SECONDS).eut(2).addTo(sMaceratorRecipes);
+                        .duration(20 * SECONDS).eut(2).addTo(maceratorRecipes);
 
             }
         }

@@ -43,6 +43,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
@@ -75,15 +76,15 @@ public class CircuitImprintLoader {
     }
 
     private static void reAddOriginalRecipes() {
-        GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.mRecipeList.removeAll(MODIFIED_CAL_RECIPES);
-        GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.mRecipeList.addAll(ORIGINAL_CAL_RECIPES);
+        RecipeMaps.circuitAssemblerRecipes.getBackend().removeRecipes(MODIFIED_CAL_RECIPES);
+        ORIGINAL_CAL_RECIPES.forEach(RecipeMaps.circuitAssemblerRecipes::add);
         ORIGINAL_CAL_RECIPES.clear();
         MODIFIED_CAL_RECIPES.clear();
     }
 
     private static void rebuildCircuitAssemblerMap(HashSet<GT_Recipe> toRem, HashSet<GT_Recipe> toAdd) {
         reAddOriginalRecipes();
-        GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.mRecipeList
+        RecipeMaps.circuitAssemblerRecipes.getAllRecipes()
                 .forEach(e -> CircuitImprintLoader.handleCircuitRecipeRebuilding(e, toRem, toAdd));
     }
 
@@ -121,8 +122,8 @@ public class CircuitImprintLoader {
     }
 
     private static void exchangeRecipesInList(HashSet<GT_Recipe> toRem, HashSet<GT_Recipe> toAdd) {
-        GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.mRecipeList.addAll(toAdd);
-        GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.mRecipeList.removeAll(toRem);
+        toAdd.forEach(RecipeMaps.circuitAssemblerRecipes::add);
+        RecipeMaps.circuitAssemblerRecipes.getBackend().removeRecipes(toRem);
         ORIGINAL_CAL_RECIPES.addAll(toRem);
         MODIFIED_CAL_RECIPES.addAll(toAdd);
     }
@@ -273,7 +274,7 @@ public class CircuitImprintLoader {
     private static void removeOldRecipesFromRegistries() {
         recipeWorldCache.forEach(CraftingManager.getInstance().getRecipeList()::remove);
         BWCoreStaticReplacementMethodes.clearRecentlyUsedRecipes();
-        gtrecipeWorldCache.forEach(GT_Recipe.GT_Recipe_Map.sSlicerRecipes.mRecipeList::remove);
+        RecipeMaps.slicerRecipes.getBackend().removeRecipes(gtrecipeWorldCache);
         recipeWorldCache.forEach(r -> {
             try {
                 BW_Util.getGTBufferedRecipeList().remove(r);
@@ -314,7 +315,7 @@ public class CircuitImprintLoader {
                 eut,
                 BW_Util.CLEANROOM);
         gtrecipeWorldCache.add(slicingRecipe);
-        GT_Recipe.GT_Recipe_Map.sSlicerRecipes.add(slicingRecipe);
+        RecipeMaps.slicerRecipes.add(slicingRecipe);
     }
 
     private static void makeAndAddCraftingRecipes(NBTTagCompound tag) {

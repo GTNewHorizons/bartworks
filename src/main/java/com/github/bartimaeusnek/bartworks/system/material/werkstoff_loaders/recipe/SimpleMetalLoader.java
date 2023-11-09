@@ -22,11 +22,11 @@ import static gregtech.api.enums.OrePrefixes.ingot;
 import static gregtech.api.enums.OrePrefixes.plate;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sBenderRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sExtruderRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sHammerRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sLatheRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sMaceratorRecipes;
+import static gregtech.api.recipe.RecipeMaps.benderRecipes;
+import static gregtech.api.recipe.RecipeMaps.extruderRecipes;
+import static gregtech.api.recipe.RecipeMaps.hammerRecipes;
+import static gregtech.api.recipe.RecipeMaps.latheRecipes;
+import static gregtech.api.recipe.RecipeMaps.maceratorRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
 
 import net.minecraft.item.ItemStack;
@@ -56,7 +56,7 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
 
                 GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(gem))
                         .itemOutputs(werkstoff.get(stick), werkstoff.get(dustSmall, 2))
-                        .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L)).eut(16).addTo(sLatheRecipes);
+                        .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L)).eut(16).addTo(latheRecipes);
 
                 GT_ModHandler.addCraftingRecipe(
                         werkstoff.get(stick, 2),
@@ -68,7 +68,7 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                         new Object[] { "f ", " X", 'X', werkstoff.get(gem) });
 
                 GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick, 2)).itemOutputs(werkstoff.get(stickLong))
-                        .duration((int) Math.max(werkstoff.getStats().getMass(), 1L)).eut(16).addTo(sHammerRecipes);
+                        .duration((int) Math.max(werkstoff.getStats().getMass(), 1L)).eut(16).addTo(hammerRecipes);
 
                 TextureSet texSet = werkstoff.getTexSet();
                 ITexture texture = SideReference.Side.Client
@@ -81,7 +81,7 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                 GregTech_API.registerCover(werkstoff.get(plate), texture, null);
 
                 GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate)).itemOutputs(werkstoff.get(dust))
-                        .duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
+                        .duration(2 * TICKS).eut(8).addTo(maceratorRecipes);
 
                 return;
             }
@@ -103,7 +103,7 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                     GT_Proxy.tBits,
                     new Object[] { "hX", 'X', werkstoff.get(plate) });
 
-            sBenderRecipes.add(
+            benderRecipes.add(
                     new GT_Recipe(
                             true,
                             new ItemStack[] { werkstoff.get(ingot), GT_Utility.getIntegratedCircuit(1) },
@@ -117,7 +117,7 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
                             0));
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot, 3)).itemOutputs(werkstoff.get(plate, 2))
-                    .duration((int) Math.max(werkstoff.getStats().getMass(), 1L)).eut(16).addTo(sHammerRecipes);
+                    .duration((int) Math.max(werkstoff.getStats().getMass(), 1L)).eut(16).addTo(hammerRecipes);
 
             GregTech_API.registerCover(
                     werkstoff.get(plate),
@@ -126,38 +126,38 @@ public class SimpleMetalLoader implements IWerkstoffRunnable {
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot))
                     .itemOutputs(werkstoff.get(stick), werkstoff.get(dustSmall, 2))
-                    .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L)).eut(16).addTo(sLatheRecipes);
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 5L, 1L)).eut(16).addTo(latheRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate), GT_Utility.getIntegratedCircuit(1))
                     .itemOutputs(werkstoff.get(foil, 4))
-                    .duration((int) Math.max(werkstoff.getStats().getMass() * 1L, 1L)).eut(24).addTo(sBenderRecipes);
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 1L, 1L)).eut(24).addTo(benderRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), GT_Utility.getIntegratedCircuit(10))
                     .itemOutputs(werkstoff.get(foil, 4))
-                    .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L)).eut(24).addTo(sBenderRecipes);
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L)).eut(24).addTo(benderRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick, 2)).itemOutputs(werkstoff.get(stickLong))
-                    .duration((int) Math.max(werkstoff.getStats().getMass(), 1L)).eut(16).addTo(sHammerRecipes);
+                    .duration((int) Math.max(werkstoff.getStats().getMass(), 1L)).eut(16).addTo(hammerRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), ItemList.Shape_Extruder_Plate.get(0))
                     .itemOutputs(werkstoff.get(plate)).duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L))
-                    .eut(45).addTo(sExtruderRecipes);
+                    .eut(45).addTo(extruderRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot), ItemList.Shape_Extruder_Rod.get(0))
                     .itemOutputs(werkstoff.get(stick, 2))
-                    .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L)).eut(45).addTo(sExtruderRecipes);
+                    .duration((int) Math.max(werkstoff.getStats().getMass() * 2L, 1L)).eut(45).addTo(extruderRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot)).itemOutputs(werkstoff.get(dust))
-                    .duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
+                    .duration(2 * TICKS).eut(8).addTo(maceratorRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate)).itemOutputs(werkstoff.get(dust))
-                    .duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
+                    .duration(2 * TICKS).eut(8).addTo(maceratorRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stickLong)).itemOutputs(werkstoff.get(dust))
-                    .duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
+                    .duration(2 * TICKS).eut(8).addTo(maceratorRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick)).itemOutputs(werkstoff.get(dustSmall, 2))
-                    .duration(2 * TICKS).eut(8).addTo(sMaceratorRecipes);
+                    .duration(2 * TICKS).eut(8).addTo(maceratorRecipes);
 
         }
     }

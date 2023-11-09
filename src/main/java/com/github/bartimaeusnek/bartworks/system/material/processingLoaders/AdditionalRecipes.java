@@ -26,10 +26,10 @@ import static gregtech.api.enums.OrePrefixes.gemExquisite;
 import static gregtech.api.enums.OrePrefixes.gemFlawed;
 import static gregtech.api.enums.OrePrefixes.stick;
 import static gregtech.api.enums.OrePrefixes.stickLong;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCentrifugeRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPrimitiveBlastRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sSifterRecipes;
+import static gregtech.api.recipe.RecipeMaps.autoclaveRecipes;
+import static gregtech.api.recipe.RecipeMaps.centrifugeRecipes;
+import static gregtech.api.recipe.RecipeMaps.primitiveBlastRecipes;
+import static gregtech.api.recipe.RecipeMaps.sifterRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.MINUTES;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 import static gregtech.api.util.GT_RecipeBuilder.TICKS;
@@ -45,7 +45,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -70,6 +69,7 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Recipe;
@@ -288,7 +288,7 @@ public class AdditionalRecipes {
                         Materials.Thorium.getDust(1),
                         WerkstoffLoader.Thorium232.get(dust))
                 .outputChances(7000, 1300, 700, 600, 300, 100).duration(20 * SECONDS).eut((int) TierEU.RECIPE_IV)
-                .addTo(sSifterRecipes);
+                .addTo(sifterRecipes);
 
         // 3ThO2 + 4Al = 3Th + 2Al2O3
         GT_Values.RA.addChemicalRecipe(
@@ -331,7 +331,7 @@ public class AdditionalRecipes {
 
         GT_Values.RA.stdBuilder().itemInputs(GT_OreDictUnificator.get(dust, Materials.Quartzite, 40L))
                 .itemOutputs(Materials.Amethyst.getDust(10)).duration(40 * SECONDS).eut(0).metadata(ADDITIVE_AMOUNT, 6)
-                .addTo(sPrimitiveBlastRecipes);
+                .addTo(primitiveBlastRecipes);
 
         // Cubic Circonia
         // 2Y + 3O = Y2O3
@@ -344,7 +344,7 @@ public class AdditionalRecipes {
                 4096,
                 (int) TierEU.RECIPE_LV);
         // Zr + 2O =Y22O3= ZrO2
-        GT_Recipe.GT_Recipe_Map.sBlastRecipes.addRecipe(
+        RecipeMaps.blastFurnaceRecipes.addRecipe(
                 false,
                 new ItemStack[] { WerkstoffLoader.Zirconium.get(dust, 10), WerkstoffLoader.YttriumOxide.get(dust, 0) },
                 new ItemStack[] { WerkstoffLoader.CubicZirconia.get(gemFlawed, 40) },
@@ -394,12 +394,12 @@ public class AdditionalRecipes {
         GT_Values.RA.stdBuilder().itemInputs(WerkstoffLoader.MagnetoResonaticDust.get(dust))
                 .itemOutputs(WerkstoffLoader.MagnetoResonaticDust.get(gemChipped, 9)).outputChances(90_00)
                 .fluidInputs(WerkstoffLoader.Neon.getFluidOrGas(1000)).duration(3 * MINUTES + 45 * SECONDS)
-                .eut(TierEU.RECIPE_IV).addTo(sAutoclaveRecipes);
+                .eut(TierEU.RECIPE_IV).addTo(autoclaveRecipes);
 
         GT_Values.RA.stdBuilder().itemInputs(WerkstoffLoader.MagnetoResonaticDust.get(dust))
                 .itemOutputs(WerkstoffLoader.MagnetoResonaticDust.get(gem))
                 .fluidInputs(WerkstoffLoader.Krypton.getFluidOrGas(1000)).duration(3 * MINUTES + 45 * SECONDS)
-                .eut(TierEU.RECIPE_IV).addTo(sAutoclaveRecipes);
+                .eut(TierEU.RECIPE_IV).addTo(autoclaveRecipes);
 
         // Milk
 
@@ -413,7 +413,7 @@ public class AdditionalRecipes {
                         Materials.Phosphor.getDustTiny(1))
                 .outputChances(100_00, 100_00, 10_00, 100_00, 10_00, 10_00).fluidInputs(Materials.Milk.getFluid(10000))
                 .fluidOutputs(Materials.Water.getFluid(8832)).duration(2 * SECONDS + 10 * TICKS).eut(TierEU.RECIPE_MV)
-                .addTo(sCentrifugeRecipes);
+                .addTo(centrifugeRecipes);
 
         // Magneto Resonatic Circuits
 
@@ -425,7 +425,7 @@ public class AdditionalRecipes {
                 ? FluidRegistry.getFluid("molten.mutatedlivingsolder")
                 : FluidRegistry.getFluid("molten.solderingalloy");
         // ULV
-        GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
+        RecipeMaps.circuitAssemblerRecipes.add(
                 new GT_Recipe(
                         false,
                         new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
@@ -442,7 +442,7 @@ public class AdditionalRecipes {
                         CLEANROOM));
         // LV-EV
         for (int i = 1; i <= 4; i++) {
-            GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
+            RecipeMaps.circuitAssemblerRecipes.add(
                     new GT_Recipe(
                             false,
                             new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
@@ -462,7 +462,7 @@ public class AdditionalRecipes {
         }
         // IV-LuV
         for (int i = 5; i <= 6; i++) {
-            GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
+            RecipeMaps.circuitAssemblerRecipes.add(
                     new GT_Recipe(
                             false,
                             new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
@@ -481,7 +481,7 @@ public class AdditionalRecipes {
                             CLEANROOM));
         }
         // ZPM
-        GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
+        RecipeMaps.circuitAssemblerRecipes.add(
                 new GT_Recipe(
                         false,
                         new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
@@ -499,7 +499,7 @@ public class AdditionalRecipes {
                         BW_Util.getMachineVoltageFromTier(7 + 1),
                         CLEANROOM));
         // UV
-        GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
+        RecipeMaps.circuitAssemblerRecipes.add(
                 new GT_Recipe(
                         false,
                         new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
@@ -518,7 +518,7 @@ public class AdditionalRecipes {
                         CLEANROOM));
         // UHV-UEV
         for (int i = 9; i <= 10; i++) {
-            GT_Recipe.GT_Recipe_Map.sCircuitAssemblerRecipes.add(
+            RecipeMaps.circuitAssemblerRecipes.add(
                     new GT_Recipe(
                             false,
                             new ItemStack[] { BW_Meta_Items.getNEWCIRCUITS().getStack(3),
@@ -536,7 +536,7 @@ public class AdditionalRecipes {
                             BW_Util.getMachineVoltageFromTier(i + 1),
                             CLEANROOM));
         }
-        GT_Recipe.GT_Recipe_Map.sSmallNaquadahReactorFuels.addRecipe(
+        RecipeMaps.smallNaquadahReactorFuels.addRecipe(
                 true,
                 new ItemStack[] { WerkstoffLoader.Tiberium.get(bolt) },
                 new ItemStack[] {},
@@ -546,7 +546,7 @@ public class AdditionalRecipes {
                 0,
                 0,
                 12500);
-        GT_Recipe.GT_Recipe_Map.sLargeNaquadahReactorFuels.addRecipe(
+        RecipeMaps.largeNaquadahReactorFuels.addRecipe(
                 true,
                 new ItemStack[] { WerkstoffLoader.Tiberium.get(stick) },
                 new ItemStack[] {},
@@ -557,45 +557,36 @@ public class AdditionalRecipes {
                 0,
                 62500);
 
-        try {
-            Class<GT_Recipe.GT_Recipe_Map> map = GT_Recipe.GT_Recipe_Map.class;
-            GT_Recipe.GT_Recipe_Map sHugeNaquadahReactorFuels = (GT_Recipe.GT_Recipe_Map) FieldUtils
-                    .getField(map, "sHugeNaquadahReactorFuels").get(null);
-            GT_Recipe.GT_Recipe_Map sExtremeNaquadahReactorFuels = (GT_Recipe.GT_Recipe_Map) FieldUtils
-                    .getField(map, "sExtremeNaquadahReactorFuels").get(null);
-            GT_Recipe.GT_Recipe_Map sUltraHugeNaquadahReactorFuels = (GT_Recipe.GT_Recipe_Map) FieldUtils
-                    .getField(map, "sUltraHugeNaquadahReactorFuels").get(null);
-            sHugeNaquadahReactorFuels.addRecipe(
-                    true,
-                    new ItemStack[] { WerkstoffLoader.Tiberium.get(stickLong) },
-                    new ItemStack[] {},
-                    null,
-                    null,
-                    null,
-                    0,
-                    0,
-                    125000);
-            sExtremeNaquadahReactorFuels.addRecipe(
-                    true,
-                    new ItemStack[] { WerkstoffLoader.Tiberium.get(stick) },
-                    new ItemStack[] {},
-                    null,
-                    null,
-                    null,
-                    0,
-                    0,
-                    31250);
-            sUltraHugeNaquadahReactorFuels.addRecipe(
-                    true,
-                    new ItemStack[] { WerkstoffLoader.Tiberium.get(stickLong) },
-                    new ItemStack[] {},
-                    null,
-                    null,
-                    null,
-                    0,
-                    0,
-                    125000);
-        } catch (NullPointerException | IllegalAccessException ignored) {}
+        RecipeMaps.hugeNaquadahReactorFuels.addRecipe(
+                true,
+                new ItemStack[] { WerkstoffLoader.Tiberium.get(stickLong) },
+                new ItemStack[] {},
+                null,
+                null,
+                null,
+                0,
+                0,
+                125000);
+        RecipeMaps.extremeNaquadahReactorFuels.addRecipe(
+                true,
+                new ItemStack[] { WerkstoffLoader.Tiberium.get(stick) },
+                new ItemStack[] {},
+                null,
+                null,
+                null,
+                0,
+                0,
+                31250);
+        RecipeMaps.ultraHugeNaquadahReactorFuels.addRecipe(
+                true,
+                new ItemStack[] { WerkstoffLoader.Tiberium.get(stickLong) },
+                new ItemStack[] {},
+                null,
+                null,
+                null,
+                0,
+                0,
+                125000);
 
         LoadItemContainers.run();
 

@@ -15,8 +15,8 @@ package com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.rec
 
 import static gregtech.api.enums.OrePrefixes.block;
 import static gregtech.api.enums.OrePrefixes.ingot;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sCompressorRecipes;
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sExtruderRecipes;
+import static gregtech.api.recipe.RecipeMaps.compressorRecipes;
+import static gregtech.api.recipe.RecipeMaps.extruderRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import com.github.bartimaeusnek.bartworks.system.material.Werkstoff;
@@ -31,11 +31,11 @@ public class MetalLoader implements IWerkstoffRunnable {
     public void run(Werkstoff werkstoff) {
         if (werkstoff.hasItemType(ingot)) {
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot, 9)).itemOutputs(werkstoff.get(block))
-                    .duration(15 * SECONDS).eut(2).addTo(sCompressorRecipes);
+                    .duration(15 * SECONDS).eut(2).addTo(compressorRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot, 9), ItemList.Shape_Extruder_Block.get(0))
                     .itemOutputs(werkstoff.get(block)).duration((int) werkstoff.getStats().getMass())
-                    .eut(8 * werkstoff.getStats().getMeltingPoint() >= 2800 ? 60 : 15).addTo(sExtruderRecipes);
+                    .eut(8 * werkstoff.getStats().getMeltingPoint() >= 2800 ? 60 : 15).addTo(extruderRecipes);
 
             GT_Values.RA.addAlloySmelterRecipe(
                     werkstoff.get(ingot, 9),

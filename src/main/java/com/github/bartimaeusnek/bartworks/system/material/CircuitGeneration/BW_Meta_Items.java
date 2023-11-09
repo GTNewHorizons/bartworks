@@ -13,7 +13,7 @@
 
 package com.github.bartimaeusnek.bartworks.system.material.CircuitGeneration;
 
-import static gregtech.api.util.GT_Recipe.GT_Recipe_Map.sPressRecipes;
+import static gregtech.api.recipe.RecipeMaps.formingPressRecipes;
 import static gregtech.api.util.GT_RecipeBuilder.SECONDS;
 
 import java.util.ArrayList;
@@ -50,6 +50,7 @@ import gregtech.api.interfaces.IItemBehaviour;
 import gregtech.api.interfaces.IItemContainer;
 import gregtech.api.items.GT_MetaBase_Item;
 import gregtech.api.objects.ItemData;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GT_Config;
 import gregtech.api.util.GT_LanguageManager;
 import gregtech.api.util.GT_OreDictUnificator;
@@ -75,9 +76,9 @@ public class BW_Meta_Items {
                         WerkstoffLoader.MagnetoResonaticDust.get(OrePrefixes.dust, 1),
                         WerkstoffLoader.ArInGaPhoBiBoTe.get(OrePrefixes.dust, 4))
                 .itemOutputs(BW_Meta_Items.NEWCIRCUITS.getStack(2)).duration(15 * SECONDS).eut(TierEU.RECIPE_HV)
-                .addTo(sPressRecipes);
+                .addTo(formingPressRecipes);
 
-        GT_Recipe.GT_Recipe_Map.sAutoclaveRecipes.add(
+        RecipeMaps.autoclaveRecipes.add(
                 new GT_Recipe(
                         false,
                         new ItemStack[] { BW_Meta_Items.NEWCIRCUITS.getStack(2) },
