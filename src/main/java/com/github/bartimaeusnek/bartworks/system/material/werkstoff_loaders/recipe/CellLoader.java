@@ -42,6 +42,7 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TextureSet;
 import gregtech.api.interfaces.ISubTagContainer;
+import gregtech.api.recipe.RecipeCategories;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
@@ -210,7 +211,7 @@ public class CellLoader implements IWerkstoffRunnable {
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dust)).fluidOutputs(werkstoff.getFluidOrGas(1000))
                     .duration(werkstoff.getStats().getMass()).eut(werkstoff.getStats().getMass() > 128 ? 64 : 30)
-                    .addTo(fluidExtractionRecipes);
+                    .recipeCategory(RecipeCategories.fluidExtractorRecycling).addTo(fluidExtractionRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(GT_Utility.getIntegratedCircuit(1)).itemOutputs(werkstoff.get(dust))
                     .fluidInputs(werkstoff.getFluidOrGas(1000)).duration((int) werkstoff.getStats().getMass())

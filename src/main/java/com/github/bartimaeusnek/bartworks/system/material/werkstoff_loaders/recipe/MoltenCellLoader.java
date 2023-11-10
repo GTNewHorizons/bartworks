@@ -50,6 +50,7 @@ import com.github.bartimaeusnek.bartworks.system.material.werkstoff_loaders.IWer
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.recipe.RecipeCategories;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Utility;
 
@@ -67,21 +68,26 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
             }
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dust)).fluidOutputs(werkstoff.getMolten(144))
-                    .duration(15 * SECONDS).eut(2).addTo(fluidExtractionRecipes);
+                    .duration(15 * SECONDS).eut(2).recipeCategory(RecipeCategories.fluidExtractorRecycling)
+                    .addTo(fluidExtractionRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustSmall)).fluidOutputs(werkstoff.getMolten(36))
-                    .duration(15 * SECONDS).eut(2).addTo(fluidExtractionRecipes);
+                    .duration(15 * SECONDS).eut(2).recipeCategory(RecipeCategories.fluidExtractorRecycling)
+                    .addTo(fluidExtractionRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(dustTiny)).fluidOutputs(werkstoff.getMolten(16))
-                    .duration(15 * SECONDS).eut(2).addTo(fluidExtractionRecipes);
+                    .duration(15 * SECONDS).eut(2).recipeCategory(RecipeCategories.fluidExtractorRecycling)
+                    .addTo(fluidExtractionRecipes);
 
         } else {
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(ingot)).fluidOutputs(werkstoff.getMolten(144))
-                    .duration(15 * SECONDS).eut(2).addTo(fluidExtractionRecipes);
+                    .duration(15 * SECONDS).eut(2).recipeCategory(RecipeCategories.fluidExtractorRecycling)
+                    .addTo(fluidExtractionRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(nugget)).fluidOutputs(werkstoff.getMolten(16))
-                    .duration(15 * SECONDS).eut(2).addTo(fluidExtractionRecipes);
+                    .duration(15 * SECONDS).eut(2).recipeCategory(RecipeCategories.fluidExtractorRecycling)
+                    .addTo(fluidExtractionRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(ItemList.Shape_Mold_Ingot.get(0)).itemOutputs(werkstoff.get(ingot))
                     .fluidInputs(werkstoff.getMolten(144)).duration((int) werkstoff.getStats().getMass())
@@ -100,13 +106,16 @@ public class MoltenCellLoader implements IWerkstoffRunnable {
             }
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stickLong)).fluidOutputs(werkstoff.getMolten(144))
-                    .duration(15 * SECONDS).eut(2).addTo(fluidExtractionRecipes);
+                    .duration(15 * SECONDS).eut(2).recipeCategory(RecipeCategories.fluidExtractorRecycling)
+                    .addTo(fluidExtractionRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(plate)).fluidOutputs(werkstoff.getMolten(144))
-                    .duration(15 * SECONDS).eut(2).addTo(fluidExtractionRecipes);
+                    .duration(15 * SECONDS).eut(2).recipeCategory(RecipeCategories.fluidExtractorRecycling)
+                    .addTo(fluidExtractionRecipes);
 
             GT_Values.RA.stdBuilder().itemInputs(werkstoff.get(stick)).fluidOutputs(werkstoff.getMolten(72))
-                    .duration(15 * SECONDS).eut(2).addTo(fluidExtractionRecipes);
+                    .duration(15 * SECONDS).eut(2).recipeCategory(RecipeCategories.fluidExtractorRecycling)
+                    .addTo(fluidExtractionRecipes);
         }
 
         if (werkstoff.getGenerationFeatures().hasMetalCraftingSolidifierRecipes()) {
