@@ -24,7 +24,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -137,15 +136,14 @@ public class StaticRecipeChangeLoaders {
                                 || replacement.getItem() == null)
                             continue;
                         for (RecipeMap<?> map : RecipeMap.ALL_RECIPE_MAPS.values()) {
-                            nextRecipe: for (Iterator<GT_Recipe> iterator = map.getAllRecipes().iterator(); iterator
-                                    .hasNext();) {
-                                GT_Recipe recipe = iterator.next();
+                            List<GT_Recipe> toRemove = new ArrayList<>();
+                            nextRecipe: for (GT_Recipe recipe : map.getAllRecipes()) {
                                 boolean removal = map.equals(RecipeMaps.fluidExtractionRecipes)
                                         || map.equals(RecipeMaps.fluidSolidifierRecipes);
                                 for (int i = 0; i < recipe.mInputs.length; i++) {
                                     if (!GT_Utility.areStacksEqual(recipe.mInputs[i], toReplace)) continue;
                                     if (removal) {
-                                        iterator.remove();
+                                        toRemove.add(recipe);
                                         continue nextRecipe;
                                     }
                                     recipe.mInputs[i] = GT_Utility.copyAmount(recipe.mInputs[i].stackSize, replacement);
@@ -153,7 +151,7 @@ public class StaticRecipeChangeLoaders {
                                 for (int i = 0; i < recipe.mOutputs.length; i++) {
                                     if (!GT_Utility.areStacksEqual(recipe.mOutputs[i], toReplace)) continue;
                                     if (removal) {
-                                        iterator.remove();
+                                        toRemove.add(recipe);
                                         continue nextRecipe;
                                     }
                                     recipe.mOutputs[i] = GT_Utility
@@ -162,13 +160,14 @@ public class StaticRecipeChangeLoaders {
                                 if (recipe.mSpecialItems instanceof ItemStack specialItemStack) {
                                     if (!GT_Utility.areStacksEqual(specialItemStack, toReplace)) continue;
                                     if (removal) {
-                                        iterator.remove();
+                                        toRemove.add(recipe);
                                         continue nextRecipe;
                                     }
                                     recipe.mSpecialItems = GT_Utility
                                             .copyAmount(specialItemStack.stackSize, replacement);
                                 }
                             }
+                            map.getBackend().removeRecipes(toRemove);
                         }
                     }
                 }
