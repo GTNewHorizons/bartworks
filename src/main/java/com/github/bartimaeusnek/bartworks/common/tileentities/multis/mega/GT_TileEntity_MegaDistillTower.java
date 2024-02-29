@@ -291,7 +291,7 @@ public class GT_TileEntity_MegaDistillTower extends GT_TileEntity_MegaMultiBlock
 
         // check each layer
         while (this.mHeight < 12) {
-            if (!checkPiece(STRUCTURE_PIECE_LAYER, 1, mHeight, 0)) {
+            if (!checkPiece(STRUCTURE_PIECE_LAYER, 1, mHeight * 5, 0)) {
                 return false;
             }
             if (this.mOutputHatchesByLayer.size() < this.mHeight
