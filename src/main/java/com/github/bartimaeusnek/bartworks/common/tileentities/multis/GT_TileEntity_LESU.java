@@ -530,19 +530,19 @@ public class GT_TileEntity_LESU extends GT_MetaTileEntity_MultiBlockBase {
                                 () -> this.getBaseMetaTileEntity().getInputVoltage(),
                                 val -> clientMaxIn = val))
                 .widget(
-                    new TextWidget().setStringSupplier(() -> "EU/t OUT: " + numberFormat.format(clientMaxOut))
-                        .setDefaultColor(this.COLOR_TEXT_WHITE.get()))
+                        new TextWidget().setStringSupplier(() -> "EU/t OUT: " + numberFormat.format(clientMaxOut))
+                                .setDefaultColor(this.COLOR_TEXT_WHITE.get()))
                 .widget(
-                    new FakeSyncWidget.LongSyncer(
-                        () -> this.getBaseMetaTileEntity().getOutputVoltage(),
-                        val -> clientMaxOut = val))
+                        new FakeSyncWidget.LongSyncer(
+                                () -> this.getBaseMetaTileEntity().getOutputVoltage(),
+                                val -> clientMaxOut = val))
                 .widget(
-                    new TextWidget().setStringSupplier(() -> "AMP/t IN/OUT: " + numberFormat.format(clientAmps))
-                        .setDefaultColor(this.COLOR_TEXT_WHITE.get()))
+                        new TextWidget().setStringSupplier(() -> "AMP/t IN/OUT: " + numberFormat.format(clientAmps))
+                                .setDefaultColor(this.COLOR_TEXT_WHITE.get()))
                 .widget(
-                    new FakeSyncWidget.LongSyncer(
-                        () -> this.getBaseMetaTileEntity().getInputAmperage(),
-                        val -> clientAmps = val))
+                        new FakeSyncWidget.LongSyncer(
+                                () -> this.getBaseMetaTileEntity().getInputAmperage(),
+                                val -> clientAmps = val))
                 .widget(
                         new TextWidget(Text.localised("tooltip.LESU.0.name")).setDefaultColor(Color.YELLOW.getRGB())
                                 .setEnabled(widget -> this.maxEUStore() >= Long.MAX_VALUE - 1))
