@@ -373,6 +373,11 @@ public class GT_TileEntity_MegaBlastFurnace extends GT_TileEntity_MegaMultiBlock
                     return false;
                 }
             }
+            for (GT_MetaTileEntity_Hatch hatch : this.mEnergyHatches) {
+                if (this.glassTier < hatch.mTier) {
+                    return false;
+                }
+            }
         }
 
         this.mHeatingCapacity = (int) this.getCoilLevel().getHeat() + 100 * (BW_Util.getTier(this.getMaxInputEu()) - 2);

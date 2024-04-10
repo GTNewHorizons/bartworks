@@ -170,6 +170,11 @@ public class GT_TileEntity_MegaChemicalReactor
                     return false;
                 }
             }
+            for (GT_MetaTileEntity_Hatch hatch : this.mEnergyHatches) {
+                if (this.glassTier < hatch.mTier) {
+                    return false;
+                }
+            }
         }
 
         return true;
