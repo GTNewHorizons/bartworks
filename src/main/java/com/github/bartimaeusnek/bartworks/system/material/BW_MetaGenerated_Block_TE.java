@@ -16,7 +16,6 @@ package com.github.bartimaeusnek.bartworks.system.material;
 import static com.github.bartimaeusnek.bartworks.MainMod.BW_Network_instance;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -27,18 +26,11 @@ import net.minecraft.tileentity.TileEntity;
 
 import com.github.bartimaeusnek.bartworks.common.net.MetaBlockPacket;
 
-import gregtech.GT_Mod;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.OrePrefixes;
 import gregtech.api.interfaces.tileentity.ITexturedTileEntity;
-import gregtech.api.objects.XSTR;
-import gregtech.api.util.GT_OreDictUnificator;
 
 public abstract class BW_MetaGenerated_Block_TE extends TileEntity implements ITexturedTileEntity {
 
     public short mMetaData;
-    protected static boolean shouldFortune = false;
-    public boolean mNatural = false;
 
     @Override
     public boolean canUpdate() {
@@ -53,8 +45,8 @@ public abstract class BW_MetaGenerated_Block_TE extends TileEntity implements IT
 
     @Override
     public void writeToNBT(NBTTagCompound aNBT) {
-        aNBT.setShort("m", this.mMetaData);
         super.writeToNBT(aNBT);
+        aNBT.setShort("m", this.mMetaData);
     }
 
     @Override
@@ -75,37 +67,7 @@ public abstract class BW_MetaGenerated_Block_TE extends TileEntity implements IT
             rList.add(new ItemStack(Blocks.cobblestone, 1, 0));
             return rList;
         }
-        Materials aOreMaterial = Werkstoff.werkstoffHashMap.get(this.mMetaData).getBridgeMaterial();
-        switch (GT_Mod.gregtechproxy.oreDropSystem) {
-            case Item -> {
-                rList.add(GT_OreDictUnificator.get(OrePrefixes.rawOre, aOreMaterial, 1));
-            }
-            case FortuneItem -> {
-                // if shouldFortune and isNatural then get fortune drops
-                // if not shouldFortune or not isNatural then get normal drops
-                // if not shouldFortune and isNatural then get normal drops
-                // if shouldFortune and not isNatural then get normal drops
-                if (shouldFortune && this.mNatural) {
-                    Random tRandom = new XSTR(this.xCoord ^ this.yCoord ^ this.zCoord);
-                    long amount = (long) Math.max(1, tRandom.nextInt((1 + Math.min(3, aFortune))));
-                    rList.add(GT_OreDictUnificator.get(OrePrefixes.rawOre, aOreMaterial, amount));
-                } else {
-                    rList.add(GT_OreDictUnificator.get(OrePrefixes.rawOre, aOreMaterial, 1));
-                }
-            }
-            case UnifiedBlock -> {
-                // Unified ore
-                rList.add(new ItemStack(this.GetProperBlock(), 1, this.mMetaData));
-            }
-            case PerDimBlock -> {
-                // Per Dimension ore
-                rList.add(new ItemStack(this.GetProperBlock(), 1, this.mMetaData));
-            }
-            case Block -> {
-                // Regular ore
-                rList.add(new ItemStack(this.GetProperBlock(), 1, this.mMetaData));
-            }
-        }
+        rList.add(new ItemStack(this.GetProperBlock(), 1, this.mMetaData));
         return rList;
     }
 }
