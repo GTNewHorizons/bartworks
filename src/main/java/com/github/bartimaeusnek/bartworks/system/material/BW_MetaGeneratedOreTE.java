@@ -38,14 +38,12 @@ public class BW_MetaGeneratedOreTE extends BW_MetaGenerated_Block_TE {
     @Override
     public void readFromNBT(NBTTagCompound aNBT) {
         super.readFromNBT(aNBT);
-        this.mMetaData = aNBT.getShort("m");
         this.mNatural = aNBT.getBoolean("n");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound aNBT) {
         super.writeToNBT(aNBT);
-        aNBT.setShort("m", this.mMetaData);
         aNBT.setBoolean("n", this.mNatural);
     }
 
