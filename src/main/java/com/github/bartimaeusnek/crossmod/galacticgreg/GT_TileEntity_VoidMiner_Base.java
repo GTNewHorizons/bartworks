@@ -84,9 +84,9 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
 
     /**
      * Public method giving other mods the ability to add manually a material with an ore version into the external
-     * dromap for a specified dim id
+     * dropmap for a specified dim id
      *
-     * @param DimensionID the dim id targetted
+     * @param DimensionID the dim id targeted
      * @param Material    the material with an ore version
      * @param weight      the non normalised version of the given weight
      */
@@ -207,7 +207,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
     /**
      * getter for the external drop map
      *
-     * @return the extraDriosDimMap
+     * @return the extraDropsDimMap
      */
     public static ArrayListMultimap<Integer, Pair<Pair<Integer, Block>, Float>> getExtraDropsDimMap() {
         return extraDropsDimMap;
@@ -245,7 +245,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
             case 0 -> gt_worldgen -> gt_worldgen.mOverworld;
             case 1 -> gt_worldgen -> gt_worldgen.mEnd;
             /*
-             * explicitely giving different dim numbers so it default to false in the config, keeping compat with the
+             * explicitly giving different dim numbers so it default to false in the config, keeping compat with the
              * current worldgen config
              */
             case 7 -> gt_worldgen -> gt_worldgen.isGenerationAllowed(world, 0, 7);
@@ -262,9 +262,9 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      */
     private void addDrop(Pair<Integer, Boolean> key, float value) {
         if (key.getValue()) {
-            addDrop(GregTech_API.sBlockOres1, key.getKey(), value);
-        } else {
             addDrop(WerkstoffLoader.BWOres, key.getKey(), value);
+        } else {
+            addDrop(GregTech_API.sBlockOres1, key.getKey(), value);
         }
     }
 
@@ -558,7 +558,7 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      * Builds the ore item stack from the key specified in the dropmap
      *
      * @param stats the key of the dropmap
-     * @return an ItemStack corresponding to the target ore, with a stacksize corresponding to the mutiplier induced by
+     * @return an ItemStack corresponding to the target ore, with a stacksize corresponding to the multiplier induced by
      *         the gas used
      */
     private ItemStack getOreItemStack(Pair<Integer, Block> stats) {
