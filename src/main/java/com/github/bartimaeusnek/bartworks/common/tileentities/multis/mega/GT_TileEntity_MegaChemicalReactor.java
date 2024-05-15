@@ -233,4 +233,9 @@ public class GT_TileEntity_MegaChemicalReactor
     public boolean supportsVoidProtection() {
         return true;
     }
+
+    @Override
+    public boolean supportsInputSeparation() {
+        return true;
+    }
 }
