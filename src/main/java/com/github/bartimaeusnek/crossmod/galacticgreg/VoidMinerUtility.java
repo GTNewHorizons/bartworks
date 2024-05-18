@@ -107,6 +107,13 @@ public class VoidMinerUtility {
         public Map<GT_Utility.ItemId, Float> getInternalMap() {
             return internalMap;
         }
+
+        public DropMap copy() {
+            DropMap result = new DropMap();
+            result.internalMap.putAll(internalMap);
+            result.totalWeight = totalWeight;
+            return result;
+        }
     }
 
     public static final Map<Integer, DropMap> dropMapsByDimId = new HashMap<>();

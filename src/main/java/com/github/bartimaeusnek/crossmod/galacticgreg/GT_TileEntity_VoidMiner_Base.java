@@ -236,13 +236,13 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
      */
     private void handleModDimDef(int id) {
         if (VoidMinerUtility.dropMapsByDimId.containsKey(id)) {
-            this.dropMap = VoidMinerUtility.dropMapsByDimId.get(id);
+            this.dropMap = VoidMinerUtility.dropMapsByDimId.get(id).copy();
         } else {
             String chunkProviderName = ((ChunkProviderServer) this.getBaseMetaTileEntity().getWorld()
                     .getChunkProvider()).currentChunkProvider.getClass().getName();
 
             if (VoidMinerUtility.dropMapsByChunkProviderName.containsKey(chunkProviderName)) {
-                this.dropMap = VoidMinerUtility.dropMapsByChunkProviderName.get(chunkProviderName);
+                this.dropMap = VoidMinerUtility.dropMapsByChunkProviderName.get(chunkProviderName).copy();
             }
         }
     }
