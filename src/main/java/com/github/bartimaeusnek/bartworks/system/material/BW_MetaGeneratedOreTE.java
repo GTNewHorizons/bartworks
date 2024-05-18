@@ -26,7 +26,6 @@ import gregtech.GT_Mod;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.interfaces.ITexture;
-import gregtech.api.objects.XSTR;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_OreDictUnificator;
 
@@ -81,12 +80,17 @@ public class BW_MetaGeneratedOreTE extends BW_MetaGenerated_Block_TE {
                 // if not shouldFortune or not isNatural then get normal drops
                 // if not shouldFortune and isNatural then get normal drops
                 // if shouldFortune and not isNatural then get normal drops
-                if (shouldFortune && this.mNatural) {
-                    Random tRandom = new XSTR(this.xCoord ^ this.yCoord ^ this.zCoord);
-                    long amount = (long) Math.max(1, tRandom.nextInt((1 + Math.min(3, aFortune))));
-                    rList.add(GT_OreDictUnificator.get(OrePrefixes.rawOre, aOreMaterial, amount));
+                if (shouldFortune && this.mNatural && aFortune > 0) {
+                    int aMinAmount = 1;
+                    // Max applicable fortune
+                    if (aFortune > 3) aFortune = 3;
+                    long amount = (long) new Random().nextInt((aFortune - aMinAmount) + aMinAmount);
+                    if (amount < 1) amount = 1;
+                    for (int i = 0; i < amount; i++) {
+                        rList.add(GT_OreDictUnificator.get(OrePrefixes.rawOre, aOreMaterial, 1));
+                    }
                 } else {
-                    rList.add(GT_OreDictUnificator.get(OrePrefixes.rawOre, aOreMaterial, 1));
+                    rList.add(new ItemStack(this.GetProperBlock(), 1, this.mMetaData));
                 }
             }
             case UnifiedBlock -> {
