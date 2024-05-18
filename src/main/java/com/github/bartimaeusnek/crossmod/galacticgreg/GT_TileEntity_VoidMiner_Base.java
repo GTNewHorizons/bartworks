@@ -62,7 +62,6 @@ public abstract class GT_TileEntity_VoidMiner_Base extends GT_MetaTileEntity_Dri
         VoidMinerUtility.addBlockToDimensionList(dimId, block, meta, weight);
     }
 
-
     public GT_TileEntity_VoidMiner_Base(int aID, String aName, String aNameRegional, int tier) {
         super(aID, aName, aNameRegional);
         this.TIER_MULTIPLIER = (byte) Math.max(tier, 1);
